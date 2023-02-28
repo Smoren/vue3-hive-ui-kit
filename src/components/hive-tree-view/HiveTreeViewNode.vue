@@ -107,6 +107,9 @@ export default defineComponent({
     });
 
     const choose = () => {
+      handleEvent(new Event("onChoose"), {
+        name: options?.name,
+      });
       options!.choosen = !options!.choosen;
       if (props.choosen?.node && props.choosen?.node.name !== options?.name) {
         props.choosen.node.choosen = false;
@@ -145,11 +148,18 @@ export default defineComponent({
     );
 
     const emitHelper = (event: EventData) => {
-      if (event.type === "onCheck") {
-        handleEvent(new Event(event.type), {
-          name: (event?.data as any).name,
-          checked: (event?.data as any).checked,
-        });
+      switch (event.type) {
+        case "onCheck":
+          handleEvent(new Event(event.type), {
+            name: (event?.data as any).name,
+            checked: (event?.data as any).checked,
+          });
+          break;
+        case "onChoose":
+          handleEvent(new Event(event.type), {
+            name: (event?.data as any).name,
+          });
+          break;
       }
     };
 

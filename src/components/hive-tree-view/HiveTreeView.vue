@@ -34,6 +34,7 @@ export default defineComponent({
       type: String,
       default: "onAfterChange",
     },
+    choosen: {},
     ...commonProps,
   },
   mounted() {
@@ -90,11 +91,18 @@ export default defineComponent({
     toReactive();
 
     const emitHelper = (event: EventData) => {
-      if (event.type === "onCheck") {
-        handleEvent(new Event(event.type), {
-          name: (event?.data as any).name,
-          checked: (event?.data as any).checked,
-        });
+      switch (event.type) {
+        case "onCheck":
+          handleEvent(new Event(event.type), {
+            name: (event?.data as any).name,
+            checked: (event?.data as any).checked,
+          });
+          break;
+        case "onChoose":
+          handleEvent(new Event(event.type), {
+            name: (event?.data as any).name,
+          });
+          break;
       }
     };
 
