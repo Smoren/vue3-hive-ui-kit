@@ -1,0 +1,52 @@
+{
+  "name": "vue-hive-ui-kit",
+  "version": "0.1.0",
+  "description": "Flexible event-based UI kit for Vue 3",
+  "main": "vite.config.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smoren/vue-hive-ui-kit.git"
+  },
+  "dependencies": {
+    "maska": "1.5.0",
+    "v-mask": "^2.3.0",
+    "vue": "^3.2.45",
+    "vue-the-mask": "^0.11.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "sass": "^1.57.1",
+    "typescript": "^4.1.5",
+    "vite": "^4.0.0",
+    "@types/uuid": "^8.3.4"
+  },
+  "keywords": [
+    "ui-kit",
+    "ui",
+    "widget",
+    "vue"
+  ],
+  "author": {
+    "name": "Smoren",
+    "email": "ofigate@gmail.com",
+    "url": "https://github.com/Smoren"
+  },
+  "contributors": [
+    {
+      "name": "Anton Lvov",
+      "url": "https://github.com/AntonL9vov"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Smoren/vue-hive-ui-kit/issues"
+  },
+  "homepage": "https://github.com/Smoren/vue-hive-ui-kit#readme"
+}
