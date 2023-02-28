@@ -1,12 +1,12 @@
 import useSearch, {
   type InputCollection,
-} from "@/components/ui/hive/common/hooks/base/use-search";
+} from "@/common/hooks/base/use-search";
 import { type ComputedRef, type Ref, ref, watch } from "vue";
 import useDataContainer, {
   type DataContainer,
   type DataContainerNode,
-} from "@/components/ui/hive/common/hooks/base/use-data-container";
-import type { ValueType } from "@/components/ui/hive/common/types";
+} from "@/common/hooks/base/use-data-container";
+import type { ValueType } from "@/common/types";
 
 type OptionType = string | number | Record<string, unknown>;
 type OptionsType = Array<OptionType> | Record<string, OptionType>;

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import '@/components/ui/hive/assets/scss/semantic.scss';
+// import '@/components/assets/scss/semantic.scss';
 
 export default defineComponent({
   name: 'HiveObservable',
@@ -59,5 +59,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/semantic.css';
+@import '@/assets/css/semantic.css';
 </style>

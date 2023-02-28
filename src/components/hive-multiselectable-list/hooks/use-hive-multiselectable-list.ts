@@ -2,8 +2,8 @@ import { computed, type ComputedRef, onMounted, type Ref, ref, watch } from "vue
 import useDataContainer, {
   type DataContainer,
   type DataContainerNode,
-} from "@/components/ui/hive/common/hooks/base/use-data-container";
-import scrollIntoView from "@/components/ui/hive/hive-selectable-list/hooks/helpers";
+} from "@/common/hooks/base/use-data-container";
+import scrollIntoView from "@/components/hive-selectable-list/hooks/helpers";
 import type { ValueType } from "../../common/types";
 import sortArray from "./helpers";
 

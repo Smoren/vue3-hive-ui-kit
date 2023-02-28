@@ -1,9 +1,9 @@
-import type { ValueType, VueComponent } from '@/components/ui/hive/common/types';
+import type { ValueType, VueComponent } from '@/common/types';
 import type {
   ActiveValueType,
   CurrentValueType,
   FilteredOptionsType,
-} from '@/components/ui/hive/hive-drop-down-list/hooks/use-hive-drop-down-list';
+} from '@/components/hive-drop-down-list/hooks/use-hive-drop-down-list';
 
 interface DropDownListMethodsConfig {
   activeValue: ActiveValueType;

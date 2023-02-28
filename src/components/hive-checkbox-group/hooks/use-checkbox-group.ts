@@ -1,9 +1,9 @@
 import { type ComputedRef, type Ref, ref } from 'vue';
 import useDataContainer, {
   type DataContainer,
-} from '@/components/ui/hive/common/hooks/base/use-data-container';
-import type { ValueType } from '@/components/ui/hive/common/types';
-import type { EventHandler } from '@/components/ui/hive/common/hooks/base/use-event-handler';
+} from '@/common/hooks/base/use-data-container';
+import type { ValueType } from '@/common/types';
+import type { EventHandler } from '@/common/hooks/base/use-event-handler';
 
 type OptionType = string | number | Record<string, unknown>;
 type OptionsType = Array<OptionType> | Record<string, OptionType>;

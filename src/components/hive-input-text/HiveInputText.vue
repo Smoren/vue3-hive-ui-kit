@@ -22,12 +22,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, type Ref } from 'vue';
-import commonProps from '@/components/ui/hive/common/mixins/common-props';
-import useEventHandler from '@/components/ui/hive/common/hooks/base/use-event-handler';
-import useComponent from '@/components/ui/hive/common/hooks/base/use-component';
-import useOnMount from '@/components/ui/hive/common/hooks/base/use-on-mount';
-import type { ValueType } from '@/components/ui/hive/common/types';
-import useAllowedRef from '../common/hooks/base/use-allowed-ref';
+import commonProps from '@/common/mixins/common-props';
+import useEventHandler from '@/common/hooks/base/use-event-handler';
+import useComponent from '@/common/hooks/base/use-component';
+import useOnMount from '@/common/hooks/base/use-on-mount';
+import type { ValueType } from '@/common/types';
+import useAllowedRef from '@/common/hooks/base/use-allowed-ref';
 
 export default defineComponent({
   name: 'HiveInputText',
@@ -103,5 +103,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/semantic.css';
+@import '@/assets/css/semantic.css';
 </style>

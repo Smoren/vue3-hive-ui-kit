@@ -25,18 +25,18 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import commonProps from "@/components/ui/hive/common/mixins/common-props";
-import useOnMount from "@/components/ui/hive/common/hooks/base/use-on-mount";
-import useComponent from "@/components/ui/hive/common/hooks/base/use-component";
+import commonProps from "@/common/mixins/common-props";
+import useOnMount from "@/common/hooks/base/use-on-mount";
+import useComponent from "@/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/components/ui/hive/common/hooks/base/use-event-handler";
-import HiveInputDateCalendar from "@/components/ui/hive/hive-popup-contents/hive-input-date-calendar/HiveInputDateCalendar.vue";
-import HivePicker from "@/components/ui/hive/hive-picker/HivePicker.vue";
+} from "@/common/hooks/base/use-event-handler";
+import HiveInputDateCalendar from "@/components/hive-popup-contents/hive-input-date-calendar/HiveInputDateCalendar.vue";
+import HivePicker from "@/components/hive-picker/HivePicker.vue";
 import useHiveInputDateRange, {
   type ModelValueType,
-} from "@/components/ui/hive/hive-input-date-range/hooks/use-hive-input-date-range";
-import usePickerEventTriggering from "@/components/ui/hive/common/hooks/base/use-picker-event-triggering";
+} from "@/components/hive-input-date-range/hooks/use-hive-input-date-range";
+import usePickerEventTriggering from "@/common/hooks/base/use-picker-event-triggering";
 
 export default defineComponent({
   name: "HiveInputDateRange",
@@ -100,7 +100,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/semantic.css";
+@import "@/assets/css/semantic.css";
 
 .date-range__calendars-container {
   display: flex;

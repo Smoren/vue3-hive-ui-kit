@@ -33,15 +33,15 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import commonProps from "@/components/ui/hive/common/mixins/common-props";
-import useComponent from "@/components/ui/hive/common/hooks/base/use-component";
-import useOnMount from "@/components/ui/hive/common/hooks/base/use-on-mount";
+import commonProps from "@/common/mixins/common-props";
+import useComponent from "@/common/hooks/base/use-component";
+import useOnMount from "@/common/hooks/base/use-on-mount";
 import useRadioGroup, {
   type RadioGroupConfig,
-} from "@/components/ui/hive/hive-radio-group/hooks/use-radio-group";
-import useEventHandler from "@/components/ui/hive/common/hooks/base/use-event-handler";
-import type { ValueType } from "@/components/ui/hive/common/types";
-import type { OptionsType } from "@/components/ui/hive/hive-multiselect/hooks/use-hive-multiselect";
+} from "@/components/hive-radio-group/hooks/use-radio-group";
+import useEventHandler from "@/common/hooks/base/use-event-handler";
+import type { ValueType } from "@/common/types";
+import type { OptionsType } from "@/components/hive-multiselect/hooks/use-hive-multiselect";
 
 export default defineComponent({
   name: "HiveRadioGroup",
@@ -116,13 +116,9 @@ export default defineComponent({
         isAllowed,
       });
       if (isAllowed && currentValue.value !== value) {
-        console.log('here')
         currentValue.value = value;
         handleEvent(new Event(props.modelValueEventName));
       }
-      // if(!isAllowed){
-      //   currentValue.value = ""
-      // }
     };
 
     watch(
@@ -145,5 +141,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "../assets/css/semantic.css";
+@import "@/assets/css/semantic.css";
 </style>
