@@ -49,17 +49,17 @@
 
 <script lang="ts">
 import { defineComponent, watch, ref } from "vue";
-import commonProps from "@/components/ui/hive/common/mixins/common-props";
-import useOnMount from "@/components/ui/hive/common/hooks/base/use-on-mount";
-import useComponent from "@/components/ui/hive/common/hooks/base/use-component";
+import commonProps from "@/common/mixins/common-props";
+import useOnMount from "@/common/hooks/base/use-on-mount";
+import useComponent from "@/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/components/ui/hive/common/hooks/base/use-event-handler";
+} from "@/common/hooks/base/use-event-handler";
 import useHiveAutocomplete, {
   type AutocompleteConfig,
-} from "@/components/ui/hive/hive-autocomplete/hooks/use-hive-autocomplete";
-import type { OptionsType } from "@/components/ui/hive/hive-drop-down-list/hooks/use-hive-drop-down-list";
-import type { ValueType } from "../common/types";
+} from "@/components/hive-autocomplete/hooks/use-hive-autocomplete";
+import type { OptionsType } from "@/components/hive-drop-down-list/hooks/use-hive-drop-down-list";
+import type { ValueType } from "@/common/types";
 
 export default defineComponent({
   name: "HiveAutocomplete",
@@ -223,8 +223,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/abstracts/_variables";
-@import "../assets/css/semantic.css";
+@import "@/assets/scss/abstracts/_variables";
+@import "@/assets/css/semantic.css";
 
 .hive-autocomplete {
   position: relative;

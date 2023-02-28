@@ -6,7 +6,10 @@
         :id="id"
         :value="(currentValue as string)"
         @keydown="onKeyDown"
-        @input="(currentValue = ($event.target as HTMLInputElement).value), handleEvent($event)"
+        @input="
+          (currentValue = ($event.target as HTMLInputElement).value),
+            handleEvent($event)
+        "
         :rows="rowsCount"
         :placeholder="placeholder"
         @change="handleEvent"
@@ -18,26 +21,26 @@
 </template>
 
 <script lang="ts">
-import useComponent from '@/components/ui/hive/common/hooks/base/use-component';
-import useEventHandler from '@/components/ui/hive/common/hooks/base/use-event-handler';
-import useOnMount from '@/components/ui/hive/common/hooks/base/use-on-mount';
-import commonProps from '@/components/ui/hive/common/mixins/common-props';
-import { defineComponent, ref } from 'vue';
-import useAllowedRef from '../common/hooks/base/use-allowed-ref';
+import useComponent from "@/common/hooks/base/use-component";
+import useEventHandler from "@/common/hooks/base/use-event-handler";
+import useOnMount from "@/common/hooks/base/use-on-mount";
+import commonProps from "@/common/mixins/common-props";
+import { defineComponent, ref } from "vue";
+import useAllowedRef from "@/common/hooks/base/use-allowed-ref";
 
 export default defineComponent({
-  name: 'HiveTextarea',
+  name: "HiveTextarea",
   props: {
     modelValue: {
       type: String,
     },
     modelValueEventName: {
       type: String,
-      default: 'onAfterChange',
+      default: "onAfterChange",
     },
     label: {
       type: String,
-      default: '',
+      default: "",
     },
     rowsCount: {
       type: Number,
@@ -87,5 +90,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import '../assets/css/semantic.css';
+@import "@/assets/css/semantic.css";
 </style>

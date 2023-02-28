@@ -35,17 +35,17 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import commonProps from "@/components/ui/hive/common/mixins/common-props";
-import useOnMount from "@/components/ui/hive/common/hooks/base/use-on-mount";
-import useComponent from "@/components/ui/hive/common/hooks/base/use-component";
+import commonProps from "@/common/mixins/common-props";
+import useOnMount from "@/common/hooks/base/use-on-mount";
+import useComponent from "@/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/components/ui/hive/common/hooks/base/use-event-handler";
-import HiveObservable from "@/components/ui/hive/hive-observable/HiveObservable.vue";
+} from "@/common/hooks/base/use-event-handler";
+import HiveObservable from "@/components/hive-observable/HiveObservable.vue";
 import useHiveMultiselectableList, {
   type OptionsType,
   type MultiselectableListConfig,
-} from "@/components/ui/hive/hive-multiselectable-list/hooks/use-hive-multiselectable-list";
+} from "@/components/hive-multiselectable-list/hooks/use-hive-multiselectable-list";
 
 export default defineComponent({
   name: "HiveMultiselectableList",
@@ -139,8 +139,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/semantic.css";
-@import "../assets/scss/abstracts/_variables";
+@import "@/assets/css/semantic.css";
+@import "@/assets/scss/abstracts/_variables";
 
 .selectable-list {
   display: grid;

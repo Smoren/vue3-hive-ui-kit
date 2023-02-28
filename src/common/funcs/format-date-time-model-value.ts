@@ -1,4 +1,4 @@
-import toTimestamp from '@/components/ui/hive/common/funcs/to-timestamp';
+import toTimestamp from '@/common/funcs/to-timestamp';
 
 export default function formatDateTimeModelValue(
   modelValue: string | Array<number | string>

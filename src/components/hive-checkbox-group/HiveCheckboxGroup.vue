@@ -22,16 +22,16 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import commonProps from "@/components/ui/hive/common/mixins/common-props";
-import useOnMount from "@/components/ui/hive/common/hooks/base/use-on-mount";
+import commonProps from "@/common/mixins/common-props";
+import useOnMount from "@/common/hooks/base/use-on-mount";
 import useEventHandler, {
   type EventConfig,
-} from "@/components/ui/hive/common/hooks/base/use-event-handler";
-import useComponent from "@/components/ui/hive/common/hooks/base/use-component";
+} from "@/common/hooks/base/use-event-handler";
+import useComponent from "@/common/hooks/base/use-component";
 import useCheckboxGroup, {
   type CheckboxGroupConfig,
-} from "@/components/ui/hive/hive-checkbox-group/hooks/use-checkbox-group";
-import type { OptionsType } from "@/components/ui/hive/hive-multiselect/hooks/use-hive-multiselect";
+} from "@/components/hive-checkbox-group/hooks/use-checkbox-group";
+import type { OptionsType } from "@/components/hive-multiselect/hooks/use-hive-multiselect";
 import HiveCheckbox from "../hive-checkbox/HiveCheckbox.vue";
 
 export default defineComponent({
@@ -115,5 +115,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "../assets/css/semantic.css";
+@import "@/assets/css/semantic.css";
 </style>

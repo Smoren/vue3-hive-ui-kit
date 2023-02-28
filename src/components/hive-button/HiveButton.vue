@@ -10,12 +10,12 @@
 
 <script lang="ts">
 import { defineComponent, onUnmounted, onUpdated } from "vue";
-import commonProps from "@/components/ui/hive/common/mixins/common-props";
-import useOnMount from "@/components/ui/hive/common/hooks/base/use-on-mount";
-import useComponent from "../common/hooks/base/use-component";
+import commonProps from "@/common/mixins/common-props";
+import useOnMount from "@/common/hooks/base/use-on-mount";
+import useComponent from "@/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "../common/hooks/base/use-event-handler";
+} from "@/common/hooks/base/use-event-handler";
 
 export default defineComponent({
   name: "HiveButton",
