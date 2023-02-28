@@ -1,4 +1,4 @@
-import type { VueComponent } from '@/components/ui/hive/common/types';
+import type { VueComponent } from '@/common/types';
 
 export default function useOnMount(component: VueComponent): void {
   component.component = component;

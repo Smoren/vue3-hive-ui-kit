@@ -6,10 +6,10 @@ import {
   watch,
   type WritableComputedRef,
 } from "vue";
-import formatDateTimeModelValue from "@/components/ui/hive/common/funcs/format-date-time-model-value";
-import toDateString from "@/components/ui/hive/common/funcs/to-date-string";
-import uniteDateAndTimeTimestamps from "@/components/ui/hive/common/funcs/unite-date-and-time-timestamps";
-import resetTime from "@/components/ui/hive/common/funcs/reset-time";
+import formatDateTimeModelValue from "@/common/funcs/format-date-time-model-value";
+import toDateString from "@/common/funcs/to-date-string";
+import uniteDateAndTimeTimestamps from "@/common/funcs/unite-date-and-time-timestamps";
+import resetTime from "@/common/funcs/reset-time";
 
 type ModelValueType =
   | string

@@ -22,10 +22,10 @@
 
 <script lang="ts" setup>
 import { ref, type Ref } from 'vue';
-import useEventHandler from '@/components/ui/hive/common/hooks/base/use-event-handler';
-import useComponent from '@/components/ui/hive/common/hooks/base/use-component';
-import type { ValueType } from '@/components/ui/hive/common/types';
-import useAllowedRef from '../common/hooks/base/use-allowed-ref';
+import useEventHandler from '@/common/hooks/base/use-event-handler';
+import useComponent from '@/common/hooks/base/use-component';
+import type { ValueType } from '@/common/types';
+import useAllowedRef from '@/common/hooks/base/use-allowed-ref';
 
 interface ICommonProps {
   id?: string;
@@ -75,7 +75,7 @@ const onKeyDown = (event: Event) => {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/semantic.css';
+@import '@/assets/css/semantic.css';
 .c {
   color: red;
 }

@@ -1,14 +1,12 @@
 import { type ComputedRef, type Ref, ref, watch, reactive } from "vue";
 import useDataContainer, {
   type DataContainer,
-} from "@/components/ui/hive/common/hooks/base/use-data-container";
-import useFilter, {
-  CompareMode,
-} from "@/components/ui/hive/common/hooks/base/use-filter";
-import useSearch from "../../common/hooks/base/use-search";
-import type { ValueType } from "@/components/ui/hive/common/types";
-import type { EventHandler } from "../../common/hooks/base/use-event-handler";
-import deepClone from "../../common/funcs/deepClone";
+} from "@/common/hooks/base/use-data-container";
+import useFilter, { CompareMode } from "@/common/hooks/base/use-filter";
+import useSearch from "@/common/hooks/base/use-search";
+import type { ValueType } from "@/common/types";
+import type { EventHandler } from "@/common/hooks/base/use-event-handler";
+import deepClone from "@/common/funcs/deepClone";
 
 export type OptionType = string | number | Record<string, unknown>;
 export type OptionsType = Array<OptionType> | Record<string, OptionType>;
