@@ -298,7 +298,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/semantic.css";
+@import "@/assets/css/semantic.css";
 
 .hive-drop-down-multiselect {
   display: flex !important;

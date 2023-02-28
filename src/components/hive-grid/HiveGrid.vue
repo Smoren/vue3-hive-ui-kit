@@ -482,7 +482,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/semantic.css";
+@import "@/assets/css/semantic.css";
 
 .wrapper {
   overflow-y: auto;
