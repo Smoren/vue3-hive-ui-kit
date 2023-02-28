@@ -45,5 +45,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import '../assets/css/semantic.css';
+@import '@/assets/css/semantic.css';
 </style>

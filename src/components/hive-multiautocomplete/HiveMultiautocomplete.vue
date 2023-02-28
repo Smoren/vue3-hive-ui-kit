@@ -69,7 +69,7 @@
       class="close-icon"
       @click.stop="clearCurrentValue()"
     >
-      <img src="@/components/icons/close-icon.svg" alt="" />
+      <img src="@/assets/icons/close-icon.svg" alt="" />
     </div>
     <div
       ref="menuRef"
