@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" :class="classes">
+  <div class="wrapper" :class="classes" :style="style">
     <button class="button" @click="leftClick" @click.right.prevent="rightClick">
       <slot name="before"></slot>
       <span>{{ text }}</span>
@@ -99,6 +99,7 @@ export default defineComponent({
     height: 100%;
     background: none;
     width: 100%;
+    text-align: center;
     &:hover {
       cursor: pointer;
     }
