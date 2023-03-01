@@ -1,7 +1,7 @@
 <template>
   <div
     class="hive-autocomplete"
-    tabindex="0"
+    tabindex="1"
     @focusout="hidePopup($event)"
     @keydown.tab="hidePopup($event)"
     @focusin="focusInput"
