@@ -54,14 +54,14 @@ import {
   toRef,
   watch,
 } from "vue";
-import useComponent from "@/common/hooks/base/use-component";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   EventData,
-} from "@/common/hooks/base/use-event-handler";
+} from "@hive/common/hooks/base/use-event-handler";
 import HiveCheckbox from "../hive-checkbox/HiveCheckbox.vue";
-import useOnMount from "@/common/hooks/base/use-on-mount";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
 import type { TreeView } from "./hive-tree-view-type";
-import commonProps from "@/common/mixins/common-props";
+import commonProps from "@hive/common/mixins/common-props";
 
 export default defineComponent({
   name: "HiveTreeViewNode",

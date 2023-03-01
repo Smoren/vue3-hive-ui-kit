@@ -1,5 +1,5 @@
 import { ref, watch, type Ref } from "vue";
-import toDateString from "@/common/funcs/to-date-string";
+import toDateString from "@hive/common/funcs/to-date-string";
 
 const getTimezone = (withTimezone: boolean): number =>
   withTimezone ? 0 : new Date().getTimezoneOffset() * 60 * 1000;

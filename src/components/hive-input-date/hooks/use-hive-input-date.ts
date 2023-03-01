@@ -1,6 +1,6 @@
 import { type Ref, ref, watch, computed } from "vue";
-import toDateString from "@/common/funcs/to-date-string";
-import toTimestamp from "@/common/funcs/to-timestamp";
+import toDateString from "@hive/common/funcs/to-date-string";
+import toTimestamp from "@hive/common/funcs/to-timestamp";
 
 type CurrentValueType = string | number;
 

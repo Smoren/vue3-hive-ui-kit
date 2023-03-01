@@ -1,15 +1,15 @@
 import { type ComputedRef, ref, type Ref, watch } from "vue";
-import type { ValueType } from "@/common/types";
+import type { ValueType } from "@hive/common/types";
 import useDataContainer, {
   createUnknownNode,
   type DataContainer,
   type DataContainerNode,
   UNKNOWN_KEY,
-} from "@/common/hooks/base/use-data-container";
-import useSearch from "@/common/hooks/base/use-search";
+} from "@hive/common/hooks/base/use-data-container";
+import useSearch from "@hive/common/hooks/base/use-search";
 import useFilter, {
   CompareMode,
-} from "@/common/hooks/base/use-filter";
+} from "@hive/common/hooks/base/use-filter";
 
 type OptionType = string | number | Record<string, unknown>;
 type OptionsType = Array<OptionType> | Record<string, OptionType>;

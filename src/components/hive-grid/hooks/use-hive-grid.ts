@@ -1,7 +1,7 @@
 import { computed, provide, reactive, ref, watch } from "vue";
-import deepClone from "@/common/funcs/deepClone";
-import type { EventData } from "@/common/hooks/base/use-event-handler";
-import type { VueComponent } from "@/common/types";
+import deepClone from "@hive/common/funcs/deepClone";
+import type { EventData } from "@hive/common/hooks/base/use-event-handler";
+import type { VueComponent } from "@hive/common/types";
 import { v4 as uuidv4 } from "uuid";
 
 export interface GridColumns {

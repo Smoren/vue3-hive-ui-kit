@@ -311,16 +311,16 @@ import {
 import useHiveGrid, {
   type GridColumns,
   type GridConfig,
-} from "@/components/hive-grid/hooks/use-hive-grid";
-import commonProps from "@/common/mixins/common-props";
-import useComponent from "@/common/hooks/base/use-component";
+} from "@hive/components/hive-grid/hooks/use-hive-grid";
+import commonProps from "@hive/common/mixins/common-props";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
   type EventData,
-} from "@/common/hooks/base/use-event-handler";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import HiveGridHeader from "@/components/hive-grid/HiveGridHeader.vue";
-import HiveGridCeil from "@/components/hive-grid/HiveGridCeil.vue";
+} from "@hive/common/hooks/base/use-event-handler";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import HiveGridHeader from "@hive/components/hive-grid/HiveGridHeader.vue";
+import HiveGridCeil from "@hive/components/hive-grid/HiveGridCeil.vue";
 import { employees, columns as clmns, columns } from "./mooks";
 import HiveInputTextVue from "../hive-input-text/HiveInputText.vue";
 import HiveInputNumber from "../hive-input-number/HiveInputNumber.vue";
@@ -482,7 +482,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/semantic.css";
+@import "@hive/assets/css/semantic.css";
 
 .wrapper {
   overflow-y: auto;

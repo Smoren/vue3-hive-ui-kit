@@ -1,9 +1,9 @@
-import COLUMN_WIDTH from '@/components/hive-grid/constants';
+import COLUMN_WIDTH from '@hive/components/hive-grid/constants';
 import type {
   ColgroupItem,
   ColumnWithChildren,
   ColumnWithoutChildren,
-} from '@/components/hive-grid/types';
+} from '@hive/components/hive-grid/types';
 
 export default function getColgroupItem(
   column: ColumnWithoutChildren | ColumnWithChildren,

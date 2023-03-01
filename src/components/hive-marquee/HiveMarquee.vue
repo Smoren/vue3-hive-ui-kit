@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import getTextWidth from '@/common/funcs/get-text-width';
+import getTextWidth from '@hive/common/funcs/get-text-width';
 
 export default defineComponent({
   name: 'HiveMarquee',

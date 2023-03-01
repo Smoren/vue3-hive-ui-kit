@@ -16,15 +16,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import commonProps from '@/common/mixins/common-props';
-import useOnMount from '@/common/hooks/base/use-on-mount';
-import useComponent from '@/common/hooks/base/use-component';
+import commonProps from '@hive/common/mixins/common-props';
+import useOnMount from '@hive/common/hooks/base/use-on-mount';
+import useComponent from '@hive/common/hooks/base/use-component';
 import useEventHandler, {
   type EventConfig,
-} from '@/common/hooks/base/use-event-handler';
+} from '@hive/common/hooks/base/use-event-handler';
 import useHiveTab, {
   type TabConfig,
-} from '@/components/hive-tab-group/hooks/use-hive-tab';
+} from '@hive/components/hive-tab-group/hooks/use-hive-tab';
 
 export default defineComponent({
   name: 'HiveTab',
@@ -63,5 +63,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/css/semantic.css';
+@import '@hive/assets/css/semantic.css';
 </style>

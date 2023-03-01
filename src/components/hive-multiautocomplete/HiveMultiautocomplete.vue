@@ -69,7 +69,7 @@
       class="close-icon"
       @click.stop="clearCurrentValue()"
     >
-      <img src="@/assets/icons/close-icon.svg" alt="" />
+      <img src="@hive/assets/icons/close-icon.svg" alt="" />
     </div>
     <div
       ref="menuRef"
@@ -111,22 +111,22 @@
 
 <script lang="ts">
 import { defineComponent, ref, toRaw, watch } from "vue";
-import commonProps from "@/common/mixins/common-props";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useComponent from "@/common/hooks/base/use-component";
+import commonProps from "@hive/common/mixins/common-props";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventData,
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
+} from "@hive/common/hooks/base/use-event-handler";
 import type {
   OptionsType,
   OptionType,
-} from "@/components/hive-multiautocomplete/hooks/use-hive-multiautocomplete";
+} from "@hive/components/hive-multiautocomplete/hooks/use-hive-multiautocomplete";
 import useHiveMultiautocomplete, {
   type MultiautocompleteConfig,
-} from "@/components/hive-multiautocomplete/hooks/use-hive-multiautocomplete";
-import HiveInputText from "@/components/hive-input-text/HiveInputText.vue";
-import type { DataContainerNode } from "@/common/hooks/base/use-data-container";
+} from "@hive/components/hive-multiautocomplete/hooks/use-hive-multiautocomplete";
+import HiveInputText from "@hive/components/hive-input-text/HiveInputText.vue";
+import type { DataContainerNode } from "@hive/common/hooks/base/use-data-container";
 
 export default defineComponent({
   name: "HiveMultiautocomplete",
@@ -366,8 +366,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/semantic.css";
-@import "@/assets/scss/abstracts/_variables";
+@import "@hive/assets/css/semantic.css";
+@import "@hive/assets/scss/abstracts/_variables";
 
 .hive-multiautocomplete {
   position: relative;

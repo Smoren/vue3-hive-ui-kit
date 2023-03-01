@@ -207,7 +207,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import HiveGridCeil from "@/components/hive-grid/HiveGridCeil.vue";
+import HiveGridCeil from "@hive/components/hive-grid/HiveGridCeil.vue";
 import HiveInputTextVue from "../hive-input-text/HiveInputText.vue";
 import HiveInputNumber from "../hive-input-number/HiveInputNumber.vue";
 import HiveInputDate from "../hive-input-date/HiveInputDate.vue";
@@ -220,14 +220,14 @@ import HiveTextarea from "../hive-textarea/HiveTextarea.vue";
 import HiveAutocomplete from "../hive-autocomplete/HiveAutocomplete.vue";
 import HiveMultiselect from "../hive-multiselect/HiveMultiselect.vue";
 import HiveButton from "../hive-button/HiveButton.vue";
-import useOnMount from "@/common/hooks/base/use-on-mount";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
 import useComponent from "../common/hooks/base/use-component";
 import useHiveGridRow from "./hooks/use-hive-grid-row";
 import type { GridColumns } from "./hooks/use-hive-grid";
 import { employees, columns as clmns, columns } from "./mooks";
 import useEventHandler, {
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
+} from "@hive/common/hooks/base/use-event-handler";
 
 export default defineComponent({
   name: "HiveGridRow",

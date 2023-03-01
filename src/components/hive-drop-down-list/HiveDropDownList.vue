@@ -74,18 +74,18 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
-import useComponent from '@/common/hooks/base/use-component';
-import useEventHandler from '@/common/hooks/base/use-event-handler';
-import useOnMount from '@/common/hooks/base/use-on-mount';
-import commonProps from '@/common/mixins/common-props';
+import useComponent from '@hive/common/hooks/base/use-component';
+import useEventHandler from '@hive/common/hooks/base/use-event-handler';
+import useOnMount from '@hive/common/hooks/base/use-on-mount';
+import commonProps from '@hive/common/mixins/common-props';
 import useHiveDropDownList, {
   type DropDownListConfig,
   type OptionsType,
-} from '@/components/hive-drop-down-list/hooks/use-hive-drop-down-list';
-import useHiveDropDownListMethods from '@/components/hive-drop-down-list/hooks/use-hive-drop-down-list-methods';
-import useDropDownMethods from '@/common/hooks/custom/use-drop-down-methods';
-import useClasses, { type ClassesType } from '@/common/hooks/base/use-classes';
-import HiveObservable from '@/components/hive-observable/HiveObservable.vue';
+} from '@hive/components/hive-drop-down-list/hooks/use-hive-drop-down-list';
+import useHiveDropDownListMethods from '@hive/components/hive-drop-down-list/hooks/use-hive-drop-down-list-methods';
+import useDropDownMethods from '@hive/common/hooks/custom/use-drop-down-methods';
+import useClasses, { type ClassesType } from '@hive/common/hooks/base/use-classes';
+import HiveObservable from '@hive/components/hive-observable/HiveObservable.vue';
 
 export default defineComponent({
   name: 'HiveDropDownList',
@@ -248,7 +248,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/semantic.css';
+@import '@hive/assets/css/semantic.css';
 
 .hive-drop-down-list {
   position: relative;

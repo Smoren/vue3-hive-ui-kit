@@ -16,22 +16,22 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import commonProps from "@/common/mixins/common-props";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useComponent from "@/common/hooks/base/use-component";
+import commonProps from "@hive/common/mixins/common-props";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventData,
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
+} from "@hive/common/hooks/base/use-event-handler";
 import useHiveInputDate, {
   type CurrentValueType,
-} from "@/components/hive-input-date/hooks/use-hive-input-date";
-import HiveInputDateCalendar from "@/components/hive-popup-contents/hive-input-date-calendar/HiveInputDateCalendar.vue";
-import HivePicker from "@/components/hive-picker/HivePicker.vue";
-import usePickerEventTriggering from "@/common/hooks/base/use-picker-event-triggering";
+} from "@hive/components/hive-input-date/hooks/use-hive-input-date";
+import HiveInputDateCalendar from "@hive/components/hive-popup-contents/hive-input-date-calendar/HiveInputDateCalendar.vue";
+import HivePicker from "@hive/components/hive-picker/HivePicker.vue";
+import usePickerEventTriggering from "@hive/common/hooks/base/use-picker-event-triggering";
 import useTimezone, {
   getTimezone,
-} from "@/components/hive-popup-contents/hive-input-date-calendar/hooks/use-timezone";
+} from "@hive/components/hive-popup-contents/hive-input-date-calendar/hooks/use-timezone";
 
 export default defineComponent({
   name: "HiveInputDate",
@@ -115,5 +115,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/semantic.css";
+@import "@hive/assets/css/semantic.css";
 </style>

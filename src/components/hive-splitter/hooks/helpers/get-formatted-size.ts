@@ -1,4 +1,4 @@
-import type { Size } from '@/components/hive-splitter/types';
+import type { Size } from '@hive/components/hive-splitter/types';
 
 export default function getFormattedSize(size: Size) {
   if (size === null || size === 0) {

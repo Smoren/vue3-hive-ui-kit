@@ -6,13 +6,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import commonProps from "@/common/mixins/common-props";
-import useComponent from "@/common/hooks/base/use-component";
+import commonProps from "@hive/common/mixins/common-props";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useHivePane from "@/components/hive-splitter/hooks/use-hive-pane";
+} from "@hive/common/hooks/base/use-event-handler";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useHivePane from "@hive/components/hive-splitter/hooks/use-hive-pane";
 
 export default defineComponent({
   name: "HivePane",

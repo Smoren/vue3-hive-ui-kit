@@ -3,8 +3,8 @@ import type {
   OnPaneAdd,
   Size,
   onPaneUpdate,
-} from '@/components/hive-splitter/types';
-import getFormattedSize from '@/components/hive-splitter/hooks/helpers/get-formatted-size';
+} from '@hive/components/hive-splitter/types';
+import getFormattedSize from '@hive/components/hive-splitter/hooks/helpers/get-formatted-size';
 
 interface PaneConfig {
   size: Size;

@@ -86,21 +86,21 @@
 
 <script lang="ts">
 import { defineComponent, ref, toRaw, watch } from "vue";
-import HiveObservable from "@/components/hive-observable/HiveObservable.vue";
-import useComponent from "@/common/hooks/base/use-component";
-import useEventHandler from "@/common/hooks/base/use-event-handler";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import commonProps from "@/common/mixins/common-props";
+import HiveObservable from "@hive/components/hive-observable/HiveObservable.vue";
+import useComponent from "@hive/common/hooks/base/use-component";
+import useEventHandler from "@hive/common/hooks/base/use-event-handler";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import commonProps from "@hive/common/mixins/common-props";
 import useHiveMultiselect, {
   type DropDownListMultipleConfig,
   type OptionsType,
-} from "@/components/hive-multiselect/hooks/use-hive-multiselect";
-import useHiveMultiselectMethods from "@/components/hive-multiselect/hooks/use-hive-multiselect-methods";
-import useDropDownMethods from "@/common/hooks/custom/use-drop-down-methods";
+} from "@hive/components/hive-multiselect/hooks/use-hive-multiselect";
+import useHiveMultiselectMethods from "@hive/components/hive-multiselect/hooks/use-hive-multiselect-methods";
+import useDropDownMethods from "@hive/common/hooks/custom/use-drop-down-methods";
 import useClasses, {
   type ClassesType,
-} from "@/common/hooks/base/use-classes";
-import usePickerEventTriggering from "@/common/hooks/base/use-picker-event-triggering";
+} from "@hive/common/hooks/base/use-classes";
+import usePickerEventTriggering from "@hive/common/hooks/base/use-picker-event-triggering";
 
 export default defineComponent({
   name: "HiveMultiselect",
@@ -298,7 +298,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/semantic.css";
+@import "@hive/assets/css/semantic.css";
 
 .hive-drop-down-multiselect {
   display: flex !important;

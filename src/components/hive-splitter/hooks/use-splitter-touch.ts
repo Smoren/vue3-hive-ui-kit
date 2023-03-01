@@ -1,7 +1,7 @@
 import { type ComputedRef, type Ref, ref } from 'vue';
-import type { Pane, TouchSplitter } from '@/components/hive-splitter/types';
-import calculatePanesSize from '@/components/hive-splitter/hooks/helpers/calculate-panes-size';
-import type { EventHandler } from '@/common/hooks/base/use-event-handler';
+import type { Pane, TouchSplitter } from '@hive/components/hive-splitter/types';
+import calculatePanesSize from '@hive/components/hive-splitter/hooks/helpers/calculate-panes-size';
+import type { EventHandler } from '@hive/common/hooks/base/use-event-handler';
 
 interface Taps {
   splitterIndex: number | null;

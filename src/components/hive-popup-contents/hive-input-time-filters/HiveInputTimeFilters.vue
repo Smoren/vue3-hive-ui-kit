@@ -33,16 +33,16 @@ type
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import HiveSelectableList from "@/components/hive-selectable-list/HiveSelectableList.vue";
-import commonProps from "@/common/mixins/common-props";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useComponent from "@/common/hooks/base/use-component";
+import HiveSelectableList from "@hive/components/hive-selectable-list/HiveSelectableList.vue";
+import commonProps from "@hive/common/mixins/common-props";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
+} from "@hive/common/hooks/base/use-event-handler";
 import useHiveInputTimeFilters, {
   type InputTimeFiltersConfig,
-} from "@/components/hive-popup-contents/hive-input-time-filters/hooks/use-hive-input-time-filters";
+} from "@hive/components/hive-popup-contents/hive-input-time-filters/hooks/use-hive-input-time-filters";
 
 export default defineComponent({
   name: "HiveInputTimeFilters",
@@ -137,7 +137,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/semantic.css";
+@import "@hive/assets/css/semantic.css";
 
 .time-picker__filters {
   display: flex;

@@ -1,9 +1,9 @@
-import type { ValueType } from "@/common/types";
+import type { ValueType } from "@hive/common/types";
 import type {
   ActiveValueType,
   CurrentValueType,
   FilteredOptionsType,
-} from "@/components/hive-multiselect/hooks/use-hive-multiselect";
+} from "@hive/components/hive-multiselect/hooks/use-hive-multiselect";
 import type { Ref } from "vue";
 
 interface DropDownListMultipleMethodsConfig {

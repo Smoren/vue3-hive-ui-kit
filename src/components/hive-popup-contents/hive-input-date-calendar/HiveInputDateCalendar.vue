@@ -84,16 +84,16 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import commonProps from "@/common/mixins/common-props";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useComponent from "@/common/hooks/base/use-component";
+import commonProps from "@hive/common/mixins/common-props";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
+} from "@hive/common/hooks/base/use-event-handler";
 import useHiveInputDateCalendar, {
   type InputDateCalendarConfig,
-} from "@/components/hive-popup-contents/hive-input-date-calendar/hooks/use-hive-input-date-calendar";
-import HiveSelectableList from "@/components/hive-selectable-list/HiveSelectableList.vue";
+} from "@hive/components/hive-popup-contents/hive-input-date-calendar/hooks/use-hive-input-date-calendar";
+import HiveSelectableList from "@hive/components/hive-selectable-list/HiveSelectableList.vue";
 
 export default defineComponent({
   name: "HiveInputDateCalendar",
@@ -215,8 +215,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/semantic.css";
-@import "@/assets/scss/abstracts/_variables";
+@import "@hive/assets/css/semantic.css";
+@import "@hive/assets/scss/abstracts/_variables";
 
 .date-picker__calendar {
   &-header {

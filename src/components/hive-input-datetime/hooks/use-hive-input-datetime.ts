@@ -1,7 +1,7 @@
 import { computed, ref, type Ref, type WritableComputedRef } from 'vue';
-import toDateString from '@/common/funcs/to-date-string';
-import toTimestamp from '@/common/funcs/to-timestamp';
-import uniteDateAndTimeTimestamps from '@/common/funcs/unite-date-and-time-timestamps';
+import toDateString from '@hive/common/funcs/to-date-string';
+import toTimestamp from '@hive/common/funcs/to-timestamp';
+import uniteDateAndTimeTimestamps from '@hive/common/funcs/unite-date-and-time-timestamps';
 
 type ModelValueType = string | number;
 

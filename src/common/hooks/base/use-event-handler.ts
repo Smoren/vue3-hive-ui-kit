@@ -2,7 +2,7 @@ import { isProxy, type Ref, toRaw, watch } from "vue";
 import type {
   ValueType,
   VueComponent,
-} from "@/common/types";
+} from "@hive/common/types";
 
 type EventHandler = (
   event: Event,

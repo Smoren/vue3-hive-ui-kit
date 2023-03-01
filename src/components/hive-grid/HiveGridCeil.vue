@@ -18,10 +18,10 @@
 
 <script lang="ts">
 import { computed, customRef, defineComponent, ref, watch } from 'vue';
-import useComponent from '@/common/hooks/base/use-component';
-import useEventHandler, { type EventConfig } from '@/common/hooks/base/use-event-handler';
-import useOnMount from '@/common/hooks/base/use-on-mount';
-import commonProps from '@/common/mixins/common-props';
+import useComponent from '@hive/common/hooks/base/use-component';
+import useEventHandler, { type EventConfig } from '@hive/common/hooks/base/use-event-handler';
+import useOnMount from '@hive/common/hooks/base/use-on-mount';
+import commonProps from '@hive/common/mixins/common-props';
 
 export default defineComponent({
   name: 'HiveGridCeil',

@@ -1,11 +1,11 @@
 import { type Ref, ref } from 'vue';
-import type { ValueType } from '@/common/types';
+import type { ValueType } from '@hive/common/types';
 import type {
   ActiveValueType,
   FilteredOptionsType,
   OptionType,
-} from '@/components/hive-multiselect/hooks/use-hive-multiselect';
-import type { DataContainerNode } from '@/common/hooks/base/use-data-container';
+} from '@hive/components/hive-multiselect/hooks/use-hive-multiselect';
+import type { DataContainerNode } from '@hive/common/hooks/base/use-data-container';
 
 interface DropDownListsCommonMethodsConfig {
   searchQuery: Ref<string>;
