@@ -1,5 +1,5 @@
 import { ref, type Ref } from 'vue';
-import type { ValueType, VueComponent } from '@/common/types';
+import type { ValueType, VueComponent } from '@hive/common/types';
 
 interface Refs {
   component: Ref<VueComponent | null>;

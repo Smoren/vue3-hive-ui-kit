@@ -1,12 +1,12 @@
 import { computed, type ComputedRef, ref, type Ref, watch } from 'vue';
-import type { ValueType } from '@/common/types';
+import type { ValueType } from '@hive/common/types';
 import useDataContainer, {
   type DataContainer,
   type DataContainerNode,
   createUnknownNode,
   UNKNOWN_KEY,
-} from '@/common/hooks/base/use-data-container';
-import useSearch from '@/common/hooks/base/use-search';
+} from '@hive/common/hooks/base/use-data-container';
+import useSearch from '@hive/common/hooks/base/use-search';
 
 type OptionType = string | number | Record<string, unknown>;
 type OptionsType = Array<OptionType> | Record<string, OptionType>;

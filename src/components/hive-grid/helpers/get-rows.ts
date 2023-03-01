@@ -1,7 +1,7 @@
 import type {
   ColumnWithChildren,
   ColumnWithoutChildren,
-} from '@/components/hive-grid/types';
+} from '@hive/components/hive-grid/types';
 
 export default function getRows(
   columns: ColumnWithoutChildren[] | ColumnWithChildren[]

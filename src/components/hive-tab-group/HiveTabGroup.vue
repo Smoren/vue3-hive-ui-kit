@@ -20,16 +20,16 @@
 
 <script lang="ts">
 import { defineComponent, toRefs, watch } from 'vue';
-import commonProps from '@/common/mixins/common-props';
-import useOnMount from '@/common/hooks/base/use-on-mount';
-import useComponent from '@/common/hooks/base/use-component';
+import commonProps from '@hive/common/mixins/common-props';
+import useOnMount from '@hive/common/hooks/base/use-on-mount';
+import useComponent from '@hive/common/hooks/base/use-component';
 import useEventHandler, {
   type EventConfig,
-} from '@/common/hooks/base/use-event-handler';
+} from '@hive/common/hooks/base/use-event-handler';
 import useHiveTabGroup, {
   type ModelValueType,
-} from '@/components/hive-tab-group/hooks/use-hive-tab-group';
-// import '@/components/assets/scss/semantic.scss';
+} from '@hive/components/hive-tab-group/hooks/use-hive-tab-group';
+// import '@hive/components/assets/scss/semantic.scss';
 
 export default defineComponent({
   name: 'HiveTabGroup',
@@ -79,7 +79,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/semantic.css';
+@import '@hive/assets/css/semantic.css';
 
 .tab-group__header {
   .item {

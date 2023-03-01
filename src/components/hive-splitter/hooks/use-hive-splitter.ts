@@ -1,14 +1,14 @@
-import type { VueComponent } from "@/common/types";
+import type { VueComponent } from "@hive/common/types";
 import { computed, nextTick, type Ref, ref, watch } from "vue";
-import getPaneIndex from "@/components/hive-splitter/hooks/helpers/get-pane-index";
-import type { EventHandler } from "@/common/hooks/base/use-event-handler";
-import useSplitterTouch from "@/components/hive-splitter/hooks/use-splitter-touch";
-import getFormattedSize from "@/components/hive-splitter/hooks/helpers/get-formatted-size";
+import getPaneIndex from "@hive/components/hive-splitter/hooks/helpers/get-pane-index";
+import type { EventHandler } from "@hive/common/hooks/base/use-event-handler";
+import useSplitterTouch from "@hive/components/hive-splitter/hooks/use-splitter-touch";
+import getFormattedSize from "@hive/components/hive-splitter/hooks/helpers/get-formatted-size";
 import type {
   Pane,
   onPaneUpdate,
   UpdateConfig,
-} from "@/components/hive-splitter/types";
+} from "@hive/components/hive-splitter/types";
 
 interface ChangedPane {
   addedPane?: Pane;

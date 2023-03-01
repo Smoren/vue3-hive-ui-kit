@@ -17,18 +17,18 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import commonProps from "@/common/mixins/common-props";
-import useComponent from "@/common/hooks/base/use-component";
+import commonProps from "@hive/common/mixins/common-props";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import getRows from "@/components/hive-grid/helpers/get-rows";
+} from "@hive/common/hooks/base/use-event-handler";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import getRows from "@hive/components/hive-grid/helpers/get-rows";
 import type {
   ColumnWithChildren,
   ColumnWithoutChildren,
-} from "@/components/hive-grid/types";
-import type { GridColumns } from "@/components/hive-grid/hooks/use-hive-grid";
+} from "@hive/components/hive-grid/types";
+import type { GridColumns } from "@hive/components/hive-grid/hooks/use-hive-grid";
 import HiveButton from "../hive-button/HiveButton.vue";
 
 export default defineComponent({

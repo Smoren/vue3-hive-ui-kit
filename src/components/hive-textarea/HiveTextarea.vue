@@ -21,12 +21,12 @@
 </template>
 
 <script lang="ts">
-import useComponent from "@/common/hooks/base/use-component";
-import useEventHandler from "@/common/hooks/base/use-event-handler";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import commonProps from "@/common/mixins/common-props";
+import useComponent from "@hive/common/hooks/base/use-component";
+import useEventHandler from "@hive/common/hooks/base/use-event-handler";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import commonProps from "@hive/common/mixins/common-props";
 import { defineComponent, ref } from "vue";
-import useAllowedRef from "@/common/hooks/base/use-allowed-ref";
+import useAllowedRef from "@hive/common/hooks/base/use-allowed-ref";
 
 export default defineComponent({
   name: "HiveTextarea",
@@ -90,5 +90,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/semantic.css";
+@import "@hive/assets/css/semantic.css";
 </style>

@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import commonProps from "@/common/mixins/common-props";
+import commonProps from "@hive/common/mixins/common-props";
 
 export default defineComponent({
   name: "HiveLoader",

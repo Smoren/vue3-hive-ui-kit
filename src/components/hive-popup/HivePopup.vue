@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import commonProps from '@/common/mixins/common-props';
-// import '@/components/assets/scss/semantic.scss';
+import commonProps from '@hive/common/mixins/common-props';
+// import '@hive/components/assets/scss/semantic.scss';
 
 export default defineComponent({
   name: 'HivePopup',
@@ -21,7 +21,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/semantic.css';
+@import '@hive/assets/css/semantic.css';
 
 .hive-popup {
   position: absolute;

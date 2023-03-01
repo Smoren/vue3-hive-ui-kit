@@ -22,13 +22,13 @@
 
 <script lang="ts">
 import { defineComponent, watch } from "vue";
-import commonProps from "@/common/mixins/common-props";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useComponent from "@/common/hooks/base/use-component";
+import commonProps from "@hive/common/mixins/common-props";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
-import useHivePicker from "@/components/hive-picker/hooks/use-hive-picker";
+} from "@hive/common/hooks/base/use-event-handler";
+import useHivePicker from "@hive/components/hive-picker/hooks/use-hive-picker";
 
 export default defineComponent({
   name: "HivePicker",
@@ -90,8 +90,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/semantic.css";
-@import "@/assets/scss/abstracts/_variables";
+@import "@hive/assets/css/semantic.css";
+@import "@hive/assets/scss/abstracts/_variables";
 
 .picker {
   position: relative;

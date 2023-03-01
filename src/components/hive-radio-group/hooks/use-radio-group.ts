@@ -1,8 +1,8 @@
 import { type ComputedRef, type Ref, ref } from "vue";
 import useDataContainer, {
   type DataContainer,
-} from "@/common/hooks/base/use-data-container";
-import type { ValueType } from "@/common/types";
+} from "@hive/common/hooks/base/use-data-container";
+import type { ValueType } from "@hive/common/types";
 
 type OptionType = string | number | Record<string, unknown>;
 type OptionsType = Array<OptionType> | Record<string, OptionType>;

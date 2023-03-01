@@ -3,7 +3,7 @@ import { onMounted, type Ref, watch } from "vue";
 import type {
   ValueType,
   VueComponent,
-} from "@/common/types";
+} from "@hive/common/types";
 
 interface PickerEventTriggeringConfig {
   pickerRef?: Ref<null | HTMLElement>;

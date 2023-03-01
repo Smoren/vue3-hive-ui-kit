@@ -8,9 +8,9 @@ import {
   getNextDays,
   getPrevDays,
   getYears,
-} from '@/components/hive-input-date/hooks/helpers';
-import toTimestamp from '@/common/funcs/to-timestamp';
-import resetTime from '@/common/funcs/reset-time';
+} from '@hive/components/hive-input-date/hooks/helpers';
+import toTimestamp from '@hive/common/funcs/to-timestamp';
+import resetTime from '@hive/common/funcs/reset-time';
 
 type Days = number[];
 

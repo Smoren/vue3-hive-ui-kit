@@ -1,6 +1,6 @@
 import { computed, type Ref, ref, watch, type WritableComputedRef } from 'vue';
-import toDateString from '@/common/funcs/to-date-string';
-import formatDateTimeModelValue from '@/common/funcs/format-date-time-model-value';
+import toDateString from '@hive/common/funcs/to-date-string';
+import formatDateTimeModelValue from '@hive/common/funcs/format-date-time-model-value';
 
 type ModelValueType = string | Array<number | string>;
 

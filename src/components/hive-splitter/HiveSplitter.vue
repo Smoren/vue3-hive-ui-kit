@@ -14,13 +14,13 @@
 
 <script lang="ts">
 import { defineComponent, provide } from "vue";
-import commonProps from "@/common/mixins/common-props";
-import useComponent from "@/common/hooks/base/use-component";
+import commonProps from "@hive/common/mixins/common-props";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   type EventConfig,
-} from "@/common/hooks/base/use-event-handler";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useHiveSplitter from "@/components/hive-splitter/hooks/use-hive-splitter";
+} from "@hive/common/hooks/base/use-event-handler";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useHiveSplitter from "@hive/components/hive-splitter/hooks/use-hive-splitter";
 
 export default defineComponent({
   name: "HiveSplitter",

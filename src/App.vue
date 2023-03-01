@@ -1,41 +1,41 @@
 <script lang="ts" setup>
-import HiveTextarea from "@/components/hive-textarea/HiveTextarea.vue";
-import HiveAutocomplete from "@/components/hive-autocomplete/HiveAutocomplete.vue";
-import HiveCheckboxGroup from "@/components/hive-checkbox-group/HiveCheckboxGroup.vue";
-import HiveComponent from "@/components/hive-component/HiveComponent.vue";
-import HiveDropDownList from "@/components/hive-drop-down-list/HiveDropDownList.vue";
-import HiveGrid from "@/components/hive-grid/HiveGrid.vue";
-import type { GridColumns } from "@/components/hive-grid/hooks/use-hive-grid";
-import HiveInputDate from "@/components/hive-input-date/HiveInputDate.vue";
-import HiveInputDateRange from "@/components/hive-input-date-range/HiveInputDateRange.vue";
-import HiveInputDateTime from "@/components/hive-input-datetime/HiveInputDateTime.vue";
-import HiveInputDateTimeRange from "@/components/hive-input-datetime-range/HiveInputDateTimeRange.vue";
-import HiveInputNumber from "@/components/hive-input-number/HiveInputNumber.vue";
-import HiveInputText from "@/components/hive-input-text/HiveInputText.vue";
-import HiveInputTime from "@/components/hive-input-time/HiveInputTime.vue";
-import HiveInputTimeRange from "@/components/hive-input-time-range/HiveInputTimeRange.vue";
-import HiveLoader from "@/components/hive-loader/HiveLoader.vue";
-import HiveMarquee from "@/components/hive-marquee/HiveMarquee.vue";
-import HiveModal from "@/components/hive-modal/HiveModal.vue";
-import HiveMultiAutocomplete from "@/components/hive-multiautocomplete/HiveMultiautocomplete.vue";
-import HiveMultiselect from "@/components/hive-multiselect/HiveMultiselect.vue";
-import HiveMultiselectableList from "@/components/hive-multiselectable-list/HiveMultiselectableList.vue";
-import HiveObservable from "@/components/hive-observable/HiveObservable.vue";
-import HivePicker from "@/components/hive-picker/HivePicker.vue";
-import HivePopup from "@/components/hive-popup/HivePopup.vue";
-import HiveRadioGroup from "@/components/hive-radio-group/HiveRadioGroup.vue";
-import HiveSelectableList from "@/components/hive-selectable-list/HiveSelectableList.vue";
-import HiveSplitter from "@/components/hive-splitter/HiveSplitter.vue";
-import HiveTabGroup from "@/components/hive-tab-group/HiveTabGroup.vue";
-import HiveTab from "@/components/hive-tab-group/HiveTab.vue";
-import HivePane from "@/components/hive-splitter/HivePane.vue";
-import WidgetItem from "@/WidgetItem.vue";
+import HiveTextarea from "@hive/components/hive-textarea/HiveTextarea.vue";
+import HiveAutocomplete from "@hive/components/hive-autocomplete/HiveAutocomplete.vue";
+import HiveCheckboxGroup from "@hive/components/hive-checkbox-group/HiveCheckboxGroup.vue";
+import HiveComponent from "@hive/components/hive-component/HiveComponent.vue";
+import HiveDropDownList from "@hive/components/hive-drop-down-list/HiveDropDownList.vue";
+import HiveGrid from "@hive/components/hive-grid/HiveGrid.vue";
+import type { GridColumns } from "@hive/components/hive-grid/hooks/use-hive-grid";
+import HiveInputDate from "@hive/components/hive-input-date/HiveInputDate.vue";
+import HiveInputDateRange from "@hive/components/hive-input-date-range/HiveInputDateRange.vue";
+import HiveInputDateTime from "@hive/components/hive-input-datetime/HiveInputDateTime.vue";
+import HiveInputDateTimeRange from "@hive/components/hive-input-datetime-range/HiveInputDateTimeRange.vue";
+import HiveInputNumber from "@hive/components/hive-input-number/HiveInputNumber.vue";
+import HiveInputText from "@hive/components/hive-input-text/HiveInputText.vue";
+import HiveInputTime from "@hive/components/hive-input-time/HiveInputTime.vue";
+import HiveInputTimeRange from "@hive/components/hive-input-time-range/HiveInputTimeRange.vue";
+import HiveLoader from "@hive/components/hive-loader/HiveLoader.vue";
+import HiveMarquee from "@hive/components/hive-marquee/HiveMarquee.vue";
+import HiveModal from "@hive/components/hive-modal/HiveModal.vue";
+import HiveMultiAutocomplete from "@hive/components/hive-multiautocomplete/HiveMultiautocomplete.vue";
+import HiveMultiselect from "@hive/components/hive-multiselect/HiveMultiselect.vue";
+import HiveMultiselectableList from "@hive/components/hive-multiselectable-list/HiveMultiselectableList.vue";
+import HiveObservable from "@hive/components/hive-observable/HiveObservable.vue";
+import HivePicker from "@hive/components/hive-picker/HivePicker.vue";
+import HivePopup from "@hive/components/hive-popup/HivePopup.vue";
+import HiveRadioGroup from "@hive/components/hive-radio-group/HiveRadioGroup.vue";
+import HiveSelectableList from "@hive/components/hive-selectable-list/HiveSelectableList.vue";
+import HiveSplitter from "@hive/components/hive-splitter/HiveSplitter.vue";
+import HiveTabGroup from "@hive/components/hive-tab-group/HiveTabGroup.vue";
+import HiveTab from "@hive/components/hive-tab-group/HiveTab.vue";
+import HivePane from "@hive/components/hive-splitter/HivePane.vue";
+import WidgetItem from "@hive/WidgetItem.vue";
 import { reactive, Ref, ref, watch, defineAsyncComponent } from "vue";
-import { EventData } from "@/common/hooks/base/use-event-handler";
-import HiveButton from "@/components/hive-button/HiveButton.vue";
+import { EventData } from "@hive/common/hooks/base/use-event-handler";
+import HiveButton from "@hive/components/hive-button/HiveButton.vue";
 import { v4 as uuidv4 } from "uuid";
-import HiveTreeView from "@/components/hive-tree-view/HiveTreeView.vue";
-import { TreeView } from "@/components/hive-tree-view/hive-tree-view-type";
+import HiveTreeView from "@hive/components/hive-tree-view/HiveTreeView.vue";
+import { TreeView } from "@hive/components/hive-tree-view/hive-tree-view-type";
 
 const isShown = ref(false);
 const textarea = ref("");
@@ -65,7 +65,7 @@ const logEvent = (event: EventData) => {
 };
 
 const hive = defineAsyncComponent({
-  loader: () => import("@/components/hive-grid/HiveGrid.vue"),
+  loader: () => import("@hive/components/hive-grid/HiveGrid.vue"),
   loadingComponent: HiveLoader,
   delay: 200,
 });

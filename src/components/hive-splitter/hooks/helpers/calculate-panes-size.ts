@@ -2,7 +2,7 @@ import type {
   CursorPosition,
   Pane,
   TouchSplitter,
-} from '@/components/hive-splitter/types';
+} from '@hive/components/hive-splitter/types';
 import type { ComputedRef, Ref } from 'vue';
 
 interface CalculatePanesSizeConfig {

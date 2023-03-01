@@ -1,5 +1,5 @@
 import type { Ref } from "vue";
-import type { ValueType } from "@/common/types";
+import type { ValueType } from "@hive/common/types";
 
 export default function scrollIntoView(
   parent: Ref<null> | Ref<Record<string, any>>,

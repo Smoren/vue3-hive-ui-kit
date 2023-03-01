@@ -14,12 +14,12 @@
 import { defineComponent, type PropType, reactive, ref } from "vue";
 import type { TreeView } from "./hive-tree-view-type";
 import HiveTreeViewNode from "./HiveTreeViewNode.vue";
-import useOnMount from "@/common/hooks/base/use-on-mount";
-import useComponent from "@/common/hooks/base/use-component";
+import useOnMount from "@hive/common/hooks/base/use-on-mount";
+import useComponent from "@hive/common/hooks/base/use-component";
 import useEventHandler, {
   EventData,
-} from "@/common/hooks/base/use-event-handler";
-import commonProps from "@/common/mixins/common-props";
+} from "@hive/common/hooks/base/use-event-handler";
+import commonProps from "@hive/common/mixins/common-props";
 
 export default defineComponent({
   name: "HiveTreeView",

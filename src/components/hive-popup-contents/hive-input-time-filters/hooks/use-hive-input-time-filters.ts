@@ -1,6 +1,6 @@
 import { computed, type ComputedRef, ref, type Ref, watch } from "vue";
-import getTimeValues from "@/components/hive-input-time/hooks/helpers";
-import toTimestamp from "@/common/funcs/to-timestamp";
+import getTimeValues from "@hive/components/hive-input-time/hooks/helpers";
+import toTimestamp from "@hive/common/funcs/to-timestamp";
 
 interface InputTimeFiltersConfig {
   modelValue: string | number;

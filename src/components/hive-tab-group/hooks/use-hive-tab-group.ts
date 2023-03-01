@@ -10,7 +10,7 @@ import {
 import type {
   Tab,
   TabsProvider,
-} from "@/components/hive-tab-group/types";
+} from "@hive/components/hive-tab-group/types";
 
 type ModelValueType = string;
 
