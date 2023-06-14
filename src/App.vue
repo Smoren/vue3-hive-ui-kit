@@ -3,8 +3,8 @@ import HiveButton from './components/hive-button/hive-button.vue';
 </script>
 
 <template>
-  <hive-button disabled />
-  <hive-button />
+  <hive-button disabled text="Button" />
+  <hive-button text="Button" />
 </template>
 
 <style scoped></style>

@@ -14,7 +14,10 @@ withDefaults(defineProps<Props>(), {
   disabled: false,
 });
 
-const emit = defineEmits(['clickLeft', 'clickRight']);
+const emit = defineEmits<{
+  (e: 'clickLeft'): void;
+  (e: 'clickRight'): void;
+}>();
 
 const leftClick = () => {
   emit('clickLeft');
