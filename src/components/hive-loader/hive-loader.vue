@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CommonProps } from '../../common/mixin/props';
+import { CommonProps } from '@/common/mixin/props';
 
 interface Props extends CommonProps {
   isVisible?: boolean;
