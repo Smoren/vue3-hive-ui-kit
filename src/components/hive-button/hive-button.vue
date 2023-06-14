@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { StyleValue } from 'vue';
-import { CommonProps } from '../../common/mixin/props';
+import { CommonProps } from '@/common/mixin/props';
 
 interface Props extends CommonProps {
   text?: string;
@@ -10,7 +10,7 @@ interface Props extends CommonProps {
 }
 
 withDefaults(defineProps<Props>(), {
-  text: '',
+  text: 'Button',
   disabled: false,
 });
 
@@ -36,7 +36,6 @@ const rightClick = () => {
     <button class="button" :class="buttonClasses" :style="buttonStyle" :disabled="disabled">
       <slot name="before" />
       <span class="button__text">{{ text }}</span>
-      <!-- <span class="button__text">{{ text }}</span> -->
       <slot name="after" />
     </button>
   </div>
