@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
+import useModelValue from '@/common/hooks/use-model-value';
 
 interface Props extends CommonProps {
   modelValue: string;
@@ -20,14 +21,13 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'placeholder',
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void;
+}>();
 
 const currentValue = ref(props.modelValue);
 
-const handleEvent = (event: Event) => {
-  currentValue.value = (event.target as HTMLInputElement).value;
-  emit('update:modelValue', currentValue.value);
-};
+useModelValue(currentValue, emit);
 </script>
 
 <template>
@@ -35,28 +35,12 @@ const handleEvent = (event: Event) => {
     <div class="field">
       <label :for="id">{{ label }}</label>
       <textarea
-        :value="modelValue"
+        v-model="currentValue"
         :id="id"
-        :placeholder="Введите текст..."
+        :placeholder="placeholder"
         :rows="rowsCount"
         :class="[{ resizable: resizable }, resizeDirection ?? '']"
-        @input="handleEvent"
       />
-      <!-- <textarea
-        :id="id"
-        :value="currentValue"
-        @keydown="onKeyDown"
-        @input="
-          currentValue = ($event.target as HTMLInputElement).value;
-          handleEvent($event);
-        "
-        :rows="rowsCount"
-        :placeholder="placeholder"
-        @change="handleEvent"
-        @focus="handleEvent"
-        @focusout="handleEvent"
-        :style="textAreaStyle"
-      /> -->
     </div>
   </div>
 </template>
