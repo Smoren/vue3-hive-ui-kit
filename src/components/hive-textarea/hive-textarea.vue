@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import useModelValue from '@/common/hooks/use-model-value';
+import {useModelValue} from '@/common/hooks/use-model-value';
 
 interface Props extends CommonProps {
   modelValue: string;
