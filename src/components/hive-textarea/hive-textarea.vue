@@ -37,7 +37,7 @@ const handleEvent = (event: Event) => {
       <textarea
         :value="modelValue"
         :id="id"
-        :placeholder="Введите текс..."
+        :placeholder="Введите текст..."
         :rows="rowsCount"
         :class="[{ resizable: resizable }, resizeDirection ?? '']"
         @input="handleEvent"
