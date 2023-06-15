@@ -3,7 +3,7 @@ import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 
 interface Props extends CommonProps {
-  text?: string;
+  title?: string;
   buttonClasses?: StyleValue[] | StyleValue;
   buttonStyle?: StyleValue;
   disabled?: boolean;
@@ -38,7 +38,9 @@ const rightClick = () => {
   >
     <button class="button" :class="buttonClasses" :style="buttonStyle" :disabled="disabled">
       <slot name="before" />
-      <span class="button__text">{{ text }}</span>
+      <slot>
+        <span class="button__text">{{ title }}</span>
+      </slot>
       <slot name="after" />
     </button>
   </div>
