@@ -27,6 +27,8 @@ interface Props extends CommonProps {
   minValue?: number;
 }
 
+type Mask = String | Number | Date | ((value: string) => boolean);
+
 const props = withDefaults(defineProps<Props>(), {
   modelValueEventName: 'input',
   type: 'text',
