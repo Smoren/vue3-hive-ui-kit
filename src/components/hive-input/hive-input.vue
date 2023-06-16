@@ -1,39 +1,81 @@
 <script lang="ts" setup>
+import { emitFocusin, emitFocusout, emitKeydown } from '@/common/emits/emits';
+import { useModelValue } from '@/common/hooks/use-model-value';
 import { CommonProps } from '@/common/mixin/props';
+import { Ref, ref } from 'vue';
+
+type IMaskValue = string | number | Date | RegExp | ((value: string) => boolean);
+
+interface IMask {
+  mask: IMaskValue | IMaskValue[];
+  lazy?: boolean;
+  min?: number;
+  max?: number;
+}
 
 interface Props extends CommonProps {
   modelValue: string;
   modelValueEventName?: string;
-  placeholder?: string;
-  isInvalid?: boolean;
-  type: string;
-  mask?: {
-    mask: Mask | Mask[]
-    lazy?: boolean;
-    min?: number;
-    max?: number;
-  };
+  placeholder: string;
+  isInvalid: boolean;
+  type: 'number' | 'text';
+  isInteger: boolean;
+  mask?: IMaskValue;
+  minValue?: number;
 }
 
-type Mask = String | Number | Date | ((value: string) => boolean);
-
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   modelValueEventName: 'input',
-  placeholder: 'placeholder',
+  type: 'text',
+  placeholder: 'input',
   isInvalid: false,
+  isInteger: false,
 });
 
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void;
+  (e: 'focusout'): void;
+  (e: 'focusin'): void;
+  (e: 'keydown'): void;
+}>();
+
+const currentValue = ref(props.modelValue);
+
+useModelValue(currentValue, emit);
+
+const input: Ref<HTMLInputElement | null> = ref(null);
+
+const forceFocus = () => {
+  if (input.value !== null) {
+    input.value.focus();
+  }
+};
+
+let generatedMask: IMask | undefined;
+
+if (props.mask) {
+  generatedMask = {
+    mask: props.mask,
+    lazy: true,
+  };
+}
 </script>
 
 <template>
   <div v-bind="attrs" :style="style" class="ui input">
     <input
-      :type="type"
-      :class="{ error: isInvalid, ...classes }"
-      :placeholder="placeholder"
-      class="hive-input"
       ref="input"
-      v-mask="mask"
+      v-model="currentValue"
+      v-mask="generatedMask"
+      class="hive-input"
+      :class="{ error: isInvalid, ...classes }"
+      :type="type"
+      :placeholder="placeholder"
+      :step="isInteger ? '1' : '0.01'"
+      :min="minValue"
+      @focusin="emitFocusin(emit)"
+      @focusout="emitFocusout(emit)"
+      @keydown="emitKeydown(emit)"
     />
   </div>
 </template>
