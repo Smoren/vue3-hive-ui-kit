@@ -1,6 +1,10 @@
 <script lang="ts" setup>
-import { emitFocusin, emitFocusout, emitKeydown } from '@/common/emits/emits';
-import { useModelValue } from '@/common/hooks/use-model-value';
+import { focusout } from '@/common/emits/emits';
+import { keydown } from '@/common/emits/emits';
+import { focusin } from '@/common/emits/emits';
+import { emitFocusin, emitFocusout, emitKeydown, mount, unmount } from '@/common/emits/emits';
+import { update, useModelValue } from '@/common/hooks/use-model-value';
+import { useOnMount } from '@/common/hooks/use-mount';
 import { CommonProps } from '@/common/mixin/props';
 import { Ref, ref } from 'vue';
 
@@ -32,12 +36,11 @@ const props = withDefaults(defineProps<Props>(), {
   isInteger: false,
 });
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
-  (e: 'focusout'): void;
-  (e: 'focusin'): void;
-  (e: 'keydown'): void;
-}>();
+type emitType = mount & unmount & update<string> & focusin & focusout & keydown;
+
+const emit = defineEmits<emitType>();
+
+useOnMount(emit);
 
 const currentValue = ref(props.modelValue);
 
