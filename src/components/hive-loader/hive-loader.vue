@@ -1,19 +1,21 @@
 <script lang="ts" setup>
+import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 
-interface Props extends CommonProps {
-  isVisible?: boolean;
+export interface HiveLoaderProps extends CommonProps {
+  visible?: boolean;
+  style?: StyleValue;
 }
 
-withDefaults(defineProps<Props>(), {
-  isVisible: false,
+withDefaults(defineProps<HiveLoaderProps>(), {
+  visible: false,
 });
 </script>
 
 <template>
-  <div v-if="isVisible" class="loader__window" :style="style">
+  <div v-if="visible" class="loader__window" :style="style">
     <div class="loader__wrapper">
-      <div :class="{ loader: isVisible }">
+      <div :class="{ loader: visible }">
         <span class="loader__size" />
         <span class="loader__size" />
         <span class="loader__size" />

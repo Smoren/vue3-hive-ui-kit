@@ -1,24 +1,21 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import {useModelValue} from '@/common/hooks/use-model-value';
+import { useModelValue } from '@/common/hooks/use-model-value';
 
-interface Props extends CommonProps {
+export interface HiveTextariaProps extends CommonProps {
   modelValue: string;
-  modelValueEventName?: string;
-  label?: string;
-  rowsCount?: number;
   placeholder?: string;
+  rowsCount?: number;
   resizable?: boolean;
   resizeDirection?: 'both' | 'vertical' | 'horizontal';
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<HiveTextariaProps>(), {
   modelValue: '',
-  modelValueEventName: 'input',
-  label: '',
+  placeholder: 'Введите текст...',
   resizable: true,
-  placeholder: 'placeholder',
+  resizeDirection: 'both',
 });
 
 const emit = defineEmits<{
@@ -31,52 +28,38 @@ useModelValue(currentValue, emit);
 </script>
 
 <template>
-  <div v-bind="attrs" :class="classes" :style="style" class="ui form">
-    <div class="field">
-      <label :for="id">{{ label }}</label>
-      <textarea
-        v-model="currentValue"
-        :id="id"
-        :placeholder="placeholder"
-        :rows="rowsCount"
-        :class="[{ resizable: resizable }, resizeDirection ?? '']"
-      />
-    </div>
-  </div>
+  <textarea
+    class="hive-textaria"
+    :class="[{ resizable: resizable }, resizeDirection]"
+    v-model="currentValue"
+    :placeholder="placeholder"
+    :rows="rowsCount"
+  />
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 $bg-color: #ffffff;
 $bg-hover: #d3eafff5;
 $text-color: rgba(0, 0, 0, 0.87);
-$border-color: rgba(34, 36, 38, 0.15);
+$border-color: #bfbfbf; // rgba(34, 36, 38, 0.15);
 $border-radius: 5px;
-$border-color-focus: #85b7d9;
+$border-color-focus: #b2d6f8; // #85b7d9;
 $box-shadow-focus: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
+$border-focus: #b2d6f8;
 
-.field {
-  height: 100%;
-  width: 100%;
-}
-
-textarea {
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: $border-color;
-  -webkit-box-shadow: 0 0 0 0 transparent inset;
-  -webkit-transition: color 0.1s ease, border-color 0.1s ease;
-  padding: 0.5rem 1rem;
-  margin: 0;
-  outline: none;
-  border: 1px solid $border-color;
+.hive-textaria {
+  border: 1px solid transparent;
   border-radius: $border-radius;
-  box-shadow: 0 0 0 0 transparent inset;
-  font-size: 1rem;
-  line-height: 1.2rem;
-  background: $bg-color;
+  padding: 0.5rem 1rem;
+  transition: background 0.2s;
+  border-color: $border-color;
+  background-color: $bg-color;
   color: $text-color;
   resize: none;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   transition: color 0.1s ease, border-color 0.1s ease;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  // widthnpm: 100%;
 
   &.resizable {
     resize: vertical;
@@ -91,10 +74,9 @@ textarea {
     }
   }
 
-  &:focus {
-    border-color: $border-color-focus;
-    -webkit-box-shadow: $box-shadow-focus;
-    box-shadow: $box-shadow-focus;
+  &:focus,
+  focus-visible {
+    outline: 1px auto $border-focus;
   }
 }
 </style>

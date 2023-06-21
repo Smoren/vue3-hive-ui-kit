@@ -1,16 +1,26 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path';
-import { fileURLToPath, URL } from 'node:url';
+import path from 'path';
 
-// https://vitejs.dev/config/
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
+
 export default defineConfig({
-  build: {
-    lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'VueHive',
-      fileName: (format) => `vue-hive.${format}.js`,
+  plugins: [vue(), cssInjectedByJsPlugin()],
+  resolve: {
+    alias: {
+      '@/': new URL('./src/', import.meta.url).pathname,
     },
+  },
+
+  build: {
+    cssCodeSplit: true,
+    target: 'esnext',
+    lib: {
+      entry: path.resolve(__dirname, 'src/index.ts'),
+      name: 'VueHiveTestLibrary',
+      fileName: (format) => `vue-hive-test-library.${format}.js`,
+    },
+
     rollupOptions: {
       external: ['vue'],
       output: {
@@ -18,12 +28,6 @@ export default defineConfig({
           vue: 'Vue',
         },
       },
-    },
-  },
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 });

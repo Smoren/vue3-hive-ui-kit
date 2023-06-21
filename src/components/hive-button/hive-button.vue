@@ -2,15 +2,14 @@
 import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 
-interface Props extends CommonProps {
+export interface HiveButtonProps extends CommonProps {
   title?: string;
-  buttonClasses?: StyleValue[] | StyleValue;
-  buttonStyle?: StyleValue;
   disabled?: boolean;
+  style?: StyleValue;
 }
 
-withDefaults(defineProps<Props>(), {
-  text: 'Button',
+withDefaults(defineProps<HiveButtonProps>(), {
+  title: 'Button',
   disabled: false,
 });
 
@@ -19,31 +18,30 @@ const emit = defineEmits<{
   (e: 'clickRight'): void;
 }>();
 
-const leftClick = () => {
+const onClickLeft = () => {
   emit('clickLeft');
 };
 
-const rightClick = () => {
+const onClickRight = () => {
   emit('clickRight');
 };
 </script>
 
 <template>
-  <div
-    class="button__wrapper"
-    :class="{ disabled: disabled, ...classes }"
+  <button
+    class="button"
+    :class="{ disabled: disabled }"
+    :disabled="disabled"
+    @click="onClickLeft"
+    @click.right.prevent="onClickRight"
     :style="style"
-    @click="leftClick"
-    @click.right.prevent="rightClick"
   >
-    <button class="button" :class="buttonClasses" :style="buttonStyle" :disabled="disabled">
-      <slot name="before" />
-      <slot>
-        <span class="button__text">{{ title }}</span>
-      </slot>
-      <slot name="after" />
-    </button>
-  </div>
+    <slot name="before" />
+    <slot>
+      {{ title }}
+    </slot>
+    <slot name="after" />
+  </button>
 </template>
 
 <style lang="scss" scoped>
@@ -53,69 +51,39 @@ $text-color: #3f3f3f;
 $border-color: #bfbfbf;
 $border-color-disabled: #bfbfbf7c;
 $border-radius: 5px;
+$border-width: 1px;
+$border-focus: #b2d6f8;
 
 .button {
-  user-select: none;
-  border: none;
-  text-rendering: auto;
-  color: initial;
-  display: inline-block;
-  text-align: start;
-  margin: 0;
-  font-size: 1rem;
-  background-color: $bg-color;
-  color: $text-color;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  height: 100%;
-  background: none;
+  cursor: pointer;
   width: 100%;
-  text-align: center;
-  display: flex;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  text-rendering: auto;
+  padding: 0.5rem 1rem;
+  transition: background 0.2s;
+  border-color: $border-color;
+  background-color: $bg-color;
+  font-size: 1rem;
+  color: $text-color;
 
   &:hover {
-    cursor: pointer;
+    background: $bg-hover;
   }
 
-  &__wrapper {
-    border-style: solid;
-    border-radius: $border-radius;
-    border-width: 1px;
-    padding: 0.5rem 1rem;
-    transition: background 0.2s;
-    max-height: 100%;
-    border-color: $border-color;
-    background-color: $bg-color;
+  &:focus,
+  focus-visible {
+    outline: 1px auto $border-focus;
+  }
+
+  &.disabled {
+    border-color: $border-color-disabled;
+    opacity: 0.4;
+    pointer-events: none;
 
     &:hover {
-      cursor: pointer;
-      background: $bg-hover;
+      background: $bg-color;
     }
-
-    &.disabled {
-      border-color: $border-color-disabled;
-      opacity: 0.4;
-      pointer-events: none;
-
-      .button {
-        &:hover {
-          cursor: auto;
-        }
-      }
-
-      &:hover {
-        background: $bg-color;
-        cursor: auto;
-      }
-    }
-  }
-
-  &__text {
-    text-align: center;
-    flex-grow: 100;
   }
 }
 </style>
