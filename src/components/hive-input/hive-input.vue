@@ -1,29 +1,28 @@
 <script lang="ts" setup>
-import { focusout } from '@/common/emits/emits';
-import { keydown } from '@/common/emits/emits';
-import { focusin } from '@/common/emits/emits';
-import { emitFocusin, emitFocusout, emitKeydown, mount, unmount } from '@/common/emits/emits';
-import { update, useModelValue } from '@/common/hooks/use-model-value';
+import {
+  focusout,
+  keydown,
+  focusin,
+  emitFocusin,
+  emitFocusout,
+  emitKeydown,
+  mount,
+  unmount,
+  update,
+} from '@/common/emits/emits';
+import { useModelValue } from '@/common/hooks/use-model-value';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { CommonProps } from '@/common/mixin/props';
-import { Ref, ref } from 'vue';
-
-type IMaskValue = string | number | Date | RegExp | ((value: string) => boolean);
-
-interface IMask {
-  mask: IMaskValue | IMaskValue[];
-  lazy?: boolean;
-  min?: number;
-  max?: number;
-}
+import { Ref, reactive, ref, watch } from 'vue';
+import { IMaskValue, IMask } from '@/common/types/mask';
 
 interface Props extends CommonProps {
-  modelValue: string;
+  modelValue: string | number;
   modelValueEventName?: string;
-  placeholder: string;
-  isInvalid: boolean;
-  type: 'number' | 'text';
-  isInteger: boolean;
+  placeholder?: string;
+  invalid?: boolean;
+  type?: 'number' | 'text';
+  integer?: boolean;
   mask?: IMaskValue;
   minValue?: number;
 }
@@ -32,11 +31,11 @@ const props = withDefaults(defineProps<Props>(), {
   modelValueEventName: 'input',
   type: 'text',
   placeholder: 'input',
-  isInvalid: false,
-  isInteger: false,
+  invalid: false,
+  integer: false,
 });
 
-type emitType = mount & unmount & update<string> & focusin & focusout & keydown;
+type emitType = mount & unmount & update<string | number> & focusin & focusout & keydown;
 
 const emit = defineEmits<emitType>();
 
@@ -44,7 +43,7 @@ useOnMount(emit);
 
 const currentValue = ref(props.modelValue);
 
-useModelValue(currentValue, emit);
+useModelValue<string | number>(currentValue, emit);
 
 const input: Ref<HTMLInputElement | null> = ref(null);
 
@@ -54,33 +53,36 @@ const forceFocus = () => {
   }
 };
 
-let generatedMask: IMask | undefined;
+const generatedMask: IMask = reactive({
+  mask: props.mask ?? '',
+  lazy: true,
+});
 
-if (props.mask) {
-  generatedMask = {
-    mask: props.mask,
-    lazy: true,
-  };
+export interface InputExpose {
+  input: HTMLInputElement | null;
 }
+
+defineExpose({ input });
 </script>
 
 <template>
-  <div v-bind="attrs" :style="style" class="ui input">
-    <input
-      ref="input"
-      v-model="currentValue"
-      v-mask="generatedMask"
-      class="hive-input"
-      :class="{ error: isInvalid, ...classes }"
-      :type="type"
-      :placeholder="placeholder"
-      :step="isInteger ? '1' : '0.01'"
-      :min="minValue"
-      @focusin="emitFocusin(emit)"
-      @focusout="emitFocusout(emit)"
-      @keydown="emitKeydown(emit)"
-    />
-  </div>
+  <input
+    ref="input"
+    :value="modelValue"
+    @input="emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
+    v-mask="mask ? generatedMask : ''"
+    v-bind="attrs"
+    :style="style"
+    class="hive-input"
+    :class="{ error: invalid, ...classes }"
+    :type="type"
+    :placeholder="placeholder"
+    :step="integer ? '1' : '0.01'"
+    :min="minValue"
+    @focusin="emitFocusin(emit)"
+    @focusout="emitFocusout(emit)"
+    @keydown="emitKeydown(emit, $event)"
+  />
 </template>
 
 <style scoped lang="scss">
@@ -111,6 +113,7 @@ $text-color-error: #9f3a38;
   border-radius: $border-radius;
   transition: box-shadow 0.1s ease, border-color 0.1s ease;
   box-shadow: none;
+  box-sizing: border-box;
 
   &:focus {
     border-color: $border-color-focus;

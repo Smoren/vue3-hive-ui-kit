@@ -24,10 +24,10 @@ export const emitFocusin = (emit: focusin) => {
   emit('focusin');
 };
 
-export type keydown = (e: 'keydown') => void;
+export type keydown = (e: 'keydown', event: KeyboardEvent) => void;
 
-export const emitKeydown = (emit: keydown) => {
-  emit('keydown');
+export const emitKeydown = (emit: keydown, event: KeyboardEvent) => {
+  emit('keydown', event);
 };
 
 export type update<T> = (e: 'update:modelValue', value: T) => void;
