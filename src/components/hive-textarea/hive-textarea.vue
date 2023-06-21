@@ -54,6 +54,8 @@ useModelValue(currentValue, emit);
   transition: color 0.1s ease, border-color 0.1s ease;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 1rem;
+  box-sizing: border-box;
+  max-width: 100%;
 
   &.resizable {
     resize: vertical;

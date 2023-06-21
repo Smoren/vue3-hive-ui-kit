@@ -49,6 +49,21 @@ const optionsObject = [
     title: 'title6',
     value: 'value6',
   },
+  {
+    key: 'key7',
+    title: 'title7',
+    value: 'value7',
+  },
+  {
+    key: 'key8',
+    title: 'title8',
+    value: 'value8',
+  },
+  {
+    key: 'key9',
+    title: 'title9',
+    value: 'value9',
+  },
 ];
 </script>
 
