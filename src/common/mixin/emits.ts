@@ -1,38 +1,38 @@
 import { Ref } from 'vue';
 
-export type mount = (e: 'mount') => void;
+export type Mount = (e: 'mount') => void;
 
-export const emitMount = (emit: mount) => {
+export const onMount = (emit: Mount) => {
   emit('mount');
 };
 
-export type unmount = (e: 'unmount') => void;
+export type Unmount = (e: 'unmount') => void;
 
-export const emitUnmount = (emit: unmount) => {
+export const onUnmount = (emit: Unmount) => {
   emit('unmount');
 };
 
-export type focusout = (e: 'focusout') => void;
+export type Focusout = (e: 'focusout') => void;
 
-export const emitFocusout = (emit: focusout) => {
+export const onFocusout = (emit: Focusout) => {
   emit('focusout');
 };
 
-export type focusin = (e: 'focusin') => void;
+export type Focusin = (e: 'focusin') => void;
 
-export const emitFocusin = (emit: focusin) => {
+export const onFocusin = (emit: Focusin) => {
   emit('focusin');
 };
 
-export type keydown = (e: 'keydown', event: KeyboardEvent) => void;
+export type Keydown = (e: 'keydown', event: KeyboardEvent) => void;
 
-export const emitKeydown = (emit: keydown, event: KeyboardEvent) => {
+export const onKeydown = (emit: Keydown, event: KeyboardEvent) => {
   emit('keydown', event);
 };
 
-export type update<T> = (e: 'update:modelValue', value: T) => void;
+export type Update<T> = (e: 'update:modelValue', value: T) => void;
 
-export const emitUpdateModelValue = <T>(emit: update<T>, value: Ref<T>) => {
+export const OnUpdateModelValue = <T>(emit: Update<T>, value: Ref<T>) => {
   emit('update:modelValue', value.value);
 };
 

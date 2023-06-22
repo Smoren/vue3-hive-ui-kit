@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 import {
-  focusout,
-  keydown,
-  focusin,
-  emitFocusin,
-  emitFocusout,
-  emitKeydown,
-  mount,
-  unmount,
-  update,
+  Focusout,
+  Keydown,
+  Focusin,
+  onFocusin,
+  onFocusout,
+  onKeydown,
+  Mount,
+  Unmount,
+  Update,
 } from '@/common/mixin/emits';
 import { useModelValue } from '@/common/hooks/use-model-value';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { CommonProps } from '@/common/mixin/props';
 import { Ref, reactive, ref, watch } from 'vue';
-import { IMaskValue, IMask } from '@/common/types/mask';
+import { MaskValue, Mask } from '@/common/types/mask';
 
 interface Props extends CommonProps {
   modelValue: string | number;
@@ -23,7 +23,7 @@ interface Props extends CommonProps {
   invalid?: boolean;
   type?: 'number' | 'text';
   integer?: boolean;
-  mask?: IMaskValue;
+  mask?: MaskValue;
   minValue?: number;
 }
 
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
   integer: false,
 });
 
-type emitType = mount & unmount & update<string | number> & focusin & focusout & keydown;
+type emitType = Mount & Unmount & Update<string | number> & Focusin & Focusout & Keydown;
 
 const emit = defineEmits<emitType>();
 
@@ -55,7 +55,7 @@ const forceFocus = () => {
   }
 };
 
-const generatedMask: IMask = reactive({
+const generatedMask: Mask = reactive({
   mask: props.mask ?? '',
   lazy: true,
 });
@@ -81,9 +81,9 @@ defineExpose({ input });
     :placeholder="placeholder"
     :step="integer ? '1' : '0.01'"
     :min="minValue"
-    @focusin="emitFocusin(emit)"
-    @focusout="emitFocusout(emit)"
-    @keydown="emitKeydown(emit, $event)"
+    @focusin="onFocusin(emit)"
+    @focusout="onFocusout(emit)"
+    @keydown="onKeydown(emit, $event)"
   />
 </template>
 

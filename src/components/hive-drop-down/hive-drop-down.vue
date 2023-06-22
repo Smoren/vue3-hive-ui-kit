@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { CommonProps } from '@/common/mixin/props';
-import { IMaskValue } from '@/common/types/mask';
+import { MaskValue } from '@/common/types/mask';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { focusout, keydown, focusin, mount, unmount, update } from '@/common/mixin/emits';
+import { Focusout, Keydown, Focusin, Mount, Unmount, Update } from '@/common/mixin/emits';
 import { onMounted, ref, watch } from 'vue';
 import useHiveDropDownList, { DropDownListConfig } from '@/components/hive-drop-down/hooks/use-hive-drop-down-list';
 import useHiveDropDownListMethods from '@/components/hive-drop-down/hooks/use-hive-drop-down-list-methods';
@@ -21,7 +21,7 @@ interface Props extends CommonProps {
   invalid?: boolean;
   type?: 'number' | 'text';
   integer?: boolean;
-  mask?: IMaskValue;
+  mask?: MaskValue;
   minValue?: number;
   keyField?: string;
   valueField?: string;
@@ -49,7 +49,7 @@ const props = withDefaults(defineProps<Props>(), {
   titleField: 'title',
 });
 
-type emitType = mount & unmount & update<string | number> & focusin & focusout & keydown;
+type emitType = Mount & Unmount & Update<string | number> & Focusin & Focusout & Keydown;
 
 const emit = defineEmits<emitType>();
 
