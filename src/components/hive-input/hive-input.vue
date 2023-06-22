@@ -9,7 +9,7 @@ import {
   mount,
   unmount,
   update,
-} from '@/common/emits/emits';
+} from '@/common/mixin/emits';
 import { useModelValue } from '@/common/hooks/use-model-value';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { CommonProps } from '@/common/mixin/props';

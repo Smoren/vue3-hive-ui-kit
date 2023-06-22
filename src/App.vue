@@ -75,9 +75,15 @@ const optionsObject = [
       <!-- Button -->
       <widget-wrapper title="Button">
         <hive-button>
+          <template #before>
+            Before
+          </template>
           <img src="@/assets/search.svg" alt="image after" class="img" />
           Click
           <img src="@/assets/search.svg" alt="image before" class="img" />
+          <template #after>
+            After
+          </template>
         </hive-button>
         <hive-button disabled />
         <hive-button />
