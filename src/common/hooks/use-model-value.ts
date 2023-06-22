@@ -1,4 +1,5 @@
 import { watch, Ref } from 'vue';
+import { Update } from '../mixin/emits';
 
 export const useModelValue = <T>(value: Ref<T>, emit: Update<T>) => {
   watch(value, () => {
@@ -6,4 +7,3 @@ export const useModelValue = <T>(value: Ref<T>, emit: Update<T>) => {
   });
 };
 
-export type Update<T> = (e: 'update:modelValue', value: T) => void;
