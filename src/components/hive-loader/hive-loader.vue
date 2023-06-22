@@ -26,10 +26,10 @@ withDefaults(defineProps<HiveLoaderProps>(), {
 </template>
 
 <style lang="scss" scoped>
-$bg-spinner: #b0ddffe5;
-$bg-window: rgba(38, 45, 52, 0.68);
-$span-size: 15px;
-$z-index: 1001;
+$loader-spinner: #b0ddffe5;
+$loader-window: rgba(38, 45, 52, 0.68);
+$loader-span-size: 15px;
+$loader-z: 1001;
 
 .hive-loader {
   &__window {
@@ -39,8 +39,8 @@ $z-index: 1001;
     right: 0;
     bottom: 0;
     margin: auto;
-    background-color: $bg-window;
-    z-index: $z-index;
+    background-color: var(--loader-window, $loader-window);
+    z-index: var(--loader-z, $loader-z);
     animation: view 1s infinite ease-in-out;
   }
 
@@ -51,22 +51,22 @@ $z-index: 1001;
     right: 0;
     bottom: 0;
     margin: auto;
-    z-index: $z-index;
-    height: $span-size * 5.5;
-    width: $span-size * 5.5;
+    z-index: var(--loader-z, $loader-z);
+    height: var(--loader-span-size, $loader-span-size * 5.5);
+    width: var(--loader-span-size, $loader-span-size * 5.5);
 
     .loader {
-      margin-top: $span-size * 2.7;
-      margin-left: $span-size * 2.7;
-      width: $span-size * 3;
-      height: $span-size * 5;
+      margin-top: var(--loader-span-size, $loader-span-size * 2.7);
+      margin-left: var(--loader-span-size, $loader-span-size * 2.7);
+      width: var(--loader-span-size, $loader-span-size * 3);
+      height: var(--loader-span-size, $loader-span-size * 5);
       transform: translate(-50%, -50%) rotate(45deg) translate3d(0, 0, 0);
       animation: loader 1.2s infinite ease-in-out;
 
       span {
         position: absolute;
         display: block;
-        background-color: $bg-spinner;
+        background-color: var(--loader-spinner, $loader-spinner);
         animation: loaderBlock 1.2s infinite ease-in-out both;
 
         &:nth-child(1) {
@@ -112,13 +112,13 @@ $z-index: 1001;
   0%,
   10%,
   100% {
-    width: $span-size * 2;
-    height: $span-size * 2;
+    width: var(--loader-span-size, $loader-span-size * 2);
+    height: var(--loader-span-size, $loader-span-size * 2);
   }
 
   65% {
-    width: $span-size * 3.75;
-    height: $span-size * 3.75;
+    width: var(--loader-span-size, $loader-span-size * 3.75);
+    height: var(--loader-span-size, $loader-span-size * 3.75);
   }
 }
 
@@ -129,7 +129,7 @@ $z-index: 1001;
   }
 
   55% {
-    background-color: $bg-spinner;
+    background-color: var(--loader-spinner, $loader-spinner);
   }
 
   100% {
@@ -144,7 +144,7 @@ $z-index: 1001;
   }
 
   55% {
-    background-color: $bg-spinner;
+    background-color: var(--loader-spinner, $loader-spinner);
   }
 
   100% {
@@ -153,7 +153,7 @@ $z-index: 1001;
 }
 
 .size {
-  width: $span-size;
-  height: $span-size;
+  width: var(--loader-span-size,$loader-span-size);
+  height: var(--loader-span-size,$loader-span-size);
 }
 </style>
