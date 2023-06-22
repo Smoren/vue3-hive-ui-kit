@@ -26,8 +26,8 @@ withDefaults(defineProps<HiveLoaderProps>(), {
 </template>
 
 <style lang="scss" scoped>
-$bg-color-spinner: #b0ddffe5;
-$bg-color-window: rgba(38, 45, 52, 0.68);
+$bg-spinner: #b0ddffe5;
+$bg-window: rgba(38, 45, 52, 0.68);
 $span-size: 15px;
 $z-index: 1001;
 
@@ -39,7 +39,7 @@ $z-index: 1001;
     right: 0;
     bottom: 0;
     margin: auto;
-    background-color: $bg-color-window;
+    background-color: $bg-window;
     z-index: $z-index;
     animation: view 1.0s infinite ease-in-out;
   }
@@ -66,7 +66,7 @@ $z-index: 1001;
       span {
         position: absolute;
         display: block;
-        background-color: $bg-color-spinner;
+        background-color: $bg-spinner;
         animation: loaderBlock 1.2s infinite ease-in-out both;
 
         &:nth-child(1) {
@@ -132,7 +132,7 @@ $z-index: 1001;
   }
 
   55% {
-    background-color: $bg-color-spinner;
+    background-color: $bg-spinner;
   }
 
   100% {
@@ -148,7 +148,7 @@ $z-index: 1001;
   }
 
   55% {
-    background-color: $bg-color-spinner;
+    background-color: $bg-spinner;
   }
 
   100% {

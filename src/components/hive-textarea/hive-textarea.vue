@@ -38,22 +38,16 @@ useModelValue(currentValue, emit);
 </template>
 
 <style lang="scss" scoped>
-$bg-color: #ffffff;
-$bg-hover: #d3eafff5;
-$text-color: rgba(0, 0, 0, 0.87);
-$border-color: #bfbfbf;
-$border-radius: 5px;
-$border-focus: #b2d6f8;
-$box-shadow-focus: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
+@import '@/assets/variables.scss';
 
 .hive-textaria {
   border: 1px solid transparent;
   border-radius: $border-radius;
   padding: 0.5rem 1rem;
   transition: background 0.2s;
-  border-color: $border-color;
-  background-color: $bg-color;
-  color: $text-color;
+  border-color: $border;
+  background-color: $bg-input;
+  color: $text;
   resize: none;
   transition: color 0.1s ease, border-color 0.1s ease;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;

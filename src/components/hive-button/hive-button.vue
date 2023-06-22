@@ -35,14 +35,7 @@ const emit = defineEmits<Click>();
 </template>
 
 <style lang="scss" scoped>
-$bg-color: #f2f2f2;
-$bg-hover: #d3eafff5;
-$text-color: #3f3f3f;
-$border-color: #bfbfbf;
-$border-color-disabled: #bfbfbf7c;
-$border-radius: 5px;
-$border-width: 1px;
-$border-focus: #b2d6f8;
+@import '@/assets/variables.scss';
 
 .hive-button {
   cursor: pointer;
@@ -52,10 +45,10 @@ $border-focus: #b2d6f8;
   text-rendering: auto;
   padding: 0.5rem 1rem;
   transition: background 0.2s;
-  border-color: $border-color;
-  background-color: $bg-color;
+  border-color: $border;
+  background-color: $bg-button;
   font-size: 1rem;
-  color: $text-color;
+  color: $text;
 
   &:hover {
     background: $bg-hover;
@@ -67,12 +60,12 @@ $border-focus: #b2d6f8;
   }
 
   &.disabled {
-    border-color: $border-color-disabled;
+    border-color: $border-disabled;
     opacity: 0.4;
     pointer-events: none;
 
     &:hover {
-      background: $bg-color;
+      background: $bg-button;
     }
   }
 }
