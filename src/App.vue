@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveLoader, HiveTextarea } from '.';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
+import hiveInput from './components/hive-input/hive-input.vue';
 
 const text = ref('text');
 
@@ -75,15 +76,11 @@ const optionsObject = [
       <!-- Button -->
       <widget-wrapper title="Button">
         <hive-button>
-          <template #before>
-            Before
-          </template>
+          <template #before>Before</template>
           <img src="@/assets/search.svg" alt="image after" class="img" />
           Click
           <img src="@/assets/search.svg" alt="image before" class="img" />
-          <template #after>
-            After
-          </template>
+          <template #after>After</template>
         </hive-button>
         <hive-button disabled />
         <hive-button />
@@ -95,14 +92,6 @@ const optionsObject = [
       <widget-wrapper title="Textarea">
         {{ text }}
         <hive-textarea v-model="text" resize-direction="both" />
-      </widget-wrapper>
-      <widget-wrapper title="Input">
-        <hive-input v-model="input" />
-        <hive-input placeholder="Input number" type="number" v-model="input" />
-      </widget-wrapper>
-      <widget-wrapper title="DropDown">
-        <!-- <hive-input v-model="input" /> -->
-        <hive-drop-down :options="optionsObject" key-field="key" value-field="value" title-field="title" />
       </widget-wrapper>
       <widget-wrapper title="Input">
         <hive-input v-model="input" />
