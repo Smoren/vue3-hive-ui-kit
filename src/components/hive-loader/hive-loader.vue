@@ -41,7 +41,7 @@ $z-index: 1001;
     margin: auto;
     background-color: $bg-window;
     z-index: $z-index;
-    animation: view 1.0s infinite ease-in-out;
+    animation: view 1s infinite ease-in-out;
   }
 
   &__wrapper {
@@ -96,7 +96,6 @@ $z-index: 1001;
 }
 
 @keyframes view {
-
   0% {
     opacity: 0;
   }
@@ -105,12 +104,11 @@ $z-index: 1001;
     opacity: 0.5;
   }
   100% {
-   opacity: 1;
+    opacity: 1;
   }
 }
 
 @keyframes loader {
-
   0%,
   10%,
   100% {
@@ -125,7 +123,6 @@ $z-index: 1001;
 }
 
 @keyframes loaderBlock {
-
   0%,
   30% {
     transform: rotate(0);
@@ -141,7 +138,6 @@ $z-index: 1001;
 }
 
 @keyframes loaderBlockInverse {
-
   0%,
   20% {
     transform: rotate(0);

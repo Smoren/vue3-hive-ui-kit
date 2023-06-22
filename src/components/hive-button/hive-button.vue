@@ -15,7 +15,6 @@ withDefaults(defineProps<HiveButtonProps>(), {
 });
 
 const emit = defineEmits<Click>();
-
 </script>
 
 <template>

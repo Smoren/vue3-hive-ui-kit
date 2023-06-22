@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { StyleValue, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Update } from '@/common/mixin/emits';
 import { useModelValue } from '@/common/hooks/use-model-value';
@@ -10,6 +10,7 @@ export interface HiveTextariaProps extends CommonProps {
   rowsCount?: number;
   resizable?: boolean;
   resizeDirection?: 'both' | 'vertical' | 'horizontal';
+  style?: StyleValue;
 }
 
 const props = withDefaults(defineProps<HiveTextariaProps>(), {
@@ -34,6 +35,7 @@ useModelValue(currentValue, emit);
     @input="emit('update:modelValue', ($event.target as HTMLTextAreaElement)?.value)"
     :placeholder="placeholder"
     :rows="rowsCount"
+    :style="style"
   />
 </template>
 

@@ -6,7 +6,6 @@ export const onClick = (emit: Click, event: MouseEvent) => {
 
 export type Click = (e: 'click', event: MouseEvent) => void;
 
-
 export const onUpdateModelValue = <T>(emit: Update<T>, value: Ref<T>) => {
   emit('update:modelValue', value.value);
 };
