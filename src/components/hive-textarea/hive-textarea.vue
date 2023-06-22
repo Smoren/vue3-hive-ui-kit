@@ -42,12 +42,12 @@ useModelValue(currentValue, emit);
 
 .hive-textaria {
   border: 1px solid transparent;
-  border-radius: $border-radius;
+  border-radius: var(--border-radius, $border-radius);
   padding: 0.5rem 1rem;
   transition: background 0.2s;
-  border-color: $border;
-  background-color: $bg-input;
-  color: $text;
+  border-color: var(--border, $border);
+  background-color: var(--bg-input, $bg-input);
+  color: var(--text, $text);
   resize: none;
   transition: color 0.1s ease, border-color 0.1s ease;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -68,7 +68,7 @@ useModelValue(currentValue, emit);
 
   &:focus,
   focus-visible {
-    outline: 1px auto $border-focus;
+    outline: 1px auto var(--border-focus, $border-focus);
   }
 }
 </style>

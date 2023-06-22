@@ -17,8 +17,8 @@ export default defineConfig({
     target: 'esnext',
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'VueHiveTestLibrary',
-      fileName: (format) => `vue-hive-test-library.${format}.js`,
+      name: 'VueHive',
+      fileName: (format) => `vue-hive.${format}.js`,
     },
 
     rollupOptions: {
