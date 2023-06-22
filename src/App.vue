@@ -9,6 +9,10 @@ const handleClick = () => {
   console.log('click');
   text.value = 'onClick';
 };
+
+const handleR = () => {
+  console.log('clickRRR');
+};
 </script>
 
 <template>
@@ -25,7 +29,7 @@ const handleClick = () => {
         </hive-button>
         <hive-button disabled />
         <hive-button />
-        <hive-button :style="{ backgroundColor: 'red' }" />
+        <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
         <hive-button title="Classes" :class="'test'" @click="handleClick" />
       </widget-wrapper>
 

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
+import { Update } from '@/common/mixin/emits';
 import { useModelValue } from '@/common/hooks/use-model-value';
 
 export interface HiveTextariaProps extends CommonProps {
@@ -18,9 +19,7 @@ const props = withDefaults(defineProps<HiveTextariaProps>(), {
   resizeDirection: 'both',
 });
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
-}>();
+const emit = defineEmits<Update<string>>();
 
 const currentValue = ref(props.modelValue);
 
@@ -42,7 +41,7 @@ useModelValue(currentValue, emit);
 $bg-color: #ffffff;
 $bg-hover: #d3eafff5;
 $text-color: rgba(0, 0, 0, 0.87);
-$border-color: #bfbfbf; // rgba(34, 36, 38, 0.15);
+$border-color: #bfbfbf;
 $border-radius: 5px;
 $border-focus: #b2d6f8;
 $box-shadow-focus: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;

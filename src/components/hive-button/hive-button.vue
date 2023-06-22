@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
+import { Click, onClick } from '@/common/mixin/emits';
 
 export interface HiveButtonProps extends CommonProps {
   title?: string;
@@ -13,27 +14,16 @@ withDefaults(defineProps<HiveButtonProps>(), {
   disabled: false,
 });
 
-const emit = defineEmits<{
-  (e: 'clickLeft'): void;
-  (e: 'clickRight'): void;
-}>();
+const emit = defineEmits<Click>();
 
-const onClickLeft = () => {
-  emit('clickLeft');
-};
-
-const onClickRight = () => {
-  emit('clickRight');
-};
 </script>
 
 <template>
   <button
-    class="button"
+    class="hive-button"
     :class="{ disabled: disabled }"
     :disabled="disabled"
-    @click="onClickLeft"
-    @click.right.prevent="onClickRight"
+    @click="onClick(emit, $event)"
     :style="style"
   >
     <slot name="before" />
@@ -54,7 +44,7 @@ $border-radius: 5px;
 $border-width: 1px;
 $border-focus: #b2d6f8;
 
-.button {
+.hive-button {
   cursor: pointer;
   width: 100%;
   border: 1px solid transparent;
