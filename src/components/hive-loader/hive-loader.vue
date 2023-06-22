@@ -153,7 +153,7 @@ $loader-z: 1001;
 }
 
 .size {
-  width: var(--loader-span-size,$loader-span-size);
-  height: var(--loader-span-size,$loader-span-size);
+  width: var(--loader-span-size, $loader-span-size);
+  height: var(--loader-span-size, $loader-span-size);
 }
 </style>
