@@ -31,7 +31,8 @@ useModelValue(currentValue, emit);
   <textarea
     class="hive-textaria"
     :class="[{ resizable: resizable }, resizeDirection]"
-    v-model="currentValue"
+    :value="modelValue"
+    @input="emit('update:modelValue', ($event.target as HTMLTextAreaElement)?.value)"
     :placeholder="placeholder"
     :rows="rowsCount"
   />
@@ -43,9 +44,8 @@ $bg-hover: #d3eafff5;
 $text-color: rgba(0, 0, 0, 0.87);
 $border-color: #bfbfbf; // rgba(34, 36, 38, 0.15);
 $border-radius: 5px;
-$border-color-focus: #b2d6f8; // #85b7d9;
-$box-shadow-focus: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
 $border-focus: #b2d6f8;
+$box-shadow-focus: 0 0 0 0 rgba(34, 36, 38, 0.35) inset;
 
 .hive-textaria {
   border: 1px solid transparent;
@@ -59,7 +59,6 @@ $border-focus: #b2d6f8;
   transition: color 0.1s ease, border-color 0.1s ease;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  // widthnpm: 100%;
 
   &.resizable {
     resize: vertical;

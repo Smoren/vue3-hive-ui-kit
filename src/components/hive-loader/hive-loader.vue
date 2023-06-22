@@ -13,13 +13,13 @@ withDefaults(defineProps<HiveLoaderProps>(), {
 </script>
 
 <template>
-  <div v-if="visible" class="loader__window" :style="style">
-    <div class="loader__wrapper">
+  <div v-if="visible" class="hive-loader__window" :style="style">
+    <div class="hive-loader__wrapper">
       <div :class="{ loader: visible }">
-        <span class="loader__size" />
-        <span class="loader__size" />
-        <span class="loader__size" />
-        <span class="loader__size" />
+        <span class="hive-loader__size" />
+        <span class="hive-loader__size" />
+        <span class="hive-loader__size" />
+        <span class="hive-loader__size" />
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@ $bg-color-window: rgba(38, 45, 52, 0.68);
 $span-size: 15px;
 $z-index: 1001;
 
-.loader {
+.hive-loader {
   &__window {
     position: absolute;
     top: 0;

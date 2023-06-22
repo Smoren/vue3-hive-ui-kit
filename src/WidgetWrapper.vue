@@ -24,6 +24,7 @@ defineProps<{
   border-bottom: 1px solid rgba(53, 55, 80, 0.322);
   .title {
     font-size: 24px;
+    background-color: azure;
   }
   .content {
     display: flex;

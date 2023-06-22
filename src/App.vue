@@ -4,6 +4,11 @@ import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveLoader, HiveTextarea } from '.';
 
 const text = ref('text');
+
+const handleClick = () => {
+  console.log('click');
+  text.value = 'onClick';
+};
 </script>
 
 <template>
@@ -11,7 +16,7 @@ const text = ref('text');
 
   <div class="app">
     <div class="wrapper">
-       <!-- Button -->
+      <!-- Button -->
       <widget-wrapper title="Button">
         <hive-button>
           <img src="@/assets/search.svg" alt="image after" class="img" />
@@ -21,10 +26,10 @@ const text = ref('text');
         <hive-button disabled />
         <hive-button />
         <hive-button :style="{ backgroundColor: 'red' }" />
-        <hive-button title="Classes" :class="'test'" />
+        <hive-button title="Classes" :class="'test'" @click="handleClick" />
       </widget-wrapper>
 
-       <!-- Textarea -->
+      <!-- Textarea -->
       <widget-wrapper title="Textarea">
         {{ text }}
         <hive-textarea v-model="text" resize-direction="both" />
