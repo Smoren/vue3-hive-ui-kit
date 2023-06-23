@@ -1,4 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import { IMaskDirective } from 'vue-imask';
 
-createApp(App).mount('#app');
+const app = createApp(App);
+
+app.directive('mask', IMaskDirective);
+
+app.mount('#app');

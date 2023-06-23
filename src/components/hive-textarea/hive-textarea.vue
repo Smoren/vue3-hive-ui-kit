@@ -13,7 +13,7 @@ export interface HiveTextariaProps extends CommonProps {
   style?: StyleValue;
 }
 
-const props = withDefaults(defineProps<HiveTextariaProps>(), {
+withDefaults(defineProps<HiveTextariaProps>(), {
   modelValue: '',
   placeholder: 'Введите текст...',
   resizable: true,
@@ -21,10 +21,6 @@ const props = withDefaults(defineProps<HiveTextariaProps>(), {
 });
 
 const emit = defineEmits<Update<string>>();
-
-const currentValue = ref(props.modelValue);
-
-useModelValue(currentValue, emit);
 </script>
 
 <template>
@@ -54,6 +50,8 @@ useModelValue(currentValue, emit);
   transition: color 0.1s ease, border-color 0.1s ease;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 1rem;
+  box-sizing: border-box;
+  max-width: 100%;
 
   &.resizable {
     resize: vertical;

@@ -26,7 +26,8 @@
     "url": "git+https://github.com/hivebdsm/vue-hive-ui-kit.git"
   },
   "dependencies": {
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-imask": "^6.6.3"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",
