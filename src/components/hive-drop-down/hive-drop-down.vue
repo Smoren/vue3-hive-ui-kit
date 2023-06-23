@@ -2,8 +2,22 @@
 import { CommonProps } from '@/common/mixin/props';
 import { MaskValue } from '@/common/types/mask';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { Focusout, Keydown, Focusin, Mount, Unmount, Update } from '@/common/mixin/emits';
-import { onMounted, ref, watch } from 'vue';
+import {
+  Focusout,
+  Keydown,
+  Focusin,
+  Mount,
+  Unmount,
+  Update,
+  Search,
+  onSearch,
+  Input,
+  onInput,
+  onFocusout,
+  onFocusin,
+  onKeydown,
+} from '@/common/mixin/emits';
+import { ref, watch } from 'vue';
 import useHiveDropDownList, { DropDownListConfig } from '@/components/hive-drop-down/hooks/use-hive-drop-down-list';
 import useHiveDropDownListMethods from '@/components/hive-drop-down/hooks/use-hive-drop-down-list-methods';
 import useDropDownMethods from '@/common/hooks/use-drop-down-methods';
@@ -14,9 +28,9 @@ type OptionType = string | number | Record<string, unknown>;
 type OptionsType = Array<OptionType> | Record<string, OptionType>;
 
 interface Props extends CommonProps {
+  options: OptionsType;
   modelValue?: string;
   modelValueEventName?: string;
-  options?: OptionsType;
   placeholder?: string;
   invalid?: boolean;
   type?: 'number' | 'text';
@@ -49,7 +63,14 @@ const props = withDefaults(defineProps<Props>(), {
   titleField: 'title',
 });
 
-type emitType = Mount & Unmount & Update<string | number> & Focusin & Focusout & Keydown;
+type emitType = Mount &
+  Unmount &
+  Update<string | number> &
+  Focusin &
+  Focusout &
+  Keydown &
+  Search<string> &
+  Input<string>;
 
 const emit = defineEmits<emitType>();
 
@@ -86,10 +107,6 @@ const { updateCurrentValue } = useHiveDropDownListMethods({
   collapse,
 });
 
-const onInputMount = () => {
-  console.log();
-};
-
 watch(
   () => props.options as OptionsType,
   (newValue) => {
@@ -104,7 +121,6 @@ watch(
     } else {
       currentOptions.value = newValue;
     }
-    // handleEvent(new Event('onDataBound'));
   },
 );
 
@@ -126,53 +142,19 @@ watch(
   },
   { flush: 'post' },
 );
-// const currentClasses = useClasses({
-//       classes: props.classes as ClassesType,
-//       extraClasses: { 'active visible': isExpanded },
-//     });
 
-// watch(
-//       () => searchQuery.value,
-//       (newValue: string) => {
-//         handleEvent(new Event('search'), { query: newValue });
-//       },
-//     );
+watch(
+  () => searchQuery.value,
+  (newValue) => {
+    onSearch(emit, newValue);
+  },
+);
 
-// export default defineComponent({
-//   name: 'HiveDropDownList',
-//   components: { HiveObservable },
-//   emits: ['update:modelValue', 'event', 'focusout'],
-//   mounted() {
-//     useOnMount(this);
-//   },
-//   setup(props, context) {
-//     if (valueChangedOnInit) {
-//       handleEvent(new Event(props.modelValueEventName));
-//     }
-
-//     const onInput = () => {
-//       activeValue.value = null;
-//       handleEvent(new Event('onInput'), searchQuery.value);
-//     };
-
-//     const forceFocus = () => {
-//       if (searchRef.value) {
-//         (searchRef.value as HTMLInputElement).focus();
-//       }
-//     };
-
-//     const onFocusOut = () => {
-//       context.emit('focusout');
-//     };
-
-//     onMounted(() => {
-//       context.emit('update:modelValue', currentValue.value);
-//       if (props.forceFocus) {
-//         forceFocus();
-//       }
-//     });
-//   },
-// });
+const forceFocus = () => {
+  if (searchRef.value) {
+    searchRef.value.forceFocus();
+  }
+};
 </script>
 
 <template>
@@ -185,9 +167,6 @@ watch(
   >
     <i class="dropdown icon" @mousedown="toggle" />
     <hive-input
-      @mount="onInputMount"
-      @focusin="expand()"
-      @focusout="collapse()"
       ref="searchRef"
       v-model="searchQuery"
       autocomplete="fomantic-search"
@@ -195,11 +174,15 @@ watch(
       placeholder=""
       tabindex="0"
       style="height: 100%"
+      :disabled="disabled"
+      @focusin="expand(), onFocusin()"
+      @focusout="collapse(), onFocusout()"
+      @keydown="onKeydown(emit, $event)"
       @keydown.enter="updateCurrentValue(activeValue)"
       @keydown.up.prevent="setPrevActiveValue"
       @keydown.down.prevent="setNextActiveValue"
       @keydown.esc="collapse"
-      :disabled="disabled"
+      @input="onInput(emit, $event as string)"
     />
     <div :class="{ filtered: searchQuery.length > 0 }" class="text">
       <div v-if="withImg && imgsArray" style="display: flex; align-items: center; gap: 5px">

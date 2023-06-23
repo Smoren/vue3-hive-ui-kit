@@ -9,11 +9,13 @@ import {
   Mount,
   Unmount,
   Update,
+  Input,
+  onInput,
 } from '@/common/mixin/emits';
 import { useModelValue } from '@/common/hooks/use-model-value';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { CommonProps } from '@/common/mixin/props';
-import { Ref, reactive, ref, watch } from 'vue';
+import { Ref, reactive, ref } from 'vue';
 import { MaskValue, Mask } from '@/common/types/mask';
 
 interface Props extends CommonProps {
@@ -25,9 +27,8 @@ interface Props extends CommonProps {
   integer?: boolean;
   mask?: MaskValue;
   minValue?: number;
+  maxValue?: number;
 }
-
-type Mask = String | Number | Date | ((value: string) => boolean);
 
 const props = withDefaults(defineProps<Props>(), {
   modelValueEventName: 'input',
@@ -37,7 +38,9 @@ const props = withDefaults(defineProps<Props>(), {
   integer: false,
 });
 
-type emitType = Mount & Unmount & Update<string | number> & Focusin & Focusout & Keydown;
+type currentType = typeof props.modelValue;
+
+type emitType = Mount & Unmount & Update<currentType> & Focusin & Focusout & Keydown & Input<currentType>;
 
 const emit = defineEmits<emitType>();
 
@@ -45,7 +48,7 @@ useOnMount(emit);
 
 const currentValue = ref(props.modelValue);
 
-useModelValue<string | number>(currentValue, emit);
+useModelValue<currentType>(currentValue, emit);
 
 const input: Ref<HTMLInputElement | null> = ref(null);
 
@@ -60,27 +63,33 @@ const generatedMask: Mask = reactive({
   lazy: true,
 });
 
+const handleInput = (value: currentType) => {
+  emit('update:modelValue', value);
+  onInput(emit, value);
+};
+
 export interface InputExpose {
   input: HTMLInputElement | null;
+  forceFocus: () => void;
 }
 
-defineExpose({ input });
+defineExpose({ input, forceFocus });
 </script>
 
 <template>
   <input
     ref="input"
     :value="modelValue"
-    @input="emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
+    @input="handleInput(($event.target as HTMLInputElement)?.value)"
     v-mask="mask ? generatedMask : ''"
-    v-bind="attrs"
     :style="style"
     class="hive-input"
-    :class="{ error: invalid, ...classes }"
+    :class="{ error: invalid }"
     :type="type"
     :placeholder="placeholder"
     :step="integer ? '1' : '0.01'"
     :min="minValue"
+    :max="maxValue"
     @focusin="onFocusin(emit)"
     @focusout="onFocusout(emit)"
     @keydown="onKeydown(emit, $event)"

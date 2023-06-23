@@ -41,3 +41,15 @@ export type Click = (e: 'click', event: MouseEvent) => void;
 export const onClick = (emit: Click, event: MouseEvent) => {
   emit('click', event);
 };
+
+export type Search<T> = (e: 'search', query: T) => void;
+
+export const onSearch = <T>(emit: Search<T>, query: T) => {
+  emit('search', query);
+};
+
+export type Input<T> = (e: 'input', value: T) => void;
+
+export const onInput = <T>(emit: Input<T>, value: T) => {
+  emit('input', value);
+};

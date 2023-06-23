@@ -13,7 +13,7 @@ export interface HiveTextariaProps extends CommonProps {
   style?: StyleValue;
 }
 
-const props = withDefaults(defineProps<HiveTextariaProps>(), {
+withDefaults(defineProps<HiveTextariaProps>(), {
   modelValue: '',
   placeholder: 'Введите текст...',
   resizable: true,
@@ -21,10 +21,6 @@ const props = withDefaults(defineProps<HiveTextariaProps>(), {
 });
 
 const emit = defineEmits<Update<string>>();
-
-const currentValue = ref(props.modelValue);
-
-useModelValue(currentValue, emit);
 </script>
 
 <template>
