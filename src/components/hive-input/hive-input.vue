@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   invalid: false,
   integer: false,
-  step: 1,
+  step: 0.01,
 });
 
 type currentType = typeof props.modelValue;
