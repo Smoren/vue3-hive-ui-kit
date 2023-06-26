@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, StyleValue, ref } from 'vue';
+import { Ref, StyleValue, computed, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Focusout,
@@ -63,7 +63,7 @@ const handleInput = (value: currentType) => {
 const handleKeydown = (event: KeyboardEvent) => {
   onKeydown(emit, event);
 
-  if (event.key === 'Backspace' ||event.key =='Delete' ) return
+  if (event.key === 'Backspace' || event.key == 'Delete') return;
 
   if (props.mask && !props.mask.test(event.key)) {
     event.preventDefault();
@@ -82,7 +82,7 @@ export interface InputExpose {
 defineExpose({ input, forceFocus });
 
 /* Changing placeholder depending on props.type */
-const placeholderView = props.type === 'number' ? 'Введите значение...' : props.placeholder;
+const placeholderView = computed(() => (props.type === 'number' ? 'Введите значение...' : props.placeholder));
 </script>
 
 <template>
