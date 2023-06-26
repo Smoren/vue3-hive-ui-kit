@@ -41,7 +41,6 @@ $loader-z: 1001;
     margin: auto;
     background-color: var(--loader-window, $loader-window);
     z-index: var(--loader-z, $loader-z);
-    animation: view 1s infinite ease-in-out;
   }
 
   &__wrapper {
@@ -92,6 +91,11 @@ $loader-z: 1001;
         }
       }
     }
+  }
+
+  &__size {
+    width: var(--loader-span-size, $loader-span-size);
+    height: var(--loader-span-size, $loader-span-size);
   }
 }
 
@@ -150,10 +154,5 @@ $loader-z: 1001;
   100% {
     transform: rotate(-90deg);
   }
-}
-
-.size {
-  width: var(--loader-span-size, $loader-span-size);
-  height: var(--loader-span-size, $loader-span-size);
 }
 </style>
