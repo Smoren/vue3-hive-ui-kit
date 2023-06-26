@@ -1,71 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
-import { HiveButton, HiveLoader, HiveTextarea } from '.';
-import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
-import hiveInput from './components/hive-input/hive-input.vue';
+import { HiveButton, HiveInput, HiveLoader, HiveTextarea } from '.';
 
 const text = ref('text');
+const num = ref(0);
 
-const handleClick = () => {
+const handleText = () => {
   console.log('click');
   text.value = 'onClick';
+};
+
+const handleNum = () => {
+  console.log('click');
+  num.value = 1000;
 };
 
 const handleR = () => {
   console.log('clickRRR');
 };
-
-const input = ref('');
-
-const options = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-const optionsObject = [
-  {
-    key: 'key1',
-    title: 'title1',
-    value: 'value1',
-  },
-  {
-    key: 'key2',
-    title: 'title2',
-    value: 'value2',
-  },
-  {
-    key: 'key3',
-    title: 'title3',
-    value: 'value3',
-  },
-  {
-    key: 'key4',
-    title: 'title4',
-    value: 'value4',
-  },
-  {
-    key: 'key5',
-    title: 'title5',
-    value: 'value5',
-  },
-  {
-    key: 'key6',
-    title: 'title6',
-    value: 'value6',
-  },
-  {
-    key: 'key7',
-    title: 'title7',
-    value: 'value7',
-  },
-  {
-    key: 'key8',
-    title: 'title8',
-    value: 'value8',
-  },
-  {
-    key: 'key9',
-    title: 'title9',
-    value: 'value9',
-  },
-];
 </script>
 
 <template>
@@ -76,16 +29,14 @@ const optionsObject = [
       <!-- Button -->
       <widget-wrapper title="Button">
         <hive-button>
-          <template #before>Before</template>
           <img src="@/assets/search.svg" alt="image after" class="img" />
           Click
           <img src="@/assets/search.svg" alt="image before" class="img" />
-          <template #after>After</template>
         </hive-button>
         <hive-button disabled />
         <hive-button />
         <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
-        <hive-button title="Classes" :class="'test'" @click="handleClick" />
+        <hive-button title="Classes" :class="'test'" @click="handleText" />
       </widget-wrapper>
 
       <!-- Textarea -->
@@ -93,13 +44,18 @@ const optionsObject = [
         {{ text }}
         <hive-textarea v-model="text" resize-direction="both" />
       </widget-wrapper>
+
+      <!-- Input -->
       <widget-wrapper title="Input">
-        <hive-input v-model="input" />
-        <hive-input placeholder="Input number" type="number" v-model="input" />
-      </widget-wrapper>
-      <widget-wrapper title="DropDown">
-        <!-- <hive-input v-model="input" /> -->
-        <hive-drop-down :options="optionsObject" key-field="key" value-field="value" title-field="title" />
+        <div>{{ text }}</div>
+        <div>{{ num }}</div>
+        <hive-button title="Classes" :class="'test'" @click="handleNum" />
+
+        <hive-input v-model="text" />
+        <hive-input  v-model="num" type="number" />
+        <hive-input  v-model="num" type="number" :step="1" />
+        <hive-input  v-model="num" type="text" integer :min="5" :max="6"/>
+        <hive-input v-model="num" :mask="/^\d+$/" />
       </widget-wrapper>
     </div>
   </div>
