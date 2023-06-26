@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, StyleValue, reactive, ref, watch } from 'vue';
+import { Ref, StyleValue, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Focusout,
@@ -24,9 +24,9 @@ export interface Props extends CommonProps {
   mask?: RegExp;
   invalid?: boolean;
   integer?: boolean;
-  min?: number | string;
-  max?: number | string;
-  step?: '1' | '0.1' | '0.01' | '0.001' | 1 | 0.1 | 0.01 | 0.001;
+  min?: number;
+  max?: number;
+  step?: number;
   style?: StyleValue;
 }
 
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Введите текст...',
   invalid: false,
   integer: false,
-  step: '0.01',
+  step: 1,
 });
 
 type currentType = typeof props.modelValue;
@@ -63,7 +63,13 @@ const handleInput = (value: currentType) => {
 const handleKeydown = (event: KeyboardEvent) => {
   onKeydown(emit, event);
 
+  if (event.key === 'Backspace' ||event.key =='Delete' ) return
+
   if (props.mask && !props.mask.test(event.key)) {
+    event.preventDefault();
+  }
+
+  if (props.integer && !/^\d+$/.test(event.key)) {
     event.preventDefault();
   }
 };
@@ -75,14 +81,8 @@ export interface InputExpose {
 
 defineExpose({ input, forceFocus });
 
-/* Изменение placeholder в зависимости от props.type */
-const placeholderView = ref(props.placeholder);
-
-watch(props, () => {
-  if (props.type === 'number') {
-    placeholderView.value = 'Введите значение...';
-  }
-});
+/* Changing placeholder depending on props.type */
+const placeholderView = props.type === 'number' ? 'Введите значение...' : props.placeholder;
 </script>
 
 <template>

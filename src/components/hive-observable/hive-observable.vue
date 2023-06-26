@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import '@/ui-kit/src/components/assets/scss/semantic.scss';
 
 export default defineComponent({
   name: 'HiveObservable',
