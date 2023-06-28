@@ -2,14 +2,21 @@
 import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveLoader, HiveTextarea } from '.';
-import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
+// import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 import hiveInput from './components/hive-input/hive-input.vue';
 
 const text = ref('text');
+const num = ref(0);
+const isOpenModal = ref(false);
 
-const handleClick = () => {
+const handleText = () => {
   console.log('click');
   text.value = 'onClick';
+};
+
+const handleNum = () => {
+  console.log('click');
+  num.value = 1000;
 };
 
 const handleR = () => {
@@ -69,7 +76,7 @@ const optionsObject = [
 </script>
 
 <template>
-  <hive-loader />
+  <hive-loader :visible="false" />
 
   <div class="app">
     <div class="wrapper">
@@ -85,7 +92,7 @@ const optionsObject = [
         <hive-button disabled />
         <hive-button />
         <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
-        <hive-button title="Classes" :class="'test'" @click="handleClick" />
+        <hive-button title="Classes" :class="'test'" @click="handleText" />
       </widget-wrapper>
 
       <!-- Textarea -->
@@ -93,10 +100,40 @@ const optionsObject = [
         {{ text }}
         <hive-textarea v-model="text" resize-direction="both" />
       </widget-wrapper>
+
+      <!-- Input -->
       <widget-wrapper title="Input">
-        <hive-input v-model="input" />
-        <hive-input placeholder="Input number" type="number" v-model="input" />
+        <div>{{ text }}</div>
+        <div>{{ num }}</div>
+        <hive-button title="Classes" :class="'test'" @click="handleNum" />
+
+        <hive-input v-model="text" />
+        <hive-input v-model="num" type="number" />
+        <hive-input v-model="num" type="number" :step="1" />
+        <hive-input v-model="num" type="text" integer :min="5" :max="6" />
+        <hive-input v-model="num" :mask="/^\d+$/" />
       </widget-wrapper>
+
+      <!-- Modal -->
+      <widget-wrapper title="Modal">
+        <hive-button @click="isOpenModal = true" />
+        
+        <hive-dialog v-model="isOpenModal">
+          <template v-slot:header>
+            <hive-button title="close" />
+          </template>
+
+          <hive-input v-model="text" />
+          <hive-button />
+          Hello
+
+          <template v-slot:footer>
+            <hive-button title="close" />
+          </template>
+        </hive-dialog>
+      </widget-wrapper>
+
+      <!-- DropDown -->
       <widget-wrapper title="DropDown">
         <!-- <hive-input v-model="input" /> -->
         <hive-drop-down :options="optionsObject" key-field="key" value-field="value" title-field="title" />
