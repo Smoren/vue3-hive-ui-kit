@@ -2,7 +2,6 @@
 import { StyleValue, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Update } from '@/common/mixin/emits';
-import { useModelValue } from '@/common/hooks/use-model-value';
 
 export interface HiveTextariaProps extends CommonProps {
   modelValue: string;
