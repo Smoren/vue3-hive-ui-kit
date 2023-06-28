@@ -15,7 +15,6 @@ export interface HiveTextariaProps extends CommonProps {
 
 withDefaults(defineProps<HiveTextariaProps>(), {
   modelValue: '',
-  placeholder: 'Введите текст...',
   resizable: true,
   resizeDirection: 'both',
 });

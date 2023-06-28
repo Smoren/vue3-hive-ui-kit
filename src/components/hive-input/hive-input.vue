@@ -33,7 +33,6 @@ export interface Props extends CommonProps {
 const props = withDefaults(defineProps<Props>(), {
   modelValueEventName: 'input',
   type: 'text',
-  placeholder: 'Введите текст...',
   invalid: false,
   integer: false,
   step: 1,
@@ -80,9 +79,6 @@ export interface InputExpose {
 }
 
 defineExpose({ input, forceFocus });
-
-/* Changing placeholder depending on props.type */
-const placeholderView = computed(() => (props.type === 'number' ? 'Введите значение...' : props.placeholder));
 </script>
 
 <template>
@@ -93,7 +89,7 @@ const placeholderView = computed(() => (props.type === 'number' ? 'Введит�
     :style="style"
     :type="type"
     :value="modelValue"
-    :placeholder="placeholderView"
+    :placeholder="placeholder"
     :step="integer ? '1' : step"
     :min="min"
     :max="max"
