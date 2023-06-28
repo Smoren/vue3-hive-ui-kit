@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
-import { HiveButton, HiveLoader, HiveTextarea } from '.';
+import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 // import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 import hiveInput from './components/hive-input/hive-input.vue';
 
