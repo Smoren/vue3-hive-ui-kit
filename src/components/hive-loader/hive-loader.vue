@@ -2,8 +2,8 @@
 import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 
-export interface Props extends CommonProps {
-  isVisible?: boolean;
+export interface HiveLoaderProps extends CommonProps {
+  visible?: boolean;
 }
 
 withDefaults(defineProps<HiveLoaderProps>(), {
