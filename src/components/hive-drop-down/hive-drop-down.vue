@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { CommonProps } from '@/common/mixin/props';
-import { MaskValue } from '@/common/types/mask';
 import { useOnMount } from '@/common/hooks/use-mount';
 import {
   Focusout,
@@ -35,7 +34,7 @@ interface Props extends CommonProps {
   invalid?: boolean;
   type?: 'number' | 'text';
   integer?: boolean;
-  mask?: MaskValue;
+  mask?: RegExp;
   minValue?: number;
   keyField?: string;
   valueField?: string;
