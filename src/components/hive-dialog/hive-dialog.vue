@@ -29,7 +29,7 @@ const handleHide = () => {
 
         <div v-if="modelValue" ref="content" class="hive-dialog" :style="{ top: top, left: left }">
           <button class="hive-dialog__btn-close" @click="handleHide">
-            <img class="hive-dialog__btn-close-img" src="./icons/remove.svg" alt="Notification close button" />
+            <img class="hive-dialog__btn-close-img" src="./icons/remove.svg" alt="Dialog close button" />
           </button>
           <slot name="header" />
           <slot />
@@ -46,14 +46,18 @@ const handleHide = () => {
 $dialog-bg: #ffffff;
 $dialog-trait: lightgrey;
 $dialog-transition: 0.25s linear;
+$dialog-padding-content: 15px;
+$dialog-height-min: 50px;
+$dialog-width-min: 100px;
+
 
 .hive-dialog {
   position: fixed;
-  padding: 15px;
+  padding: $dialog-padding-content;
   background-color: $dialog-bg;
   border-radius: $border-radius;
-  min-width: 100px;
-  min-height: 50px;
+  min-width: $dialog-width-min;
+  min-height: $dialog-height-min;
   max-width: fit-content;
   max-height: fit-content;
   left: calc(-50vw + 50%);
