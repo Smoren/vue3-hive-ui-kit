@@ -1,23 +1,24 @@
 <script lang="ts" setup>
 import { CommonProps } from '@/common/mixin/props';
-import { Update } from '@/common/mixin/emits';
+import { Update, onUpdateModelValue } from '@/common/mixin/emits';
 
-export interface HiveDialogProps extends CommonProps {
+export interface Props extends CommonProps {
   modelValue: boolean;
-  top?: string;
-  left?: string;
   maskBackground?: string;
 }
 
-withDefaults(defineProps<HiveDialogProps>(), {
+withDefaults(defineProps<Props>(), {
   modelValue: false,
   maskBackground: '#262d34ad',
 });
 
-const emit = defineEmits<Update<boolean>>();
+type Emit = Update<boolean>
+
+const emit = defineEmits<Emit>();
 
 const handleHide = () => {
-  emit('update:modelValue', false);
+  // emit('update:modelValue', false);
+  onUpdateModelValue(emit, false);
 };
 </script>
 
@@ -27,7 +28,7 @@ const handleHide = () => {
       <div v-if="modelValue" class="hive-dialog__fade">
         <div class="hive-dialog__mask" @click="handleHide" :style="{ background: maskBackground }" />
 
-        <div v-if="modelValue" ref="content" class="hive-dialog" :style="{ top: top, left: left }">
+        <div v-if="modelValue" ref="content" class="hive-dialog">
           <button class="hive-dialog__btn-close" @click="handleHide">
             <img class="hive-dialog__btn-close-img" src="./icons/remove.svg" alt="Dialog close button" />
           </button>

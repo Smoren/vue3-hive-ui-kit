@@ -3,18 +3,20 @@ import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Click, onClick } from '@/common/mixin/emits';
 
-export interface HiveButtonProps extends CommonProps {
+export interface Props extends CommonProps {
   title?: string;
   disabled?: boolean;
   style?: StyleValue;
 }
 
-withDefaults(defineProps<HiveButtonProps>(), {
+withDefaults(defineProps<Props>(), {
   title: 'Button',
   disabled: false,
 });
 
-const emit = defineEmits<Click>();
+type Emit = Click;
+
+const emit = defineEmits<Emit>();
 </script>
 
 <template>
