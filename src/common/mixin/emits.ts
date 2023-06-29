@@ -1,5 +1,3 @@
-import { Ref } from 'vue';
-
 export type Mount = (e: 'mount') => void;
 
 export const onMount = (emit: Mount) => {

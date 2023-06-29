@@ -11,15 +11,12 @@ export interface HiveDialogProps extends CommonProps {
 
 withDefaults(defineProps<HiveDialogProps>(), {
   modelValue: false,
-  top: '40%',
-  left: '40%',
   maskBackground: '#262d34ad',
 });
 
 const emit = defineEmits<Update<boolean>>();
 
 const handleHide = () => {
-
   emit('update:modelValue', false);
 };
 </script>
@@ -29,17 +26,15 @@ const handleHide = () => {
     <transition name="backdrop">
       <div v-if="modelValue" class="hive-dialog__fade">
         <div class="hive-dialog__mask" @click="handleHide" :style="{ background: maskBackground }" />
-      </div>
-    </transition>
 
-    <transition name="content">
-      <div v-if="modelValue" ref="content" class="hive-dialog" :style="{ top: top, left: left }">
-        <button class="hive-dialog__btn-close" @click="handleHide">
-          <img class="hive-dialog__btn-close-img" src="./icons/remove.svg" alt="Notification close button" />
-        </button>
-        <slot name="header" />
-        <slot />
-        <slot name="footer" />
+        <div v-if="modelValue" ref="content" class="hive-dialog" :style="{ top: top, left: left }">
+          <button class="hive-dialog__btn-close" @click="handleHide">
+            <img class="hive-dialog__btn-close-img" src="./icons/remove.svg" alt="Notification close button" />
+          </button>
+          <slot name="header" />
+          <slot />
+          <slot name="footer" />
+        </div>
       </div>
     </transition>
   </teleport>
@@ -59,6 +54,9 @@ $dialog-transition: 0.25s linear;
   border-radius: $border-radius;
   min-width: 100px;
   min-height: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   &__mask {
     position: fixed;
@@ -69,6 +67,9 @@ $dialog-transition: 0.25s linear;
     display: flex;
     justify-content: center;
     align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &__btn-close {
@@ -76,7 +77,6 @@ $dialog-transition: 0.25s linear;
     font: inherit;
     color: inherit;
     margin: 0;
-    // padding: 0;
     overflow: visible;
     text-transform: none;
     background-color: transparent;
@@ -115,11 +115,11 @@ $dialog-transition: 0.25s linear;
 .backdrop-leave-active {
   transition: opacity 0.25s ease-in;
 }
-
-.content-enter-active {
+.backdrop-enter-active .hive-dialog {
   animation: modal-door-enter 400ms both cubic-bezier(0.4, 0, 0, 1.5);
+  transition-delay: 0.25s;
 }
-.content-leave-active {
+.backdrop-leave-active .hive-dialog {
   animation: modal-door-leave 400ms both ease-out;
 }
 
