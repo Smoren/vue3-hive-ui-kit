@@ -19,6 +19,7 @@ withDefaults(defineProps<Props>(), {
 });
 
 type Emit = Update<string>
+
 const emit = defineEmits<Emit>();
 </script>
 

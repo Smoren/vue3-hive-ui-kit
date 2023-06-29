@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, StyleValue, computed, ref } from 'vue';
+import { Ref, StyleValue, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Focusout,
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   invalid: false,
   integer: false,
-  step: 1,
+  step: 0.01,
 });
 
 type currentType = typeof props.modelValue;
