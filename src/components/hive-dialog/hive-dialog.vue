@@ -17,7 +17,6 @@ type Emit = Update<boolean>
 const emit = defineEmits<Emit>();
 
 const handleHide = () => {
-  // emit('update:modelValue', false);
   onUpdateModelValue(emit, false);
 };
 </script>
