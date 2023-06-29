@@ -54,9 +54,13 @@ $dialog-transition: 0.25s linear;
   border-radius: $border-radius;
   min-width: 100px;
   min-height: 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  max-width: fit-content;
+  max-height: fit-content;
+  left: calc(-50vw + 50%);
+  right: calc(-50vw + 50%);
+  top: calc(-50vh + 50%);
+  bottom: calc(-50vh + 50%);
+  margin: auto;
 
   &__mask {
     position: fixed;
@@ -64,12 +68,6 @@ $dialog-transition: 0.25s linear;
     left: 0;
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   &__btn-close {
