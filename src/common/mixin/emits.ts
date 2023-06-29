@@ -1,5 +1,3 @@
-import { Ref } from 'vue';
-
 export type Mount = (e: 'mount') => void;
 
 export const onMount = (emit: Mount) => {
@@ -32,8 +30,8 @@ export const onKeydown = (emit: Keydown, event: KeyboardEvent) => {
 
 export type Update<T> = (e: 'update:modelValue', value: T) => void;
 
-export const onUpdateModelValue = <T>(emit: Update<T>, value: Ref<T>) => {
-  emit('update:modelValue', value.value);
+export const onUpdateModelValue = <T>(emit: Update<T>, value: T) => {
+  emit('update:modelValue', value);
 };
 
 export type Click = (e: 'click', event: MouseEvent) => void;

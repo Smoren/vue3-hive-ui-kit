@@ -2,9 +2,8 @@
 import { StyleValue, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Update } from '@/common/mixin/emits';
-import { useModelValue } from '@/common/hooks/use-model-value';
 
-export interface HiveTextariaProps extends CommonProps {
+export interface Props extends CommonProps {
   modelValue: string;
   placeholder?: string;
   rowsCount?: number;
@@ -13,13 +12,15 @@ export interface HiveTextariaProps extends CommonProps {
   style?: StyleValue;
 }
 
-withDefaults(defineProps<HiveTextariaProps>(), {
+withDefaults(defineProps<Props>(), {
   modelValue: '',
   resizable: true,
   resizeDirection: 'both',
 });
 
-const emit = defineEmits<Update<string>>();
+type Emit = Update<string>
+
+const emit = defineEmits<Emit>();
 </script>
 
 <template>
