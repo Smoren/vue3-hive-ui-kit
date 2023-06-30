@@ -120,7 +120,8 @@ const optionsObject = [
         
         <hive-dialog v-model="isOpenModal">
           <template v-slot:header>
-            <hive-button title="close" />
+            <!-- <hive-button title="close" /> -->
+            Привэд Мэдвэд
           </template>
 
           <hive-input v-model="text" />
@@ -166,5 +167,6 @@ const optionsObject = [
 
 .test {
   background-color: aqua;
+  z-index: 1;
 }
 </style>

@@ -5,11 +5,13 @@ import { Update, onUpdateModelValue } from '@/common/mixin/emits';
 export interface Props extends CommonProps {
   modelValue: boolean;
   maskBackground?: string;
+  zIndex?: number;
 }
 
 withDefaults(defineProps<Props>(), {
   modelValue: false,
   maskBackground: '#262d34ad',
+  zIndex: 10000,
 });
 
 type Emit = Update<boolean>
@@ -25,13 +27,15 @@ const handleHide = () => {
   <teleport to="body">
     <transition name="backdrop">
       <div v-if="modelValue" class="hive-dialog__fade">
-        <div class="hive-dialog__mask" @click="handleHide" :style="{ background: maskBackground }" />
+        <div class="hive-dialog__mask" @click="handleHide" :style="{ backgroundColor: maskBackground, zIndex: zIndex }" />
 
-        <div v-if="modelValue" ref="content" class="hive-dialog">
-          <button class="hive-dialog__btn-close" @click="handleHide">
-            <img class="hive-dialog__btn-close-img" src="./icons/remove.svg" alt="Dialog close button" />
-          </button>
-          <slot name="header" />
+        <div class="hive-dialog" :style="{ zIndex: zIndex }">
+          <div class="hive-dialog__header">
+            <slot name="header" />
+            <button class="hive-dialog__btn-close" @click="handleHide">
+              <img class="hive-dialog__btn-close-img" src="./icons/remove.svg" alt="Dialog close button" />
+            </button>
+          </div>
           <slot />
           <slot name="footer" />
         </div>
@@ -58,8 +62,10 @@ $dialog-width-min: 100px;
   border-radius: $border-radius;
   min-width: $dialog-width-min;
   min-height: $dialog-height-min;
-  max-width: fit-content;
-  max-height: fit-content;
+  width: fit-content;
+  height: fit-content;
+  max-width: 90vw;
+  max-height: 80vh;
   left: calc(-50vw + 50%);
   right: calc(-50vw + 50%);
   top: calc(-50vh + 50%);
@@ -74,6 +80,14 @@ $dialog-width-min: 100px;
     height: 100vh;
   }
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
   &__btn-close {
     box-sizing: inherit;
     font: inherit;
@@ -85,11 +99,6 @@ $dialog-width-min: 100px;
     border: none;
     outline: none;
     cursor: pointer;
-
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
     padding: 3px;
     border-radius: $border-radius;
     transition: background-color $dialog-transition;

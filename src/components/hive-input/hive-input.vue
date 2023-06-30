@@ -13,6 +13,7 @@ import {
   Update,
   Input,
   onInput,
+  onUpdateModelValue,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 
@@ -55,7 +56,7 @@ const forceFocus = () => {
 };
 
 const handleInput = (value: currentType) => {
-  emit('update:modelValue', value);
+  onUpdateModelValue(emit, value);
   onInput(emit, value);
 };
 

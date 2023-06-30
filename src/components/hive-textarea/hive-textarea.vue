@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { StyleValue, ref } from 'vue';
+import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import { Update } from '@/common/mixin/emits';
+import { Update, onUpdateModelValue } from '@/common/mixin/emits';
 
 export interface Props extends CommonProps {
   modelValue: string;
@@ -28,7 +28,7 @@ const emit = defineEmits<Emit>();
     class="hive-textaria"
     :class="[{ resizable: resizable }, resizeDirection]"
     :value="modelValue"
-    @input="emit('update:modelValue', ($event.target as HTMLTextAreaElement)?.value)"
+    @input="onUpdateModelValue(emit, ($event.target as HTMLTextAreaElement)?.value)"
     :placeholder="placeholder"
     :rows="rowsCount"
     :style="style"
