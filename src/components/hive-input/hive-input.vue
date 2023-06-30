@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, StyleValue, computed, ref } from 'vue';
+import { Ref, StyleValue, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Focusout,
@@ -13,6 +13,7 @@ import {
   Update,
   Input,
   onInput,
+  onUpdateModelValue,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 
@@ -55,7 +56,7 @@ const forceFocus = () => {
 };
 
 const handleInput = (value: currentType) => {
-  emit('update:modelValue', value);
+  onUpdateModelValue(emit, value);
   onInput(emit, value);
 };
 
