@@ -119,16 +119,16 @@ const optionsObject = [
         <hive-button @click="isOpenModal = true" />
         
         <hive-dialog v-model="isOpenModal">
-          <template v-slot:header>
+          <template #header>
             <!-- <hive-button title="close" /> -->
-            Привэд Мэдвэд
+            ривэд эдвэд FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
           </template>
 
           <hive-input v-model="text" />
           <hive-button />
           Hello
 
-          <template v-slot:footer>
+          <template #footer>
             <hive-button title="close" />
           </template>
         </hive-dialog>
