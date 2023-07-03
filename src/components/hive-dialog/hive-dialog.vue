@@ -29,8 +29,8 @@ const handleHide = () => {
       <div v-if="modelValue" class="hive-dialog">
         <div
           class="hive-dialog__mask"
-          @click="handleHide"
           :style="{ backgroundColor: maskBackground, zIndex: zIndex }"
+          @click="handleHide"
         />
         <div class="hive-dialog__content" :style="{ zIndex: zIndex, ...style }" v-bind="$attrs">
           <slot name="header" />
