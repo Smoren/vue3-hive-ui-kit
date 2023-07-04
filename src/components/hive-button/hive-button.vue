@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Click, onClick } from '@/common/mixin/emits';
 
 export interface Props extends CommonProps {
   title?: string;
   disabled?: boolean;
-  style?: StyleValue;
 }
 
 withDefaults(defineProps<Props>(), {

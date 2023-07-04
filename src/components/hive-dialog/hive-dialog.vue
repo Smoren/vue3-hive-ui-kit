@@ -32,8 +32,7 @@ const handleHide = () => {
           :style="{ backgroundColor: maskBackground, zIndex: zIndex }"
           @click="handleHide"
         />
-
-        <div class="hive-dialog__content" :style="{ zIndex: zIndex }">
+        <div class="hive-dialog__content" :style="{ zIndex: zIndex, ...style }" v-bind="$attrs">
           <slot name="header" />
           <slot />
           <slot name="footer" />
@@ -81,14 +80,29 @@ $dialog-width-min: 100px;
   }
 }
 
-.backdrop-enter-from,
-.backdrop-leave-to {
-  opacity: 0;
+.backdrop-enter-active {
+  .hive-dialog {
+    &__mask {
+      animation: visible 0.4s ease-out;
+    }
+  }
 }
 
-.backdrop-enter-to,
-.backdrop-leave-from {
-  opacity: 1;
+.backdrop-leave-active {
+  .hive-dialog {
+    &__mask {
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes visible {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .backdrop-enter-active,
