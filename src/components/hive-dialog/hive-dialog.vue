@@ -32,8 +32,7 @@ const handleHide = () => {
           @click="handleHide"
           :style="{ backgroundColor: maskBackground, zIndex: zIndex }"
         />
-
-        <div class="hive-dialog__content" :style="{ zIndex: zIndex }">
+        <div class="hive-dialog__content" :style="{ zIndex: zIndex, ...style }" v-bind="$attrs">
           <slot name="header" />
           <slot />
           <slot name="footer" />
