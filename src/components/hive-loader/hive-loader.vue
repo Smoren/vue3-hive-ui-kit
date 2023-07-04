@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 
 export interface Props extends CommonProps {
   visible?: boolean;
-  style?: StyleValue;
 }
 
 withDefaults(defineProps<Props>(), {

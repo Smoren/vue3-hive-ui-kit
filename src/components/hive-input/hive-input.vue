@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, StyleValue, ref } from 'vue';
+import { Ref, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Focusout,
@@ -28,7 +28,6 @@ export interface Props extends CommonProps {
   min?: number;
   max?: number;
   step?: number;
-  style?: StyleValue;
 }
 
 const props = withDefaults(defineProps<Props>(), {
