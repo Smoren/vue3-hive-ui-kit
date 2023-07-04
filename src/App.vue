@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
-// import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
+import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 import hiveInput from './components/hive-input/hive-input.vue';
 
 const text = ref('text');

@@ -164,7 +164,8 @@ const forceFocus = () => {
     @focusin="expand()"
     @focusout="collapse()"
   >
-    <i class="dropdown icon" @mousedown="toggle" />
+    <!-- <i class="dropdown icon" @mousedown="toggle" /> -->
+    <!-- <span>▼</span> -->
     <hive-input
       ref="searchRef"
       v-model="searchQuery"
@@ -174,8 +175,8 @@ const forceFocus = () => {
       tabindex="0"
       style="height: 100%"
       :disabled="disabled"
-      @focusin="expand(), onFocusin()"
-      @focusout="collapse(), onFocusout()"
+      @focusin="expand(), onFocusin(emit)"
+      @focusout="collapse(), onFocusout(emit)"
       @keydown="onKeydown(emit, $event)"
       @keydown.enter="updateCurrentValue(activeValue)"
       @keydown.up.prevent="setPrevActiveValue"
@@ -183,8 +184,10 @@ const forceFocus = () => {
       @keydown.esc="collapse"
       @input="onInput(emit, $event as string)"
     />
+    <span>▼</span>
     <div :class="{ filtered: searchQuery.length > 0 }" class="text">
       <div v-if="withImg && imgsArray" style="display: flex; align-items: center; gap: 5px">
+        <!-- TODO -->
         <!-- <img :src="imgsArray[currentOption?.title]" alt="" /> -->
         <div>
           {{ currentOption?.title }}
@@ -221,6 +224,7 @@ const forceFocus = () => {
           @mousedown.prevent
         >
           <div v-if="withImg && imgsArray" style="display: flex; align-items: center; gap: 5px">
+             <!-- TODO -->
             <!-- <img :src="imgsArray[index]" alt="" /> -->
             <div>
               {{ option?.title }}
@@ -310,6 +314,29 @@ const forceFocus = () => {
     opacity: 0.8;
     -webkit-transition: opacity 0.1s ease;
     transition: opacity 0.1s ease;
+
+//     .ui.button > .icon:not(.button) {
+//     height: auto;
+//     opacity: 0.8;
+//     -webkit-transition: opacity 0.1s ease;
+//     transition: opacity 0.1s ease;
+//     color: '';
+// }
+
+// .ui.button:not(.icon) > .icon:not(.button):not(.dropdown),
+// .ui.button:not(.icon) > .icons:not(.button):not(.dropdown) {
+//     margin: 0 0.42857143em 0 -0.21428571em;
+//     vertical-align: baseline;
+// }
+
+// .ui.button:not(.icon) > .icons:not(.button):not(.dropdown) > .icon {
+//     vertical-align: baseline;
+// }
+
+// .ui.button:not(.icon) > .right.icon:not(.button):not(.dropdown) {
+//     margin: 0 -0.21428571em 0 0.42857143em;
+// }
+
   }
 
   .menu {
