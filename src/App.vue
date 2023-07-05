@@ -25,6 +25,10 @@ const handleR = () => {
 
 const input = ref('');
 
+const modalStyle = {
+  backgroundColor: 'green',
+};
+
 const options = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 const optionsObject = [
   {
@@ -117,17 +121,18 @@ const optionsObject = [
       <!-- Modal -->
       <widget-wrapper title="Modal">
         <hive-button @click="isOpenModal = true" />
-        
-        <hive-dialog v-model="isOpenModal">
+
+        <hive-dialog v-model="isOpenModal" :style="modalStyle">
           <template #header>
             <!-- <hive-button title="close" /> -->
-            ривэд эдвэд FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+            ривэд эдвэд
+            FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
           </template>
-
-          <hive-input v-model="text" />
-          <hive-button />
-          Hello
-
+          <div>
+            <hive-input v-model="text" />
+            <hive-button />
+            Hello
+          </div>
           <template #footer>
             <hive-button title="close" />
           </template>
@@ -168,5 +173,15 @@ const optionsObject = [
 .test {
   background-color: aqua;
   z-index: 1;
+}
+
+.new {
+  background-color: green;
+}
+</style>
+
+<style>
+.new {
+  background-color: green;
 }
 </style>

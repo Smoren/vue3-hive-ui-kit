@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { StyleValue } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Update, onUpdateModelValue } from '@/common/mixin/emits';
 
@@ -9,7 +8,6 @@ export interface Props extends CommonProps {
   rowsCount?: number;
   resizable?: boolean;
   resizeDirection?: 'both' | 'vertical' | 'horizontal';
-  style?: StyleValue;
 }
 
 withDefaults(defineProps<Props>(), {
