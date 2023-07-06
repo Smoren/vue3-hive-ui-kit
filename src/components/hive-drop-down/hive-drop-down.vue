@@ -61,8 +61,9 @@ useOnMount(emit);
 
 const menuRef = ref(null);
 
-const { currentValue, activeValue, currentOption, currentOptions, filteredOptions, searchQuery } =
-  useList(props as ListConfig);
+const { currentValue, activeValue, currentOption, currentOptions, filteredOptions, searchQuery } = useList(
+  props as ListConfig,
+);
 
 const {
   isExpanded,
@@ -148,7 +149,7 @@ defineExpose({ searchRef, forceFocus });
 
 <template>
   <div class="hive-drop-down" :class="{ 'active visible': isExpanded }" @focusin="expand()" @focusout="collapse()">
-    <i class="hive-drop-down__icon" :class="{expand: isExpanded }" @mousedown="toggle" />
+    <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
     <hive-input
       v-model="searchQuery"
       ref="searchRef"
@@ -293,7 +294,7 @@ $drop-down-border-color-hover: rgba(34, 36, 38, 0.35);
     right: 1rem;
     opacity: 0.7;
     background: none;
-    
+
     &:before {
       content: '▼';
     }
@@ -304,7 +305,7 @@ $drop-down-border-color-hover: rgba(34, 36, 38, 0.35);
       }
     }
   }
-  
+
   &__menu {
     cursor: auto;
     position: absolute;

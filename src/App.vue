@@ -1,4 +1,4 @@
-<script lang="ts"  setup>
+<script lang="ts" setup>
 import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
@@ -117,18 +117,19 @@ const optionsObject = [
       <!-- Modal -->
       <widget-wrapper title="Modal">
         <hive-button @click="isOpenModal = true" />
-        
+
         <hive-dialog v-model="isOpenModal">
           <template #header>
             <!-- <hive-button title="close" /> -->
-            ривэд эдвэд FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+            ривэд эдвэд
+            FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
           </template>
 
           <hive-input v-model="text" />
           <hive-button />
           Hello
 
-           <hive-drop-down :options="optionsObject" />
+          <hive-drop-down :options="optionsObject" />
 
           <template #footer>
             <hive-button title="close" />

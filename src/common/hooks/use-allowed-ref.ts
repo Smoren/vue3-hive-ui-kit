@@ -1,6 +1,6 @@
-import { customRef, type Ref, ref } from 'vue';
+import { customRef, Ref, ref } from 'vue';
 
-export default function useAllowedRef<T>(value: T, isAllowed = ref(true)): Ref<T> {
+export const useAllowedRef = <T>(value: T, isAllowed = ref(true)): Ref<T> => {
   return customRef((track, trigger) => ({
     get() {
       track();
@@ -13,4 +13,4 @@ export default function useAllowedRef<T>(value: T, isAllowed = ref(true)): Ref<T
       trigger();
     },
   }));
-}
+};

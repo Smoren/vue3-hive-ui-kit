@@ -1,4 +1,4 @@
-interface DataContainerNodeWithRaw<T> extends Record<string, unknown> {
+export type DataContainerNodeWithRaw<T> = Record<string, unknown> & {
   key: string;
   value: unknown;
   title: string;
@@ -6,9 +6,9 @@ interface DataContainerNodeWithRaw<T> extends Record<string, unknown> {
   raw: T;
   prev: DataContainerNode<T> | null;
   next: DataContainerNode<T> | null;
-}
+};
 
-interface DataContainerNode<T> extends Record<string, unknown> {
+export type DataContainerNode<T> = Record<string, unknown> & {
   key: string;
   value: unknown;
   title: string;
@@ -16,8 +16,6 @@ interface DataContainerNode<T> extends Record<string, unknown> {
   raw: DataContainerNodeWithRaw<T> | null;
   prev: DataContainerNode<T> | null;
   next: DataContainerNode<T> | null;
-}
+};
 
-type DataContainer<T> = Record<string, DataContainerNode<T>>;
-
-export type { DataContainer, DataContainerNode, DataContainerNodeWithRaw };
+export type DataContainer<T> = Record<string, DataContainerNode<T>>;

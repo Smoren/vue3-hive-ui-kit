@@ -1,19 +1,19 @@
-import { computed, type ComputedRef, type Ref } from 'vue';
+import { computed, ComputedRef, Ref } from 'vue';
 import { DataContainer, DataContainerNode, DataContainerNodeWithRaw } from '../types/data-container';
 
 type DataType<T> = Array<T> | Record<string, T>;
 type DataRefType<T> = Ref<DataType<T>> | ComputedRef<DataType<T>>;
 type DataItemKey = string | number;
 
-interface DataContainerConfig<T> {
+type DataContainerConfig<T> = {
   data: DataRefType<T>;
   valueField?: string;
   titleField?: string;
-}
+};
 
-const UNKNOWN_KEY = '';
+export const UNKNOWN_KEY = '';
 
-function createUnknownNode(): DataContainerNode<null> {
+export const createUnknownNode = (): DataContainerNode<null> => {
   return {
     key: UNKNOWN_KEY,
     value: null,
@@ -23,15 +23,13 @@ function createUnknownNode(): DataContainerNode<null> {
     prev: null,
     next: null,
   };
-}
+};
 
-export { createUnknownNode, UNKNOWN_KEY };
-
-export default function useDataContainer<T>({
+export const useDataContainer = <T>({
   data,
   valueField,
   titleField = 'title',
-}: DataContainerConfig<T>): ComputedRef<DataContainer<T>> {
+}: DataContainerConfig<T>): ComputedRef<DataContainer<T>> => {
   const getValue = (item: T, key: DataItemKey): unknown => {
     if (valueField !== undefined && typeof item === 'object') {
       const value = (item as Record<string, unknown>)[valueField];
@@ -85,4 +83,4 @@ export default function useDataContainer<T>({
 
     return result;
   });
-}
+};

@@ -1,16 +1,16 @@
 import { FilteredOptions } from '@/common/types/option';
-import type { ActiveValue, CurrentValue, Value } from '@/common/types/value';
+import { ActiveValue, CurrentValue, Value } from '@/common/types/value';
 
-export interface ListMethodsConfig {
+export type ListMethodsConfig = {
   activeValue: ActiveValue;
   currentValue: CurrentValue;
   filteredOptions: FilteredOptions;
   collapse: () => void;
-}
+};
 
-export interface ListMethodsExport {
+export type ListMethodsExport = {
   updateCurrentValue: (value: Value) => void;
-}
+};
 
 export const useListMethods = ({
   activeValue,

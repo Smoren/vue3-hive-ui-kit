@@ -16,7 +16,7 @@ withDefaults(defineProps<Props>(), {
   resizeDirection: 'both',
 });
 
-type Emit = Update<string>
+type Emit = Update<string>;
 
 const emit = defineEmits<Emit>();
 </script>

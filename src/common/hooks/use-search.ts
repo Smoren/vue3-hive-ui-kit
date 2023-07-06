@@ -1,33 +1,31 @@
-import { computed, type ComputedRef, type Ref, ref } from 'vue';
-import useAllowedRef from '@/common/hooks/use-allowed-ref';
+import { computed, ComputedRef, Ref, ref } from 'vue';
+import { useAllowedRef } from '@/common/hooks/use-allowed-ref';
 
-type InputCollection<T> = T[] | Record<string, T>;
+export type InputCollection<T> = T[] | Record<string, T>;
 type FieldCollection<T> = T extends Record<string, unknown> ? Array<keyof T> : never[];
 type ItemsType<T> = Ref<InputCollection<T>> | ComputedRef<InputCollection<T>>;
 
-interface SearchConfig<T> {
+export type SearchConfig<T> = {
   items: ItemsType<T>;
   fields?: FieldCollection<T>;
   defaultQuery?: string;
   caseInsensitive?: boolean;
   minQueryLength?: number;
-}
+};
 
-interface SearchExport<T> {
+export type SearchExport<T> = {
   filtered: ComputedRef<InputCollection<T>>;
   query: Ref<string>;
   isChangeAllowed: Ref<boolean>;
-}
+};
 
-export type { SearchConfig, SearchExport, InputCollection };
-
-export default function useSearch<T>({
+export const useSearch = <T>({
   items,
   fields = [] as FieldCollection<T>,
   defaultQuery = '',
   caseInsensitive = false,
   minQueryLength = 0,
-}: SearchConfig<T>): SearchExport<T> {
+}: SearchConfig<T>): SearchExport<T> => {
   const isChangeAllowed = ref(true);
 
   const query = useAllowedRef(defaultQuery, isChangeAllowed);
@@ -78,4 +76,4 @@ export default function useSearch<T>({
     query,
     isChangeAllowed,
   };
-}
+};

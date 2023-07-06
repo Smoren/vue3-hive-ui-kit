@@ -1,11 +1,11 @@
-import { computed, type ComputedRef, ref, type Ref, watch } from 'vue';
-import type { ActiveValue, CurrentValue } from '@/common/types/value';
-import useDataContainer, { createUnknownNode, UNKNOWN_KEY } from '@/common/hooks/use-data-container';
-import useSearch from '@/common/hooks/use-search';
+import { computed, ComputedRef, ref, Ref, watch } from 'vue';
+import { useDataContainer, createUnknownNode, UNKNOWN_KEY } from '@/common/hooks/use-data-container';
+import { useSearch } from '@/common/hooks/use-search';
 import { Option, Options } from '@/common/types/option';
+import { ActiveValue, CurrentValue } from '@/common/types/value';
 import { DataContainer, DataContainerNode } from '@/common/types/data-container';
 
-export interface ListConfig {
+export type ListConfig = {
   modelValue: string;
   options: Options;
   valueField?: string;
@@ -14,9 +14,9 @@ export interface ListConfig {
   empty?: boolean;
   withNull?: boolean;
   nullTitle?: string;
-}
+};
 
-export interface ListExport {
+export type ListExport = {
   currentValue: CurrentValue;
   activeValue: ActiveValue;
   currentOptions: Ref<Options>;
@@ -24,7 +24,7 @@ export interface ListExport {
   filteredOptions: ComputedRef<DataContainer<Option>>;
   searchQuery: Ref<string>;
   valueChangedOnInit: boolean;
-}
+};
 
 export const useList = ({
   modelValue,

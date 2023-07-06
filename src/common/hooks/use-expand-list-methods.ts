@@ -4,15 +4,15 @@ import { ActiveValue, Value } from '../types/value';
 import { Option, FilteredOptions } from '../types/option';
 import { DataContainerNode } from '../types/data-container';
 
-export interface ExpandListsCommonMethodsConfig {
+export type ExpandListsCommonMethodsConfig = {
   searchQuery: Ref<string>;
   activeValue: ActiveValue;
   currentValue?: Ref<Value | null>;
   filteredOptions: FilteredOptions;
   handleEvent?: (event: Event) => void;
-}
+};
 
-export interface ExpandListsCommonMethodsExport {
+export type ExpandListsCommonMethodsExport = {
   isExpanded: Ref<boolean>;
   searchRef: Ref<InputExpose | null>;
   expand: () => void;
@@ -24,7 +24,7 @@ export interface ExpandListsCommonMethodsExport {
   setNextActiveValue: () => void;
   onAppear: (option: DataContainerNode<Option>) => void;
   onDisappear: (option: DataContainerNode<Option>) => void;
-}
+};
 
 export const useExpandListMethods = ({
   searchQuery,
@@ -119,4 +119,4 @@ export const useExpandListMethods = ({
     onAppear,
     onDisappear,
   };
-}
+};
