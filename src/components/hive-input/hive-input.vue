@@ -49,7 +49,7 @@ useOnMount(emit);
 const inputRef: Ref<HTMLInputElement | null> = ref(null);
 
 const forceFocus = () => {
-  if (inputRef.value !== null) {
+  if (inputRef.value) {
     inputRef.value.focus();
   }
 };

@@ -137,6 +137,13 @@ const forceFocus = () => {
     searchRef.value.forceFocus();
   }
 };
+
+export interface InputExpose {
+  input: HTMLInputElement | null;
+  forceFocus: () => void;
+}
+
+defineExpose({ searchRef, forceFocus });
 </script>
 
 <template>
