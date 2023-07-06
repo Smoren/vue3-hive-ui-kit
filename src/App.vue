@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script lang="ts"  setup>
 import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
-import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 import hiveInput from './components/hive-input/hive-input.vue';
+import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -24,10 +24,6 @@ const handleR = () => {
 };
 
 const input = ref('');
-
-const modalStyle = {
-  backgroundColor: 'green',
-};
 
 const options = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 const optionsObject = [
@@ -121,18 +117,19 @@ const optionsObject = [
       <!-- Modal -->
       <widget-wrapper title="Modal">
         <hive-button @click="isOpenModal = true" />
-
-        <hive-dialog v-model="isOpenModal" :style="modalStyle">
+        
+        <hive-dialog v-model="isOpenModal">
           <template #header>
             <!-- <hive-button title="close" /> -->
-            ривэд эдвэд
-            FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+            ривэд эдвэд FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
           </template>
-          <div>
-            <hive-input v-model="text" />
-            <hive-button />
-            Hello
-          </div>
+
+          <hive-input v-model="text" />
+          <hive-button />
+          Hello
+
+           <hive-drop-down :options="optionsObject" />
+
           <template #footer>
             <hive-button title="close" />
           </template>
@@ -141,8 +138,9 @@ const optionsObject = [
 
       <!-- DropDown -->
       <widget-wrapper title="DropDown">
-        <!-- <hive-input v-model="input" /> -->
-        <hive-drop-down :options="optionsObject" key-field="key" value-field="value" title-field="title" />
+        <hive-drop-down :options="optionsObject" />
+        <hive-drop-down :options="optionsObject" value-field="value" title-field="title" />
+        <hive-drop-down :options="options" />
       </widget-wrapper>
     </div>
   </div>
@@ -173,15 +171,5 @@ const optionsObject = [
 .test {
   background-color: aqua;
   z-index: 1;
-}
-
-.new {
-  background-color: green;
-}
-</style>
-
-<style>
-.new {
-  background-color: green;
 }
 </style>
