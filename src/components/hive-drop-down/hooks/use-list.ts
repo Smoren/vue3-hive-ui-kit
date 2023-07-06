@@ -1,52 +1,32 @@
 import { computed, type ComputedRef, ref, type Ref, watch } from 'vue';
-import type { ValueType } from '@/common/types/valueType';
-import useDataContainer, {
-  type DataContainer,
-  type DataContainerNode,
-  createUnknownNode,
-  UNKNOWN_KEY,
-} from '@/common/hooks/use-data-container';
+import type { ActiveValue, CurrentValue } from '@/common/types/value';
+import useDataContainer, { createUnknownNode, UNKNOWN_KEY } from '@/common/hooks/use-data-container';
 import useSearch from '@/common/hooks/use-search';
+import { Option, Options } from '@/common/types/option';
+import { DataContainer, DataContainerNode } from '@/common/types/data-container';
 
-type OptionType = string | number | Record<string, unknown>;
-type OptionsType = Array<OptionType> | Record<string, OptionType>;
-type CurrentValueType = Ref<ValueType>;
-type ActiveValueType = Ref<ValueType | null>;
-type FilteredOptionsType = ComputedRef<DataContainer<OptionType>>;
-
-interface DropDownListConfig {
+export interface ListConfig {
   modelValue: string;
-  options: OptionsType;
-  keyField?: string;
+  options: Options;
   valueField?: string;
-  titleField: string;
-  minQueryLength: number;
-  empty: boolean;
-  withNull: boolean;
-  nullTitle: string;
+  titleField?: string;
+  minQueryLength?: number;
+  empty?: boolean;
+  withNull?: boolean;
+  nullTitle?: string;
 }
 
-interface DropDownListExport {
-  currentValue: CurrentValueType;
-  activeValue: ActiveValueType;
-  currentOptions: Ref<OptionsType>;
-  currentOption: ComputedRef<DataContainerNode<OptionType>>;
-  filteredOptions: ComputedRef<DataContainer<OptionType>>;
+export interface ListExport {
+  currentValue: CurrentValue;
+  activeValue: ActiveValue;
+  currentOptions: Ref<Options>;
+  currentOption: ComputedRef<DataContainerNode<Option>>;
+  filteredOptions: ComputedRef<DataContainer<Option>>;
   searchQuery: Ref<string>;
   valueChangedOnInit: boolean;
 }
 
-export type {
-  CurrentValueType,
-  ActiveValueType,
-  FilteredOptionsType,
-  OptionType,
-  OptionsType,
-  DropDownListConfig,
-  DropDownListExport,
-};
-
-export default function useHiveDropDownList({
+export const useList = ({
   modelValue,
   valueField,
   titleField,
@@ -55,20 +35,20 @@ export default function useHiveDropDownList({
   empty,
   withNull,
   nullTitle,
-}: DropDownListConfig): DropDownListExport {
+}: ListConfig): ListExport => {
   let valueChangedOnInit = false;
   const currentValue = ref(modelValue);
   const activeValue = ref(modelValue);
-  let currentOptions: Ref<OptionType[] | Record<string, OptionType>>;
+  let currentOptions: Ref<Option[] | Record<string, Option>>;
   if (Array.isArray(options)) {
-    if (withNull) {
+    if (withNull && valueField) {
       options.unshift({
-        [titleField]: nullTitle,
+        [titleField!]: nullTitle,
         [valueField ?? 'value']: null,
       });
     }
     const opt = JSON.parse(JSON.stringify(options));
-    currentOptions = ref(Array.from(new Set(opt)) as OptionType[] | Record<string, OptionType>);
+    currentOptions = ref(Array.from(new Set(opt)) as Option[] | Record<string, Option>);
   } else {
     currentOptions = ref(options);
   }
@@ -82,13 +62,13 @@ export default function useHiveDropDownList({
     minQueryLength,
   });
 
-  const unfilteredOptions: ComputedRef<DataContainer<OptionType>> = useDataContainer({
+  const unfilteredOptions: ComputedRef<DataContainer<Option>> = useDataContainer({
     valueField,
     titleField,
     data: currentOptions,
   });
 
-  const filteredOptions: ComputedRef<DataContainer<OptionType>> = useDataContainer({
+  const filteredOptions: ComputedRef<DataContainer<Option>> = useDataContainer({
     valueField,
     titleField,
     data: bufferedOptions,
@@ -110,7 +90,7 @@ export default function useHiveDropDownList({
         currentValue.value = '';
       } else {
         currentValue.value = UNKNOWN_KEY;
-        unfilteredOptions.value[UNKNOWN_KEY] = createUnknownNode() as unknown as DataContainerNode<OptionType>;
+        unfilteredOptions.value[UNKNOWN_KEY] = createUnknownNode() as unknown as DataContainerNode<Option>;
       }
     }
   };
@@ -122,7 +102,7 @@ export default function useHiveDropDownList({
     () => onOptionsInit(),
   );
 
-  const emtyNode = {
+  const emptyNode = {
     key: '',
     value: '',
     title: '',
@@ -132,9 +112,9 @@ export default function useHiveDropDownList({
     next: null,
   };
 
-  const currentOption = computed<DataContainerNode<OptionType>>(
-    (): DataContainerNode<OptionType> =>
-      empty && currentValue.value === '' ? emtyNode : unfilteredOptions.value[String(currentValue.value)],
+  const currentOption = computed<DataContainerNode<Option>>(
+    (): DataContainerNode<Option> =>
+      empty && currentValue.value === '' ? emptyNode : unfilteredOptions.value[String(currentValue.value)],
   );
 
   return {
@@ -142,8 +122,8 @@ export default function useHiveDropDownList({
     activeValue,
     currentOptions,
     currentOption,
-    filteredOptions: filteredOptions as ComputedRef<DataContainer<OptionType>>,
+    filteredOptions: filteredOptions as ComputedRef<DataContainer<Option>>,
     searchQuery,
     valueChangedOnInit,
   };
-}
+};

@@ -1,6 +1,9 @@
-import type { defineComponent, VueElement } from 'vue';
+import type { defineComponent, Ref, VueElement } from 'vue';
 
 type VueComponent = VueElement | ReturnType<typeof defineComponent>;
 type Value = string | number | boolean | unknown | string[];
 
-export type { VueComponent, Value };
+type CurrentValue = Ref<Value>;
+type ActiveValue = Ref<Value | null>;
+
+export type { VueComponent, Value, CurrentValue, ActiveValue };

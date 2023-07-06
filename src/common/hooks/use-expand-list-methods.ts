@@ -1,43 +1,37 @@
-import { type Ref, ref, computed } from 'vue';
-import type { ValueType } from '@/common/types/valueType';
-import type {
-  ActiveValueType,
-  FilteredOptionsType,
-  OptionType,
-} from '@/components/hive-multiselect/hooks/use-hive-multiselect';
-import type { DataContainerNode } from '@/common/hooks/use-data-container';
+import { Ref, ref, computed } from 'vue';
 import { InputExpose } from '@/components/hive-input/hive-input.vue';
+import { ActiveValue, Value } from '../types/value';
+import { Option, FilteredOptions } from '../types/option';
+import { DataContainerNode } from '../types/data-container';
 
-interface DropDownListsCommonMethodsConfig {
+export interface ExpandListsCommonMethodsConfig {
   searchQuery: Ref<string>;
-  activeValue: ActiveValueType;
-  currentValue?: Ref<ValueType | null>;
-  filteredOptions: FilteredOptionsType;
+  activeValue: ActiveValue;
+  currentValue?: Ref<Value | null>;
+  filteredOptions: FilteredOptions;
   handleEvent?: (event: Event) => void;
 }
 
-interface DropDownListsCommonMethodsExport {
+export interface ExpandListsCommonMethodsExport {
   isExpanded: Ref<boolean>;
   searchRef: Ref<InputExpose | null>;
   expand: () => void;
   collapse: () => void;
   toggle: () => void;
-  updateActiveValue: (value: ValueType) => void;
+  updateActiveValue: (value: Value) => void;
   setActiveValueToFirst: () => void;
   setPrevActiveValue: () => void;
   setNextActiveValue: () => void;
-  onAppear: (option: DataContainerNode<OptionType>) => void;
-  onDisappear: (option: DataContainerNode<OptionType>) => void;
+  onAppear: (option: DataContainerNode<Option>) => void;
+  onDisappear: (option: DataContainerNode<Option>) => void;
 }
 
-export type { DropDownListsCommonMethodsConfig, DropDownListsCommonMethodsExport };
-
-export default function useDropDownMethods({
+export const useExpandListMethods = ({
   searchQuery,
   activeValue,
   currentValue = ref(null),
   filteredOptions,
-}: DropDownListsCommonMethodsConfig): DropDownListsCommonMethodsExport {
+}: ExpandListsCommonMethodsConfig): ExpandListsCommonMethodsExport => {
   const isExpanded = ref(false);
   const searchRef: Ref<InputExpose | null> = ref(null);
 
@@ -63,7 +57,7 @@ export default function useDropDownMethods({
     }
   };
 
-  const updateActiveValue = (value: ValueType) => {
+  const updateActiveValue = (value: Value) => {
     activeValue.value = value;
   };
 
@@ -73,7 +67,7 @@ export default function useDropDownMethods({
     if (!opts.length) {
       activeValue.value = null;
     } else if (!filteredOptions.value[String(activeValue.value)]) {
-      activeValue.value = opts[0].value as ValueType;
+      activeValue.value = opts[0].value as Value;
     }
   };
 
@@ -87,7 +81,7 @@ export default function useDropDownMethods({
     }
 
     if (node !== null) {
-      updateActiveValue(node.value as ValueType);
+      updateActiveValue(node.value as Value);
     }
   };
 
@@ -101,14 +95,14 @@ export default function useDropDownMethods({
     }
 
     if (node !== null) {
-      updateActiveValue(node.value as ValueType);
+      updateActiveValue(node.value as Value);
     }
   };
 
-  const onAppear = (option: DataContainerNode<OptionType>) => {
+  const onAppear = (option: DataContainerNode<Option>) => {
     option.visible = true;
   };
-  const onDisappear = (option: DataContainerNode<OptionType>) => {
+  const onDisappear = (option: DataContainerNode<Option>) => {
     option.visible = false;
   };
 

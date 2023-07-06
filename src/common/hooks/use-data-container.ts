@@ -1,4 +1,5 @@
 import { computed, type ComputedRef, type Ref } from 'vue';
+import { DataContainer, DataContainerNode, DataContainerNodeWithRaw } from '../types/data-container';
 
 type DataType<T> = Array<T> | Record<string, T>;
 type DataRefType<T> = Ref<DataType<T>> | ComputedRef<DataType<T>>;
@@ -9,28 +10,6 @@ interface DataContainerConfig<T> {
   valueField?: string;
   titleField?: string;
 }
-
-interface DataContainerNodeWithRaw<T> extends Record<string, unknown> {
-  key: string;
-  value: unknown;
-  title: string;
-  visible: boolean;
-  raw: T;
-  prev: DataContainerNode<T> | null;
-  next: DataContainerNode<T> | null;
-}
-
-interface DataContainerNode<T> extends Record<string, unknown> {
-  key: string;
-  value: unknown;
-  title: string;
-  visible: boolean;
-  raw: DataContainerNodeWithRaw<T> | null;
-  prev: DataContainerNode<T> | null;
-  next: DataContainerNode<T> | null;
-}
-
-type DataContainer<T> = Record<string, DataContainerNode<T>>;
 
 const UNKNOWN_KEY = '';
 
@@ -46,15 +25,7 @@ function createUnknownNode(): DataContainerNode<null> {
   };
 }
 
-export {
-  type DataType,
-  type DataItemKey,
-  type DataContainerConfig,
-  type DataContainerNode,
-  type DataContainer,
-  createUnknownNode,
-  UNKNOWN_KEY,
-};
+export { createUnknownNode, UNKNOWN_KEY };
 
 export default function useDataContainer<T>({
   data,

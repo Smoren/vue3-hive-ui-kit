@@ -46,11 +46,11 @@ const emit = defineEmits<Emit>();
 
 useOnMount(emit);
 
-const input: Ref<HTMLInputElement | null> = ref(null);
+const inputRef: Ref<HTMLInputElement | null> = ref(null);
 
 const forceFocus = () => {
-  if (input.value !== null) {
-    input.value.focus();
+  if (inputRef.value !== null) {
+    inputRef.value.focus();
   }
 };
 
@@ -78,12 +78,12 @@ export interface InputExpose {
   forceFocus: () => void;
 }
 
-defineExpose({ input, forceFocus });
+defineExpose({ inputRef, forceFocus });
 </script>
 
 <template>
   <input
-    ref="input"
+    ref="inputRef"
     class="hive-input"
     :class="{ error: invalid }"
     :style="style"
@@ -102,10 +102,11 @@ defineExpose({ input, forceFocus });
 
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
+
 .hive-input {
   border: 1px solid transparent;
   border-radius: var(--border-radius, $border-radius);
-  padding: 0.5rem 1rem;
+  padding: $p-input;
   transition: background 0.2s;
   border-color: var(--border, $border);
   background-color: var(--bg-input, $bg-input);
@@ -119,7 +120,8 @@ defineExpose({ input, forceFocus });
 
   &:focus,
   focus-visible {
-    outline: 1px auto var(--border-focus, $border-focus);
+    outline: none;
+    border-color: var(--border-focus, $border-focus);
   }
 }
 </style>
