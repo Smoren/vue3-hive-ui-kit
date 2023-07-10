@@ -102,7 +102,6 @@ watch(currentValue, () => {
 watch(
   () => props.modelValue,
   () => {
-    console.log(props.modelValue);
     updateCurrentValue(props.modelValue);
   },
 );
@@ -201,6 +200,7 @@ defineExpose({ searchRef, forceFocus });
         {{ currentOption?.title }}
       </span>
     </div>
+    <div v-if="isExpanded" class="hive-drop-down__botch"></div>
     <div
       ref="menuRef"
       class="hive-drop-down__menu"
@@ -273,9 +273,19 @@ $drop-down-padding: 0.5rem 0;
   border: 1px solid var(--border, $border);
   padding: $drop-down-padding;
   border-radius: var(--border-radius, $border-radius);
-  transition:
-    box-shadow 0.1s ease,
-    width 0.1s ease;
+  transition: box-shadow 0.1s ease, width 0.1s ease;
+
+  &__botch {
+    position: absolute;
+    top: 0m;
+    left: -1px;
+    background-color: white;
+    z-index: 100;
+    height: 10px;
+    width: 100%;
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+  }
 
   &__search {
     position: absolute;
@@ -331,6 +341,7 @@ $drop-down-padding: 0.5rem 0;
     right: 1rem;
     opacity: 0.7;
     background: none;
+    font-style: normal;
 
     &:before {
       content: '▼';
@@ -345,6 +356,10 @@ $drop-down-padding: 0.5rem 0;
 
   &__menu {
     cursor: auto;
+    position: absolute;
+    top: 1.8rem;
+    left: -1px;
+    width: 100%;
     z-index: $drop-down-z_menu;
     display: none;
     outline: none;
@@ -358,7 +373,8 @@ $drop-down-padding: 0.5rem 0;
     overflow-x: hidden;
     overflow-y: auto;
     backface-visibility: hidden;
-    border: none;
+    border: 1px solid red;
+    border-radius: 5px;
     border-top-width: 0 !important;
     max-height: $drop-down-max-height;
 
