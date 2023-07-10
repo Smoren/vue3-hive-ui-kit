@@ -21,9 +21,9 @@ const emit = defineEmits<Emit>();
   <button
     class="hive-button"
     :class="{ disabled: disabled }"
+    :style="style"
     :disabled="disabled"
     @click="onClick(emit, $event)"
-    :style="style"
   >
     <slot name="before" />
     <slot>

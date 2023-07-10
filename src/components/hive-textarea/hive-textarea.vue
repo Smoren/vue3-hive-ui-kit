@@ -25,11 +25,11 @@ const emit = defineEmits<Emit>();
   <textarea
     class="hive-textaria"
     :class="[{ resizable: resizable }, resizeDirection]"
+    :style="style"
     :value="modelValue"
     @input="onUpdateModelValue(emit, ($event.target as HTMLTextAreaElement)?.value)"
     :placeholder="placeholder"
     :rows="rowsCount"
-    :style="style"
   />
 </template>
 

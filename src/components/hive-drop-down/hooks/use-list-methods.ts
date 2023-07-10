@@ -12,14 +12,9 @@ export type ListMethodsExport = {
   updateCurrentValue: (value: Value) => void;
 };
 
-export const useListMethods = ({
-  activeValue,
-  currentValue,
-  filteredOptions,
-  collapse,
-}: ListMethodsConfig): ListMethodsExport => {
+export const useListMethods = ({ currentValue, filteredOptions, collapse }: ListMethodsConfig): ListMethodsExport => {
   const updateCurrentValue = (value: Value) => {
-    if (!filteredOptions.value[String(activeValue.value)]) {
+    if (!filteredOptions.value[String(value)]) {
       collapse();
       return;
     }
