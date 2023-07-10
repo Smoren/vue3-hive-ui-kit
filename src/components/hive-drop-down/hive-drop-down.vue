@@ -169,8 +169,8 @@ defineExpose({ searchRef, forceFocus });
     class="hive-drop-down"
     :class="{ 'active visible': isExpanded }"
     :style="style"
-    @focusin="expand()"
-    @focusout="collapse()"
+    @focusin="expand"
+    @focusout="collapse"
   >
     <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
     <hive-input
@@ -180,8 +180,8 @@ defineExpose({ searchRef, forceFocus });
       placeholder=""
       tabindex="0"
       :disabled="disabled"
-      @focusin="expand(), onFocusin(emit)"
-      @focusout="collapse(), onFocusout(emit)"
+      @focusin="expand, onFocusin(emit)"
+      @focusout="collapse, onFocusout(emit)"
       @keydown="onKeydown(emit, $event)"
       @keydown.enter="updateCurrentValue(activeValue)"
       @keydown.up.prevent="setPrevActiveValue"
