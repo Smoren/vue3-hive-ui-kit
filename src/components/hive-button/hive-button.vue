@@ -55,7 +55,7 @@ const emit = defineEmits<Emit>();
 
   &:focus,
   focus-visible {
-    outline: 1px auto var(--border-focus, $border-focus);
+    outline: none;
   }
 
   &.disabled {
