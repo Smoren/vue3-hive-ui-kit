@@ -21,9 +21,9 @@ const emit = defineEmits<Emit>();
   <button
     class="hive-button"
     :class="{ disabled: disabled }"
+    :style="style"
     :disabled="disabled"
     @click="onClick(emit, $event)"
-    :style="style"
   >
     <slot name="before" />
     <slot>
@@ -55,7 +55,7 @@ const emit = defineEmits<Emit>();
 
   &:focus,
   focus-visible {
-    outline: 1px auto var(--border-focus, $border-focus);
+    outline: none;
   }
 
   &.disabled {

@@ -25,11 +25,11 @@ const emit = defineEmits<Emit>();
   <textarea
     class="hive-textaria"
     :class="[{ resizable: resizable }, resizeDirection]"
+    :style="style"
     :value="modelValue"
     @input="onUpdateModelValue(emit, ($event.target as HTMLTextAreaElement)?.value)"
     :placeholder="placeholder"
     :rows="rowsCount"
-    :style="style"
   />
 </template>
 
@@ -66,7 +66,8 @@ const emit = defineEmits<Emit>();
 
   &:focus,
   focus-visible {
-    outline: 1px auto var(--border-focus, $border-focus);
+    outline: none;
+    border-color: var(--border-focus, $border-focus);
   }
 }
 </style>
