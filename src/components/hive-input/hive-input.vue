@@ -78,7 +78,7 @@ export interface InputExpose {
   forceFocus: () => void;
 }
 
-defineExpose({ inputRef, forceFocus });
+defineExpose({ input: inputRef, forceFocus });
 </script>
 
 <template>
