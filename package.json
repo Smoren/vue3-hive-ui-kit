@@ -29,13 +29,13 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@types/node": "^20.3.3",
+    "@types/node": "^20.4.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "sass": "^1.63.6",
     "typescript": "^5.1.6",
-    "vite": "^4.3.9",
-    "vite-plugin-css-injected-by-js": "^3.1.2",
-    "vue-tsc": "^1.8.3"
+    "vite": "^4.4.2",
+    "vite-plugin-css-injected-by-js": "^3.2.0",
+    "vue-tsc": "^1.8.4"
   },
   "author": {
     "name": "BDSM",
