@@ -279,12 +279,12 @@ $drop-down-padding: 0.5rem 0;
     position: absolute;
     top: 0m;
     left: -1px;
-    background-color: white;
+    background-color: var(--bg-input, $bg-input);
     z-index: 100;
     height: 10px;
     width: 100%;
-    border-left: 1px solid red;
-    border-right: 1px solid red;
+    border-left: 1px solid var(--border-focus, $border-focus);
+    border-right: 1px solid var(--border-focus, $border-focus);
   }
 
   &__search {
@@ -373,7 +373,7 @@ $drop-down-padding: 0.5rem 0;
     overflow-x: hidden;
     overflow-y: auto;
     backface-visibility: hidden;
-    border: 1px solid red;
+    border: 1px solid var(--border-focus, $border-focus);
     border-radius: 5px;
     border-top-width: 0 !important;
     max-height: $drop-down-max-height;
@@ -406,7 +406,7 @@ $drop-down-padding: 0.5rem 0;
 
   &.active {
     z-index: $drop-down-z-active;
-    border-color: var(--border, $border-focus);
+    border-color: var(--border-focus, $border-focus);
     box-shadow: $drop-down-box-shadow;
 
     .visible {
