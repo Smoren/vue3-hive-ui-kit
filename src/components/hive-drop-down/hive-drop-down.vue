@@ -266,19 +266,19 @@ $drop-down-padding: 0.5rem 0;
   text-align: left;
   outline: 0;
   transform: rotateZ(0deg);
-  background-color: var(--bg-input, $bg-input);
+  background-color: none;
   display: inline-block;
   color: var(--text, $text);
   box-shadow: none;
-  border: 1px solid var(--border, $border);
-  padding: $drop-down-padding;
+  border: none;
   border-radius: var(--border-radius, $border-radius);
+  padding: $drop-down-padding;
   transition: box-shadow 0.1s ease, width 0.1s ease;
 
   &__botch {
     position: absolute;
     top: 0m;
-    left: -1px;
+    left: 0;
     background-color: var(--bg-input, $bg-input);
     z-index: 100;
     height: 10px;
@@ -293,7 +293,7 @@ $drop-down-padding: 0.5rem 0;
     left: 0;
     z-index: $drop-down-z_search;
     background: none transparent;
-    border: none;
+    border: 1px solid var(--border, $border);
     box-shadow: none;
     width: 100%;
     height: 2rem;
@@ -305,7 +305,6 @@ $drop-down-padding: 0.5rem 0;
 
     &:focus {
       cursor: text;
-      border: none;
     }
   }
 
@@ -358,7 +357,7 @@ $drop-down-padding: 0.5rem 0;
     cursor: auto;
     position: absolute;
     top: 1.8rem;
-    left: -1px;
+    left: 0;
     width: 100%;
     z-index: $drop-down-z_menu;
     display: none;
