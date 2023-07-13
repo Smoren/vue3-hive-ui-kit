@@ -270,7 +270,7 @@ $drop-down-padding: 0.5rem 0;
   display: inline-block;
   color: var(--text, $text);
   box-shadow: none;
-  border: none;
+  border: 1px solid var(--border, $border);
   border-radius: var(--border-radius, $border-radius);
   padding: $drop-down-padding;
   transition: box-shadow 0.1s ease, width 0.1s ease;
@@ -285,6 +285,7 @@ $drop-down-padding: 0.5rem 0;
     width: 100%;
     border-left: 1px solid var(--border-focus, $border-focus);
     border-right: 1px solid var(--border-focus, $border-focus);
+    box-sizing: border-box;
   }
 
   &__search {
@@ -293,18 +294,20 @@ $drop-down-padding: 0.5rem 0;
     left: 0;
     z-index: $drop-down-z_search;
     background: none transparent;
-    border: 1px solid var(--border, $border);
+    border: none;
+    box-sizing: border-box;
     box-shadow: none;
     width: 100%;
     height: 2rem;
     outline: none;
     line-height: 2rem;
     padding: 1rem;
-    cursor: default;
+    cursor: pointer;
     font: inherit;
 
     &:focus {
       cursor: text;
+       border: 1px solid var(--border-focus, $border-focus);
     }
   }
 
@@ -376,6 +379,7 @@ $drop-down-padding: 0.5rem 0;
     border-radius: 5px;
     border-top-width: 0 !important;
     max-height: $drop-down-max-height;
+    box-sizing: border-box;
 
     &:after {
       display: none;
@@ -399,13 +403,12 @@ $drop-down-padding: 0.5rem 0;
   }
 
   &:hover {
-    border-color: $drop-down-border-color-hover;
     box-shadow: none;
   }
 
   &.active {
     z-index: $drop-down-z-active;
-    border-color: var(--border-focus, $border-focus);
+    border: none;
     box-shadow: $drop-down-box-shadow;
 
     .visible {
