@@ -246,8 +246,6 @@ $drop-down-padding: 0.8em 1em 0.8em 1em;
   white-space: normal;
   text-align: left;
   outline: 0;
-  transform: rotateZ(0deg);
-  -webkit-transform: rotateZ(0deg);
   background-color: none;
   display: inline-block;
   color: var(--text, $text);
