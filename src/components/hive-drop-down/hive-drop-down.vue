@@ -41,7 +41,6 @@ interface Props extends CommonProps {
   withNull?: boolean;
   focusOnMount?: boolean;
   minQueryLength?: number;
-  mcw?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -53,7 +52,6 @@ const props = withDefaults(defineProps<Props>(), {
   integer: false,
   titleField: 'title',
   valueField: 'value',
-  mcw: '0px',
 });
 
 type Emit = Mount & Unmount & Update<string> & Focusin & Focusout & Keydown & Input<string> & Search<string>;
@@ -249,24 +247,30 @@ $drop-down-padding: 0.8em 1em 0.8em 1em;
   background-color: none;
   display: inline-block;
   color: var(--text, $text);
+  -webkit-box-shadow: none;
   box-shadow: none;
   border: $drop-down-border;
   border-radius: var(--border-radius, $border-radius);
   padding: $drop-down-padding;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: right;
+  -webkit-transition: width 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition:
     box-shadow 0.1s ease,
     width 0.1s ease;
 
   &.selection {
+    border-color: $drop-down-border-top;
     box-shadow: $drop-down-box-shadow;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
 
   &__search {
+    -webkit-appearance: none;
+    -moz-appearance: none;
     position: absolute;
     left: 1px;
     top: 0;
@@ -326,16 +330,17 @@ $drop-down-padding: 0.8em 1em 0.8em 1em;
     -webkit-overflow-scrolling: auto;
     outline: none;
     max-height: 16rem;
-    min-width: calc(100% + v-bind(mcw)) !important;
-    width: calc(100% + v-bind(mcw)) !important;
+    min-width: calc(100% + 2px) !important;
+    width: calc(100% + 2px) !important;
     border-top-width: 0 !important;
     border-radius: 0 0 $border-radius $border-radius;
     box-shadow: $drop-down-box-shadow;
+    -webkit-transition: opacity 0.1s ease;
     transition: opacity 0.1s ease;
     background-color: var(--bg-input, $bg-input);
     text-shadow: none;
     text-align: left;
-    border: $drop-down-border;
+    border: none;
     z-index: $drop-down-z_menu;
     will-change: transform, opacity;
     animation-iteration-count: 1;
@@ -345,6 +350,7 @@ $drop-down-padding: 0.8em 1em 0.8em 1em;
     visibility: hidden;
 
     &.visible {
+      -web-kit-box-shadow: $drop-down-box-shadow;
       box-shadow: $drop-down-box-shadow;
       border-top-width: 0 !important;
       display: block !important;
