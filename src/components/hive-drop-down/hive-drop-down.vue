@@ -41,6 +41,7 @@ interface Props extends CommonProps {
   withNull?: boolean;
   focusOnMount?: boolean;
   minQueryLength?: number;
+  mcw?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -52,6 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
   integer: false,
   titleField: 'title',
   valueField: 'value',
+  mcw: '0px',
 });
 
 type Emit = Mount & Unmount & Update<string> & Focusin & Focusout & Keydown & Input<string> & Search<string>;
@@ -164,19 +166,12 @@ defineExpose({ searchRef, forceFocus });
 </script>
 
 <template>
-  <div
-    class="hive-drop-down"
-    :class="{ 'active visible': isExpanded }"
-    :style="style"
-    @focusin="expand"
-    @focusout="collapse"
-  >
-    <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
+  <div class="hive-drop-down" :class="{ selection: isExpanded }" :style="style" @focusin="expand" @focusout="collapse">
     <hive-input
       v-model="searchQuery"
       ref="searchRef"
       class="hive-drop-down__search"
-      placeholder=""
+      :placeholder="currentOption?.title"
       tabindex="0"
       :disabled="disabled"
       @focusin="expand, onFocusin(emit)"
@@ -188,19 +183,7 @@ defineExpose({ searchRef, forceFocus });
       @keydown.esc="collapse"
       @input="onInput(emit, $event as string)"
     />
-    <div class="hive-drop-down__text" :class="{ filtered: searchQuery.length > 0, expand: isExpanded }">
-      <div v-if="imgsArray" class="hive-drop-down__text-img">
-        <!-- TODO -->
-        <!-- <img :src="imgsArray[currentOption?.title]" alt="" /> -->
-        <div>
-          {{ currentOption?.title }}
-        </div>
-      </div>
-      <span v-else>
-        {{ currentOption?.title }}
-      </span>
-    </div>
-    <div v-if="isExpanded" class="hive-drop-down__botch"></div>
+    <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
     <div
       ref="menuRef"
       class="hive-drop-down__menu"
@@ -247,102 +230,76 @@ defineExpose({ searchRef, forceFocus });
 @import '@/assets/variables.scss';
 
 $drop-down-z_search: 2;
-$drop-down-z-active: 10;
 $drop-down-z_menu: 11;
-$drop-down-max-height: 250px;
+$drop-down-border: 1px solid var(--border, $border);
 $drop-down-selected_background: rgba(0, 0, 0, 0.03);
 $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-$drop-down-border-color-hover: rgba(34, 36, 38, 0.35);
-$drop-down-padding: 0.5rem 0;
+$drop-down-padding: 0.8em 1em 0.8em 1em;
 
 .hive-drop-down {
   position: relative;
   cursor: pointer;
   word-wrap: break-word;
-  line-height: 1em;
+  line-height: 1.2rem;
   white-space: normal;
   text-align: left;
   outline: 0;
-  transform: rotateZ(0deg);
   background-color: none;
   display: inline-block;
   color: var(--text, $text);
   box-shadow: none;
-  border: 1px solid var(--border, $border);
+  border: $drop-down-border;
   border-radius: var(--border-radius, $border-radius);
   padding: $drop-down-padding;
-  transition: box-shadow 0.1s ease, width 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  transition:
+    box-shadow 0.1s ease,
+    width 0.1s ease;
 
-  &__botch {
-    position: absolute;
-    top: 0m;
-    left: 0;
-    background-color: var(--bg-input, $bg-input);
-    z-index: 100;
-    height: 10px;
-    width: 100%;
-    border-left: 1px solid var(--border-focus, $border-focus);
-    border-right: 1px solid var(--border-focus, $border-focus);
-    box-sizing: border-box;
+  &.selection {
+    box-shadow: $drop-down-box-shadow;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
 
   &__search {
     position: absolute;
+    left: 1px;
     top: 0;
-    left: 0;
     z-index: $drop-down-z_search;
-    background: none transparent;
-    border: none;
-    box-sizing: border-box;
-    box-shadow: none;
+    height: 100%;
     width: 100%;
-    height: 2rem;
+    line-height: 1.2rem;
+    padding: $drop-down-padding;
+    cursor: default !important;
+    background: none transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     outline: none;
-    line-height: 2rem;
-    padding: 1rem;
-    cursor: pointer;
-    font: inherit;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+    &::placeholder {
+      opacity: 1;
+    }
 
     &:focus {
       cursor: text;
-       border: 1px solid var(--border-focus, $border-focus);
-    }
-  }
 
-  &__text {
-    cursor: text;
-    position: relative;
-    z-index: auto;
-    display: inline-block;
-    transition: none;
-    padding-left: 1rem;
-
-    &-img {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    &.expand {
-      opacity: 0.6;
-    }
-
-    &.filtered {
-      color: transparent;
-      opacity: 0.1;
+      &::placeholder {
+        opacity: 0.5;
+      }
     }
   }
 
   &__icon {
     cursor: auto;
-    position: absolute;
-    width: 0.5rem;
-    height: 0.5rem;
-    right: 1rem;
+    line-height: 1.2rem;
     opacity: 0.7;
-    background: none;
+    background: none !important;
     font-style: normal;
 
     &:before {
@@ -357,36 +314,41 @@ $drop-down-padding: 0.5rem 0;
   }
 
   &__menu {
-    cursor: auto;
-    position: absolute;
-    top: 1.8rem;
-    left: 0;
-    width: 100%;
-    z-index: $drop-down-z_menu;
     display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    cursor: auto;
+    margin: 0 -1px;
+    padding: 0 0;
+    overflow-y: auto;
+    backface-visibility: hidden;
+    -webkit-overflow-scrolling: auto;
     outline: none;
-    margin: 0;
-    padding: 0;
+    max-height: 16rem;
+    min-width: calc(100% + v-bind(mcw)) !important;
+    width: calc(100% + v-bind(mcw)) !important;
+    border-top-width: 0 !important;
+    border-radius: 0 0 $border-radius $border-radius;
+    box-shadow: $drop-down-box-shadow;
+    transition: opacity 0.1s ease;
     background-color: var(--bg-input, $bg-input);
     text-shadow: none;
     text-align: left;
-    transition: opacity 0.1s ease;
+    border: $drop-down-border;
+    z-index: $drop-down-z_menu;
     will-change: transform, opacity;
-    overflow-x: hidden;
-    overflow-y: auto;
-    backface-visibility: hidden;
-    border: 1px solid var(--border-focus, $border-focus);
-    border-radius: 5px;
-    border-top-width: 0 !important;
-    max-height: $drop-down-max-height;
-    box-sizing: border-box;
+    animation-iteration-count: 1;
+    animation-duration: 300ms;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
+    visibility: hidden;
 
-    &:after {
-      display: none;
-    }
-
-    &:before {
-      display: none;
+    &.visible {
+      box-shadow: $drop-down-box-shadow;
+      border-top-width: 0 !important;
+      display: block !important;
+      visibility: visible !important;
     }
 
     &-item {
@@ -402,18 +364,18 @@ $drop-down-padding: 0.5rem 0;
     }
   }
 
-  &:hover {
-    box-shadow: none;
-  }
+  &__text {
+    cursor: text;
+    position: relative;
+    z-index: auto;
+    display: inline-block;
+    transition: none;
+    padding-left: 1rem;
 
-  &.active {
-    z-index: $drop-down-z-active;
-    border: none;
-    box-shadow: $drop-down-box-shadow;
-
-    .visible {
-      display: block;
-      padding-top: 1rem;
+    &-img {
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
   }
 }

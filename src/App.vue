@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
-import hiveInput from './components/hive-input/hive-input.vue';
+import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 
 const text = ref('text');
@@ -126,11 +126,15 @@ const optionsObject = [
             FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
           </template>
 
-          <hive-input v-model="text" />
-          <hive-button />
           Hello
-
-          <hive-drop-down v-model="dropdown" :options="optionsObject" />
+          
+          <div :style="{ display: 'flex', gap: '10px', height: '500px' }">
+            <hive-input v-model="text" />
+            <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
+            <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
+             <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" />
+            <hive-button />
+          </div>
 
           <template #footer>
             <hive-button title="close" />

@@ -46,7 +46,6 @@ const emit = defineEmits<Emit>();
   color: var(--text, $text);
   resize: none;
   transition: color 0.1s ease, border-color 0.1s ease;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 1rem;
   box-sizing: border-box;
   max-width: 100%;
