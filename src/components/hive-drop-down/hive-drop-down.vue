@@ -252,14 +252,11 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   border: $drop-down-border;
   border-radius: var(--border-radius, $border-radius);
   padding: $drop-down-padding;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: right;
   -webkit-transition: width 0.1s ease, -webkit-box-shadow 0.1s ease;
-  transition:
-    box-shadow 0.1s ease,
-    width 0.1s ease;
+  transition: box-shadow 0.1s ease, width 0.1s ease;
 
   &.selection {
     border-color: $drop-down-border-top;
