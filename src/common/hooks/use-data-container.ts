@@ -41,7 +41,13 @@ export const useDataContainer = <T>({
     return key;
   };
 
-  const getKey = (item: T, key: DataItemKey): string => String(getValue(item, key));
+  const getKey = (item: T, key: DataItemKey): string => {
+    if (key && typeof key === 'string') {
+      return key;
+    }
+
+    return String(getValue(item, key));
+  };
 
   const getTitle = (item: T): string => {
     if (item instanceof Object) {

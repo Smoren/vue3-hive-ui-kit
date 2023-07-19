@@ -9,6 +9,7 @@ const text = ref('text');
 const num = ref(0);
 const isOpenModal = ref(false);
 const dropdown = ref('dd');
+const dd3 = ref(2023);
 
 const handleText = () => {
   console.log('click');
@@ -26,7 +27,35 @@ const handleR = () => {
 
 const input = ref('');
 
-const options = ['1', '2'];
+const options = [5, 2, 1, 4, 3, 6];
+
+const optionsObjectSort = [
+  {
+    // key: 'key1',
+    // title: 'title3',
+    // value: 'value3',
+    value: '2023',
+    title: '2023',
+    // key: '0',
+  },
+  {
+    // key: 'key2',
+    // title: 'title2',
+    // value: 'value2',
+    value: '2022',
+    title: '2022',
+    // key: '1',
+  },
+  {
+    // key: 'key3',
+    // title: 'title1',
+    // value: 'value1',
+    value: '2024',
+    title: '2024',
+    // key: '2',
+  },
+];
+
 const optionsObject = [
   {
     key: 'key1',
@@ -127,12 +156,12 @@ const optionsObject = [
           </template>
 
           Hello
-          
+
           <div :style="{ display: 'flex', gap: '10px', height: '500px' }">
             <hive-input v-model="text" />
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
-             <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" />
+            <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" />
             <hive-button />
           </div>
 
@@ -145,9 +174,18 @@ const optionsObject = [
       <!-- DropDown -->
       <widget-wrapper title="DropDown">
         {{ dropdown }}
+        <br />
+        {{ dd3 }}
         <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" />
-        <hive-drop-down v-model="dropdown" :options="optionsObject" value-field="value" title-field="title" />
+        <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" />
         <hive-drop-down v-model="dropdown" :options="options" />
+
+        <!-- <select>
+          <input>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select> -->
       </widget-wrapper>
     </div>
   </div>

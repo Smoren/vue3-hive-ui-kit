@@ -27,7 +27,7 @@ import { Options } from '@/common/types/option';
 
 interface Props extends CommonProps {
   options: Options;
-  modelValue: string;
+  modelValue: string | number;
   modelValueEventName?: string;
   disabled?: boolean;
   nullTitle?: string;
@@ -234,7 +234,7 @@ $drop-down-selected_background: rgba(0, 0, 0, 0.03);
 $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-$drop-down-padding: 0.8em 1em 0.8em 1em;
+$drop-down-padding: 0.5em 1em 0.5em 1em;
 
 .hive-drop-down {
   position: relative;
@@ -288,6 +288,7 @@ $drop-down-padding: 0.8em 1em 0.8em 1em;
 
     &::placeholder {
       opacity: 1;
+      color: $text;
     }
 
     &:focus {
