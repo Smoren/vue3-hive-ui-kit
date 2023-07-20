@@ -273,7 +273,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     top: 0;
     z-index: $drop-down-z_search;
     height: 100%;
-    width: 100%;
+    width: calc(100% - 1.2em);
     line-height: 1.2rem;
     padding: $drop-down-padding;
     cursor: default !important;

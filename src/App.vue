@@ -59,7 +59,7 @@ const optionsObjectSort = [
 const optionsObject = [
   {
     key: 'key1',
-    title: 'title1',
+    title: 'title11111111111111111111111111111111111111111111111111111111',
     value: 'value1',
   },
   {
