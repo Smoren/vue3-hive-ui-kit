@@ -227,7 +227,6 @@ defineExpose({ searchRef, forceFocus });
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
-$drop-down-z_search: 2;
 $drop-down-z_menu: 11;
 $drop-down-border: 1px solid var(--border, $border);
 $drop-down-selected_background: rgba(0, 0, 0, 0.03);
@@ -271,7 +270,6 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     position: absolute;
     left: 1px;
     top: 0;
-    z-index: $drop-down-z_search;
     height: 100%;
     width: calc(100% - 1.2em);
     line-height: 1.2rem;
