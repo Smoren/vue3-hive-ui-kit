@@ -279,6 +279,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     border: none !important;
     box-shadow: none !important;
     outline: none;
+    font-size: inherit;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
     &::placeholder {
