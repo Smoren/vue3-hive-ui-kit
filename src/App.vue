@@ -9,7 +9,7 @@ const text = ref('text');
 const num = ref(0);
 const isOpenModal = ref(false);
 const dropdown = ref('dd');
-const dd3 = ref(2023);
+const dd3 = ref(null);
 
 const handleText = () => {
   console.log('click');
@@ -34,24 +34,24 @@ const optionsObjectSort = [
     // key: 'key1',
     // title: 'title3',
     // value: 'value3',
-    value: '2023',
-    title: '2023',
+    valu: '2023',
+    titl: 't2023',
     // key: '0',
   },
   {
     // key: 'key2',
     // title: 'title2',
     // value: 'value2',
-    value: '2022',
-    title: '2022',
+    valu: '2022',
+    titl: 't2022',
     // key: '1',
   },
   {
     // key: 'key3',
     // title: 'title1',
     // value: 'value1',
-    value: '2024',
-    title: '2024',
+    valu: '2024',
+    titl: 't2024',
     // key: '2',
   },
 ];
@@ -59,7 +59,7 @@ const optionsObjectSort = [
 const optionsObject = [
   {
     key: 'key1',
-    title: 'title11111111111111111111111111111111111111111111111111111111',
+    title: 'title1',
     value: 'value1',
   },
   {
@@ -176,9 +176,10 @@ const optionsObject = [
         {{ dropdown }}
         <br />
         {{ dd3 }}
-        <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" />
-        <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" />
-        <hive-drop-down v-model="dropdown" :options="options" />
+        <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
+        <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
+        <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" with-null/>
+        <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
 
         <!-- <select>
           <input>
