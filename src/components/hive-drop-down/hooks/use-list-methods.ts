@@ -133,6 +133,7 @@ export const useListMethods = ({
     collapse,
     toggle,
     filteredOptions,
+    currentOptions,
     setPrevActiveValue,
     setNextActiveValue,
   };

@@ -18,9 +18,10 @@ import {
 import { useOnMount } from '@/common/hooks/use-mount';
 import { ListMethodsConfig, useListMethods } from './hooks/use-list-methods';
 import { Value, Option, OptionsRef } from '@/common/types/select';
+import { Ref, computed, reactive, ref, watch } from 'vue';
 
 interface Props {
-  options: Option[];
+  options: Option[] | undefined;
   modelValue: Value;
   modelValueEventName?: string;
   disabled?: boolean;
@@ -47,14 +48,14 @@ const emit = defineEmits<Emit>();
 
 useOnMount(emit);
 
-const configOptions: ListMethodsConfig = {
+const configOptions = reactive({
   options: props.options,
   modelValue: props.modelValue,
   withNull: props.withNull,
   nullTitle: props.nullTitle,
   fieldTitle: props.titleField,
   fieldValue: props.valueField,
-};
+});
 
 const {
   isExpanded,
@@ -68,16 +69,26 @@ const {
   collapse,
   toggle,
   filteredOptions,
+  currentOptions,
   setPrevActiveValue,
   setNextActiveValue,
 } = useListMethods(configOptions);
+
+watch(
+  () => props.options,
+  () => {
+    configOptions.options = props.options;
+    currentOptions.value = useListMethods(configOptions).currentOptions.value;
+    filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
+  },
+);
 </script>
 
 <template>
-  <div class="wrap">
-    <div class="hive-drop-down">
+  <div v-if="options" class="wrap">
+    <div class="hive-drop-down" :class="{ expand: isExpanded }">
       <hive-input
-      v-if="current"
+        v-if="current"
         v-model="searchQuery"
         ref="searchRef"
         :disabled="disabled"
@@ -160,6 +171,10 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   animation-timing-function: ease;
   animation-fill-mode: both;
 
+  &.expand {
+    z-index: $drop-down-z_menu + 1;
+  }
+
   &__search {
     border: none;
     padding: $drop-down-padding;
@@ -212,15 +227,5 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
       }
     }
   }
-}
-
-.menu-item .sub-menu {
-  position: absolute;
-  background-color: #222;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  border-radius: 0px 0px 16px 16px;
 }
 </style>
