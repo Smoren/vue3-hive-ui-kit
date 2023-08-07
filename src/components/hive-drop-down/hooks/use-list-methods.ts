@@ -11,7 +11,14 @@ export type ListMethodsConfig = {
   fieldValue: string;
 };
 
-export const useListMethods = ({ options, modelValue, withNull, nullTitle, fieldTitle, fieldValue }: ListMethodsConfig) => {
+export const useListMethods = ({
+  options,
+  modelValue,
+  withNull,
+  nullTitle,
+  fieldTitle,
+  fieldValue,
+}: ListMethodsConfig) => {
   const isExpanded = ref(false);
   const activeValue: Ref<Value | undefined> = ref();
   const currentValue: Ref<Value | undefined> = ref();
@@ -28,25 +35,27 @@ export const useListMethods = ({ options, modelValue, withNull, nullTitle, field
     next: null,
   });
 
-  let prev;
+  if (options) {
+    let prev;
 
-  if (withNull) {
-    filteredOptions.value.set('null', nullOption.value);
-    currentOptions.value.set('null', nullOption.value);
+    if (withNull) {
+      filteredOptions.value.set('null', nullOption.value);
+      currentOptions.value.set('null', nullOption.value);
 
-    prev = 'null';
-  }
+      prev = 'null';
+    }
 
-  for (const option of options) {
-    if (prev) {
-      const temp = filteredOptions.value.get(prev);
-      filteredOptions.value.set(prev, { ...temp, next: option[fieldValue] });
-      filteredOptions.value.set(option[fieldValue], { ...option, prev });
-      currentOptions.value.set(prev, { ...temp, next: option[fieldValue] })
-      currentOptions.value.set(option[fieldValue], { ...option, prev })
-    } else {
-      filteredOptions.value.set(option[fieldValue], { ...option, prev: null });
-      currentOptions.value.set(option[fieldValue], { ...option, prev: null });
+    for (const option of options) {
+      if (prev) {
+        const temp = filteredOptions.value.get(prev);
+        filteredOptions.value.set(prev, { ...temp, next: option[fieldValue] });
+        filteredOptions.value.set(option[fieldValue], { ...option, prev });
+        currentOptions.value.set(prev, { ...temp, next: option[fieldValue] });
+        currentOptions.value.set(option[fieldValue], { ...option, prev });
+      } else {
+        filteredOptions.value.set(option[fieldValue], { ...option, prev: null });
+        currentOptions.value.set(option[fieldValue], { ...option, prev: null });
+      }
     }
   }
 
@@ -55,14 +64,12 @@ export const useListMethods = ({ options, modelValue, withNull, nullTitle, field
   }
 
   if (modelValue) {
-  current.value = filteredOptions.value.get(modelValue);
+    current.value = filteredOptions.value.get(modelValue);
   }
-
 
   const updateActiveValue = (value: Value) => {
     activeValue.value = value;
   };
-    
 
   const updateCurrentValue = (value: Value | undefined) => {
     if (!value) {
@@ -103,13 +110,13 @@ export const useListMethods = ({ options, modelValue, withNull, nullTitle, field
         if (item[1][fieldTitle].indexOf(searchQuery.value) !== -1) {
           filteredOptions.value.set(item[1][fieldValue], item[1]);
         }
-      }   
+      }
     } else {
-      filteredOptions.value = new Map(JSON.parse(JSON.stringify([...currentOptions.value])))
+      filteredOptions.value = new Map(JSON.parse(JSON.stringify([...currentOptions.value])));
     }
-  })
+  });
 
-  const setPrevActiveValue = () => { };
+  const setPrevActiveValue = () => {};
   const setNextActiveValue = () => {};
 
   return {
@@ -128,5 +135,5 @@ export const useListMethods = ({ options, modelValue, withNull, nullTitle, field
     filteredOptions,
     setPrevActiveValue,
     setNextActiveValue,
-  }
+  };
 };

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ComputedRef, computed, ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
+import { Option, OptionsRef } from './common/types/select';
 
 const text = ref('text');
 const num = ref(0);
@@ -29,7 +30,10 @@ const input = ref('');
 
 const options = [5, 2, 1, 4, 3, 6];
 
-const optionsObjectSort = [
+let optionsTest: Option[] | undefined;
+
+setTimeout(() => {
+  optionsTest = [
   {
     // key: 'key1',
     // title: 'title3',
@@ -54,7 +58,10 @@ const optionsObjectSort = [
     titl: 't2024',
     // key: '2',
   },
-];
+]
+})
+
+const optionsObjectSort = computed(() => optionsTest);
 
 const optionsObject = [
   {

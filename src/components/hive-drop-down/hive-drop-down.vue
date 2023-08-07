@@ -17,7 +17,7 @@ import {
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { ListMethodsConfig, useListMethods } from './hooks/use-list-methods';
-import { Value, Option } from '@/common/types/select';
+import { Value, Option, OptionsRef } from '@/common/types/select';
 
 interface Props {
   options: Option[];
@@ -77,10 +77,11 @@ const {
   <div class="wrap">
     <div class="hive-drop-down">
       <hive-input
+      v-if="current"
         v-model="searchQuery"
         ref="searchRef"
         :disabled="disabled"
-        :placeholder="(current![titleField] as string)"
+        :placeholder="(current[titleField] as string)"
         class="hive-drop-down__search"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
@@ -164,6 +165,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     padding: $drop-down-padding;
     width: calc(100% - 2rem);
     cursor: default;
+    font-size: inherit;
 
     &::placeholder {
       opacity: 1;
