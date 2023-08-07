@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { ComputedRef, computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
-import { Option, OptionsRef } from './common/types/select';
+import { Option } from './common/types/select';
+import { useYearStore } from './stores/years';
 
 const text = ref('text');
 const num = ref(0);
@@ -61,7 +62,33 @@ setTimeout(() => {
 ]
 })
 
-const optionsObjectSort = computed(() => optionsTest);
+const optionsObjectSort = //computed(() => optionsTest);
+[
+  {
+    // key: 'key1',
+    // title: 'title3',
+    // value: 'value3',
+    valu: '2023',
+    titl: 't2023',
+    // key: '0',
+  },
+  {
+    // key: 'key2',
+    // title: 'title2',
+    // value: 'value2',
+    valu: '2022',
+    titl: 't2022',
+    // key: '1',
+  },
+  {
+    // key: 'key3',
+    // title: 'title1',
+    // value: 'value1',
+    valu: '2024',
+    titl: 't2024',
+    // key: '2',
+  },
+]
 
 const optionsObject = [
   {
@@ -110,6 +137,13 @@ const optionsObject = [
     value: 'value9',
   },
 ];
+
+const yearStore = useYearStore();
+const yearList = computed(() => yearStore.years);
+
+onMounted(() => {
+  yearStore.getYears();
+})
 </script>
 
 <template>
@@ -186,14 +220,8 @@ const optionsObject = [
         <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
         <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" with-null/>
+        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null/>
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-
-        <!-- <select>
-          <input>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-        </select> -->
       </widget-wrapper>
     </div>
   </div>
