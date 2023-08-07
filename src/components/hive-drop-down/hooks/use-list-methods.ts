@@ -3,7 +3,7 @@ import { InputExpose } from '@/components/hive-input/hive-input.vue';
 import { Value, Option } from '@/common/types/select';
 
 export type ListMethodsConfig = {
-  options: Option[];
+  options: Option[] | undefined;
   modelValue: Value;
   withNull: boolean;
   nullTitle: string;
@@ -35,14 +35,19 @@ export const useListMethods = ({
     next: null,
   });
 
+  const temp = {
+    [fieldTitle]: String(modelValue),
+    [fieldValue]: modelValue,
+    prev: null,
+    next: null,
+  };
+
   if (options) {
-    let prev;
+    let prev = 'null';
 
     if (withNull) {
       filteredOptions.value.set('null', nullOption.value);
       currentOptions.value.set('null', nullOption.value);
-
-      prev = 'null';
     }
 
     for (const option of options) {
@@ -57,13 +62,16 @@ export const useListMethods = ({
         currentOptions.value.set(option[fieldValue], { ...option, prev: null });
       }
     }
+  } else {
+    filteredOptions.value.set(String(modelValue), temp);
+    currentOptions.value.set(String(modelValue), temp);
   }
 
   if (withNull) {
     current.value = nullOption.value;
   }
 
-  if (modelValue) {
+  if (modelValue && filteredOptions.value) {
     current.value = filteredOptions.value.get(modelValue);
   }
 

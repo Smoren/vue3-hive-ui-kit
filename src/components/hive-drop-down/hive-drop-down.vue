@@ -80,6 +80,7 @@ watch(
     configOptions.options = props.options;
     currentOptions.value = useListMethods(configOptions).currentOptions.value;
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
+    current.value = useListMethods(configOptions).current.value
   },
 );
 </script>

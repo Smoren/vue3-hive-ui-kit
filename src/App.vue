@@ -11,7 +11,7 @@ const text = ref('text');
 const num = ref(0);
 const isOpenModal = ref(false);
 const dropdown = ref('dd');
-const dd3 = ref(null);
+const dd3 = ref(2023);
 
 const handleText = () => {
   console.log('click');
@@ -202,7 +202,7 @@ onMounted(() => {
             <hive-input v-model="text" />
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
-            <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" />
+            <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" /> -->
             <hive-button />
           </div>
 
@@ -219,8 +219,8 @@ onMounted(() => {
         {{ dd3 }}
         <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
-        <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" with-null/>
-        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null/>
+        <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" with-null/> -->
+        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
       </widget-wrapper>
     </div>
