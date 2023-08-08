@@ -169,7 +169,7 @@ onMounted(() => {
       <!-- Textarea -->
       <widget-wrapper title="Textarea">
         {{ text }}
-        <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
+        <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }"  disabled />
       </widget-wrapper>
 
       <!-- Input -->
@@ -178,7 +178,7 @@ onMounted(() => {
         <div>{{ num }}</div>
         <hive-button title="Classes" :class="'test'" @click="handleNum" />
 
-        <hive-input v-model="text" />
+        <hive-input v-model="text" disabled />
         <hive-input v-model="num" type="number" />
         <hive-input v-model="num" type="number" :step="1" />
         <hive-input v-model="num" type="text" integer :min="5" :max="6" />
@@ -220,7 +220,7 @@ onMounted(() => {
         <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" with-null/> -->
-        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
+        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null disabled />
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
       </widget-wrapper>
     </div>

@@ -122,5 +122,11 @@ defineExpose({ input: inputRef, forceFocus });
     outline: none;
     border-color: var(--border-focus, $border-focus);
   }
+
+  &:disabled {
+    border-color: var(--border-disabled, $border-disabled);
+    opacity: 0.6;
+    pointer-events: none;
+  }
 }
 </style>
