@@ -219,8 +219,8 @@ onMounted(() => {
         {{ dd3 }}
         <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
-        <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" with-null/> -->
-        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null disabled />
+        <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
+        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
       </widget-wrapper>
     </div>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { reactive, watch } from 'vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
   Focusout,
@@ -18,7 +19,6 @@ import {
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from './hooks/use-list-methods';
 import { Value, Option,  } from '@/common/types/select';
-import { reactive, watch } from 'vue';
 
 interface Props {
   options: Option[] | undefined;
@@ -118,7 +118,7 @@ watch(
             :key="i"
             class="hive-drop-down__menu-item"
             :class="{
-              selected: item[1][valueField] === activeValue,
+              selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
             }"
             @click="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
@@ -135,7 +135,7 @@ watch(
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
-$drop-down-z_menu: 11;
+$drop-down-z_menu: 1;
 $drop-down-border: 1px solid var(--border, $border);
 $drop-down-selected_background: rgba(0, 0, 0, 0.03);
 $drop-down-selected_color: rgba(0, 0, 0, 0.95);
