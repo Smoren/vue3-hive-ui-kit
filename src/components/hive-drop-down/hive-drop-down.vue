@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { reactive, watch } from 'vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
   Focusout,
@@ -16,9 +17,8 @@ import {
   Search,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { ListMethodsConfig, useListMethods } from './hooks/use-list-methods';
-import { Value, Option, OptionsRef } from '@/common/types/select';
-import { Ref, computed, reactive, ref, watch } from 'vue';
+import { useListMethods } from './hooks/use-list-methods';
+import { Value, Option,  } from '@/common/types/select';
 
 interface Props {
   options: Option[] | undefined;
@@ -80,14 +80,14 @@ watch(
     configOptions.options = props.options;
     currentOptions.value = useListMethods(configOptions).currentOptions.value;
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
-    current.value = useListMethods(configOptions).current.value
+    current.value = useListMethods(configOptions).current.value;
   },
 );
 </script>
 
 <template>
-  <div v-if="options" class="wrap">
-    <div class="hive-drop-down" :class="{ expand: isExpanded }">
+  <div v-if="options" class="hive-drop-down__wrap">
+    <div class="hive-drop-down" :class="{ expand: isExpanded, disable: disabled }">
       <hive-input
         v-if="current"
         v-model="searchQuery"
@@ -118,7 +118,7 @@ watch(
             :key="i"
             class="hive-drop-down__menu-item"
             :class="{
-              selected: item[1][valueField] === activeValue,
+              selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
             }"
             @click="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
@@ -135,7 +135,7 @@ watch(
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
-$drop-down-z_menu: 11;
+$drop-down-z_menu: 1;
 $drop-down-border: 1px solid var(--border, $border);
 $drop-down-selected_background: rgba(0, 0, 0, 0.03);
 $drop-down-selected_color: rgba(0, 0, 0, 0.95);
@@ -143,13 +143,6 @@ $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 $drop-down-padding: 0.5em 1em 0.5em 1em;
 
-.wrap {
-  position: relative;
-  height: 2.2rem;
-  width: 100%;
-  background-color: none;
-  cursor: pointer;
-}
 .hive-drop-down {
   position: absolute;
   left: 0;
@@ -174,6 +167,21 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
   &.expand {
     z-index: $drop-down-z_menu + 1;
+  }
+
+  &.disable {
+    border-color: var(--border-disabled, $border-disabled);
+    opacity: 0.6;
+    pointer-events: none;
+     cursor: pointer;
+  }
+
+  &__wrap {
+    position: relative;
+    height: 2.2rem;
+    width: 100%;
+    background-color: none;
+    cursor: default;
   }
 
   &__search {

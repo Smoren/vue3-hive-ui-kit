@@ -35,36 +35,40 @@ export const useListMethods = ({
     next: null,
   });
 
-  const temp = {
-    [fieldTitle]: String(modelValue),
+  const first = {
+    [fieldTitle]: String(modelValue) || '',
     [fieldValue]: modelValue,
     prev: null,
     next: null,
   };
 
   if (options) {
-    let prev = 'null';
+    let prev;
 
     if (withNull) {
       filteredOptions.value.set('null', nullOption.value);
       currentOptions.value.set('null', nullOption.value);
+
+      prev = 'null';
     }
 
     for (const option of options) {
       if (prev) {
         const temp = filteredOptions.value.get(prev);
         filteredOptions.value.set(prev, { ...temp, next: option[fieldValue] });
-        filteredOptions.value.set(option[fieldValue], { ...option, prev });
+        filteredOptions.value.set(option[fieldValue], { ...option, prev, next: null });
         currentOptions.value.set(prev, { ...temp, next: option[fieldValue] });
-        currentOptions.value.set(option[fieldValue], { ...option, prev });
+        currentOptions.value.set(option[fieldValue], { ...option, prev, next: null });
+        prev = option[fieldValue];
       } else {
-        filteredOptions.value.set(option[fieldValue], { ...option, prev: null });
-        currentOptions.value.set(option[fieldValue], { ...option, prev: null });
+        filteredOptions.value.set(option[fieldValue], { ...option, prev: null, next: null });
+        currentOptions.value.set(option[fieldValue], { ...option, prev: null, next: null });
+        prev = option[fieldValue];
       }
     }
   } else {
-    filteredOptions.value.set(String(modelValue), temp);
-    currentOptions.value.set(String(modelValue), temp);
+    filteredOptions.value.set(String(modelValue), first);
+    currentOptions.value.set(String(modelValue), first);
   }
 
   if (withNull) {
@@ -80,13 +84,14 @@ export const useListMethods = ({
   };
 
   const updateCurrentValue = (value: Value | undefined) => {
+    currentValue.value = value;
+
     if (!value) {
-      collapse();
-      return;
+      current.value = nullOption.value
+    } else {
+      current.value = filteredOptions.value.get(value);
     }
 
-    currentValue.value = value;
-    current.value = filteredOptions.value.get(value);
     collapse();
   };
 
@@ -124,8 +129,26 @@ export const useListMethods = ({
     }
   });
 
-  const setPrevActiveValue = () => {};
-  const setNextActiveValue = () => {};
+  const setPrevActiveValue = () => {
+    const node = filteredOptions.value.get(activeValue.value);
+
+    if (node?.prev) {
+      updateActiveValue(node.prev);
+    }
+  };
+
+  const setNextActiveValue = () => {
+    const node = filteredOptions.value.get(activeValue.value);
+
+    if (node === undefined) {
+      for (const key of filteredOptions.value.keys()) {
+        updateActiveValue(key);
+        break;
+      }
+    } else if (node?.next) {
+      updateActiveValue(node.next);
+    }
+  };
 
   return {
     isExpanded,
