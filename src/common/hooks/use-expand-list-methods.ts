@@ -67,35 +67,35 @@ export const useExpandListMethods = ({
     if (!opts.length) {
       activeValue.value = null;
     } else if (!filteredOptions.value[String(activeValue.value)]) {
-      activeValue.value = opts[0].value as Value;
+      activeValue.value = opts[0]?.value as Value;
     }
   };
 
   const setPrevActiveValue = () => {
     let node = null;
     try {
-      node = filteredOptions.value[String(activeValue.value)].prev;
+      node = filteredOptions.value[String(activeValue.value)]?.prev;
     } catch (e) {
       setActiveValueToFirst();
       return;
     }
 
     if (node !== null) {
-      updateActiveValue(node.value as Value);
+      updateActiveValue(node?.value as Value);
     }
   };
 
   const setNextActiveValue = () => {
     let node = null;
     try {
-      node = filteredOptions.value[String(activeValue.value)].next;
+      node = filteredOptions.value[String(activeValue.value)]?.next;
     } catch (e) {
       setActiveValueToFirst();
       return;
     }
 
     if (node !== null) {
-      updateActiveValue(node.value as Value);
+      updateActiveValue(node?.value as Value);
     }
   };
 

@@ -89,11 +89,10 @@ watch(
   <div v-if="options" class="hive-drop-down__wrap">
     <div class="hive-drop-down" :class="{ expand: isExpanded, disable: disabled }">
       <hive-input
-        v-if="current"
         v-model="searchQuery"
         ref="searchRef"
         :disabled="disabled"
-        :placeholder="(current[titleField] as string)"
+        :placeholder="(current ? current[titleField] as string : '')"
         class="hive-drop-down__search"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
