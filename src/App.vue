@@ -11,7 +11,7 @@ const text = ref('text');
 const num = ref(0);
 const isOpenModal = ref(false);
 const dropdown = ref('dd');
-const dd3 = ref(2023);
+const dd3 = ref(0);
 
 const handleText = () => {
   console.log('click');
@@ -203,6 +203,7 @@ onMounted(() => {
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" /> -->
+            <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" />
             <hive-button />
           </div>
 
