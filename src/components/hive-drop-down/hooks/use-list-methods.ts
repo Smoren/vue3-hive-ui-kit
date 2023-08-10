@@ -53,7 +53,7 @@ export const useListMethods = ({
     }
 
     for (const option of options) {
-      if (prev) {
+      if (prev !== undefined) {
         const temp = filteredOptions.value.get(prev);
         filteredOptions.value.set(prev, { ...temp, next: option[fieldValue] });
         filteredOptions.value.set(option[fieldValue], { ...option, prev, next: null });
@@ -75,7 +75,7 @@ export const useListMethods = ({
     current.value = nullOption.value;
   }
 
-  if (modelValue && filteredOptions.value) {
+  if ((modelValue !== undefined || modelValue !== null) && filteredOptions.value) {
     current.value = filteredOptions.value.get(modelValue);
   }
 
@@ -132,7 +132,7 @@ export const useListMethods = ({
   const setPrevActiveValue = () => {
     const node = filteredOptions.value.get(activeValue.value);
 
-    if (node?.prev) {
+    if (node?.prev !== undefined) {
       updateActiveValue(node.prev);
     }
   };
@@ -145,7 +145,7 @@ export const useListMethods = ({
         updateActiveValue(key);
         break;
       }
-    } else if (node?.next) {
+    } else {
       updateActiveValue(node.next);
     }
   };
