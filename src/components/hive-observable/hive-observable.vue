@@ -35,7 +35,7 @@ export default defineComponent({
       threshold: this.threshold,
     };
     this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0]?.isIntersecting) {
         this.$emit('appear', entries[0], this.unobserve);
       } else {
         this.$emit('disappear', entries[0], this.unobserve);

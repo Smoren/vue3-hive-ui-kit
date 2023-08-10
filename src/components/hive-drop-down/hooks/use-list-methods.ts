@@ -86,8 +86,8 @@ export const useListMethods = ({
   const updateCurrentValue = (value: Value | undefined) => {
     currentValue.value = value;
 
-    if (!value) {
-      current.value = nullOption.value
+    if (value === undefined || value === null) {
+      current.value = nullOption.value;
     } else {
       current.value = filteredOptions.value.get(value);
     }
