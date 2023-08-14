@@ -139,7 +139,8 @@ const optionsArray = [
   },
 ];
 
-const dd4 = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d')
+// const dd4 = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d')
+const dd4 = ref(null)
 
 const optionsObject = {
   '74fd8aaa-e10a-4fd0-941b-6f6c7249003d': {
@@ -237,9 +238,9 @@ onMounted(() => {
         <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
-        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
+        <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-         <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="value" />
+         <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="value" with-null />
       </widget-wrapper>
     </div>
   </div>

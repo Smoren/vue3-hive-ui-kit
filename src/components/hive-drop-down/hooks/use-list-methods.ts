@@ -41,8 +41,10 @@ export const useListMethods = ({
     current.value = nullOption.value;
   }
 
-  if ((modelValue !== undefined || modelValue !== null) && filteredOptions.value) {
-    current.value = filteredOptions.value.get(modelValue);
+  if (modelValue !== undefined && filteredOptions.value) {
+    if (modelValue !== null) {
+      current.value = filteredOptions.value.get(modelValue);
+    }
   }
 
   const updateActiveValue = (value: Value) => {
