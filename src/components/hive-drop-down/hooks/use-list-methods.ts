@@ -1,9 +1,10 @@
 import { Ref, computed, ref, watch } from 'vue';
 import { InputExpose } from '@/components/hive-input/hive-input.vue';
-import { Value, Option } from '@/common/types/select';
+import { Value, Options, CurrentOptionsRef } from '@/common/types/select';
+import { useFilter } from './use-filter';
 
 export type ListMethodsConfig = {
-  options: Option[] | undefined;
+  options: Options | undefined;
   modelValue: Value;
   withNull: boolean;
   nullTitle: string;
@@ -22,54 +23,19 @@ export const useListMethods = ({
   const isExpanded = ref(false);
   const activeValue: Ref<Value | undefined> = ref();
   const currentValue: Ref<Value | undefined> = ref();
-  const current: Ref<Option | undefined> = ref();
+  const current: CurrentOptionsRef = ref();
   const searchQuery = ref('');
   const searchRef: Ref<InputExpose | null> = ref(null);
   const searchInput = computed(() => searchRef.value?.input);
-  const currentOptions = ref(new Map());
-  const filteredOptions = ref(new Map());
-  const nullOption = ref({
-    [fieldTitle]: nullTitle,
-    [fieldValue]: null,
-    prev: null,
-    next: null,
+
+  const { filteredOptions, currentOptions, nullOption } = useFilter({
+    options,
+    modelValue,
+    withNull,
+    nullTitle,
+    fieldTitle,
+    fieldValue,
   });
-
-  const first = {
-    [fieldTitle]: String(modelValue) || '',
-    [fieldValue]: modelValue,
-    prev: null,
-    next: null,
-  };
-
-  if (options) {
-    let prev;
-
-    if (withNull) {
-      filteredOptions.value.set('null', nullOption.value);
-      currentOptions.value.set('null', nullOption.value);
-
-      prev = 'null';
-    }
-
-    for (const option of options) {
-      if (prev !== undefined) {
-        const temp = filteredOptions.value.get(prev);
-        filteredOptions.value.set(prev, { ...temp, next: option[fieldValue] });
-        filteredOptions.value.set(option[fieldValue], { ...option, prev, next: null });
-        currentOptions.value.set(prev, { ...temp, next: option[fieldValue] });
-        currentOptions.value.set(option[fieldValue], { ...option, prev, next: null });
-        prev = option[fieldValue];
-      } else {
-        filteredOptions.value.set(option[fieldValue], { ...option, prev: null, next: null });
-        currentOptions.value.set(option[fieldValue], { ...option, prev: null, next: null });
-        prev = option[fieldValue];
-      }
-    }
-  } else {
-    filteredOptions.value.set(String(modelValue), first);
-    currentOptions.value.set(String(modelValue), first);
-  }
 
   if (withNull) {
     current.value = nullOption.value;

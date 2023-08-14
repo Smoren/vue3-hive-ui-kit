@@ -18,11 +18,11 @@ import {
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from './hooks/use-list-methods';
-import { Value, Option,  } from '@/common/types/select';
+import { Option, Options, Value  } from '@/common/types/select';
 
 interface Props {
-  options: Option[] | undefined;
-  modelValue: Value;
+  options: Options | undefined; //Option[] | Record<string, Option> | undefined;
+  modelValue:Value;
   modelValueEventName?: string;
   disabled?: boolean;
   withNull?: boolean;
@@ -34,7 +34,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  options: () => [],
+  // options: () => [],
   modelValueEventName: 'input',
   disabled: false,
   nullTitle: 'Не выбрано',
@@ -92,7 +92,7 @@ watch(
         v-model="searchQuery"
         ref="searchRef"
         :disabled="disabled"
-        :placeholder="(current ? current[titleField] as string : '')"
+        :placeholder="(current ? String(current[titleField]) : '')"
         class="hive-drop-down__search"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
