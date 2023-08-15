@@ -15,7 +15,7 @@ export const useFilter = ({ options, modelValue, withNull, nullTitle, fieldTitle
   const filteredOptions = ref(new Map());
   const nullOption: CurrentOptionsRef = ref({
     [fieldTitle]: nullTitle,
-    [fieldValue]: null,
+    [fieldValue]: undefined,
     prev: null,
     next: null,
   });
@@ -31,10 +31,10 @@ export const useFilter = ({ options, modelValue, withNull, nullTitle, fieldTitle
     let prev;
 
     if (withNull) {
-      filteredOptions.value.set('null', nullOption.value);
-      currentOptions.value.set('null', nullOption.value);
+      filteredOptions.value.set('none', nullOption.value);
+      currentOptions.value.set('none', nullOption.value);
 
-      prev = 'null';
+      prev = 'none';
     }
 
     if (Array.isArray(options)) {
