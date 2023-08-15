@@ -165,7 +165,7 @@ const maritalStatusList = [
     title: 'женат',
   },
 ];
-const mm = ref(null)
+const mm = ref()
 
 const date: Ref<Date | undefined> = ref()
 
@@ -263,8 +263,8 @@ const handleSearch = (value: string) => {
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-         <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="id" with-null />
-         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null @search="handleSearch" />
+         <!-- <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="id" with-null /> -->
+         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-undefined @search="handleSearch" />
       </widget-wrapper>
     </div>
   </div>

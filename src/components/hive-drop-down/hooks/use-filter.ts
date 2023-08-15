@@ -39,7 +39,7 @@ export const useFilter = ({
   if (options) {
     let prev;
 
-    if (withNull) {
+    if (withNull || withUndefined) {
       filteredOptions.value.set('none', nullOption.value);
       currentOptions.value.set('none', nullOption.value);
 
