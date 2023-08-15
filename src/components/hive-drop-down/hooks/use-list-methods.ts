@@ -40,7 +40,7 @@ export const useListMethods = ({
     fieldValue,
   });
 
-  if (withNull) {
+  if (withNull || withUndefined) {
     current.value = nullOption.value;
   }
 
