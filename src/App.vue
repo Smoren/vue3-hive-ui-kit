@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
@@ -155,6 +155,8 @@ const optionsObject = {
   },
 };
 
+const date: Ref<Date | undefined> = ref()
+
 const yearStore = useYearStore();
 const yearList = computed(() => yearStore.years);
 
@@ -200,6 +202,7 @@ onMounted(() => {
         <hive-input v-model="num" type="number" :step="1" />
         <hive-input v-model="num" type="text" integer :min="5" :max="6" />
         <hive-input v-model="num" :mask="/^\d+$/" />
+        <hive-input v-model="date" type="date" />
       </widget-wrapper>
 
       <!-- Modal -->
