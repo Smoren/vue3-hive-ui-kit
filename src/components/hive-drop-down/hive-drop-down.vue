@@ -22,7 +22,7 @@ import { Option, Options, Value  } from '@/common/types/select';
 
 interface Props {
   options: Options | undefined; //Option[] | Record<string, Option> | undefined;
-  modelValue:Value;
+  modelValue: Value;
   modelValueEventName?: string;
   disabled?: boolean;
   withNull?: boolean;

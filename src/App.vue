@@ -145,15 +145,27 @@ const dd4 = ref(null)
 const optionsObject = {
   '74fd8aaa-e10a-4fd0-941b-6f6c7249003d': {
     title: 'Российская Федерация',
-    value: '74fd8aaa-e10a-4fd0-941b-6f6c7249003d',
+    id: '74fd8aaa-e10a-4fd0-941b-6f6c7249003d',
     classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
   },
   'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f': {
     title: 'Республика Беларусь',
-    value: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f',
+    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f',
     classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
   },
 };
+
+const maritalStatusList = [
+  {
+    id: 0,
+    title: 'холост',
+  },
+  {
+    id: 1,
+    title: 'женат',
+  },
+];
+const mm = ref(null)
 
 const date: Ref<Date | undefined> = ref()
 
@@ -202,7 +214,7 @@ onMounted(() => {
         <hive-input v-model="num" type="number" :step="1" />
         <hive-input v-model="num" type="text" integer :min="5" :max="6" />
         <hive-input v-model="num" :mask="/^\d+$/" />
-        <hive-input v-model="date" type="date" />
+        <!-- <hive-input v-model="date" type="date" /> -->
       </widget-wrapper>
 
       <!-- Modal -->
@@ -223,7 +235,8 @@ onMounted(() => {
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" /> -->
-            <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" />
+            <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" /> -->
+            <!-- <hive-drop-down v-model="mm" :options="yearList" title-field="title" value-field="id" /> -->
             <hive-button />
           </div>
 
@@ -238,12 +251,15 @@ onMounted(() => {
         {{ dd3 }}
         <br />
         {{ dd4 }}
+        <br />
+        {{ mm }}
         <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-         <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="value" with-null />
+         <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="id" with-null />
+         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null />
       </widget-wrapper>
     </div>
   </div>
