@@ -18,10 +18,10 @@ import {
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from './hooks/use-list-methods';
-import { Option, Options, Value  } from '@/common/types/select';
+import { Options, Value  } from '@/common/types/select';
 
 interface Props {
-  options: Options | undefined; //Option[] | Record<string, Option> | undefined;
+  options: Options | undefined;
   modelValue: Value;
   modelValueEventName?: string;
   disabled?: boolean;
@@ -34,7 +34,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  // options: () => [],
   modelValueEventName: 'input',
   disabled: false,
   nullTitle: 'Не выбрано',
