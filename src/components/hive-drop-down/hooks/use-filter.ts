@@ -4,18 +4,27 @@ import { CurrentOptions, CurrentOptionsRef, Options, Value } from '@/common/type
 export type FilterConfig = {
   options: Options | undefined;
   modelValue: Value;
+  withUndefined: boolean;
   withNull: boolean;
   nullTitle: string;
   fieldTitle: string;
   fieldValue: string;
 };
 
-export const useFilter = ({ options, modelValue, withNull, nullTitle, fieldTitle, fieldValue }: FilterConfig) => {
+export const useFilter = ({
+  options,
+  modelValue,
+  withUndefined,
+  withNull,
+  nullTitle,
+  fieldTitle,
+  fieldValue,
+}: FilterConfig) => {
   const currentOptions = ref(new Map());
   const filteredOptions = ref(new Map());
   const nullOption: CurrentOptionsRef = ref({
     [fieldTitle]: nullTitle,
-    [fieldValue]: undefined,
+    [fieldValue]: withUndefined ? undefined : null,
     prev: null,
     next: null,
   });

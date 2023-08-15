@@ -11,10 +11,9 @@ import {
   Mount,
   Unmount,
   Update,
-  Input,
-  onInput,
   onUpdateModelValue,
   Search,
+  onSearch,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from './hooks/use-list-methods';
@@ -25,6 +24,7 @@ interface Props {
   modelValue: Value;
   modelValueEventName?: string;
   disabled?: boolean;
+  withUndefined?: boolean; 
   withNull?: boolean;
   nullTitle?: string;
   titleField?: string;
@@ -34,14 +34,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValueEventName: 'input',
+  modelValueEventName: 'onAfterChange',
   disabled: false,
   nullTitle: 'Не выбрано',
   titleField: 'title',
   valueField: 'value',
 });
 
-type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Input<string> & Search<string>;
+type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
 
 const emit = defineEmits<Emit>();
 
@@ -50,6 +50,7 @@ useOnMount(emit);
 const configOptions = reactive({
   options: props.options,
   modelValue: props.modelValue,
+  withUndefined: props.withUndefined,
   withNull: props.withNull,
   nullTitle: props.nullTitle,
   fieldTitle: props.titleField,
@@ -101,7 +102,7 @@ watch(
         @keydown.esc="collapse"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
-        @input="onInput(emit, $event as string)"
+        @search="onSearch<string>(emit, $event as string)"
       />
       <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
       <transition name="fade" appear>
