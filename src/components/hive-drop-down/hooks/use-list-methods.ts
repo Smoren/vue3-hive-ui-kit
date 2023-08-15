@@ -6,6 +6,7 @@ import { useFilter } from './use-filter';
 export type ListMethodsConfig = {
   options: Options | undefined;
   modelValue: Value;
+  withUndefined: boolean;
   withNull: boolean;
   nullTitle: string;
   fieldTitle: string;
@@ -15,6 +16,7 @@ export type ListMethodsConfig = {
 export const useListMethods = ({
   options,
   modelValue,
+  withUndefined,
   withNull,
   nullTitle,
   fieldTitle,
@@ -31,6 +33,7 @@ export const useListMethods = ({
   const { filteredOptions, currentOptions, nullOption } = useFilter({
     options,
     modelValue,
+    withUndefined,
     withNull,
     nullTitle,
     fieldTitle,

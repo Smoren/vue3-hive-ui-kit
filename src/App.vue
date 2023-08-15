@@ -175,6 +175,11 @@ const yearList = computed(() => yearStore.years);
 onMounted(() => {
   yearStore.getYears();
 });
+
+const handleSearch = (value: string) => {
+  console.log('val', value);
+  
+}
 </script>
 
 <template>
@@ -259,7 +264,7 @@ onMounted(() => {
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
          <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="id" with-null />
-         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null />
+         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null @search="handleSearch" />
       </widget-wrapper>
     </div>
   </div>
