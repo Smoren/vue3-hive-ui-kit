@@ -94,6 +94,7 @@ watch(
         :disabled="disabled"
         :placeholder="(current ? String(current[titleField]) : '')"
         class="hive-drop-down__search"
+        :class="{ valueNull:  modelValue === null}"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
@@ -201,6 +202,10 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
       &::placeholder {
         opacity: 0.5;
       }
+    }
+
+    &.valueNull {
+      opacity: 0.8;
     }
   }
 

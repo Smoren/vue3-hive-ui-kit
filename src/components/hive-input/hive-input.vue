@@ -79,13 +79,16 @@ export interface InputExpose {
 }
 
 defineExpose({ input: inputRef, forceFocus });
+
+// @ts-ignore
+const isDateTime = props.type === 'date' || props.type === 'time';
 </script>
 
 <template>
   <input
     ref="inputRef"
     class="hive-input"
-    :class="{ error: invalid }"
+    :class="{ error: invalid, datetime: isDateTime && !modelValue }"
     :style="style"
     :type="type"
     :value="modelValue"
@@ -127,6 +130,10 @@ defineExpose({ input: inputRef, forceFocus });
     border-color: var(--border-disabled, $border-disabled);
     opacity: 0.6;
     pointer-events: none;
+  }
+
+  &.datetime {
+    color: #3f3f3f80;
   }
 }
 </style>
