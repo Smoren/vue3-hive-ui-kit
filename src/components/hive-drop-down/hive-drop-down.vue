@@ -214,6 +214,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     opacity: 0.7;
     background: none !important;
     font-style: normal;
+    // font-size: 11px;
 
     &:before {
       content: '▼';
