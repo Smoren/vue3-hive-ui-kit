@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
   nullTitle: 'Не выбрано',
   titleField: 'title',
   valueField: 'value',
-  menuHeight: '10rem'
+  menuHeight: '5rem'
 });
 
 type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
