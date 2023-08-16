@@ -39,12 +39,11 @@ const props = withDefaults(defineProps<Props>(), {
   nullTitle: 'Не выбрано',
   titleField: 'title',
   valueField: 'value',
+  menuHeight: '5rem'
 });
 
 type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
-
 const emit = defineEmits<Emit>();
-
 useOnMount(emit);
 
 const configOptions = reactive({
@@ -102,7 +101,7 @@ watch(
         @keydown.esc="collapse"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
-        @search="onSearch<string>(emit, $event as string)"
+        @input="onSearch<string>(emit, $event as string)"
       />
       <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
       <transition name="fade" appear>
@@ -167,6 +166,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
   &.expand {
     z-index: $drop-down-z_menu + 1;
+    border-color: var(--border-focus, $border-focus);
   }
 
   &.disable {
@@ -215,6 +215,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     opacity: 0.7;
     background: none !important;
     font-style: normal;
+    // font-size: 11px;
 
     &:before {
       content: '▼';
@@ -228,6 +229,8 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   }
 
   &__menu {
+    overflow-y: auto;
+
     &-item {
       border-top: 1px solid $drop-down-border-top;
       padding: $p-input !important;

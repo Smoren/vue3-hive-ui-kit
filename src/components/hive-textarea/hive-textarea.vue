@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { CommonProps } from '@/common/mixin/props';
-import { Update, onUpdateModelValue } from '@/common/mixin/emits';
+import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
   modelValue: string;
@@ -16,9 +17,9 @@ withDefaults(defineProps<Props>(), {
   resizeDirection: 'both',
 });
 
-type Emit = Update<string>;
-
+type Emit = Mount & Unmount & Update<string>;
 const emit = defineEmits<Emit>();
+useOnMount(emit);
 </script>
 
 <template>

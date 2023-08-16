@@ -49,6 +49,10 @@ export const useFilter = ({
     if (Array.isArray(options)) {
       for (const option of options) {
         if (typeof option === 'object') {
+          if (currentOptions.value.has(option[fieldValue])) {
+            continue;
+          }
+
           if (prev !== undefined) {
             const temp = filteredOptions.value.get(prev);
             filteredOptions.value.set(prev, { ...temp, next: option[fieldValue] });
@@ -62,6 +66,10 @@ export const useFilter = ({
             prev = option[fieldValue];
           }
         } else {
+          if (currentOptions.value.has(String(option))) {
+            continue;
+          }
+
           if (prev !== undefined) {
             const temp = filteredOptions.value.get(prev);
             filteredOptions.value.set(prev, { ...temp, next: String(option) });

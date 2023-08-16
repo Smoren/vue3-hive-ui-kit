@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { CommonProps } from '@/common/mixin/props';
-import { Click, onClick } from '@/common/mixin/emits';
+import { Click, Mount, Unmount, onClick } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
   title?: string;
@@ -12,9 +13,9 @@ withDefaults(defineProps<Props>(), {
   disabled: false,
 });
 
-type Emit = Click;
-
+type Emit = Mount & Unmount & Click;
 const emit = defineEmits<Emit>();
+useOnMount(emit);
 </script>
 
 <template>
