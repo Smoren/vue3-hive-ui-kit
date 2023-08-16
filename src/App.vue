@@ -263,8 +263,8 @@ const handleSearch = (value: string) => {
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-         <!-- <hive-drop-down v-model="dd4" :options="optionsObject" title-field="title" value-field="id" with-null /> -->
-         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-undefined @search="handleSearch" />
+         <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
+         <!-- <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-undefined @search="handleSearch" /> -->
       </widget-wrapper>
     </div>
   </div>
