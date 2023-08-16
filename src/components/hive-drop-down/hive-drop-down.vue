@@ -106,7 +106,7 @@ watch(
       <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
       <transition name="fade" appear>
         <div
-          v-if="!isExpanded"
+          v-if="isExpanded"
           class="hive-drop-down__menu"
           :style="{
             height: menuHeight,
@@ -166,6 +166,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
   &.expand {
     z-index: $drop-down-z_menu + 1;
+    border-color: var(--border-focus, $border-focus);
   }
 
   &.disable {
