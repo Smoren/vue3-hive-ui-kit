@@ -38,12 +38,10 @@ const props = withDefaults(defineProps<Props>(), {
   step: 0.01,
 });
 
-type currentType = typeof props.modelValue;
+type CurrentType = typeof props.modelValue;
 
-type Emit = Mount & Unmount & Update<currentType> & Focusin & Focusout & Keydown & Input<currentType>;
-
+type Emit = Mount & Unmount & Update<CurrentType> & Focusin & Focusout & Keydown & Input<CurrentType>;
 const emit = defineEmits<Emit>();
-
 useOnMount(emit);
 
 const inputRef: Ref<HTMLInputElement | null> = ref(null);
@@ -54,7 +52,7 @@ const forceFocus = () => {
   }
 };
 
-const handleInput = (value: currentType) => {
+const handleInput = (value: CurrentType) => {
   onUpdateModelValue(emit, value);
   onInput(emit, value);
 };

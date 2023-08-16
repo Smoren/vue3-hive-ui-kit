@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { CommonProps } from '@/common/mixin/props';
-import { Update, onUpdateModelValue } from '@/common/mixin/emits';
+import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
   modelValue: boolean;
@@ -14,9 +15,9 @@ withDefaults(defineProps<Props>(), {
   zIndex: 10000,
 });
 
-type Emit = Update<boolean>;
-
+type Emit = Mount & Unmount & Update<boolean>;
 const emit = defineEmits<Emit>();
+useOnMount(emit);
 
 const handleHide = () => {
   onUpdateModelValue(emit, false);

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { CommonProps } from '@/common/mixin/props';
+import { Mount, Unmount } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
   visible?: boolean;
@@ -8,6 +10,10 @@ export interface Props extends CommonProps {
 withDefaults(defineProps<Props>(), {
   visible: false,
 });
+
+type Emit = Mount & Unmount;
+const emit = defineEmits<Emit>();
+useOnMount(emit);
 </script>
 
 <template>

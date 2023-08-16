@@ -43,9 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
-
 const emit = defineEmits<Emit>();
-
 useOnMount(emit);
 
 const configOptions = reactive({
