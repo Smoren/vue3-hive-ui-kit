@@ -41,13 +41,16 @@ export const useListMethods = ({
   });
 
   if (withNull || withUndefined) {
+    console.log('with');
+    
     current.value = nullOption.value;
   }
 
   if (modelValue !== undefined && filteredOptions.value) {
-    if (modelValue !== null) {
-      current.value = filteredOptions.value.get(modelValue);
-    }
+    // if (modelValue !== null) {
+    current.value = filteredOptions.value.get(modelValue);
+    console.log('model', current.value);
+    // }
   }
 
   const updateActiveValue = (value: Value) => {
@@ -57,10 +60,14 @@ export const useListMethods = ({
   const updateCurrentValue = (value: Value | undefined) => {
     currentValue.value = value;
 
-    if (value === undefined || value === null) {
+    if (value === undefined || (value === null && withNull)) {
+      console.log('value');
+      
       current.value = nullOption.value;
     } else {
-      current.value = filteredOptions.value.get(value);
+      let key = value;
+      if (value === null && !withNull) key = 'none';
+      current.value = filteredOptions.value.get(key);
     }
 
     collapse();
