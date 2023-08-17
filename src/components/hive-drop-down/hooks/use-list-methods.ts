@@ -40,16 +40,13 @@ export const useListMethods = ({
     fieldValue,
   });
 
-  if (withNull || withUndefined) {
-    console.log('with');
-    
+  if (withNull || withUndefined) {    
     current.value = nullOption.value;
   }
 
   if (modelValue !== undefined && filteredOptions.value) {
     // if (modelValue !== null) {
     current.value = filteredOptions.value.get(modelValue);
-    console.log('model', current.value);
     // }
   }
 
@@ -61,8 +58,6 @@ export const useListMethods = ({
     currentValue.value = value;
 
     if (value === undefined || (value === null && withNull)) {
-      console.log('value');
-      
       current.value = nullOption.value;
     } else {
       let key = value;
