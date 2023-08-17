@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
   nullTitle: 'Не выбрано',
   titleField: 'title',
   valueField: 'value',
-  menuHeight: '5rem'
+  menuHeight: '10rem'
 });
 
 type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
@@ -93,7 +93,7 @@ watch(
         :disabled="disabled"
         :placeholder="(current ? String(current[titleField]) : '')"
         class="hive-drop-down__search"
-        :class="{ valueNull:  modelValue === null}"
+        :class="{ valueNull:  modelValue === null && withNull || modelValue === undefined}"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
@@ -109,7 +109,7 @@ watch(
           v-if="isExpanded"
           class="hive-drop-down__menu"
           :style="{
-            height: menuHeight,
+            maxHeight: menuHeight,
           }"
         >
           <div
@@ -173,7 +173,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     border-color: var(--border-disabled, $border-disabled);
     opacity: 0.6;
     pointer-events: none;
-     cursor: pointer;
+    cursor: pointer;
   }
 
   &__wrap {
