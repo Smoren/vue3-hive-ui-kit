@@ -49,21 +49,25 @@ export const useFilter = ({
     if (Array.isArray(options)) {
       for (const option of options) {
         if (typeof option === 'object') {
-          if (currentOptions.value.has(option[fieldValue])) {
+          let key = option[fieldValue];
+
+          if (key === null) key = 'none';
+
+          if (currentOptions.value.has(key)) {
             continue;
           }
 
           if (prev !== undefined) {
             const temp = filteredOptions.value.get(prev);
-            filteredOptions.value.set(prev, { ...temp, next: option[fieldValue] });
-            filteredOptions.value.set(option[fieldValue], { ...option, prev, next: null });
-            currentOptions.value.set(prev, { ...temp, next: option[fieldValue] });
-            currentOptions.value.set(option[fieldValue], { ...option, prev, next: null });
-            prev = option[fieldValue];
+            filteredOptions.value.set(prev, { ...temp, next: key });
+            filteredOptions.value.set(key, { ...option, prev, next: null });
+            currentOptions.value.set(prev, { ...temp, next: key });
+            currentOptions.value.set(key, { ...option, prev, next: null });
+            prev = key;
           } else {
-            filteredOptions.value.set(option[fieldValue], { ...option, prev: null, next: null });
-            currentOptions.value.set(option[fieldValue], { ...option, prev: null, next: null });
-            prev = option[fieldValue];
+            filteredOptions.value.set(key, { ...option, prev: null, next: null });
+            currentOptions.value.set(key, { ...option, prev: null, next: null });
+            prev = key;
           }
         } else {
           if (currentOptions.value.has(String(option))) {
