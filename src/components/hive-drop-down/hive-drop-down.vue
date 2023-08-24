@@ -31,6 +31,7 @@ interface Props {
   valueField?: string;
   mask?: RegExp;
   menuHeight?: string;
+  height?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -39,7 +40,8 @@ const props = withDefaults(defineProps<Props>(), {
   nullTitle: 'Не выбрано',
   titleField: 'title',
   valueField: 'value',
-  menuHeight: '10rem'
+  menuHeight: '10rem',
+  height: '2.2rem',
 });
 
 type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
@@ -93,7 +95,8 @@ watch(
         :disabled="disabled"
         :placeholder="(current ? String(current[titleField]) : '')"
         class="hive-drop-down__search"
-        :class="{ valueNull:  modelValue === null && withNull || modelValue === undefined}"
+        :class="{ valueNull:  modelValue === null && withNull || modelValue === undefined }"
+        :style="{ height }"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
@@ -216,6 +219,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     background: none !important;
     font-style: normal;
     // font-size: 11px;
+    margin: auto 0;
 
     &:before {
       content: '▼';
