@@ -10,7 +10,7 @@ import { useYearStore } from './stores/years';
 const text = ref('text');
 const num = ref(0);
 const isOpenModal = ref(false);
-const dropdown = ref('dd');
+const dropdown = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d');
 const dd3 = ref(0);
 
 const handleText = () => {
@@ -281,13 +281,13 @@ const handleSearch = (value: string) => {
         {{ dd4 }}
         <br />
         {{ mm }}
-        <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
+        <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" />
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
          <!-- <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" /> -->
-         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null />
+         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null height="100px" />
          <!-- <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" /> -->
       </widget-wrapper>
     </div>
