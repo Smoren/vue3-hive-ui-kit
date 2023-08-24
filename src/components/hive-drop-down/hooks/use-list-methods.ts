@@ -44,12 +44,6 @@ export const useListMethods = ({
     current.value = nullOption.value;
   }
 
-  if (modelValue !== undefined && filteredOptions.value) {
-    let key = modelValue;
-    if (modelValue === null && !withNull) key = 'none';
-    current.value = filteredOptions.value.get(key);
-  }
-
   const updateActiveValue = (value: Value) => {
     activeValue.value = value;
   };
@@ -57,11 +51,10 @@ export const useListMethods = ({
   const updateCurrentValue = (value: Value | undefined) => {
     currentValue.value = value;
 
-    if (value === undefined || (value === null && withNull)) {
+    if (value === undefined || (value === null)) {
       current.value = nullOption.value;
     } else {
       let key = value;
-      if (value === null && !withNull) key = 'none';    
       current.value = filteredOptions.value.get(key);
     }
 
