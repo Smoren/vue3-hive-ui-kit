@@ -148,7 +148,7 @@ const optionsArray = [
 ];
 
 // const dd4 = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d')
-const dd4 = ref(null)
+const dd4 = ref(null);
 
 const optionsObject = {
   '74fd8aaa-e10a-4fd0-941b-6f6c7249003d': {
@@ -173,7 +173,7 @@ const maritalStatusList = [
     title: 'женат',
   },
 ];
-const mm = ref(null)
+const mm = ref(null);
 
 const statusList = [
   {
@@ -187,10 +187,10 @@ const statusList = [
     description: '',
     title: 'Черновик',
     type: null,
-  }
+  },
 ];
 
-const date: Ref<Date | undefined> = ref()
+const date: Ref<Date | undefined> = ref();
 
 const yearStore = useYearStore();
 const yearList = computed(() => yearStore.years);
@@ -201,8 +201,7 @@ onMounted(() => {
 
 const handleSearch = (value: string) => {
   console.log('val', value);
-  
-}
+};
 </script>
 
 <template>
@@ -286,9 +285,17 @@ const handleSearch = (value: string) => {
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-         <!-- <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" /> -->
-         <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null height="100px" />
-         <!-- <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" /> -->
+        <!-- <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" /> -->
+        <hive-drop-down
+          v-model="mm"
+          :options="maritalStatusList"
+          title-field="title"
+          value-field="id"
+          with-null
+          height="100px"
+          :focusOnMount="true"
+        />
+        <!-- <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" /> -->
       </widget-wrapper>
     </div>
   </div>
