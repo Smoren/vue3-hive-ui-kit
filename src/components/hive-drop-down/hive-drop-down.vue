@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, watch } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
   Focusout,
@@ -17,21 +17,22 @@ import {
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from './hooks/use-list-methods';
-import { Options, Value  } from '@/common/types/select';
+import { Options, Value } from '@/common/types/select';
 
 interface Props {
   options: Options | undefined;
   modelValue: Value;
   modelValueEventName?: string;
   disabled?: boolean;
-  withUndefined?: boolean; 
+  withUndefined?: boolean;
   withNull?: boolean;
   nullTitle?: string;
   titleField?: string;
   valueField?: string;
   mask?: RegExp;
   menuHeight?: string;
-  height?: string
+  height?: string;
+  focusOnMount?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -42,6 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
   valueField: 'value',
   menuHeight: '10rem',
   height: '2.2rem',
+  focusOnMount: false,
 });
 
 type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
@@ -75,6 +77,10 @@ const {
   setNextActiveValue,
 } = useListMethods(configOptions);
 
+onMounted(() => {
+  if (props.focusOnMount) searchRef.value?.forceFocus();
+});
+
 watch(
   () => props.options,
   () => {
@@ -93,9 +99,9 @@ watch(
         v-model="searchQuery"
         ref="searchRef"
         :disabled="disabled"
-        :placeholder="(current ? String(current[titleField]) : '')"
+        :placeholder="current ? String(current[titleField]) : ''"
         class="hive-drop-down__search"
-        :class="{ valueNull:  modelValue === null && withNull || modelValue === undefined }"
+        :class="{ valueNull: (modelValue === null && withNull) || modelValue === undefined }"
         :style="{ height }"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
