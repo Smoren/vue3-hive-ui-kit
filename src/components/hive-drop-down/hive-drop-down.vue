@@ -143,7 +143,7 @@ watch(
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
-$drop-down-z_menu: 10;
+$drop-down-z_menu: 1;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);
 $drop-down-selected_background: rgba(0, 0, 0, 0.03);
