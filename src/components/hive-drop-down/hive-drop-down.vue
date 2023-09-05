@@ -143,8 +143,9 @@ watch(
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
 
-$drop-down-z_menu: 1;
-$drop-down-border: 1px solid var(--border, $border);
+$drop-down-z_menu: 10;
+$border-width: 1px;
+$drop-down-border: $border-width solid var(--border, $border);
 $drop-down-selected_background: rgba(0, 0, 0, 0.03);
 $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
@@ -152,10 +153,7 @@ $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 $drop-down-padding: 0.5em 1em 0.5em 1em;
 
 .hive-drop-down {
-  position: absolute;
-  left: 0;
-  top: 0%;
-  width: 100%;
+  position: relative;
   cursor: pointer;
   text-align: left;
   text-shadow: none;
@@ -166,7 +164,6 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   border-radius: var(--border-radius, $border-radius);
   transition: opacity 0.1s ease;
   background-color: var(--bg-input, $bg-input);
-  z-index: $drop-down-z_menu;
   will-change: transform, opacity;
   animation-iteration-count: 1;
   animation-duration: 300ms;
@@ -176,6 +173,8 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   &.expand {
     z-index: $drop-down-z_menu + 1;
     border-color: var(--border-focus, $border-focus);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &.disable {
@@ -187,8 +186,8 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
   &__wrap {
     position: relative;
-    height: 2.2rem;
     width: 100%;
+    display: flex;
     background-color: none;
     cursor: default;
   }
@@ -239,7 +238,19 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   }
 
   &__menu {
+    position: absolute;
+    left: -$border-width;
+    top: 100%;
+    width: 100%;
     overflow-y: auto;
+    background-color: var(--bg-input, $bg-input);
+    z-index: $drop-down-z_menu;
+    border: $drop-down-border;
+    border-color: var(--border-focus, $border-focus);
+    border-radius: var(--border-radius, $border-radius);
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
     &-item {
       border-top: 1px solid $drop-down-border-top;

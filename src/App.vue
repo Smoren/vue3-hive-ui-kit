@@ -281,13 +281,13 @@ const handleSearch = (value: string) => {
         {{ dd4 }}
         <br />
         {{ mm }}
-        <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" />
+        <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
         <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-         <!-- <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" /> -->
-        <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null height="100px" />
+         <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
+        <!-- <hive-drop-down v-model="mm" :options="maritalStatusList" title-field="title" value-field="id" with-null height="100px" /> -->
          <!-- <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" /> -->
 
         <!-- <hive-input v-model="num" type="number" /> -->
