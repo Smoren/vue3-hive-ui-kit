@@ -61,7 +61,8 @@ const handleBtnClick = () => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/scss/main.scss';
+@import '@/assets/variables.scss';
+@import '@/assets/mixins.scss';
 
 .search {
   position: relative;

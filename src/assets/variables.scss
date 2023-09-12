@@ -1,15 +1,19 @@
-/* Core */
+//* Core
 $bg-button: #f2f2f2;
 $bg-input: #ffffff;
 $bg-hover: #d3eafff5;
 
 $text: #3f3f3f;
 
-/* Borders */
+//* Borders
 $border: #bfbfbf;
 $border-disabled: #bfbfbf7c;
 $border-focus: #b2d6f8; //#96c8da
 $border-radius: 5px;
 
-/* Padding */
+//* Padding
 $p-input: 0.5rem 1rem;
+
+//* Shadow styles start
+$box-shadow-general: -4px -4px 17px 1px rgb(255 255 255 / 41%), 4px 4px 17px 1px rgb(16 35 47 / 14%);
+$box-shadow-btn: 0px 0px 5px 1px #d0d0d04d;

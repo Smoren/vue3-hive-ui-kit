@@ -1,0 +1,62 @@
+// Breakpoints
+@mixin respond-to($breakpoint, $direction) {
+  @if $direction == max {
+    @media screen and (max-width: $breakpoint) {
+      @content;
+    }
+  } @else if $direction == min {
+    @media screen and (min-width: $breakpoint) {
+      @content;
+    }
+  } @else {
+    @media ($direction: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+// Transition
+@mixin transition($properties...) {
+  $transition: ();
+
+  @each $property in $properties {
+    $transition: append(
+      $transition,
+      ($property 0.15s linear),
+      $separator: comma
+    );
+  }
+
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+// Squre
+@mixin square($width: 80px, $border-radius: 50%) {
+  .square {
+    position: relative;
+    display: block;
+    width: $width;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      display: block;
+      padding-bottom: $width;
+    }
+
+    &__content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      object-fit: cover;
+      height: 100%;
+
+      @extend %unblurred-image;
+    }
+  }
+}
