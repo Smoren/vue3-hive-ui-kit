@@ -4,6 +4,7 @@ import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
+import HiveBadge from './components/hive-badge/hive-badge.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
 
@@ -242,6 +243,7 @@ const handleSearch = (value: string) => {
         <hive-input v-model="num" type="text" integer :min="5" :max="6" />
         <hive-input v-model="num" :mask="/^\d+$/" />
         <!-- <hive-input v-model="date" type="date" /> -->
+        <hive-badge :counter="4" />
       </widget-wrapper>
 
       <!-- Modal -->
