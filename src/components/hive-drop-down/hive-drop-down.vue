@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { onMounted, reactive, watch } from 'vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
@@ -140,7 +140,7 @@ watch(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import '@/assets/variables.scss';
 
 $drop-down-z_menu: 1;
