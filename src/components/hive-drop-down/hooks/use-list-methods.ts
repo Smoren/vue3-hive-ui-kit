@@ -1,7 +1,7 @@
 import { Ref, computed, ref, watch } from 'vue';
 import { InputExpose } from '@/components/hive-input/hive-input.vue';
 import { Value, Options, CurrentOptionsRef } from '@/common/types/select';
-import { useFilter } from './use-filter';
+import { useFilter } from '../../../common/hooks/use-filter';
 
 export type ListMethodsConfig = {
   options: Options | undefined;

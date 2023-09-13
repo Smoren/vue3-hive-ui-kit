@@ -4,19 +4,19 @@ import { CurrentOptions, CurrentOptionsRef, Options, Value } from '@/common/type
 export type FilterConfig = {
   options: Options | undefined;
   modelValue: Value;
-  withUndefined: boolean;
-  withNull: boolean;
-  nullTitle: string;
   fieldTitle: string;
   fieldValue: string;
+  withUndefined?: boolean;
+  withNull?: boolean;
+  nullTitle?: string;
 };
 
 export const useFilter = ({
   options,
   modelValue,
-  withUndefined,
-  withNull,
-  nullTitle,
+  withUndefined = false,
+  withNull = false,
+  nullTitle = '',
   fieldTitle,
   fieldValue,
 }: FilterConfig) => {
