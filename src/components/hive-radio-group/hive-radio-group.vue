@@ -1,23 +1,25 @@
 <script lang="ts" setup>
-import { CommonProps } from '@/common/mixin/props';
 import { ref, watch } from 'vue';
+import { CommonProps } from '@/common/mixin/props';
 import { Options, Value } from '@/common/types/select';
-import { useFilter } from '@/components/hive-drop-down/hooks/use-filter';
+import { useFilter } from '@/common/hooks/use-filter';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
 
 export interface Props extends CommonProps {
   modelValue: Value;
+  options: Options | undefined;
   inline?: boolean;
-  options?: Options;
   titleField?: string;
   valueField?: string;
+  name?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   inline: false,
   titleField: 'title',
   valueField: 'value',
+  name: 'radio-group',
 });
 
 type Emit = Mount & Unmount & Update<Value>;
@@ -71,6 +73,7 @@ watch(
         <input
           :id="`hive-radio-${option[1][valueField]}`"
           :checked="option[1][valueField] === currentValue"
+          :name="name"
           class="radio-input"
           tabindex="0"
           type="radio"
