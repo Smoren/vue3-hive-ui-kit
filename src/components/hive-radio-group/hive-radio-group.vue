@@ -64,7 +64,7 @@ watch(
     <div class="fields" :class="{ inline: inline }">
       <div
         v-for="(option, i) in filteredOptions"
-        :key="option[i]"
+        :key="option[1][valueField]"
         class="field"
         @click.prevent
         @click="changeValue(option[1][valueField])"
