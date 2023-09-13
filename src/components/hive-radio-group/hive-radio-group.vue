@@ -100,7 +100,7 @@ $outer-size: $inner-size - 2px;
 $border-radius: 100%;
 $top: calc(50% - ($outer-size/2));
 $base-addition: 5px;
-$paddint-left: max(25px, $outer-size + $base-addition);
+$padding-left: max(25px, $outer-size + $base-addition);
 $gap: 15px;
 
 .fields {
@@ -114,7 +114,7 @@ $gap: 15px;
 
   .field {
     position: relative;
-    padding-left: $paddint-left;
+    padding-left: $padding-left;
     display: flex;
     align-items: center;
     min-height: $outer-size;
