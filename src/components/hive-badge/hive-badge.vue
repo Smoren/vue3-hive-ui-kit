@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CommonProps } from '@/common/mixin/props';
+
 type Counter = {
   count: number;
   mode: number;

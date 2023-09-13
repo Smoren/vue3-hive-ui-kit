@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, watch } from 'vue';
+import { CommonProps } from '@/common/mixin/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
   Focusout,
@@ -19,7 +20,7 @@ import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from './hooks/use-list-methods';
 import { Options, Value } from '@/common/types/select';
 
-interface Props {
+interface Props extends CommonProps {
   options: Options | undefined;
   modelValue: Value;
   modelValueEventName?: string;
