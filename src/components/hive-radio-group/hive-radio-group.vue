@@ -13,6 +13,8 @@ export interface Props extends CommonProps {
   titleField?: string;
   valueField?: string;
   name?: string;
+  innerSize?: string;
+  outerSize?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,6 +22,8 @@ const props = withDefaults(defineProps<Props>(), {
   titleField: 'title',
   valueField: 'value',
   name: 'radio-group',
+  innerSize: '18px',
+  outerSize: '16px',
 });
 
 type Emit = Mount & Unmount & Update<Value>;
@@ -81,6 +85,7 @@ watch(
           class="input-label"
           :for="`hive-radio-${option[1][valueField]}`"
           :class="{ checked: option[1][valueField] === currentValue }"
+          style=""
         >
           {{ option[1][titleField] }}
         </label>
@@ -97,8 +102,8 @@ $transition-type: ease;
 $transiton: $transition-duration $transition-type;
 $transitions: border $transiton, opacity $transiton, transform $transiton, box-shadow $transiton,
   -webkit-transform $transiton, -webkit-box-shadow $transiton;
-$inner-size: 18px;
-$outer-size: $inner-size - 2px;
+$inner-size: v-bind(innerSize);
+$outer-size: v-bind(outerSize);
 $border-radius: 100%;
 $top: calc(50% - ($outer-size/2));
 $base-addition: 5px;
