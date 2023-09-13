@@ -5,6 +5,7 @@ import HiveDropDown from '@/components/hive-drop-down/hive-drop-down.vue';
 import HiveFilter from './components/hive-filter/HiveFilter.vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import HiveLoader from '@/components/hive-loader/hive-loader.vue';
+import HiveRadioGroup from '@/components/hive-radio-group/hive-radio-group.vue'
 import HiveTextarea from '@/components/hive-textarea/hive-textarea.vue';
 
-export { HiveBadge, HiveButton, HiveDialog, HiveDropDown, HiveFilter, HiveInput, HiveLoader, HiveTextarea };
+export { HiveBadge, HiveButton, HiveDialog, HiveDropDown, HiveFilter, HiveInput, HiveLoader, HiveRadioGroup, HiveTextarea };
