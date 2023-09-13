@@ -66,8 +66,7 @@ watch(
         v-for="(option, i) in filteredOptions"
         :key="option[1][valueField]"
         class="field"
-        @click.prevent
-        @click="changeValue(option[1][valueField])"
+        @click.prevent="changeValue(option[1][valueField])"
       >
         <input
           :id="`hive-radio-${option[1][valueField]}`"
