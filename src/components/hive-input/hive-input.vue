@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { Ref, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
@@ -101,7 +101,7 @@ const isDateTime = props.type === 'date' || props.type === 'time';
   />
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import '@/assets/variables.scss';
 
 .hive-input {

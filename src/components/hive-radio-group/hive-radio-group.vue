@@ -1,10 +1,10 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import { Options, Value } from '@/common/types/select';
-import { useFilter } from '@/common/hooks/use-filter';
-import { useOnMount } from '@/common/hooks/use-mount';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
+import { useFilter } from '@/common/hooks/use-filter';
+import { Options, Value } from '@/common/types/select';
 
 export interface Props extends CommonProps {
   modelValue: Value;
@@ -24,7 +24,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 type Emit = Mount & Unmount & Update<Value>;
 const emit = defineEmits<Emit>();
-
 useOnMount(emit);
 
 const currentValue = ref(props.modelValue);
