@@ -4,6 +4,7 @@ import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
+import HiveRadioGroup from './components/hive-radio-group/hive-radio-group.vue';
 import HiveBadge from './components/hive-badge/hive-badge.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
@@ -191,6 +192,8 @@ const statusList = [
   },
 ];
 
+const radioGroup = ref(null);
+
 const date: Ref<Date | undefined> = ref();
 
 const yearStore = useYearStore();
@@ -282,7 +285,7 @@ const handleSearch = (value: string) => {
         {{ dd4 }}
         <br />
         {{ mm }}
-        <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" />
+        <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" value-field="id" />
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
         <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
@@ -295,9 +298,13 @@ const handleSearch = (value: string) => {
           value-field="id"
           with-null
           height="100px"
-          :focusOnMount="true"
         />
         <!-- <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" /> -->
+      </widget-wrapper>
+      <!-- RadioGroup -->
+      <widget-wrapper title="DropDown">
+        {{ radioGroup }}
+        <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="id" />
       </widget-wrapper>
     </div>
   </div>

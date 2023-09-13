@@ -77,10 +77,6 @@ const {
   setNextActiveValue,
 } = useListMethods(configOptions);
 
-onMounted(() => {
-  if (props.focusOnMount) searchRef.value?.forceFocus();
-});
-
 watch(
   () => props.options,
   () => {
@@ -90,6 +86,11 @@ watch(
     current.value = useListMethods(configOptions).current.value;
   },
 );
+
+onMounted(() => {
+  if (props.focusOnMount) searchRef.value?.forceFocus();
+});
+
 </script>
 
 <template>

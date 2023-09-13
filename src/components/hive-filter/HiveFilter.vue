@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { CommonProps } from '@/common/mixin/props';
 
-interface Props {
+interface Props extends CommonProps {
   modelValue: string;
   btnBackgroundColor?: string;
   isOpened?: boolean;

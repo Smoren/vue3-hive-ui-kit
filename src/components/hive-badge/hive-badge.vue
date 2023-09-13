@@ -4,9 +4,10 @@ type Counter = {
   mode: number;
 };
 
-const props = defineProps<{
+interface Props extends CommonProps {
   counter: Counter | number;
-}>();
+}
+const props = defineProps<Props>();
 
 const isNum = typeof props.counter === 'number';
 const countObj = props.counter as Counter;

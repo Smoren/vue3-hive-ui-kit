@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
@@ -29,7 +29,7 @@ useOnMount(emit);
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 $loader-spinner: #b0ddffe5;
 $loader-window: rgba(38, 45, 52, 0.68);
 $loader-span-size: 15px;

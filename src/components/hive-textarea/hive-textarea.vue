@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
@@ -34,7 +34,7 @@ useOnMount(emit);
   />
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import '@/assets/variables.scss';
 
 .hive-textaria {
