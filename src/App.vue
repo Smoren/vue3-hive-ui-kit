@@ -305,6 +305,8 @@ const handleSearch = (value: string) => {
       <widget-wrapper title="DropDown">
         {{ radioGroup }}
         <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="id" />
+        <input type="radio" checked/>
+        <!-- <hive-input type="radio" checked /> -->
       </widget-wrapper>
     </div>
   </div>

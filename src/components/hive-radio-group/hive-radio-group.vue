@@ -13,8 +13,6 @@ export interface Props extends CommonProps {
   titleField?: string;
   valueField?: string;
   name?: string;
-  innerSize?: string;
-  outerSize?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -22,8 +20,6 @@ const props = withDefaults(defineProps<Props>(), {
   titleField: 'title',
   valueField: 'value',
   name: 'radio-group',
-  innerSize: '18px',
-  outerSize: '16px',
 });
 
 type Emit = Mount & Unmount & Update<Value>;
@@ -65,31 +61,24 @@ watch(
 </script>
 
 <template>
-  <div>
-    <div class="radio__container" :class="{ inline: inline }">
-      <div
-        v-for="(option, i) in currentOptions"
-        :key="option[1][valueField]"
-        class="radio__item"
-        @click.prevent="changeValue(option[1][valueField])"
-      >
-        <input
-          :id="`hive-radio-${option[1][valueField]}`"
-          :checked="option[1][valueField] === currentValue"
-          :name="name"
-          class="radio__item-input"
-          tabindex="0"
-          type="radio"
-        />
-        <label
-          class="radio__item-label"
-          :for="`hive-radio-${option[1][valueField]}`"
-          :class="{ checked: option[1][valueField] === currentValue }"
-          style=""
-        >
-          {{ option[1][titleField] }}
-        </label>
-      </div>
+  <div class="hive-radio__container" :class="{ inline: inline }">
+    <div
+      v-for="(option, i) in currentOptions"
+      :key="option[1][valueField]"
+      class="hive-radio__item"
+      @click.prevent="changeValue(option[1][valueField])"
+    >
+      <input
+        class="hive-radio__input"
+        type="radio"
+        :id="`hive-radio-${option[1][valueField]}`"
+        :checked="option[1][valueField] === currentValue"
+        :name="name"
+        tabindex="0"
+      />
+      <label :for="`hive-radio-${option[1][valueField]}`">
+        {{ option[1][titleField] }}
+      </label>
     </div>
   </div>
 </template>
@@ -97,20 +86,9 @@ watch(
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
 
-$transition-duration: 0.1s;
-$transition-type: ease;
-$transition: $transition-duration $transition-type;
-$transitions: border $transition, opacity $transition, transform $transition, box-shadow $transition,
-  -webkit-transform $transition, -webkit-box-shadow $transition;
-$inner-size: v-bind(innerSize);
-$outer-size: v-bind(outerSize);
-$border-radius: 100%;
-$top: calc(50% - ($outer-size/2));
-$base-addition: 5px;
-$padding-left: max(25px, $outer-size + $base-addition);
 $gap: 15px;
 
-.radio {
+.hive-radio {
   &__container {
     width: fit-content;
 
@@ -122,66 +100,65 @@ $gap: 15px;
   }
 
   &__item {
-    position: relative;
-    padding-left: $padding-left;
     display: flex;
     align-items: center;
-    min-height: $outer-size;
+    position: relative;
+  }
 
-    &-input {
-      z-index: -1;
+  &__input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+
+    + label {
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
       cursor: pointer;
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      outline: none;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      padding: 0;
-      display: none;
-    }
-
-    &-label {
-    &::after {
-      position: absolute;
-      width: $inner-size;
-      height: $inner-size;
-      text-align: center;
-      transition: $transitions;
-      border: none;
-      content: '';
-      top: $top;
-      left: 0;
-      border-radius: $border-radius;
-      transform: scale(0.5);
-    }
-
-    &::before {
-      position: absolute;
-      transition: $transitions;
-      border: 1px solid #d4d4d5;
-      content: '';
-      transform: none;
-      width: $outer-size;
-      height: $outer-size;
-      border-radius: $border-radius;
-      top: $top;
-      left: 0;
-    }
-
-    &.checked {
-      &::after {
-        background-color: #000000f2;
-        opacity: 1;
-      }
-
-      &::before {
-        background: #ffffff;
-        border-color: #22242659;
-      }
     }
   }
-  }
+}
+
+.hive-radio__input + label::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid var(--border, $border);
+  border-radius: 50%;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+.hive-radio__input:not(:disabled):not(:checked) + label:hover::before {
+  border-color: var(--border, $border);
+}
+
+.hive-radio__input:not(:disabled):active + label::before {
+  background-color: var(--border, $border);
+  border-color: var(--border, $border);
+}
+
+.hive-radio__input:focus + label::before {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.hive-radio__input:focus:not(:checked) + label::before {
+  border-color: var(--border-focus, $border-focus);
+}
+
+.hive-radio__input:checked + label::before {
+  border-color:var(--border, $border);
+  background-color: $bg-input;
+  // background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='fff'/%3e%3c/svg%3e");
+}
+
+.hive-radio__input:disabled + label::before {
+  background-color: var(--border-disabled, $border-disabled) // #e9ecef;
 }
 </style>
