@@ -2,8 +2,8 @@
 import { ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
+import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { useFilter } from '@/common/hooks/use-filter';
 import { Options, Value } from '@/common/types/select';
 
 export interface Props extends CommonProps {
@@ -32,7 +32,7 @@ useOnMount(emit);
 
 const currentValue = ref(props.modelValue);
 
-const { filteredOptions } = useFilter({
+const { currentOptions } = useOptions({
   options: props.options,
   modelValue: props.modelValue,
   fieldTitle: props.titleField,
@@ -54,12 +54,12 @@ watch(
 watch(
   () => props.options,
   () => {
-    filteredOptions.value = useFilter({
+    currentOptions.value = useOptions({
       options: props.options,
       modelValue: props.modelValue,
       fieldTitle: props.titleField,
       fieldValue: props.valueField,
-    }).filteredOptions.value;
+    }).currentOptions.value;
   },
 );
 </script>
@@ -68,7 +68,7 @@ watch(
   <div>
     <div class="fields" :class="{ inline: inline }">
       <div
-        v-for="(option, i) in filteredOptions"
+        v-for="(option, i) in currentOptions"
         :key="option[1][valueField]"
         class="field"
         @click.prevent="changeValue(option[1][valueField])"
@@ -94,14 +94,14 @@ watch(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import '@/assets/variables.scss';
 
 $transition-duration: 0.1s;
 $transition-type: ease;
-$transiton: $transition-duration $transition-type;
-$transitions: border $transiton, opacity $transiton, transform $transiton, box-shadow $transiton,
-  -webkit-transform $transiton, -webkit-box-shadow $transiton;
+$transition: $transition-duration $transition-type;
+$transitions: border $transition, opacity $transition, transform $transition, box-shadow $transition,
+  -webkit-transform $transition, -webkit-box-shadow $transition;
 $inner-size: v-bind(innerSize);
 $outer-size: v-bind(outerSize);
 $border-radius: 100%;

@@ -1,7 +1,7 @@
-import { Ref, computed, ref, watch } from 'vue';
+import { Ref, computed, reactive, ref, watch } from 'vue';
 import { InputExpose } from '@/components/hive-input/hive-input.vue';
 import { Value, Options, CurrentOptionsRef } from '@/common/types/select';
-import { useFilter } from '../../../common/hooks/use-filter';
+import { useOptions } from '../../../common/hooks/use-options';
 
 export type ListMethodsConfig = {
   options: Options | undefined;
@@ -29,8 +29,8 @@ export const useListMethods = ({
   const searchQuery = ref('');
   const searchRef: Ref<InputExpose | null> = ref(null);
   const searchInput = computed(() => searchRef.value?.input);
-
-  const { filteredOptions, currentOptions, nullOption } = useFilter({
+  
+  const { currentOptions, nullOption } = useOptions({
     options,
     modelValue,
     withUndefined,
@@ -39,6 +39,8 @@ export const useListMethods = ({
     fieldTitle,
     fieldValue,
   });
+
+  const filteredOptions = ref(new Map(currentOptions.value));
 
   if (withNull || withUndefined) {    
     current.value = nullOption.value;
@@ -92,7 +94,7 @@ export const useListMethods = ({
       filteredOptions.value.clear();
 
       for (const item of currentOptions.value) {
-        if (item[1][fieldTitle].indexOf(searchQuery.value) !== -1) {
+        if (item[1][fieldTitle].toLowerCase().indexOf(searchQuery.value.toLowerCase()) !== -1) {
           filteredOptions.value.set(item[1][fieldValue], item[1]);
         }
       }

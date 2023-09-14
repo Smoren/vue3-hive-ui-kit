@@ -11,7 +11,7 @@ export type FilterConfig = {
   nullTitle?: string;
 };
 
-export const useFilter = ({
+export const useOptions = ({
   options,
   modelValue,
   withUndefined = false,
@@ -21,7 +21,6 @@ export const useFilter = ({
   fieldValue,
 }: FilterConfig) => {
   const currentOptions = ref(new Map());
-  const filteredOptions = ref(new Map());
   const nullOption: CurrentOptionsRef = ref({
     [fieldTitle]: nullTitle,
     [fieldValue]: withUndefined ? undefined : null,
@@ -40,9 +39,7 @@ export const useFilter = ({
     let prev;
 
     if (withNull || withUndefined) {
-      filteredOptions.value.set('none', nullOption.value);
       currentOptions.value.set('none', nullOption.value);
-
       prev = 'none';
     }
 
@@ -58,14 +55,11 @@ export const useFilter = ({
           }
 
           if (prev !== undefined) {
-            const temp = filteredOptions.value.get(prev);
-            filteredOptions.value.set(prev, { ...temp, next: key });
-            filteredOptions.value.set(key, { ...option, prev, next: null });
+            const temp = currentOptions.value.get(prev);
             currentOptions.value.set(prev, { ...temp, next: key });
             currentOptions.value.set(key, { ...option, prev, next: null });
             prev = key;
           } else {
-            filteredOptions.value.set(key, { ...option, prev: null, next: null });
             currentOptions.value.set(key, { ...option, prev: null, next: null });
             prev = key;
           }
@@ -75,14 +69,11 @@ export const useFilter = ({
           }
 
           if (prev !== undefined) {
-            const temp = filteredOptions.value.get(prev);
-            filteredOptions.value.set(prev, { ...temp, next: String(option) });
-            filteredOptions.value.set(String(option), { title: String(option), value: option, prev, next: null });
+            const temp = currentOptions.value.get(prev);
             currentOptions.value.set(prev, { ...temp, next: String(option) });
             currentOptions.value.set(String(option), { title: String(option), value: option, prev, next: null });
             prev = String(option);
           } else {
-            filteredOptions.value.set(String(option), { title: String(option), value: option, prev: null, next: null });
             currentOptions.value.set(String(option), { title: String(option), value: option, prev: null, next: null });
             prev = String(option);
           }
@@ -91,26 +82,21 @@ export const useFilter = ({
     } else if (typeof options === 'object') {
       for (const key in options) {
         if (prev !== undefined) {
-          const temp = filteredOptions.value.get(prev);
-          filteredOptions.value.set(prev, { ...temp, next: key });
-          filteredOptions.value.set(key, { ...(options[key] as object), prev, next: null });
+          const temp = currentOptions.value.get(prev);
           currentOptions.value.set(prev, { ...temp, next: key });
           currentOptions.value.set(key, { ...(options[key] as object), prev, next: null });
           prev = key;
         } else {
-          filteredOptions.value.set(key, { ...(options[key] as object), prev: null, next: null });
           currentOptions.value.set(key, { ...(options[key] as object), prev: null, next: null });
           prev = key;
         }
       }
     }
   } else {
-    filteredOptions.value.set(String(modelValue), first);
     currentOptions.value.set(String(modelValue), first);
   }
 
   return {
-    filteredOptions,
     currentOptions,
     nullOption,
   };
