@@ -66,23 +66,23 @@ watch(
 
 <template>
   <div>
-    <div class="fields" :class="{ inline: inline }">
+    <div class="radio__container" :class="{ inline: inline }">
       <div
         v-for="(option, i) in currentOptions"
         :key="option[1][valueField]"
-        class="field"
+        class="radio__item"
         @click.prevent="changeValue(option[1][valueField])"
       >
         <input
           :id="`hive-radio-${option[1][valueField]}`"
           :checked="option[1][valueField] === currentValue"
           :name="name"
-          class="radio-input"
+          class="radio__item-input"
           tabindex="0"
           type="radio"
         />
         <label
-          class="input-label"
+          class="radio__item-label"
           :for="`hive-radio-${option[1][valueField]}`"
           :class="{ checked: option[1][valueField] === currentValue }"
           style=""
@@ -110,38 +110,39 @@ $base-addition: 5px;
 $padding-left: max(25px, $outer-size + $base-addition);
 $gap: 15px;
 
-.fields {
-  width: fit-content;
+.radio {
+  &__container {
+    width: fit-content;
 
-  &.inline {
-    display: flex;
-    gap: $gap;
-    flex-wrap: wrap;
+    &.inline {
+      display: flex;
+      gap: $gap;
+      flex-wrap: wrap;
+    }
   }
 
-  .field {
+  &__item {
     position: relative;
     padding-left: $padding-left;
     display: flex;
     align-items: center;
     min-height: $outer-size;
-  }
 
-  .radio-input {
-    z-index: -1;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    outline: none;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0;
-    display: none;
-  }
+    &-input {
+      z-index: -1;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      outline: none;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 0;
+      display: none;
+    }
 
-  .input-label {
+    &-label {
     &::after {
       position: absolute;
       width: $inner-size;
@@ -180,6 +181,7 @@ $gap: 15px;
         border-color: #22242659;
       }
     }
+  }
   }
 }
 </style>
