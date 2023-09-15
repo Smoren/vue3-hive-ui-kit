@@ -165,16 +165,37 @@ const optionsObject = {
   },
 };
 
-const maritalStatusList = [
-  {
-    id: 0,
-    title: 'холост',
-  },
-  {
-    id: 1,
-    title: 'женат',
-  },
-];
+const maritalStatusList = ref([
+   {
+      id: 0,
+      title: 'холост',
+    },
+    {
+      id: 1,
+      title: 'женат',
+    },
+    {
+      id: 2,
+      title: 'женат2',
+    },
+]);
+
+// setTimeout(() => {
+//   maritalStatusList.value = [
+//     {
+//       id: 0,
+//       title: 'холост',
+//     },
+//     {
+//       id: 1,
+//       title: 'женат',
+//     },
+//     {
+//       id: 2,
+//       title: 'женат2',
+//     },
+//   ];
+// }, 2000);
 const mm = ref(null);
 
 const statusList = [
@@ -192,7 +213,7 @@ const statusList = [
   },
 ];
 
-const radioGroup = ref(null);
+const radioGroup = ref('женат');
 
 const date: Ref<Date | undefined> = ref();
 
@@ -304,8 +325,8 @@ const handleSearch = (value: string) => {
       <!-- RadioGroup -->
       <widget-wrapper title="DropDown">
         {{ radioGroup }}
-        <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="id" />
-        <input type="radio" checked/>
+        <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="title" />
+        <input type="radio" checked />
         <!-- <hive-input type="radio" checked /> -->
       </widget-wrapper>
     </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
 import { useOptions } from '@/common/hooks/use-options';
@@ -58,6 +58,10 @@ watch(
     }).currentOptions.value;
   },
 );
+
+onMounted(() => {
+  currentValue.value = props.modelValue;
+});
 </script>
 
 <template>
