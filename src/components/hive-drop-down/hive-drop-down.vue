@@ -91,7 +91,6 @@ watch(
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
 });
-
 </script>
 
 <template>
@@ -155,6 +154,7 @@ $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 $drop-down-padding: 0.5em 1em 0.5em 1em;
 
 .hive-drop-down {
+  width: 100%;
   position: relative;
   cursor: pointer;
   text-align: left;
@@ -240,6 +240,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   }
 
   &__menu {
+    box-sizing: content-box;
     position: absolute;
     left: -$border-width;
     top: 100%;
