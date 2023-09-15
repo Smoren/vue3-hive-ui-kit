@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, onMounted, ref, watch } from 'vue';
+import { Ref, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
 import { useOptions } from '@/common/hooks/use-options';
@@ -30,7 +30,7 @@ const currentValue: Ref<Value | null> = ref(null);
 
 setTimeout(() => {
   currentValue.value = props.modelValue;
-});
+}, 200);
 
 const { currentOptions } = useOptions({
   options: props.options,
