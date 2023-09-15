@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { Ref, onMounted, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
 import { useOptions } from '@/common/hooks/use-options';
@@ -26,7 +26,7 @@ type Emit = Mount & Unmount & Update<Value>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const currentValue = ref(null);
+const currentValue: Ref<Value | null> = ref(null);
 
 const { currentOptions } = useOptions({
   options: props.options,
