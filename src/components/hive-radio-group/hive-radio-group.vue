@@ -26,7 +26,7 @@ type Emit = Mount & Unmount & Update<Value>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const currentValue = ref(props.modelValue);
+const currentValue = ref(null);
 
 const { currentOptions } = useOptions({
   options: props.options,
