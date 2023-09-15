@@ -28,6 +28,10 @@ useOnMount(emit);
 
 const currentValue: Ref<Value | null> = ref(null);
 
+setTimeout(() => {
+  currentValue.value = props.modelValue;
+});
+
 const { currentOptions } = useOptions({
   options: props.options,
   modelValue: props.modelValue,
@@ -58,16 +62,12 @@ watch(
     }).currentOptions.value;
   },
 );
-
-onMounted(() => {
-  currentValue.value = props.modelValue;
-});
 </script>
 
 <template>
   <div class="hive-radio__container" :class="{ inline: inline }">
     <div
-      v-for="(option, i) in currentOptions"
+      v-for="option in currentOptions"
       :key="option[1][valueField]"
       class="hive-radio__item"
       @click.prevent="changeValue(option[1][valueField])"
@@ -156,13 +156,13 @@ $gap: 15px;
 }
 
 .hive-radio__input:checked + label::before {
-  border-color:var(--border, $border);
+  border-color: var(--border, $border);
   background-color: $bg-input;
   // background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='fff'/%3e%3c/svg%3e");
 }
 
 .hive-radio__input:disabled + label::before {
-  background-color: var(--border-disabled, $border-disabled) // #e9ecef;
+  background-color: var(--border-disabled, $border-disabled);
 }
 </style>
