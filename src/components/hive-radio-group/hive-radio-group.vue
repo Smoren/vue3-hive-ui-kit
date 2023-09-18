@@ -7,8 +7,8 @@ import { useOnMount } from '@/common/hooks/use-mount';
 import { Options, Value } from '@/common/types/select';
 
 export interface Props extends CommonProps {
-  modelValue: Value;
   options: Options | undefined;
+  modelValue: Value;
   inline?: boolean;
   titleField?: string;
   valueField?: string;
