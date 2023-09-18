@@ -7,13 +7,17 @@ interface Props extends CommonProps {
   btnBackgroundColor?: string;
   isOpened?: boolean;
   placeholder?: string;
-  label?: string
+  label?: string;
+  timeout?: number;
 }
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  timeout: 250,
+});
 
 const emit = defineEmits(['update:modelValue']);
 
 const searchInputRef = ref<HTMLElement | null>(null);
+const searchValue = ref('');
 
 const handleBtnClick = () => {
   if (searchInputRef.value) {
@@ -21,8 +25,23 @@ const handleBtnClick = () => {
   }
 
   if (props.modelValue.length) {
-    emit('update:modelValue', '');
+    searchValue.value = '';
+    emit('update:modelValue', searchValue.value);
   }
+};
+
+const handleInput = (value: string) => {
+  if (searchInputRef.value) {
+    searchInputRef.value.focus();
+  }
+
+  searchValue.value = value;
+
+  let delay;
+  if (delay) clearTimeout(delay);
+  delay = setTimeout(() => {
+    emit('update:modelValue', searchValue.value);
+  }, props.timeout);
 };
 </script>
 
@@ -56,7 +75,7 @@ const handleBtnClick = () => {
       id="input"
       :value="modelValue"
       :placeholder="placeholder"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
+      @input="handleInput(($event.target as HTMLInputElement)?.value)"
     />
   </div>
 </template>

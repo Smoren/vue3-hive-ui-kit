@@ -26,11 +26,7 @@ type Emit = Mount & Unmount & Update<Value>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const currentValue: Ref<Value | null> = ref(null);
-
-setTimeout(() => {
-  currentValue.value = props.modelValue;
-}, 200);
+const currentValue: Ref<Value> = ref(props.modelValue);
 
 const { currentOptions } = useOptions({
   options: props.options,
