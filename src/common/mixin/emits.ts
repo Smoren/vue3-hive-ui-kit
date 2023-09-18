@@ -28,11 +28,19 @@ export const onKeydown = (emit: Keydown, event: KeyboardEvent) => {
   emit('keydown', event);
 };
 
-export type Update<T> = ((e: 'update:modelValue', value: T) => void) & ((e: 'change', value: T) => void);
+export type Change<T> = (e: 'change', value: T) => void;
+
+export const onChange = <T>(emit: Change<T>, value: T) => {
+  emit('change', value);
+};
+
+export type ModelValueUpdated<T> = (e: 'model-value-updated', value: T) => void;
+
+export type Update<T> = ((e: 'update:modelValue', value: T) => void) & ModelValueUpdated<T>;
 
 export const onUpdateModelValue = <T>(emit: Update<T>, value: T) => {
   emit('update:modelValue', value);
-  emit('change', value);
+  emit('model-value-updated', value);
 };
 
 export type Click = (e: 'click', event: MouseEvent) => void;

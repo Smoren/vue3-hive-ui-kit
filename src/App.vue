@@ -5,6 +5,7 @@ import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 import HiveRadioGroup from './components/hive-radio-group/hive-radio-group.vue';
+import HiveCheckboxGroup from './components/hive-checkbox-group/hive-checkbox-group.vue';
 import HiveBadge from './components/hive-badge/hive-badge.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
@@ -166,18 +167,18 @@ const optionsObject = {
 };
 
 const maritalStatusList = ref([
-   {
-      id: 0,
-      title: 'холост',
-    },
-    {
-      id: 1,
-      title: 'женат',
-    },
-    {
-      id: 2,
-      title: 'женат2',
-    },
+  {
+    id: 0,
+    title: 'холост',
+  },
+  {
+    id: 1,
+    title: 'женат',
+  },
+  {
+    id: 2,
+    title: 'женат2',
+  },
 ]);
 
 // setTimeout(() => {
@@ -214,6 +215,7 @@ const statusList = [
 ];
 
 const radioGroup = ref('женат');
+const checkbox = ref(['женат']);
 
 const date: Ref<Date | undefined> = ref();
 
@@ -323,11 +325,15 @@ const handleSearch = (value: string) => {
         <!-- <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" /> -->
       </widget-wrapper>
       <!-- RadioGroup -->
-      <widget-wrapper title="DropDown">
+      <widget-wrapper title="Radio">
         {{ radioGroup }}
         <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="title" />
         <input type="radio" checked />
         <!-- <hive-input type="radio" checked /> -->
+      </widget-wrapper>
+      <widget-wrapper title="Checkbox">
+        {{ checkbox }}
+        <hive-checkbox-group :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="title" />
       </widget-wrapper>
     </div>
   </div>

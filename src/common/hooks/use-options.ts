@@ -3,7 +3,7 @@ import { CurrentOptions, CurrentOptionsRef, Options, Value } from '@/common/type
 
 export type FilterConfig = {
   options: Options | undefined;
-  modelValue: Value;
+  modelValue: Value | Value[];
   fieldTitle: string;
   fieldValue: string;
   withUndefined?: boolean;

@@ -6,7 +6,7 @@ export type Option = string | number | Record<string, unknown>;
 export type Options = Array<Option> | Record<string, Option>;
 
 export type CurrentOptions = {
-  [x: string]: Value;
+  [x: string]: Value | Value[];
   prev: string | null;
   next: string | null;
 };

@@ -115,50 +115,53 @@ $gap: 15px;
       align-items: center;
       user-select: none;
       cursor: pointer;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        flex-shrink: 0;
+        flex-grow: 0;
+        border: 1px solid var(--border, $border);
+        border-radius: 50%;
+        margin-right: 0.5em;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 50% 50%;
+      }
+    }
+
+    &:not(:disabled) {
+      &:not(:checked) + label:hover::before {
+        border-color: var(--border, $border);
+      }
+
+      &:active + label::before {
+        background-color: var(--border, $border);
+        border-color: var(--border, $border);
+      }
+    }
+
+    &:focus {
+      + label::before {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      &:not(:checked) + label::before {
+        border-color: var(--border-focus, $border-focus);
+      }
+    }
+
+    &:checked + label::before {
+      border-color: var(--border, $border);
+      background-color: $bg-input;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='fff'/%3e%3c/svg%3e");
+    }
+
+    &:disabled + label::before {
+      background-color: var(--border-disabled, $border-disabled);
     }
   }
-}
-
-.hive-radio__input + label::before {
-  content: '';
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  flex-shrink: 0;
-  flex-grow: 0;
-  border: 1px solid var(--border, $border);
-  border-radius: 50%;
-  margin-right: 0.5em;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50% 50%;
-}
-
-.hive-radio__input:not(:disabled):not(:checked) + label:hover::before {
-  border-color: var(--border, $border);
-}
-
-.hive-radio__input:not(:disabled):active + label::before {
-  background-color: var(--border, $border);
-  border-color: var(--border, $border);
-}
-
-.hive-radio__input:focus + label::before {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.hive-radio__input:focus:not(:checked) + label::before {
-  border-color: var(--border-focus, $border-focus);
-}
-
-.hive-radio__input:checked + label::before {
-  border-color: var(--border, $border);
-  background-color: $bg-input;
-  // background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='fff'/%3e%3c/svg%3e");
-}
-
-.hive-radio__input:disabled + label::before {
-  background-color: var(--border-disabled, $border-disabled);
 }
 </style>
