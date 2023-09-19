@@ -5,7 +5,7 @@ import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits
 import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Options, Value } from '@/common/types/select';
-import HiveCheckbox from '../hive-checkbox/HiveCheckbox.vue';
+import HiveCheckbox from '@/components/hive-checkbox/hive-checkbox.vue';
 
 export interface Props extends CommonProps {
   modelValue: Value[];
@@ -14,6 +14,7 @@ export interface Props extends CommonProps {
   titleField?: string;
   valueField?: string;
   name?: string;
+  minusIcon?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -42,14 +43,17 @@ const { currentOptions } = useOptions({
 
 const changeValue = (value: Value) => {
   if (currentValue.value === null) return;
-  if (!currentValue.value.includes(value)) {
+
+  const includes = currentValue.value.includes(value);
+
+  if (!includes) {
     currentValue.value?.push(value);
+
     onUpdateModelValue<Value[]>(emit, currentValue.value);
-  } else if (currentValue.value.includes(value)) {
-    var index = currentValue.value.indexOf(value);
-    if (index !== -1) {
-      currentValue.value.splice(index, 1);
-    }
+  } else {
+    const index = currentValue.value.indexOf(value);
+
+    if (index !== -1) currentValue.value.splice(index, 1);
   }
 };
 
@@ -75,15 +79,16 @@ watch(
 
 <template>
   <div class="hive-checkbox__container" :class="{ inline: inline }">
-    <div v-for="option in currentOptions" :key="option[1][valueField]" class="hive-checkbox__item">
-      <hive-checkbox
-        :option="option"
-        :title-field="titleField"
-        :value-field="valueField"
-        @change="changeValue(option[1][valueField])"
-        :checked="(currentValue as string[])?.includes(option[1][valueField])"
-      />
-    </div>
+    <hive-checkbox
+      v-for="option in currentOptions"
+      :key="option[1][valueField]"
+      :option="option"
+      :title-field="titleField"
+      :value-field="valueField"
+      :minus-icon="minusIcon"
+      :checked="(currentValue as string[])?.includes(option[1][valueField])"
+      @change="changeValue(option[1][valueField])"
+    />
   </div>
 </template>
 
@@ -100,19 +105,7 @@ $gap: 15px;
       display: flex;
       gap: $gap;
       flex-wrap: wrap;
-
-      &.inline {
-        display: flex;
-        gap: $gap;
-        flex-wrap: wrap;
-      }
     }
-  }
-
-  &__item {
-    display: flex;
-    align-items: center;
-    position: relative;
   }
 }
 </style>
