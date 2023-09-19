@@ -10,6 +10,8 @@ import {
   onChange,
   Focusout,
   onFocusout,
+  Focusin,
+  onFocusin,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { CurrentOptions } from '@/common/types/select';
@@ -30,7 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
   checked: false,
 });
 
-type Emit = Mount & Unmount & Update<boolean> & Change<boolean> & Focusout;
+type Emit = Mount & Unmount & Update<boolean> & Change<boolean> & Focusout & Focusin;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -57,6 +59,7 @@ watch(currentValue, (newValue) => {
       type="checkbox"
       @change="onChange(emit, currentValue)"
       @focusout="onFocusout(emit)"
+      @focusin="onFocusin(emit)"
     />
     <label :for="`hive-checkbox-${option[1][valueField]}`" :class="{ minus: minusIcon }">
       {{ option[1][titleField] }}

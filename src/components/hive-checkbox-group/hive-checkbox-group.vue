@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { Ref, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
+import {
+  Mount,
+  Unmount,
+  Update,
+  onUpdateModelValue,
+  Focusout,
+  onFocusout,
+  Focusin,
+  onFocusin,
+} from '@/common/mixin/emits';
 import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Options, Value } from '@/common/types/select';
@@ -24,7 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   name: 'checkbox-group',
 });
 
-type Emit = Mount & Unmount & Update<Value[]>;
+type Emit = Mount & Unmount & Update<Value[]> & Focusout & Focusin;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -88,6 +97,8 @@ watch(
       :minus-icon="minusIcon"
       :checked="(currentValue as string[])?.includes(option[1][valueField])"
       @change="changeValue(option[1][valueField])"
+      @focusout="onFocusout(emit)"
+      @focusin="onFocusin(emit)"
     />
   </div>
 </template>
