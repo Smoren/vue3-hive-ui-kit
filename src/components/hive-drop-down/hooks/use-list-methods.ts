@@ -5,7 +5,7 @@ import { useOptions } from '../../../common/hooks/use-options';
 
 export type ListMethodsConfig = {
   options: Options | undefined;
-  modelValue: Value;
+  modelValue: Value | Value[];
   withUndefined: boolean;
   withNull: boolean;
   nullTitle: string;
@@ -24,12 +24,12 @@ export const useListMethods = ({
 }: ListMethodsConfig) => {
   const isExpanded = ref(false);
   const activeValue: Ref<Value | undefined> = ref();
-  const currentValue: Ref<Value | undefined> = ref();
+  const currentValue: Ref<Value | Value[] | undefined> = ref(modelValue);
   const current: CurrentOptionsRef = ref();
   const searchQuery = ref('');
   const searchRef: Ref<InputExpose | null> = ref(null);
   const searchInput = computed(() => searchRef.value?.input);
-  
+
   const { currentOptions, nullOption } = useOptions({
     options,
     modelValue,
@@ -42,7 +42,7 @@ export const useListMethods = ({
 
   const filteredOptions = ref(new Map(currentOptions.value));
 
-  if (withNull || withUndefined) {    
+  if (withNull || withUndefined) {
     current.value = nullOption.value;
   }
 
@@ -59,7 +59,7 @@ export const useListMethods = ({
   const updateCurrentValue = (value: Value | undefined) => {
     currentValue.value = value;
 
-    if (value === undefined || (value === null)) {
+    if (value === undefined || value === null) {
       current.value = nullOption.value;
     } else {
       let key = value;
@@ -72,7 +72,7 @@ export const useListMethods = ({
   const expand = () => {
     isExpanded.value = true;
 
-    if (currentValue.value) {
+    if (currentValue.value && !Array.isArray(currentValue.value)) {
       activeValue.value = currentValue.value;
     }
   };

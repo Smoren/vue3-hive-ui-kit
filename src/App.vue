@@ -6,6 +6,7 @@ import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 import HiveRadioGroup from './components/hive-radio-group/hive-radio-group.vue';
 import HiveCheckboxGroup from './components/hive-checkbox-group/hive-checkbox-group.vue';
+import HiveMultiselect from './components/hive-multiselect/hive-multiselect.vue';
 import HiveBadge from './components/hive-badge/hive-badge.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
@@ -338,6 +339,10 @@ const log = (value: string) => {
       <widget-wrapper title="Checkbox">
         {{ checkbox }}
         <hive-checkbox-group :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="title" />
+      </widget-wrapper>
+      <widget-wrapper title="Multiselect">
+        {{ checkbox }}
+        <hive-multiselect :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="title" />
       </widget-wrapper>
     </div>
   </div>
