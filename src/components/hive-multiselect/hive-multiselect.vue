@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, reactive, ref, watch } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
@@ -20,6 +20,7 @@ import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Options, Value } from '@/common/types/select';
 import { useListMethods } from '@/components/hive-drop-down/hooks/use-list-methods';
+import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 
 export interface Props extends CommonProps {
   modelValue: Value[];
@@ -84,7 +85,7 @@ const {
 } = useListMethods(configOptions);
 
 const changeValue = (value: Value) => {
-  if (currentValue.value === null || !Array.isArray(currentValue.value)) return;
+  if (!currentValue.value || !value || !Array.isArray(currentValue.value)) return;
 
   const includes = currentValue.value?.includes(value);
 
@@ -120,10 +121,10 @@ watch(
 
 <template>
   <div class="hive-multiselect__wrap" ref="multiSelectRef" :class="{ expand: isExpanded, disable: disabled }">
-    <i class="dropdown icon"></i>
     <div class="hive-multiselect__selected">
       <div v-for="value in currentValue" :key="value" class="hive-multiselect__selected-item" @mousedown.stop.prevent>
-        {{ filteredOptions[value as string]?.title ? filteredOptions[value as string].title : value }}
+        {{ value }}
+        <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
       </div>
     </div>
     <hive-input
@@ -141,6 +142,7 @@ watch(
       @keydown.esc="collapse"
       @keydown.up.prevent="setPrevActiveValue"
       @keydown.down.prevent="setNextActiveValue"
+      @keydown.delete="changeValue(currentValue?.at(-1))"
       @input="onSearch<string>(emit, $event as string)"
     />
     <div
@@ -151,19 +153,20 @@ watch(
         maxHeight: menuHeight,
       }"
     >
-      <div
-        v-for="(item, i) in filteredOptions"
-        :key="i"
-        class="hive-multiselect__menu-item"
-        :class="{
-          selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
-        }"
-        @click="changeValue(item[1][valueField])"
-        @mousedown.prevent
-      >
-        <!-- @mouseover="updateActiveValue(item[1][valueField])" -->
-        {{ item[1][titleField] }}
-      </div>
+      <template v-for="(item, i) in filteredOptions" :key="i">
+        <div
+          v-if="!currentValue?.includes(item[1][valueField])"
+          class="hive-multiselect__menu-item"
+          :class="{
+            selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
+          }"
+          @click="changeValue(item[1][valueField])"
+          @mouseover="updateActiveValue(item[1][valueField])"
+          @mousedown.prevent
+        >
+          {{ item[1][titleField] }}
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -222,6 +225,17 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
       display: flex;
       align-items: center;
       height: 100%;
+      gap: 5px;
+
+      &__img {
+        width: 15px;
+        height: 15px;
+        margin-top: 2px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 
