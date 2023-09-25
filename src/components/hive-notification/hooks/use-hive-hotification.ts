@@ -1,9 +1,13 @@
-import { ref } from "vue";
+import { ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
+import HiveNotificationWrapper from '@/components/hive-notification/hive-notification-wrapper.vue';
+import { createVNode, render, h } from 'vue';
+
+export type NotificationType = 'error' | 'warning' | 'info' | 'success';
 
 export interface Notification {
   id: string;
-  type: string;
+  type: NotificationType;
   title: string;
   message: string;
   autoClose: boolean;
@@ -11,7 +15,13 @@ export interface Notification {
 }
 
 export type CreateNotification = {
-  (options: { type?: string; title?: string; message?: string; autoClose?: boolean; duration?: number }): void;
+  (options: {
+    type?: NotificationType;
+    title?: string;
+    message?: string;
+    autoClose?: boolean;
+    duration?: number;
+  }): void;
 };
 
 const defaultNotificationOptions = {
@@ -26,6 +36,7 @@ export default function useNotifications() {
   const notifications = ref<Notification[]>([]);
 
   const createNotification: CreateNotification = (options) => {
+    console.log('here');
     const _options = Object.assign({ ...defaultNotificationOptions }, options);
 
     notifications.value.push(
@@ -34,8 +45,9 @@ export default function useNotifications() {
           id: uuidv4(),
           ..._options,
         },
-      ]
+      ],
     );
+    console.log('here', notifications.value);
   };
 
   const removeNotifications = (id: string) => {
@@ -43,19 +55,27 @@ export default function useNotifications() {
     if (index !== -1) notifications.value.splice(index, 1);
   };
 
-  const stopBodyOverflow = () => {
-    document && document.body.classList.add(...['hide-overflow']);
-  };
+  const container = document.createElement('div');
 
-  const allowBodyOverflow = () => {
-    document && document.body.classList.remove(...['hide-overflow']);
-  };
+  let vnode = createVNode(HiveNotificationWrapper, {
+    notifications,
+    createNotification,
+    removeNotifications,
+  });
+
+  // const vm = h(HiveNotificationWrapper, {
+  //   notifications,
+  //   createNotification,
+  //   removeNotifications,
+  // });
+
+  render(vnode, container);
+
+  console.log(vnode);
 
   return {
     notifications,
     createNotification,
     removeNotifications,
-    stopBodyOverflow,
-    allowBodyOverflow,
   };
 }

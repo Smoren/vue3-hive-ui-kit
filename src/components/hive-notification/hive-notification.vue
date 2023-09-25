@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
+import { Mount, Unmount, Close, onClose } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
   id: string;
@@ -18,9 +20,9 @@ const props = withDefaults(defineProps<Props>(), {
   duration: 5,
 });
 
-const emit = defineEmits<{
-  (e: 'close'): void;
-}>();
+type Emit = Mount & Unmount & Close;
+const emit = defineEmits<Emit>();
+useOnMount(emit);
 
 const timer = ref(-1);
 const startedAt = ref<number>(0);
@@ -30,7 +32,9 @@ onMounted(() => {
   if (props.autoClose) {
     startedAt.value = Date.now();
     delay.value = props.duration * 1000;
-    timer.value = window.setTimeout(close, delay.value);
+    timer.value = window.setTimeout(() => {
+      onClose(emit);
+    }, delay.value);
   }
 });
 
@@ -61,36 +65,30 @@ const toastColor = computed(() => {
 });
 
 const toastTitle = computed(() => (props.title && props.title !== null ? props.title : 'Notification'));
-
-const close = () => {
-  emit('close');
-};
 </script>
 
 <template>
-  <teleport to="body">
-    <div
-      class="toast-notification"
-      :style="`--toast-duration: ${duration}s; --toast-color: ${toastColor}`"
-      @click.prevent="close"
-      :ref="id"
-    >
-      <div @click="close" class="close-btn" title="Close">
-        <i class="ri-icon ri-lg ri-close-fill"></i>
-      </div>
-
-      <div class="body">
-        <i :class="`ri-icon ri-2x ${toastIcon}`"></i>
-        <div class="vl"></div>
-        <div class="content">
-          <div class="content__title">{{ toastTitle }}</div>
-
-          <p v-if="message && message != ''" class="content__message">{{ message }}</p>
-        </div>
-      </div>
-      <div v-if="autoClose" class="progress" />
+  <div
+    class="toast-notification"
+    :style="`--toast-duration: ${duration}s; --toast-color: ${toastColor}`"
+    @click.prevent="onClose(emit)"
+    :ref="id"
+  >
+    <div @click="onClose(emit)" class="close-btn" title="Close">
+      <i class="ri-icon ri-lg ri-close-fill"></i>
     </div>
-  </teleport>
+
+    <div class="body">
+      <i :class="`ri-icon ri-2x ${toastIcon}`"></i>
+      <div class="vl"></div>
+      <div class="content">
+        <div class="content__title">{{ toastTitle }}</div>
+
+        <p v-if="message && message != ''" class="content__message">{{ message }}</p>
+      </div>
+    </div>
+    <div v-if="autoClose" class="progress" />
+  </div>
 </template>
 
 <style lang="scss" scoped>

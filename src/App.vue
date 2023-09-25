@@ -9,8 +9,10 @@ import HiveCheckboxGroup from './components/hive-checkbox-group/hive-checkbox-gr
 import HiveCheckbox from './components/hive-checkbox/hive-checkbox.vue';
 import HiveMultiselect from './components/hive-multiselect/hive-multiselect.vue';
 import HiveBadge from './components/hive-badge/hive-badge.vue';
+import hiveNotificationWrapper from './components/hive-notification/hive-notification-wrapper.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
+import useNotifications from './components/hive-notification/hooks/use-hive-hotification';
 import HiveAutocomplete from './components/hive-autocomplete/hive-autocomplete.vue';
 import HiveMultiautocomplete from './components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
@@ -255,6 +257,17 @@ const handleSearch = (value: string) => {
   console.log('val', value);
 };
 
+const { createNotification } = useNotifications();
+
+const create = () =>
+  createNotification({
+    type: 'info',
+    title: 'Информация',
+    message: 'No messages available',
+    autoClose: true,
+    duration: 5,
+  });
+
 const log = (value: string) => {
   console.log(value);
 };
@@ -280,6 +293,7 @@ const tab = ref('');
         <hive-button />
         <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
         <hive-button title="Classes" :class="'test'" @click="handleText" />
+        <hive-button title="Notify" :class="'test'" @click="create" />
       </widget-wrapper> -->
 
       <!-- Textarea -->

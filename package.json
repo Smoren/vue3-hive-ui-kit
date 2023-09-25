@@ -26,6 +26,7 @@
     "url": "git+https://github.com/hivebdsm/vue-hive-ui-kit.git"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.4",
     "pinia": "^2.1.6",
     "uuid": "^9.0.1",
     "vue": "^3.3.4"
