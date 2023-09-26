@@ -28,7 +28,6 @@ export interface Props extends CommonProps {
   titleField?: string;
   valueField?: string;
   name?: string;
-  disctinct?: boolean;
   height?: string;
   withUndefined?: boolean;
   withNull?: boolean;
@@ -44,7 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
   name: 'radio-group',
   menuHeight: '10rem',
   height: '2.2rem',
-  disctinct: false,
   disabled: false,
   nullTitle: 'Не выбрано',
 });
@@ -165,6 +163,7 @@ watch(
         @input="onSearch<string>(emit, $event as string)"
       />
     </div>
+    <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
     <div
       ref="menuRef"
       v-if="isExpanded"
@@ -224,7 +223,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   &__selected {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0 5px;
     margin: 0 5px;
     box-sizing: border-box;
     flex-wrap: wrap;
@@ -284,6 +283,27 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     }
   }
 
+  &__icon {
+    cursor: auto;
+    line-height: 1.2rem;
+    opacity: 0.7;
+    background: none !important;
+    font-style: normal;
+    // font-size: 11px;
+    margin: auto 0;
+    margin-right: 15px;
+
+    &:before {
+      content: '▼';
+    }
+
+    &.expand {
+      &:before {
+        content: '▲';
+      }
+    }
+  }
+
   &__search {
     border: none;
     padding: $drop-down-padding;
@@ -311,26 +331,6 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
     &.no-padding {
       padding-left: 0;
-    }
-  }
-
-  &__icon {
-    cursor: auto;
-    line-height: 1.2rem;
-    opacity: 0.7;
-    background: none !important;
-    font-style: normal;
-    // font-size: 11px;
-    margin: auto 0;
-
-    &:before {
-      content: '▼';
-    }
-
-    &.expand {
-      &:before {
-        content: '▲';
-      }
     }
   }
 
