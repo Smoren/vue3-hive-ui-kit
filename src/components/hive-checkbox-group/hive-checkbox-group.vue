@@ -17,8 +17,8 @@ import { Options, Value } from '@/common/types/select';
 import HiveCheckbox from '@/components/hive-checkbox/hive-checkbox.vue';
 
 export interface Props extends CommonProps {
-  modelValue: Value[];
   options: Options | undefined;
+  modelValue: Value[];
   inline?: boolean;
   titleField?: string;
   valueField?: string;

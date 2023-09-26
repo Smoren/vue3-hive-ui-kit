@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
@@ -67,7 +67,7 @@ watch(currentValue, (newValue) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import '@/assets/variables.scss';
 
 $background-img: url('./assets/check-mark.svg');
