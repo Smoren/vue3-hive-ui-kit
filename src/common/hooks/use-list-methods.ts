@@ -1,7 +1,7 @@
-import { Ref, computed, ref, watch } from 'vue';
+import { Ref, computed, ref, toRaw, watch } from 'vue';
 import { InputExpose } from '@/components/hive-input/hive-input.vue';
 import { Value, Options, CurrentOptionsRef } from '@/common/types/select';
-import { useOptions } from '../../../common/hooks/use-options';
+import { useOptions } from '@/common/hooks/use-options';
 
 export type ListMethodsConfig = {
   options: Options | undefined;
@@ -41,6 +41,24 @@ export const useListMethods = ({
   });
 
   const filteredOptions = ref(new Map(currentOptions.value));
+
+  const distinct = () => {
+    for (let key of filteredOptions.value.keys()) {
+      if (Array.isArray(modelValue) && modelValue.includes(key)) {
+        const next = filteredOptions.value.get(key).next;
+        const prev = filteredOptions.value.get(key).prev;
+        if (next) {
+          filteredOptions.value.get(next).prev = prev;
+        }
+        if (prev) {
+          filteredOptions.value.get(prev).next = next;
+        }
+        filteredOptions.value.delete(key);
+      }
+    }
+  };
+
+  distinct();
 
   if (withNull || withUndefined) {
     current.value = nullOption.value;
@@ -95,11 +113,18 @@ export const useListMethods = ({
 
       for (const item of currentOptions.value) {
         if (item[1][fieldTitle].toLowerCase().indexOf(searchQuery.value.toLowerCase()) !== -1) {
-          filteredOptions.value.set(item[1][fieldValue], item[1]);
+          if (Array.isArray(modelValue)) {
+            if (!modelValue.includes(item[1][fieldValue])) {
+              filteredOptions.value.set(item[1][fieldValue], item[1]);
+            }
+          } else {
+            filteredOptions.value.set(item[1][fieldValue], item[1]);
+          }
         }
       }
     } else {
       filteredOptions.value = new Map(JSON.parse(JSON.stringify([...currentOptions.value])));
+      distinct();
     }
   });
 

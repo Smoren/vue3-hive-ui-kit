@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue';
+import { Ref, reactive, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
@@ -16,10 +16,9 @@ import {
   Search,
   onSearch,
 } from '@/common/mixin/emits';
-import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Options, Value } from '@/common/types/select';
-import { useListMethods } from '@/components/hive-drop-down/hooks/use-list-methods';
+import { useListMethods } from '@/common/hooks/use-list-methods';
 import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 
 export interface Props extends CommonProps {
@@ -95,56 +94,77 @@ const changeValue = (value: Value) => {
     const index = currentValue.value.indexOf(value);
     if (index !== -1) currentValue.value.splice(index, 1);
   }
+  searchQuery.value = '';
   onUpdateModelValue<Value[]>(emit, currentValue.value);
+};
+
+const deleteLast = (value: Value) => {
+  if (!searchQuery.value.length) {
+    changeValue(value);
+  }
 };
 
 watch(
   () => props.modelValue,
   () => {
-    console.log('here', props.modelValue);
     currentValue.value = props.modelValue;
   },
+  { deep: true },
 );
 
 watch(
   () => props.options,
   () => {
-    currentOptions.value = useOptions({
-      options: props.options,
-      modelValue: props.modelValue,
-      fieldTitle: props.titleField,
-      fieldValue: props.valueField,
-    }).currentOptions.value;
+    filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
   },
+);
+
+watch(
+  currentValue,
+  () => {
+    filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
+    setNextActiveValue();
+  },
+  { deep: true },
 );
 </script>
 
 <template>
   <div class="hive-multiselect__wrap" ref="multiSelectRef" :class="{ expand: isExpanded, disable: disabled }">
     <div class="hive-multiselect__selected">
-      <div v-for="value in currentValue" :key="value" class="hive-multiselect__selected-item" @mousedown.stop.prevent>
-        {{ value }}
-        <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
-      </div>
+      <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
+        <div
+          v-for="value in currentValue"
+          :key="Array.isArray(value) ? value[0] : value"
+          class="hive-multiselect__selected-item"
+          @mousedown.stop.prevent
+        >
+          {{ currentOptions.get(value).title }}
+          <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
+        </div>
+      </template>
+      <hive-input
+        v-model="searchQuery"
+        ref="searchRef"
+        :disabled="disabled"
+        :placeholder="current ? String(current[titleField]) : ''"
+        class="hive-multiselect__search"
+        :class="{
+          valueNull: (modelValue === null && withNull) || modelValue === undefined,
+          'no-padding': Array.isArray(currentValue) && currentValue.length,
+        }"
+        :style="{ height }"
+        @focusin="expand(), onFocusin(emit)"
+        @focusout="collapse(), onFocusout(emit)"
+        @keydown="onKeydown(emit, $event)"
+        @keydown.enter="changeValue(activeValue)"
+        @keydown.esc="collapse"
+        @keydown.up.prevent="setPrevActiveValue"
+        @keydown.down.prevent="setNextActiveValue"
+        @keydown.delete="deleteLast((currentValue as Value[])?.at(-1))"
+        @input="onSearch<string>(emit, $event as string)"
+      />
     </div>
-    <hive-input
-      v-model="searchQuery"
-      ref="searchRef"
-      :disabled="disabled"
-      :placeholder="current ? String(current[titleField]) : ''"
-      class="hive-multiselect__search"
-      :class="{ valueNull: (modelValue === null && withNull) || modelValue === undefined }"
-      :style="{ height }"
-      @focusin="expand(), onFocusin(emit)"
-      @focusout="collapse(), onFocusout(emit)"
-      @keydown="onKeydown(emit, $event)"
-      @keydown.enter="changeValue(activeValue)"
-      @keydown.esc="collapse"
-      @keydown.up.prevent="setPrevActiveValue"
-      @keydown.down.prevent="setNextActiveValue"
-      @keydown.delete="changeValue(currentValue?.at(-1))"
-      @input="onSearch<string>(emit, $event as string)"
-    />
     <div
       ref="menuRef"
       v-if="isExpanded"
@@ -155,7 +175,6 @@ watch(
     >
       <template v-for="(item, i) in filteredOptions" :key="i">
         <div
-          v-if="!currentValue?.includes(item[1][valueField])"
           class="hive-multiselect__menu-item"
           :class="{
             selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
@@ -207,9 +226,9 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     align-items: center;
     gap: 5px;
     margin: 0 5px;
-    height: 2.2rem;
     box-sizing: border-box;
-    padding: 7px 0;
+    flex-wrap: wrap;
+    width: 100%;
 
     &-item {
       box-sizing: content-box;
@@ -217,6 +236,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
       border-radius: var(--border-radius, $border-radius);
       box-shadow: 0 0 0 1px #22242626 inset;
       padding: 3px 3px;
+      margin: 3px 0;
       vertical-align: baseline;
       background-color: #e8e8e8;
       color: #0009;
@@ -224,8 +244,8 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
       font-weight: 700;
       display: flex;
       align-items: center;
-      height: 100%;
       gap: 5px;
+      white-space: nowrap;
 
       &__img {
         width: 15px;
@@ -267,10 +287,10 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   &__search {
     border: none;
     padding: $drop-down-padding;
-    width: calc(100% - 2rem);
     cursor: default;
     font-size: inherit;
     border: none;
+    flex-grow: 100;
 
     &::placeholder {
       opacity: 1;
@@ -287,6 +307,10 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
     &.valueNull {
       opacity: 0.8;
+    }
+
+    &.no-padding {
+      padding-left: 0;
     }
   }
 

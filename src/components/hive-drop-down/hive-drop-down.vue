@@ -17,7 +17,7 @@ import {
   onSearch,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { useListMethods } from './hooks/use-list-methods';
+import { useListMethods } from '@/common/hooks/use-list-methods';
 import { Options, Value } from '@/common/types/select';
 
 interface Props extends CommonProps {

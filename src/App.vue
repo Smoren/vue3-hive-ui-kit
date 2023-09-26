@@ -165,6 +165,31 @@ const optionsObject = {
     id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f',
     classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
   },
+  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fhsdfh': {
+    title: 'Республика Беларусь',
+    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fhsdfh',
+    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
+  },
+  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fasd': {
+    title: 'Республика Беларусь',
+    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fasd',
+    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
+  },
+  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f34': {
+    title: 'Республика Беларусь',
+    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f34',
+    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
+  },
+  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f213': {
+    title: 'Республика Беларусь',
+    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f213',
+    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
+  },
+  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f123': {
+    title: 'Республика Беларусь',
+    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f123',
+    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
+  },
 };
 
 const maritalStatusList = ref([
@@ -216,7 +241,8 @@ const statusList = [
 ];
 
 const radioGroup = ref('женат');
-const checkbox = ref(['женат']);
+const checkbox = ref([0]);
+const multiselect = ref(['74fd8aaa-e10a-4fd0-941b-6f6c7249003d']);
 
 const date: Ref<Date | undefined> = ref();
 
@@ -338,11 +364,11 @@ const log = (value: string) => {
       </widget-wrapper>
       <widget-wrapper title="Checkbox">
         {{ checkbox }}
-        <hive-checkbox-group :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="title" />
+        <hive-checkbox-group :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="id" />
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
-        <hive-multiselect :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="title" />
+        <hive-multiselect :options="optionsObject" v-model="multiselect" title-field="title" value-field="id" />
       </widget-wrapper>
     </div>
   </div>
