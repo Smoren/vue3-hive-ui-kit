@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { Ref, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
+import {
+  Mount,
+  Unmount,
+  Update,
+  onUpdateModelValue,
+  Focusout,
+  onFocusout,
+  Focusin,
+  onFocusin,
+} from '@/common/mixin/emits';
 import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Options, Value } from '@/common/types/select';
@@ -22,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   name: 'radio-group',
 });
 
-type Emit = Mount & Unmount & Update<Value>;
+type Emit = Mount & Unmount & Update<Value> & Focusout & Focusin;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -61,7 +70,12 @@ watch(
 </script>
 
 <template>
-  <div class="hive-radio__container" :class="{ inline: inline }">
+  <div
+    class="hive-radio__container"
+    :class="{ inline: inline }"
+    @focusout="onFocusout(emit)"
+    @focusin="onFocusin(emit)"
+  >
     <div
       v-for="option in currentOptions"
       :key="option[1][valueField]"

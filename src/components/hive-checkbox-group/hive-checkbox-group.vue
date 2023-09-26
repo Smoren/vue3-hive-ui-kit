@@ -37,11 +37,7 @@ type Emit = Mount & Unmount & Update<Value[]> & Focusout & Focusin;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const currentValue: Ref<Value[] | null> = ref(null);
-
-setTimeout(() => {
-  currentValue.value = props.modelValue;
-}, 200);
+const currentValue: Ref<Value[]> = ref(props.modelValue);
 
 const { currentOptions } = useOptions({
   options: props.options,
@@ -51,19 +47,16 @@ const { currentOptions } = useOptions({
 });
 
 const changeValue = (value: Value) => {
-  if (currentValue.value === null) return;
-
   const includes = currentValue.value.includes(value);
 
   if (!includes) {
     currentValue.value?.push(value);
-
-    onUpdateModelValue<Value[]>(emit, currentValue.value);
   } else {
     const index = currentValue.value.indexOf(value);
 
     if (index !== -1) currentValue.value.splice(index, 1);
   }
+  onUpdateModelValue<Value[]>(emit, currentValue.value);
 };
 
 watch(
@@ -87,7 +80,12 @@ watch(
 </script>
 
 <template>
-  <div class="hive-checkbox__container" :class="{ inline: inline }">
+  <div
+    class="hive-checkbox__container"
+    :class="{ inline: inline }"
+    @focusout="onFocusout(emit)"
+    @focusin="onFocusin(emit)"
+  >
     <hive-checkbox
       v-for="option in currentOptions"
       :key="option[1][valueField]"
@@ -97,8 +95,6 @@ watch(
       :minus-icon="minusIcon"
       :checked="(currentValue as string[])?.includes(option[1][valueField])"
       @change="changeValue(option[1][valueField])"
-      @focusout="onFocusout(emit)"
-      @focusin="onFocusin(emit)"
     />
   </div>
 </template>

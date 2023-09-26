@@ -229,6 +229,10 @@ onMounted(() => {
 const handleSearch = (value: string) => {
   console.log('val', value);
 };
+
+const log = (value: string) => {
+  console.log(value);
+};
 </script>
 
 <template>
