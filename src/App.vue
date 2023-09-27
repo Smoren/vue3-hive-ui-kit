@@ -368,7 +368,7 @@ const log = (value: string) => {
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
-        <hive-multiselect :options="optionsObject" v-model="multiselect" title-field="title" value-field="id" />
+        <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
       </widget-wrapper>
     </div>
   </div>
