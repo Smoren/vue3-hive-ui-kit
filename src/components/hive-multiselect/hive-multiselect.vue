@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, reactive, ref, watch } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
@@ -34,6 +34,7 @@ export interface Props extends CommonProps {
   menuHeight?: string;
   nullTitle?: string;
   disabled?: boolean;
+  focusOnMount?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -45,14 +46,12 @@ const props = withDefaults(defineProps<Props>(), {
   height: '2.2rem',
   disabled: false,
   nullTitle: 'Не выбрано',
+  focusOnMount: false,
 });
 
 type Emit = Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
-
-const multiSelectRef = ref(undefined);
-const menuRef = ref(undefined);
 
 const configOptions = reactive({
   options: props.options,
@@ -125,10 +124,14 @@ watch(
   },
   { deep: true },
 );
+
+onMounted(() => {
+  if (props.focusOnMount) searchRef.value?.forceFocus();
+});
 </script>
 
 <template>
-  <div class="hive-multiselect__wrap" ref="multiSelectRef" :class="{ expand: isExpanded, disable: disabled }">
+  <div class="hive-multiselect__wrap" :class="{ expand: isExpanded, disable: disabled }">
     <div class="hive-multiselect__selected">
       <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
         <div
@@ -289,7 +292,6 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     opacity: 0.7;
     background: none !important;
     font-style: normal;
-    // font-size: 11px;
     margin: auto 0;
     margin-right: 15px;
 
