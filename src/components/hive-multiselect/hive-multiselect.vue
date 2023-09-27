@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { onMounted, reactive, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
@@ -22,12 +22,11 @@ import { useListMethods } from '@/common/hooks/use-list-methods';
 import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 
 export interface Props extends CommonProps {
-  modelValue: Value[];
   options: Options | undefined;
+  modelValue: Value[];
   inline?: boolean;
   titleField?: string;
   valueField?: string;
-  name?: string;
   height?: string;
   withUndefined?: boolean;
   withNull?: boolean;
@@ -41,7 +40,6 @@ const props = withDefaults(defineProps<Props>(), {
   inline: false,
   titleField: 'title',
   valueField: 'value',
-  name: 'radio-group',
   menuHeight: '10rem',
   height: '2.2rem',
   disabled: false,
@@ -192,7 +190,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import '@/assets/variables.scss';
 
 $drop-down-z_menu: 1;
