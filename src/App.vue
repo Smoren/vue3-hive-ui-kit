@@ -324,8 +324,9 @@ const log = (value: string) => {
 
           Hello
 
-          <div :style="{ display: 'flex', gap: '10px', height: '500px' }">
+          <div :style="{ display: 'flex', flexDirection: 'column', gap: '10px', height: '500px' }">
             <hive-input v-model="text" />
+            <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" /> -->

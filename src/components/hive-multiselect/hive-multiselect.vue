@@ -178,7 +178,6 @@ onMounted(() => {
             maxHeight: menuHeight,
           }"
         >
-          <!-- <template v-for="(item, i) in filteredOptions" :key="i"> -->
           <div
             v-for="(item, i) in filteredOptions"
             :key="i"
@@ -192,7 +191,6 @@ onMounted(() => {
           >
             {{ item[1][titleField] }}
           </div>
-          <!-- </template> -->
         </div>
       </transition>
     </div>
@@ -218,7 +216,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   text-align: left;
   text-shadow: none;
   outline: 0;
-  display: flex; //inline-block;
+  display: flex;
   color: var(--text, $text);
   border: $drop-down-border;
   border-radius: var(--border-radius, $border-radius);
@@ -290,31 +288,6 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     }
   }
 
-  // &__wrap {
-  //   border: 1px solid transparent;
-  //   border-radius: var(--border-radius, $border-radius);
-  //   border-color: var(--border, $border);
-  //   position: relative;
-  //   width: 100%;
-  //   display: flex;
-  //   background-color: none;
-  //   cursor: default;
-
-  //   &.expand {
-  //     z-index: $drop-down-z_menu + 1;
-  //     border-color: var(--border-focus, $border-focus);
-  //     border-bottom-left-radius: 0;
-  //     border-bottom-right-radius: 0;
-  //   }
-
-  //   &.disable {
-  //     border-color: var(--border-disabled, $border-disabled);
-  //     opacity: 0.6;
-  //     pointer-events: none;
-  //     cursor: pointer;
-  //   }
-  // }
-
   &__icon {
     cursor: auto;
     line-height: 1.2rem;
@@ -380,7 +353,6 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    z-index: 100;
 
     &-item {
       border-top: 1px solid $drop-down-border-top;
