@@ -133,8 +133,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="hive-multiselect__wrap" :class="{ expand: isExpanded, disable: disabled }">
-    <div class="hive-multiselect">
+  <div v-if="options" class="hive-multiselect__wrap">
+    <div class="hive-multiselect" :class="{ expand: isExpanded, disable: disabled }">
       <div class="hive-multiselect__selected">
         <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
           <div
@@ -143,7 +143,7 @@ onMounted(() => {
             class="hive-multiselect__selected-item"
             @mousedown.stop.prevent
           >
-            {{ currentOptions.get(value).title }}
+            {{ currentOptions.get(value)?.title }}
             <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
           </div>
         </template>
@@ -170,17 +170,17 @@ onMounted(() => {
         />
       </div>
       <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
-       <transition name="fade" appear>
-      <div
-        v-if="isExpanded"
-        class="hive-multiselect__menu"
-        :style="{
-          maxHeight: menuHeight,
-        }"
-      >
-        <!-- <template v-for="(item, i) in filteredOptions" :key="i"> -->
+      <transition name="fade" appear>
+        <div
+          v-if="isExpanded"
+          class="hive-multiselect__menu"
+          :style="{
+            maxHeight: menuHeight,
+          }"
+        >
+          <!-- <template v-for="(item, i) in filteredOptions" :key="i"> -->
           <div
-          v-for="(item, i) in filteredOptions"
+            v-for="(item, i) in filteredOptions"
             :key="i"
             class="hive-multiselect__menu-item"
             :class="{
@@ -192,8 +192,8 @@ onMounted(() => {
           >
             {{ item[1][titleField] }}
           </div>
-        <!-- </template> -->
-      </div>
+          <!-- </template> -->
+        </div>
       </transition>
     </div>
   </div>
@@ -218,7 +218,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   text-align: left;
   text-shadow: none;
   outline: 0;
-  display: inline-block;
+  display: flex; //inline-block;
   color: var(--text, $text);
   border: $drop-down-border;
   border-radius: var(--border-radius, $border-radius);
@@ -229,6 +229,28 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   animation-duration: 300ms;
   animation-timing-function: ease;
   animation-fill-mode: both;
+
+  &.expand {
+    z-index: $drop-down-z_menu + 1;
+    border-color: var(--border-focus, $border-focus);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.disable {
+    border-color: var(--border-disabled, $border-disabled);
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: pointer;
+  }
+
+  &__wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    background-color: none;
+    cursor: default;
+  }
 
   &__selected {
     display: flex;
@@ -268,30 +290,30 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     }
   }
 
-  &__wrap {
-    border: 1px solid transparent;
-    border-radius: var(--border-radius, $border-radius);
-    border-color: var(--border, $border);
-    position: relative;
-    width: 100%;
-    display: flex;
-    background-color: none;
-    cursor: default;
+  // &__wrap {
+  //   border: 1px solid transparent;
+  //   border-radius: var(--border-radius, $border-radius);
+  //   border-color: var(--border, $border);
+  //   position: relative;
+  //   width: 100%;
+  //   display: flex;
+  //   background-color: none;
+  //   cursor: default;
 
-    &.expand {
-      z-index: $drop-down-z_menu + 1;
-      border-color: var(--border-focus, $border-focus);
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
+  //   &.expand {
+  //     z-index: $drop-down-z_menu + 1;
+  //     border-color: var(--border-focus, $border-focus);
+  //     border-bottom-left-radius: 0;
+  //     border-bottom-right-radius: 0;
+  //   }
 
-    &.disable {
-      border-color: var(--border-disabled, $border-disabled);
-      opacity: 0.6;
-      pointer-events: none;
-      cursor: pointer;
-    }
-  }
+  //   &.disable {
+  //     border-color: var(--border-disabled, $border-disabled);
+  //     opacity: 0.6;
+  //     pointer-events: none;
+  //     cursor: pointer;
+  //   }
+  // }
 
   &__icon {
     cursor: auto;
