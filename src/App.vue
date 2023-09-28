@@ -369,6 +369,7 @@ const log = (value: string) => {
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
         <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
+        <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
       </widget-wrapper>
     </div>
   </div>

@@ -134,62 +134,67 @@ onMounted(() => {
 
 <template>
   <div class="hive-multiselect__wrap" :class="{ expand: isExpanded, disable: disabled }">
-    <div class="hive-multiselect__selected">
-      <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
-        <div
-          v-for="value in currentValue"
-          :key="Array.isArray(value) ? value[0] : value"
-          class="hive-multiselect__selected-item"
-          @mousedown.stop.prevent
-        >
-          {{ currentOptions.get(value).title }}
-          <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
-        </div>
-      </template>
-      <hive-input
-        v-model="searchQuery"
-        ref="searchRef"
-        :disabled="disabled"
-        :placeholder="current ? String(current[titleField]) : ''"
-        class="hive-multiselect__search"
-        :class="{
-          valueNull: (modelValue === null && withNull) || modelValue === undefined,
-          'no-padding': Array.isArray(currentValue) && currentValue.length,
-        }"
-        :style="{ height }"
-        @focusin="expand(), onFocusin(emit)"
-        @focusout="collapse(), onFocusout(emit)"
-        @keydown="onKeydown(emit, $event)"
-        @keydown.enter="changeValue(activeValue)"
-        @keydown.esc="collapse"
-        @keydown.up.prevent="setPrevActiveValue"
-        @keydown.down.prevent="setNextActiveValue"
-        @keydown.delete="deleteLast((currentValue as Value[])?.at(-1))"
-        @input="onSearch<string>(emit, $event as string)"
-      />
-    </div>
-    <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
-    <div
-      ref="menuRef"
-      v-if="isExpanded"
-      class="hive-multiselect__menu"
-      :style="{
-        maxHeight: menuHeight,
-      }"
-    >
-      <template v-for="(item, i) in filteredOptions" :key="i">
-        <div
-          class="hive-multiselect__menu-item"
+    <div class="hive-multiselect">
+      <div class="hive-multiselect__selected">
+        <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
+          <div
+            v-for="value in currentValue"
+            :key="Array.isArray(value) ? value[0] : value"
+            class="hive-multiselect__selected-item"
+            @mousedown.stop.prevent
+          >
+            {{ currentOptions.get(value).title }}
+            <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
+          </div>
+        </template>
+        <hive-input
+          v-model="searchQuery"
+          ref="searchRef"
+          :disabled="disabled"
+          :placeholder="current ? String(current[titleField]) : ''"
+          class="hive-multiselect__search"
           :class="{
-            selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
+            valueNull: (modelValue === null && withNull) || modelValue === undefined,
+            'no-padding': Array.isArray(currentValue) && currentValue.length,
           }"
-          @click="changeValue(item[1][valueField])"
-          @mouseover="updateActiveValue(item[1][valueField])"
-          @mousedown.prevent
-        >
-          {{ item[1][titleField] }}
-        </div>
-      </template>
+          :style="{ height }"
+          @focusin="expand(), onFocusin(emit)"
+          @focusout="collapse(), onFocusout(emit)"
+          @keydown="onKeydown(emit, $event)"
+          @keydown.enter="changeValue(activeValue)"
+          @keydown.esc="collapse"
+          @keydown.up.prevent="setPrevActiveValue"
+          @keydown.down.prevent="setNextActiveValue"
+          @keydown.delete="deleteLast((currentValue as Value[])?.at(-1))"
+          @input="onSearch<string>(emit, $event as string)"
+        />
+      </div>
+      <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
+       <transition name="fade" appear>
+      <div
+        v-if="isExpanded"
+        class="hive-multiselect__menu"
+        :style="{
+          maxHeight: menuHeight,
+        }"
+      >
+        <!-- <template v-for="(item, i) in filteredOptions" :key="i"> -->
+          <div
+          v-for="(item, i) in filteredOptions"
+            :key="i"
+            class="hive-multiselect__menu-item"
+            :class="{
+              selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
+            }"
+            @click="changeValue(item[1][valueField])"
+            @mouseover="updateActiveValue(item[1][valueField])"
+            @mousedown.prevent
+          >
+            {{ item[1][titleField] }}
+          </div>
+        <!-- </template> -->
+      </div>
+      </transition>
     </div>
   </div>
 </template>
