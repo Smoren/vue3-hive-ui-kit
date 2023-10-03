@@ -6,7 +6,7 @@ import HiveInputSearch from './components/hive-input-search/hive-input-search.vu
 import HiveCheckbox from './components/hive-checkbox/hive-checkbox.vue';
 import HiveCheckboxGroup from './components/hive-checkbox-group/hive-checkbox-group.vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
-import HivePreloader from '@/components/hive-preloader/hive-preloader.vue';
+import HiveLoader from '@/components/hive-loader/hive-loader.vue';
 import HiveRadioGroup from '@/components/hive-radio-group/hive-radio-group.vue';
 import HiveTextarea from '@/components/hive-textarea/hive-textarea.vue';
 import HiveMultiselect from '@/components/hive-multiselect/hive-multiselect.vue';
@@ -20,7 +20,7 @@ export {
   HiveCheckbox,
   HiveCheckboxGroup,
   HiveInput,
-  HivePreloader,
+  HiveLoader,
   HiveMultiselect,
   HiveRadioGroup,
   HiveTextarea,
