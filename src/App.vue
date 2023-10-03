@@ -11,6 +11,8 @@ import HiveMultiselect from './components/hive-multiselect/hive-multiselect.vue'
 import HiveBadge from './components/hive-badge/hive-badge.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
+import HiveAutocomplete from './components/hive-autocomplete/hive-autocomplete.vue';
+import HiveMultiautocomplete from './components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 
@@ -18,6 +20,8 @@ const text = ref('text');
 const num = ref(0);
 const isOpenModal = ref(false);
 const dropdown = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d');
+const autocomplete = ref('');
+const multiautocomplete = ref([]);
 const dd3 = ref(0);
 
 const handleText = () => {
@@ -39,6 +43,8 @@ const input = ref('');
 const options = [5, 2, 1, 4, 3, 6];
 
 let optionsTest: Option[] | undefined;
+
+const autoCompleteOptions = ['bsh', 'asd', 'uip', 'lszv'];
 
 setTimeout(() => {
   optionsTest = [
@@ -157,43 +163,23 @@ const optionsArray = [
 // const dd4 = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d')
 const dd4 = ref(null);
 
-const optionsObject = {
-  '74fd8aaa-e10a-4fd0-941b-6f6c7249003d': {
-    title: 'Российская Федерация',
-    id: '74fd8aaa-e10a-4fd0-941b-6f6c7249003d',
-    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-  },
-  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f': {
-    title: 'Республика Беларусь',
-    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f',
-    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-  },
-  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fhsdfh': {
-    title: 'Республика Беларусь',
-    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fhsdfh',
-    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-  },
-  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fasd': {
-    title: 'Республика Беларусь',
-    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5fasd',
-    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-  },
-  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f34': {
-    title: 'Республика Беларусь',
-    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f34',
-    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-  },
-  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f213': {
-    title: 'Республика Беларусь',
-    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f213',
-    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-  },
-  'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f123': {
-    title: 'Республика Беларусь',
-    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f123',
-    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-  },
-};
+const optionsObject = ref(null);
+
+setTimeout(() => {
+  // @ts-ignore
+  optionsObject.value = {
+    '1': {
+      title: 'Российская Федерация',
+      id: '74fd8aaa-e10a-4fd0-941b-6f6c7249003d',
+      classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae12',
+    },
+    '2': {
+      title: 'Республика Беларусь',
+      id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f',
+      classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
+    },
+  };
+}, 1000);
 
 const maritalStatusList = ref([
   {
@@ -278,7 +264,7 @@ const log = (value: string) => {
   <div class="app">
     <div class="wrapper">
       <!-- Button -->
-      <widget-wrapper title="Button">
+      <!-- <widget-wrapper title="Button">
         <hive-button>
           <template #before>Before</template>
           <img src="@/assets/search.svg" alt="image after" class="img" />
@@ -290,7 +276,7 @@ const log = (value: string) => {
         <hive-button />
         <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
         <hive-button title="Classes" :class="'test'" @click="handleText" />
-      </widget-wrapper>
+      </widget-wrapper> -->
 
       <!-- Textarea -->
       <widget-wrapper title="Textarea">
@@ -344,18 +330,19 @@ const log = (value: string) => {
       </widget-wrapper>
 
       <!-- DropDown -->
-      <widget-wrapper title="DropDown">
+      <!-- <widget-wrapper title="DropDown">
         {{ dd3 }}
         <br />
         {{ dd4 }}
         <br />
         {{ mm }}
+        {{ dropdown }}
         <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" value-field="id" />
-        <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" /> -->
-        <!-- <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" /> -->
-        <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null /> -->
-        <!-- <hive-drop-down v-model="dropdown" :options="options" /> -->
-        <!-- <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" /> -->
+        <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" />
+        <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" />
+        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
+        <hive-drop-down v-model="dropdown" :options="options" />
+        <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
         <hive-drop-down
           v-model="mm"
           :options="maritalStatusList"
@@ -364,18 +351,23 @@ const log = (value: string) => {
           with-null
           height="100px"
         />
-        <!-- <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" /> -->
-      </widget-wrapper>
+        <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" />
+      </widget-wrapper> -->
       <!-- RadioGroup -->
-      <widget-wrapper title="Radio">
+      <!-- <widget-wrapper title="Radio">
         {{ radioGroup }}
         <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="title" />
         <input type="radio" checked />
-        <!-- <hive-input type="radio" checked /> -->
-      </widget-wrapper>
+        <hive-input type="radio" checked />
+      </widget-wrapper> -->
       <widget-wrapper title="Checkbox">
         {{ checkbox }}
-        <!-- <hive-checkbox-group :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="id" /> -->
+        <!-- <hive-checkbox-group
+          :options="optionsObject ?? undefined"
+          v-model="checkbox"
+          title-field="title"
+          value-field="classifier_id"
+        /> -->
          <!-- <hive-checkbox-group :options="maritalStatusList" v-model="check" title-field="title" value-field="id" /> -->
         <hive-checkbox :option="checkName" v-model="check" />
       </widget-wrapper>
@@ -383,6 +375,22 @@ const log = (value: string) => {
         {{ checkbox }}
         <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
+      </widget-wrapper>
+      <widget-wrapper title="Autocompelte">
+        {{ autocomplete }}
+        <hive-autocomplete v-model="autocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
+      </widget-wrapper>
+      <widget-wrapper title="Multiautocompelte">
+        {{ autocomplete }}
+        <hive-multiautocomplete v-model="multiautocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
+      </widget-wrapper>
+      <widget-wrapper title="Autocompelte">
+        {{ autocomplete }}
+        <hive-autocomplete v-model="autocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
+      </widget-wrapper>
+      <widget-wrapper title="Multiautocompelte">
+        {{ autocomplete }}
+        <hive-multiautocomplete v-model="multiautocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
       </widget-wrapper>
       <widget-wrapper title="ListLoader">
         <hive-list-loader :visible="true" />

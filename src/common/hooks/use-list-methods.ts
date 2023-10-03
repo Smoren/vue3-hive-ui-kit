@@ -11,6 +11,7 @@ export type ListMethodsConfig = {
   nullTitle: string;
   fieldTitle: string;
   fieldValue: string;
+  autocomplete?: boolean;
 };
 
 export const useListMethods = ({
@@ -21,6 +22,7 @@ export const useListMethods = ({
   nullTitle,
   fieldTitle,
   fieldValue,
+  autocomplete = false,
 }: ListMethodsConfig) => {
   const isExpanded = ref(false);
   const activeValue: Ref<Value | undefined> = ref();
@@ -79,6 +81,8 @@ export const useListMethods = ({
 
     if (value === undefined || value === null) {
       current.value = nullOption.value;
+    } else if (autocomplete) {
+      // current.value = value;
     } else {
       let key = value;
       current.value = filteredOptions.value.get(key);
@@ -121,6 +125,12 @@ export const useListMethods = ({
             filteredOptions.value.set(item[1][fieldValue], item[1]);
           }
         }
+      }
+      const key = filteredOptions.value.keys().next().value;
+      if (key) {
+        updateActiveValue(filteredOptions.value.get(key).value);
+      } else {
+        updateActiveValue(undefined);
       }
     } else {
       filteredOptions.value = new Map(JSON.parse(JSON.stringify([...currentOptions.value])));

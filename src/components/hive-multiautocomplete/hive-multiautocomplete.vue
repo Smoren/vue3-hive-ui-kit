@@ -17,12 +17,12 @@ import {
   onSearch,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { Options, Value } from '@/common/types/select';
+import { Value } from '@/common/types/select';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 
 export interface Props extends CommonProps {
-  options: Options | undefined;
+  options: string[] | undefined;
   modelValue: Value[];
   inline?: boolean;
   titleField?: string;
@@ -142,7 +142,7 @@ onMounted(() => {
           class="hive-multiselect__selected-item"
           @mousedown.stop.prevent
         >
-          {{ currentOptions.get(value)?.title ?? currentOptions.get(value) }}
+          {{ value }}
           <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
         </div>
       </template>
@@ -160,7 +160,7 @@ onMounted(() => {
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
-        @keydown.enter="changeValue(activeValue)"
+        @keydown.enter="changeValue(activeValue ?? searchQuery)"
         @keydown.esc="collapse"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
@@ -197,14 +197,14 @@ onMounted(() => {
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
 
-$multiselect-z_menu: 1;
+$drop-down-z_menu: 1;
 $border-width: 1px;
-$multiselect-border: $border-width solid var(--border, $border);
-$multiselect-selected_background: rgba(0, 0, 0, 0.03);
-$multiselect-selected_color: rgba(0, 0, 0, 0.95);
-$multiselect-border-top: #fafafa;
-$multiselect-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-$multiselect-padding: 0.5em 1em 0.5em 1em;
+$drop-down-border: $border-width solid var(--border, $border);
+$drop-down-selected_background: rgba(0, 0, 0, 0.03);
+$drop-down-selected_color: rgba(0, 0, 0, 0.95);
+$drop-down-border-top: #fafafa;
+$drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+$drop-down-padding: 0.5em 1em 0.5em 1em;
 
 .hive-multiselect {
   width: 100%;
@@ -213,9 +213,9 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
   text-align: left;
   text-shadow: none;
   outline: 0;
-  display: flex;
+  display: inline-block;
   color: var(--text, $text);
-  border: $multiselect-border;
+  border: $drop-down-border;
   border-radius: var(--border-radius, $border-radius);
   transition: opacity 0.1s ease;
   background-color: var(--bg-input, $bg-input);
@@ -224,28 +224,6 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
   animation-duration: 300ms;
   animation-timing-function: ease;
   animation-fill-mode: both;
-
-  &.expand {
-    z-index: $multiselect-z_menu + 1;
-    border-color: var(--border-focus, $border-focus);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  &.disable {
-    border-color: var(--border-disabled, $border-disabled);
-    opacity: 0.6;
-    pointer-events: none;
-    cursor: pointer;
-  }
-
-  &__wrap {
-    position: relative;
-    width: 100%;
-    display: flex;
-    background-color: none;
-    cursor: default;
-  }
 
   &__selected {
     display: flex;
@@ -285,6 +263,31 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
     }
   }
 
+  &__wrap {
+    border: 1px solid transparent;
+    border-radius: var(--border-radius, $border-radius);
+    border-color: var(--border, $border);
+    position: relative;
+    width: 100%;
+    display: flex;
+    background-color: none;
+    cursor: default;
+
+    &.expand {
+      z-index: $drop-down-z_menu + 1;
+      border-color: var(--border-focus, $border-focus);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.disable {
+      border-color: var(--border-disabled, $border-disabled);
+      opacity: 0.6;
+      pointer-events: none;
+      cursor: pointer;
+    }
+  }
+
   &__icon {
     cursor: auto;
     line-height: 1.2rem;
@@ -307,7 +310,7 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
 
   &__search {
     border: none;
-    padding: $multiselect-padding;
+    padding: $drop-down-padding;
     cursor: default;
     font-size: inherit;
     border: none;
@@ -343,23 +346,24 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
     width: 100%;
     overflow-y: auto;
     background-color: var(--bg-input, $bg-input);
-    z-index: $multiselect-z_menu;
-    border: $multiselect-border;
+    z-index: $drop-down-z_menu;
+    border: $drop-down-border;
     border-color: var(--border-focus, $border-focus);
     border-radius: var(--border-radius, $border-radius);
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    z-index: 100;
 
     &-item {
-      border-top: 1px solid $multiselect-border-top;
+      border-top: 1px solid $drop-down-border-top;
       padding: $p-input !important;
       white-space: normal;
       word-wrap: normal;
 
       &.selected {
-        background: $multiselect-selected_background;
-        color: $multiselect-selected_color;
+        background: $drop-down-selected_background;
+        color: $drop-down-selected_color;
       }
     }
   }
