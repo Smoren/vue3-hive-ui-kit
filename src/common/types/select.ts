@@ -1,6 +1,6 @@
 import { Ref } from 'vue';
 
-export type Value = string | number | null | undefined;
+export type Value = string | number | boolean | null | undefined;
 
 export type Option = string | number | Record<string, unknown>;
 export type Options = Array<Option> | Record<string, Option>;

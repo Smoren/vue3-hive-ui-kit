@@ -6,6 +6,7 @@ import HiveInput from './components/hive-input/hive-input.vue';
 import HiveDropDown from './components/hive-drop-down/hive-drop-down.vue';
 import HiveRadioGroup from './components/hive-radio-group/hive-radio-group.vue';
 import HiveCheckboxGroup from './components/hive-checkbox-group/hive-checkbox-group.vue';
+import HiveCheckbox from './components/hive-checkbox/hive-checkbox.vue';
 import HiveMultiselect from './components/hive-multiselect/hive-multiselect.vue';
 import HiveBadge from './components/hive-badge/hive-badge.vue';
 import { Option } from './common/types/select';
@@ -242,6 +243,13 @@ const statusList = [
 
 const radioGroup = ref('женат');
 const checkbox = ref([0]);
+const check = ref(false);
+const checkName = 'Active'
+
+const checkCurrent = {
+  title: 'Activ',
+  value: false,
+}
 const multiselect = ref(['74fd8aaa-e10a-4fd0-941b-6f6c7249003d']);
 
 const date: Ref<Date | undefined> = ref();
@@ -364,7 +372,9 @@ const log = (value: string) => {
       </widget-wrapper>
       <widget-wrapper title="Checkbox">
         {{ checkbox }}
-        <hive-checkbox-group :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="id" />
+        <!-- <hive-checkbox-group :options="maritalStatusList" v-model="checkbox" title-field="title" value-field="id" /> -->
+         <!-- <hive-checkbox-group :options="maritalStatusList" v-model="check" title-field="title" value-field="id" /> -->
+        <hive-checkbox :option="checkName" v-model="check" />
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}

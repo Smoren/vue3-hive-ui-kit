@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Mount,
@@ -14,10 +15,10 @@ import {
   onFocusin,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { CurrentOptions } from '@/common/types/select';
+import { CurrentOptions, Value } from '@/common/types/select';
 
 export interface Props extends CommonProps {
-  option: [string, CurrentOptions] | undefined;
+  option: [string, CurrentOptions] | string | undefined;
   checked?: boolean;
   modelValue?: boolean;
   titleField?: string;
@@ -45,6 +46,13 @@ if (props.checked) {
 watch(currentValue, (newValue) => {
   onUpdateModelValue(emit, newValue);
 });
+
+let id: Value | Value[];
+if (Array.isArray(props.option)) {
+  id = props.option[1][props.valueField]
+} else {
+  props.option ? id = props.option : uuidv4();
+}
 </script>
 
 <template>
@@ -53,7 +61,7 @@ watch(currentValue, (newValue) => {
       v-model="currentValue"
       :checked="checked"
       :value="true"
-      :id="`hive-checkbox-${option[1][valueField]}`"
+      :id="`hive-checkbox-${id}`"
       class="hive-checkbox__input"
       tabindex="0"
       type="checkbox"
@@ -61,8 +69,8 @@ watch(currentValue, (newValue) => {
       @focusout="onFocusout(emit)"
       @focusin="onFocusin(emit)"
     />
-    <label :for="`hive-checkbox-${option[1][valueField]}`" :class="{ minus: minusIcon }">
-      {{ option[1][titleField] }}
+    <label :for="`hive-checkbox-${id}`" :class="{ minus: minusIcon }">
+      {{ id }}
     </label>
   </div>
 </template>

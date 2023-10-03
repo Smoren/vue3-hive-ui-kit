@@ -27,11 +27,13 @@
   },
   "dependencies": {
     "pinia": "^2.1.6",
+    "uuid": "^9.0.1",
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@types/node": "^20.7.0",
-    "@vitejs/plugin-vue": "^4.3.4",
+    "@types/node": "^20.8.2",
+    "@types/uuid": "^9.0.4",
+    "@vitejs/plugin-vue": "^4.4.0",
     "sass": "^1.68.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
