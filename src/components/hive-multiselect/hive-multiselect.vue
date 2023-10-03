@@ -200,14 +200,14 @@ onMounted(() => {
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
 
-$drop-down-z_menu: 1;
+$multiselect-z_menu: 1;
 $border-width: 1px;
-$drop-down-border: $border-width solid var(--border, $border);
-$drop-down-selected_background: rgba(0, 0, 0, 0.03);
-$drop-down-selected_color: rgba(0, 0, 0, 0.95);
-$drop-down-border-top: #fafafa;
-$drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-$drop-down-padding: 0.5em 1em 0.5em 1em;
+$multiselect-border: $border-width solid var(--border, $border);
+$multiselect-selected_background: rgba(0, 0, 0, 0.03);
+$multiselect-selected_color: rgba(0, 0, 0, 0.95);
+$multiselect-border-top: #fafafa;
+$multiselect-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+$multiselect-padding: 0.5em 1em 0.5em 1em;
 
 .hive-multiselect {
   width: 100%;
@@ -218,7 +218,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   outline: 0;
   display: flex;
   color: var(--text, $text);
-  border: $drop-down-border;
+  border: $multiselect-border;
   border-radius: var(--border-radius, $border-radius);
   transition: opacity 0.1s ease;
   background-color: var(--bg-input, $bg-input);
@@ -229,7 +229,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   animation-fill-mode: both;
 
   &.expand {
-    z-index: $drop-down-z_menu + 1;
+    z-index: $multiselect-z_menu + 1;
     border-color: var(--border-focus, $border-focus);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -310,7 +310,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
   &__search {
     border: none;
-    padding: $drop-down-padding;
+    padding: $multiselect-padding;
     cursor: default;
     font-size: inherit;
     border: none;
@@ -346,8 +346,8 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     width: 100%;
     overflow-y: auto;
     background-color: var(--bg-input, $bg-input);
-    z-index: $drop-down-z_menu;
-    border: $drop-down-border;
+    z-index: $multiselect-z_menu;
+    border: $multiselect-border;
     border-color: var(--border-focus, $border-focus);
     border-radius: var(--border-radius, $border-radius);
     border-top: none;
@@ -355,14 +355,14 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     border-top-right-radius: 0;
 
     &-item {
-      border-top: 1px solid $drop-down-border-top;
+      border-top: 1px solid $multiselect-border-top;
       padding: $p-input !important;
       white-space: normal;
       word-wrap: normal;
 
       &.selected {
-        background: $drop-down-selected_background;
-        color: $drop-down-selected_color;
+        background: $multiselect-selected_background;
+        color: $multiselect-selected_color;
       }
     }
   }
