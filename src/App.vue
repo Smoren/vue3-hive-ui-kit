@@ -13,6 +13,8 @@ import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
 import HiveAutocomplete from './components/hive-autocomplete/hive-autocomplete.vue';
 import HiveMultiautocomplete from './components/hive-multiautocomplete/hive-multiautocomplete.vue';
+import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
+import HiveTab from './components/hive-tab-group/hive-tab.vue';
 import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 
@@ -256,6 +258,8 @@ const handleSearch = (value: string) => {
 const log = (value: string) => {
   console.log(value);
 };
+
+const tab = ref('');
 </script>
 
 <template>
@@ -390,7 +394,26 @@ const log = (value: string) => {
       </widget-wrapper>
       <widget-wrapper title="Multiautocompelte">
         {{ autocomplete }}
-        <hive-multiautocomplete v-model="multiautocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
+        <hive-multiautocomplete
+          v-model="multiautocomplete"
+          :options="autoCompleteOptions"
+          :style="{ width: '300px' }"
+        />
+      </widget-wrapper>
+      <widget-wrapper title="Multiautocompelte">
+        {{ autocomplete }}
+        <hive-tab-group v-model="tab">
+          <hive-tab name="first" id="1">asd</hive-tab>
+          <hive-tab name="second" id="2">cvb</hive-tab>
+          <hive-tab name="third" id="3">fgh</hive-tab>
+          <hive-tab name="fourth" id="4">ytiu</hive-tab>
+        </hive-tab-group>
+      </widget-wrapper>
+      <widget-wrapper title="ListLoader">
+        <hive-list-loader :visible="true" />
+      </widget-wrapper>
+      <widget-wrapper title="Skeleton">
+        <hive-skeleton :visible="true" />
       </widget-wrapper>
       <widget-wrapper title="ListLoader">
         <hive-list-loader :visible="true" />
