@@ -3,7 +3,6 @@ import { Ref, ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import useHiveTabGroup from './hooks/use-hive-tab-group';
 import useHiveTab from './hooks/use-hive-tab';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -45,17 +44,17 @@ watch(isActive, () => {
     :class="{ activeTab: isActive }"
     :style="style"
     role="tabpanel"
-    class="w"
+    class="tab"
   >
     <slot />
   </section>
 </template>
 
 <style scoped lang="scss">
-.w {
+.tab {
   width: 100%;
-  height: calc(100% - 61px) !important;
+  height: 100%;
   overflow: auto;
-  background-color: transparent !important;
+  background-color: transparent;
 }
 </style>
