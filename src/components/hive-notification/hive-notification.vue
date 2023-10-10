@@ -1,183 +1,120 @@
-<script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
-import { Mount, Unmount, Close, onClose } from '@/common/mixin/emits';
-import { useOnMount } from '@/common/hooks/use-mount';
-
-export interface Props extends CommonProps {
-  id: string;
-  type: 'error' | 'warning' | 'info' | 'success';
-  title?: string | null;
-  message?: string;
-  autoClose?: boolean;
-  duration?: number;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  title: null,
-  message: 'Без текста',
-  autoClose: false,
-  duration: 5,
-});
-
-type Emit = Mount & Unmount & Close;
-const emit = defineEmits<Emit>();
-useOnMount(emit);
-
-const timer = ref(-1);
-const startedAt = ref<number>(0);
-const delay = ref<number>(0);
-
-onMounted(() => {
-  if (props.autoClose) {
-    startedAt.value = Date.now();
-    delay.value = props.duration * 1000;
-    timer.value = window.setTimeout(() => {
-      onClose(emit);
-    }, delay.value);
-  }
-});
-
-const toastIcon = computed(() => {
-  switch (props.type) {
-    case 'error':
-      return 'ri-emotion-unhappy-line';
-    case 'warning':
-      return 'ri-error-warning-line';
-    case 'success':
-      return 'ri-emotion-happy-line';
-    default:
-      return 'ri-information-line';
-  }
-});
-
-const toastColor = computed(() => {
-  switch (props.type) {
-    case 'error':
-      return '#ff355b';
-    case 'warning':
-      return '#e8b910';
-    case 'success':
-      return '#00cc69';
-    default:
-      return '#0067ff';
-  }
-});
-
-const toastTitle = computed(() => (props.title && props.title !== null ? props.title : 'Notification'));
-</script>
-
 <template>
-  <div
-    class="toast-notification"
-    :style="`--toast-duration: ${duration}s; --toast-color: ${toastColor}`"
-    @click.prevent="onClose(emit)"
-    :ref="id"
-  >
-    <div @click="onClose(emit)" class="close-btn" title="Close">
-      <i class="ri-icon ri-lg ri-close-fill"></i>
+  <transition name="fade" @after-leave="afterLeave" @after-enter="afterEnter">
+    <div
+      v-show="visible"
+      ref="root"
+      class="notification"
+      :style="styleObj"
+      @mouseenter="clearTimer"
+      @mouseleave="createTimer"
+    >
+      <span class="content">{{ content }}</span>
+      <a class="btn" @click="handleClose">{{ btn }}</a>
     </div>
-
-    <div class="body">
-      <i :class="`ri-icon ri-2x ${toastIcon}`"></i>
-      <div class="vl"></div>
-      <div class="content">
-        <div class="content__title">{{ toastTitle }}</div>
-
-        <p v-if="message && message != ''" class="content__message">{{ message }}</p>
-      </div>
-    </div>
-    <div v-if="autoClose" class="progress" />
-  </div>
+  </transition>
 </template>
 
-<style lang="scss" scoped>
-.toast-notification {
-  --toast-color: #0067ff;
-  cursor: pointer;
-  max-width: 450px;
-  position: relative;
-  background: white;
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.08), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  min-height: 4rem;
-  padding-inline: 1.5rem;
-  padding-block: 1.2rem;
-  transition: all 0.3s ease-in-out;
+<script lang="ts">
+import { defineComponent, reactive, ref, toRefs, computed, onMounted, onBeforeUnmount } from 'vue';
 
-  .close-btn {
-    position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
-    display: flex;
-    place-items: center;
-    justify-content: center;
-    height: 32px;
-    width: 32px;
-    transition: var(--all-transition);
-    cursor: pointer;
+export default defineComponent({
+  name: 'Notification',
+  props: {
+    content: { type: String, required: true },
+    duration: {
+      type: Number,
+      default: 3000,
+    },
+    btn: {
+      type: String,
+      default: 'off',
+    },
+    verticalOffset: {
+      type: Number,
+      default: 0,
+    },
+    // eslint-disable-next-line vue/require-default-prop
+    onClosed: Function,
+  },
+  setup(props) {
+    const root = ref(null!);
+    const state = reactive({
+      height: 0,
+      visible: false,
+    });
+    const styleObj = computed(() => ({
+      position: 'fixed',
+      right: '20px',
+      bottom: `${props.verticalOffset}px`,
+    }));
+    const timer = ref(0);
 
-    &:hover {
-      box-shadow: 0px 0px 10px rgb(228, 228, 228);
-      border-radius: 50%;
-    }
-  }
+    const handleClose = (e: MouseEvent): void => {
+      e.preventDefault();
+      state.visible = false;
+    };
 
-  .body {
-    display: flex;
-    gap: 1.4rem;
-    place-items: center;
+    const afterLeave = () => {
+      (props as any).onClosed(state.height);
+    };
 
-    i {
-      color: var(--toast-color);
-    }
+    const afterEnter = () => {
+      state.height = (root as any).value.offsetHeight;
+    };
 
-    .vl {
-      background: #e4e4e4;
-      width: 0.12rem;
-      height: 3rem;
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-
-      &__title {
-        font-weight: 600;
+    const createTimer = () => {
+      if (props.duration) {
+        timer.value = setTimeout(() => {
+          state.visible = false;
+        }, props.duration) as unknown as number;
       }
-    }
-  }
+    };
+    const clearTimer = () => {
+      if (timer.value) {
+        clearTimeout(timer.value);
+        timer.value = 0;
+      }
+    };
+    onMounted(() => {
+      state.visible = true;
+      createTimer();
+    });
 
-  .progress {
-    position: absolute;
-    bottom: 0px;
-    left: 0;
-    height: 0.4rem;
-    width: 100%;
-    background: var(--toast-color);
-    animation: progress var(--toast-duration) ease-in-out forwards;
-  }
+    onBeforeUnmount(() => {
+      clearTimer();
+    });
 
-  @keyframes progress {
-    to {
-      width: 0;
-    }
-  }
+    // toRefs changes data created by Reactive to reactive
+    return { ...toRefs(state), root, styleObj, handleClose, afterLeave, afterEnter, clearTimer, createTimer };
+  },
+});
+</script>
 
-  @keyframes toast-fade-in {
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes toast-fade-out {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
+<style scoped>
+.notification {
+  display: inline-flex;
+  background-color: #303030;
+  color: rgba(255.255.255.1);
+  align-items: center;
+  padding: 20px;
+  min-width: 280px;
+  box-shadow: 0px 3px 5px -1px rgba(0.2), 0px 6px 10px 0px rgba(0.14), 0px 1px 18px 0px rgba(0.12);
+  flex-wrap: wrap;
+  transition: all 0.3 s;
+}
+.content {
+  padding: 0;
+}
+.btn {
+  color: #ff4081;
+  padding-left: 24px;
+  margin-left: auto;
+  cursor: pointer;
+}
+.fade-enter-active .fade-leave-active {
+  transition: opacity 0.5 s;
+}
+.fade-enter .fade-leave-to {
+  opacity: 0;
 }
 </style>
