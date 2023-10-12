@@ -13,6 +13,8 @@ import hiveNotificationWrapper from './components/hive-notification/hive-notific
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
 import { useNotification } from './components/hive-notification';
+import HiveSplitter from './components/hive-splitter/hive-splitter.vue';
+import HivePane from './components/hive-splitter/hive-pane.vue';
 import HiveAutocomplete from './components/hive-autocomplete/hive-autocomplete.vue';
 import HiveMultiautocomplete from './components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
@@ -399,6 +401,12 @@ const tab = ref('');
       <widget-wrapper title="Multiautocompelte">
         {{ autocomplete }}
         <hive-multiautocomplete v-model="multiautocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
+      </widget-wrapper>
+      <widget-wrapper title="Splitter" style="height: 700px" :class="{ 123: 1 }">
+        <hive-splitter>
+          <hive-pane>1</hive-pane>
+          <hive-pane>2</hive-pane>
+        </hive-splitter>
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
         {{ autocomplete }}

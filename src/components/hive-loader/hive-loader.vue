@@ -4,7 +4,7 @@ import { Mount, Unmount } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
-  visible?: boolean;
+  visible?: boolean | number;
 }
 
 withDefaults(defineProps<Props>(), {
