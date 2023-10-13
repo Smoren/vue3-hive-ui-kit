@@ -12,6 +12,7 @@ import HiveBadge from './components/hive-badge/hive-badge.vue';
 import hiveNotificationWrapper from './components/hive-notification/hive-notification-wrapper.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
+import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
 import { useNotification } from './components/hive-notification';
 import HiveSplitter from './components/hive-splitter/hive-splitter.vue';
 import HivePane from './components/hive-splitter/hive-pane.vue';
@@ -401,6 +402,9 @@ const tab = ref('');
       <widget-wrapper title="Multiautocompelte">
         {{ autocomplete }}
         <hive-multiautocomplete v-model="multiautocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
+      </widget-wrapper>
+      <widget-wrapper title="HiveUploadFile">
+        <hive-upload-file />
       </widget-wrapper>
       <widget-wrapper title="Splitter" style="height: 700px" :class="{ 123: 1 }">
         <hive-splitter>
