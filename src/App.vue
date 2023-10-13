@@ -11,6 +11,8 @@ import HiveMultiselect from './components/hive-multiselect/hive-multiselect.vue'
 import HiveBadge from './components/hive-badge/hive-badge.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
+import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
+import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -381,6 +383,12 @@ const log = (value: string) => {
         {{ checkbox }}
         <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
+      </widget-wrapper>
+      <widget-wrapper title="ListLoader">
+        <hive-list-loader :visible="true" />
+      </widget-wrapper>
+      <widget-wrapper title="Skeleton">
+        <hive-skeleton :visible="true" />
       </widget-wrapper>
     </div>
   </div>
