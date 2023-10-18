@@ -4,7 +4,6 @@ import App from './App.vue';
 import './style.scss';
 import Notification from '@/components/hive-notification';
 
-// createApp(App).mount('#app');
 const app = createApp(App);
 const pinia = createPinia();
 

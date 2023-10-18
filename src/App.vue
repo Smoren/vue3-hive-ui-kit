@@ -12,7 +12,7 @@ import HiveBadge from './components/hive-badge/hive-badge.vue';
 import hiveNotificationWrapper from './components/hive-notification/hive-notification-wrapper.vue';
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
-import useNotifications from './components/hive-notification/hooks/use-hive-hotification';
+import { useNotification } from './components/hive-notification';
 import HiveAutocomplete from './components/hive-autocomplete/hive-autocomplete.vue';
 import HiveMultiautocomplete from './components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
@@ -257,15 +257,13 @@ const handleSearch = (value: string) => {
   console.log('val', value);
 };
 
-const { createNotification } = useNotifications();
+const { notify } = useNotification();
 
 const create = () =>
-  createNotification({
-    type: 'info',
-    title: 'Информация',
-    message: 'No messages available',
-    autoClose: true,
-    duration: 5,
+  notify({
+    title: 'Уведомление',
+    text: 'Уведомление было получено!',
+    type: 'success',
   });
 
 const log = (value: string) => {
@@ -437,6 +435,7 @@ const tab = ref('');
       </widget-wrapper>
     </div>
   </div>
+  <notifications position="bottom center" />
 </template>
 
 <style lang="scss" scoped>

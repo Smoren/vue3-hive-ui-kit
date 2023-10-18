@@ -1,13 +1,8 @@
-import { Plugin, App } from 'vue';
-import Notification from './hive-notification.vue';
-import notify from './function';
+import { Plugin } from 'vue';
+import { install } from './plugin';
+export { notify, useNotification } from './notify';
+export type { NotificationsOptions, NotificationsPluginOptions, NotificationItem } from './types';
 
-// Mount the component method
-const install = (app: App): App => {
-  //@ts-ignore
-  app.config.globalProperties.$notify = notify;
-  app.component(Notification.name, Notification);
-  return app;
-};
-
-export default install as Plugin;
+export default {
+  install,
+} as Plugin;
