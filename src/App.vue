@@ -447,12 +447,6 @@ const tab = ref('');
       <widget-wrapper title="Skeleton">
         <hive-skeleton :visible="true" />
       </widget-wrapper>
-      <widget-wrapper title="ListLoader">
-        <hive-list-loader :visible="true" />
-      </widget-wrapper>
-      <widget-wrapper title="Skeleton">
-        <hive-skeleton :visible="true" />
-      </widget-wrapper>
     </div>
   </div>
   <notifications position="bottom center" />

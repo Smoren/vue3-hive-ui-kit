@@ -82,6 +82,7 @@ watch(
       width: fit-content;
       padding: 3px;
       cursor: pointer;
+      border-bottom: 3px solid transparent;
     }
 
     .active {
