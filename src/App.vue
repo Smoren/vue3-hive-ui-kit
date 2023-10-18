@@ -286,7 +286,7 @@ const tab = ref('');
   <div class="app">
     <div class="wrapper">
       <!-- Button -->
-      <!-- <widget-wrapper title="Button">
+      <widget-wrapper title="Button">
         <hive-button>
           <template #before>Before</template>
           <img src="@/assets/search.svg" alt="image after" class="img" />
@@ -299,7 +299,7 @@ const tab = ref('');
         <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
         <hive-button title="Classes" :class="'test'" @click="handleText" />
         <hive-button title="Notify" :class="'test'" @click="create" />
-      </widget-wrapper> -->
+      </widget-wrapper>
 
       <!-- Textarea -->
       <widget-wrapper title="Textarea">
@@ -353,7 +353,7 @@ const tab = ref('');
       </widget-wrapper>
 
       <!-- DropDown -->
-      <!-- <widget-wrapper title="DropDown">
+      <widget-wrapper title="DropDown">
         {{ dd3 }}
         <br />
         {{ dd4 }}
@@ -375,13 +375,13 @@ const tab = ref('');
           height="100px"
         />
         <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" />
-      </widget-wrapper> -->
+      </widget-wrapper>
       <!-- RadioGroup -->
-      <!-- <widget-wrapper title="Radio">
+      <widget-wrapper title="Radio">
         {{ radioGroup }}
         <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="title" />
         <hive-input type="radio" checked />
-      </widget-wrapper> -->
+      </widget-wrapper>
       <widget-wrapper title="Checkbox">
         {{ checkbox }}
         <!-- <hive-checkbox-group
