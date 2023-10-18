@@ -52,7 +52,7 @@ export default function useHiveSplitter(horizontal: boolean) {
   };
 
   const updatePaneStyle = function (pane: Pane): void {
-    const size: number | string | null = indexedPanes.value[pane.id]?.size;
+    const size: number | string | null = indexedPanes.value[pane.id]?.size ?? null;
 
     console.log(pane);
 
@@ -103,10 +103,10 @@ export default function useHiveSplitter(horizontal: boolean) {
       if (pane.size !== null) {
         panesWithDefinedSizesCount += 1;
         spaceToAllocate -= formatSize(pane.size);
-        if (pane.size >= pane.max) {
+        if (Number(pane.size) >= Number(pane.max)) {
           ungrowablePanes.push(pane.id);
         }
-        if (pane.size <= pane.min) {
+        if (Number(pane.size) <= Number(pane.min)) {
           unshrinkablePanes.push(pane.id);
         }
       }
@@ -139,8 +139,8 @@ export default function useHiveSplitter(horizontal: boolean) {
     panes.value.forEach((pane) => {
       if (pane.size) {
         spaceToAllocate -= formatSize(pane.size);
-        if (pane.size >= pane.max) ungrowablePanes.push(pane.id);
-        if (pane.size <= pane.min) unshrinkablePanes.push(pane.id);
+        if (Number(pane.size) >= Number(pane.max)) ungrowablePanes.push(pane.id);
+        if (Number(pane.size) <= Number(pane.min)) unshrinkablePanes.push(pane.id);
       }
     });
 
@@ -290,7 +290,6 @@ export default function useHiveSplitter(horizontal: boolean) {
   };
 
   const updatePaneComponents = () => {
-    console.log('here');
     panes.value.forEach((pane) => {
       updatePaneStyle(pane);
     });
@@ -315,6 +314,7 @@ export default function useHiveSplitter(horizontal: boolean) {
   watch(
     () => panes.value,
     () => {
+      console.log(panes.value);
       updatePaneComponents();
     },
     { deep: true, immediate: false },

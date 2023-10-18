@@ -14,9 +14,11 @@ export interface Props extends CommonProps {
 const props = withDefaults(defineProps<Props>(), {
   size: null,
   minSize: '0%',
-  maxSize: '0%',
-  id: uuidv4(),
+  maxSize: '100%',
+  id: '',
 });
+
+console.log(props.id, uuidv4());
 
 const { onPaneUpdate, onPaneAdd, updateStyle, updatedStyle, formattedSize, formattedMinSize, formattedMaxSize } =
   useHivePane({
@@ -30,6 +32,7 @@ console.log(updateStyle);
 const pane = getCurrentInstance();
 
 onMounted(() => {
+  props.id = uuidv4();
   if (onPaneAdd && pane) {
     onPaneAdd(pane);
   }
@@ -76,5 +79,6 @@ defineComponent({
 .hive-splitter__pane {
   overflow-y: auto;
   overflow-x: auto;
+  height: 100%;
 }
 </style>

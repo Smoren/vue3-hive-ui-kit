@@ -44,6 +44,7 @@ export default function useSplitterTouch(
 
   const onMouseMove = (event: TouchEvent | MouseEvent) => {
     if (touch.value.mouseDown) {
+      console.log('inside');
       event.preventDefault();
       touch.value.isDragging = true;
       calculatePanesSize({
@@ -111,7 +112,7 @@ export default function useSplitterTouch(
       }, 500);
     }
     if (!touch.value.isDragging) {
-      handleEvent(new Event('splitter-click'), panes.value[splitterIndex]);
+      // handleEvent(new Event('splitter-click'), panes.value[splitterIndex]);
     }
   };
 

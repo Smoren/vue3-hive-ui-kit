@@ -26,9 +26,17 @@
     "url": "git+https://github.com/hivebdsm/vue-hive-ui-kit.git"
   },
   "dependencies": {
+    "@tiptap/extension-highlight": "^2.0.0-beta.220",
+    "@tiptap/extension-task-item": "^2.0.0-beta.220",
+    "@tiptap/extension-task-list": "^2.0.0-beta.220",
+    "@tiptap/pm": "^2.0.0-beta.220",
+    "@tiptap/starter-kit": "^2.0.0-beta.220",
+    "@tiptap/vue-3": "^2.0.0-beta.220",
+    "@vueup/vue-quill": "^1.2.0",
     "@types/uuid": "^9.0.4",
     "mitt": "^3.0.1",
     "pinia": "^2.1.6",
+    "remixicon": "^2.5.0",
     "uuid": "^9.0.1",
     "vue": "^3.3.4"
   },

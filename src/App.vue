@@ -16,6 +16,8 @@ import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
 import { useNotification } from './components/hive-notification';
 import HiveSplitter from './components/hive-splitter/hive-splitter.vue';
 import HivePane from './components/hive-splitter/hive-pane.vue';
+import HiveHtmlEditor from './components/hive-html-editor/hive-html-editor.vue';
+import { v4 as uuidv4 } from 'uuid';
 import HiveAutocomplete from './components/hive-autocomplete/hive-autocomplete.vue';
 import HiveMultiautocomplete from './components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
@@ -48,6 +50,8 @@ const handleR = () => {
 const input = ref('');
 
 const options = [5, 2, 1, 4, 3, 6];
+
+const textEditor = ref('');
 
 let optionsTest: Option[] | undefined;
 
@@ -376,7 +380,6 @@ const tab = ref('');
       <!-- <widget-wrapper title="Radio">
         {{ radioGroup }}
         <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="title" />
-        <input type="radio" checked />
         <hive-input type="radio" checked />
       </widget-wrapper> -->
       <widget-wrapper title="Checkbox">
@@ -406,10 +409,11 @@ const tab = ref('');
       <widget-wrapper title="HiveUploadFile">
         <hive-upload-file />
       </widget-wrapper>
-      <widget-wrapper title="Splitter" style="height: 700px" :class="{ 123: 1 }">
-        <hive-splitter>
-          <hive-pane>1</hive-pane>
-          <hive-pane>2</hive-pane>
+      <widget-wrapper title="Splitter" :class="{ 123: 1 }">
+        <hive-splitter style="height: 700px">
+          <hive-pane :id="uuidv4()">1</hive-pane>
+          <hive-pane :id="uuidv4()">2</hive-pane>
+          <hive-pane :id="uuidv4()">3</hive-pane>
         </hive-splitter>
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
@@ -432,6 +436,10 @@ const tab = ref('');
           <hive-tab name="third" id="3">fgh</hive-tab>
           <hive-tab name="fourth" id="4">ytiu</hive-tab>
         </hive-tab-group>
+      </widget-wrapper>
+      <widget-wrapper title="HtmlEditor" :class="{ 123: 1 }">
+        {{ textEditor }}
+        <hive-html-editor v-model="textEditor" />
       </widget-wrapper>
       <widget-wrapper title="ListLoader">
         <hive-list-loader :visible="true" />

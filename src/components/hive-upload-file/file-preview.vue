@@ -1,16 +1,3 @@
-<template>
-  <component :is="tag" class="file-preview">
-    <img src="@/components/hive-upload-file/assets/attach_file_FILL0_wght400_GRAD0_opsz48.svg" />
-    <div>
-      {{ file.file.name }}
-    </div>
-    <button @click="$emit('remove', file)" class="close-icon">&times;</button>
-    <span class="status-indicator loading-indicator" v-show="file.status == 'loading'"> In Progress </span>
-    <span class="status-indicator success-indicator" v-show="file.status == true"> Uploaded </span>
-    <span class="status-indicator failure-indicator" v-show="file.status == false"> Error </span>
-  </component>
-</template>
-
 <script lang="ts" setup>
 defineProps({
   file: { type: Object, required: true },
@@ -19,6 +6,19 @@ defineProps({
 
 defineEmits(['remove']);
 </script>
+
+<template>
+  <component :is="tag" class="file-preview">
+    <img src="@/components/hive-upload-file/assets/attach_file_FILL0_wght400_GRAD0_opsz48.svg" />
+    <div>
+      {{ file.file.name }}
+    </div>
+    <button @click="$emit('remove', file)" class="close-icon">&times;</button>
+    <span class="status-indicator loading-indicator" v-show="file.status == 'loading'">In Progress</span>
+    <span class="status-indicator success-indicator" v-show="file.status == true">Uploaded</span>
+    <span class="status-indicator failure-indicator" v-show="file.status == false">Error</span>
+  </component>
+</template>
 
 <style scoped lang="scss">
 .file-preview {

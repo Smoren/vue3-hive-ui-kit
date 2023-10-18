@@ -1,90 +1,70 @@
 <script setup lang="ts">
-import { defineComponent, PropType, Ref, ref } from 'vue';
-import HiveUploadFileDropZone from './HiveUploadFileDropZone.vue';
-import FilePreview from './FilePreview.vue';
+import { Ref, ref } from 'vue';
+import HiveUploadFileDropZone from './hive-upload-file-dropzone.vue';
+import FilePreview from './file-preview.vue';
 import useFileList, { IinitialFiles } from './hooks/use-file-list';
+import { v4 as uuidv4 } from 'uuid';
+import { CommonProps } from '@/common/mixin/props';
+import { useOnMount } from '@/common/hooks/use-mount';
+import {
+  Mount,
+  Unmount,
+  Focusout,
+  Focusin,
+  Change,
+  onFocusin,
+  onFocusout,
+  FileAdd,
+  onFileAdd,
+  FileRemove,
+  onFileRemove,
+} from '@/common/mixin/emits';
 
 export interface Props extends CommonProps {
-  options: Options | undefined;
-  modelValue: Value;
-  inline?: boolean;
-  titleField?: string;
-  valueField?: string;
-  name?: string;
+  fileTypes: string;
+  title: string;
+  initialFiles: string[] | null;
+  id: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  inline: false,
-  titleField: 'title',
-  valueField: 'value',
-  name: 'radio-group',
+  fileTypes: '',
+  title: 'Нажмите сюда чтобы выбрать файлы или перетащите их',
+  initialFiles: null,
+  id: uuidv4(),
 });
 
-export default defineComponent({
-  name: 'HiveUploadFile',
-  props: {
-    fileTypes: {
-      type: String,
-      default: '',
-    },
-    modelValueEventName: {
-      type: String,
-      default: 'input',
-    },
-    title: {
-      type: String,
-      default: 'Нажмите сюда чтобы выбрать файлы или перетащите их',
-    },
-    initialFiles: {
-      type: Object as PropType<string[] | null>,
-      default: [],
-    },
-  },
-  components: { HiveUploadFileDropZone, FilePreview },
-  setup(props, context) {
-    const initialFilesRef: Ref<IinitialFiles[]> = ref([]);
-    if (props.initialFiles && props.initialFiles.length > 0) {
-      for (const name of props.initialFiles) {
-        initialFilesRef.value.push(
-          //@ts-ignore
-          {
-            file: new File(['foo'], name),
-          },
-        );
-      }
-    }
+type Emit = Mount & Unmount & Focusout & Focusin & Change<string> & FileAdd & FileRemove;
+const emit = defineEmits<Emit>();
+useOnMount(emit);
 
-    const { files, addFiles, removeFile } = useFileList(initialFilesRef);
+const initialFilesRef: Ref<IinitialFiles[]> = ref([]);
+if (props.initialFiles && props.initialFiles.length > 0) {
+  for (const name of props.initialFiles) {
+    initialFilesRef.value.push({
+      file: new File(['foo'], name),
+    });
+  }
+}
 
-    const removeHandler = (file: File) => {
-      removeFile(file);
-      // handleEvent(new Event('onRemove'));
-    };
+const { files, addFiles, removeFile } = useFileList(initialFilesRef);
 
-    const handleAdd = () => {
-      // handleEvent(new Event('onAddFiles'));
-    };
+const removeHandler = (file: File) => {
+  removeFile(file);
+  onFileRemove(emit);
+};
 
-    function onInputChange(e: Event) {
-      if (e.target === null) return;
-      //@ts-ignore
-      addFiles((e.target as HTMLInputElement).files as File[]);
-      handleAdd();
-      //@ts-ignore
-      e.target.value = null;
-    }
+const handleAdd = () => {
+  onFileAdd(emit);
+};
 
-    return {
-      removeFile,
-      files,
-      onInputChange,
-      addFiles,
-      initialFilesRef,
-      removeHandler,
-      handleAdd,
-    };
-  },
-});
+function onInputChange(e: Event) {
+  if (e.target === null) return;
+  addFiles((e.target as HTMLInputElement).files as unknown as File[]);
+  handleAdd();
+  //@ts-ignore
+  e.target.value = null;
+}
 </script>
 
 <template>
@@ -102,7 +82,14 @@ export default defineComponent({
         <span v-else class="text-center">
           {{ title }}
         </span>
-        <input type="file" :id="id" @change="onInputChange" :accept="fileTypes !== ' ' ? fileTypes : '*'" />
+        <input
+          type="file"
+          :id="id"
+          @change="onInputChange"
+          @focusin="onFocusin(emit)"
+          @focusout="onFocusout(emit)"
+          :accept="fileTypes !== ' ' ? fileTypes : '*'"
+        />
       </label>
       <ul class="image-list" v-show="files.length !== 0 || initialFilesRef.length !== 0">
         <FilePreview

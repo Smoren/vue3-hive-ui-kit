@@ -2,6 +2,7 @@ import { Ref, computed, ref, toRaw, watch } from 'vue';
 import { InputExpose } from '@/components/hive-input/hive-input.vue';
 import { Value, Options, CurrentOptionsRef } from '@/common/types/select';
 import { useOptions } from '@/common/hooks/use-options';
+import { smartSearch } from './use-search';
 
 export type ListMethodsConfig = {
   options: Options | undefined;
@@ -112,30 +113,28 @@ export const useListMethods = ({
   };
 
   watch(searchQuery, () => {
-    if (searchQuery.value) {
-      filteredOptions.value.clear();
+    smartSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions);
 
-      for (const item of currentOptions.value) {
-        if (item[1][fieldTitle].toLowerCase().indexOf(searchQuery.value.toLowerCase()) !== -1) {
-          if (Array.isArray(modelValue)) {
-            if (!modelValue.includes(item[1][fieldValue])) {
-              filteredOptions.value.set(item[1][fieldValue], item[1]);
-            }
-          } else {
-            filteredOptions.value.set(item[1][fieldValue], item[1]);
-          }
-        }
-      }
-      const key = filteredOptions.value.keys().next().value;
-      if (key) {
-        updateActiveValue(filteredOptions.value.get(key).value);
-      } else {
-        updateActiveValue(undefined);
-      }
-    } else {
-      filteredOptions.value = new Map(JSON.parse(JSON.stringify([...currentOptions.value])));
-      distinct();
-    }
+    // if (searchQuery.value) {
+    //   filteredOptions.value.clear();
+
+    //   console.log(currentOptions.value.values());
+
+    //   for (const item of currentOptions.value.values()) {
+    //     if (item[1][fieldTitle].toLowerCase().indexOf(searchQuery.value.toLowerCase()) !== -1) {
+    //       if (Array.isArray(modelValue)) {
+    //         if (!modelValue.includes(item[1][fieldValue])) {
+    //           filteredOptions.value.set(item[1][fieldValue], item[1]);
+    //         }
+    //       } else {
+    //         filteredOptions.value.set(item[1][fieldValue], item[1]);
+    //       }
+    //     }
+    //   }
+    // } else {
+    //   filteredOptions.value = new Map(JSON.parse(JSON.stringify([...currentOptions.value])));
+    //   distinct();
+    // }
   });
 
   const setPrevActiveValue = () => {

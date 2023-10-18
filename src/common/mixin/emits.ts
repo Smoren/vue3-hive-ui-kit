@@ -61,6 +61,17 @@ export const onInput = <T>(emit: Input<T>, value: T) => {
   emit('input', value);
 };
 
+export type FileAdd = (e: 'onFileAdd') => void;
+
+export const onFileAdd = <T>(emit: FileAdd) => {
+  emit('onFileAdd');
+};
+export type FileRemove = (e: 'onFileRemove') => void;
+
+export const onFileRemove = <T>(emit: FileRemove) => {
+  emit('onFileRemove');
+};
+
 export type Close = (e: 'close') => void;
 
 export const onClose = (emit: Close) => {

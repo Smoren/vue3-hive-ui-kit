@@ -5,14 +5,13 @@ export interface IinitialFiles {
 }
 
 export default function (initialFilesRef: Ref<IinitialFiles[]>) {
-  const files = ref([]);
+  const files: Ref<File[]> = ref([]);
 
   function addFiles(newFiles: File[]) {
     let newUploadableFiles = [...newFiles]
       .map((file) => new UploadableFile(file))
       .filter((file) => !fileExists(file.id));
-    //@ts-ignore
-    files.value = files.value.concat(newUploadableFiles);
+    files.value = files.value.concat(newUploadableFiles as unknown as File[]);
     initialFilesRef.value.length = 0;
   }
 
@@ -21,7 +20,6 @@ export default function (initialFilesRef: Ref<IinitialFiles[]>) {
   }
 
   function removeFile(file: File) {
-    //@ts-ignore
     const index = files.value.indexOf(file);
 
     if (index > -1) files.value.splice(index, 1);
