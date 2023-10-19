@@ -13,7 +13,7 @@ import hiveNotificationWrapper from './components/hive-notification/hive-notific
 import { Option } from './common/types/select';
 import { useYearStore } from './stores/years';
 import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
-import { useNotification } from './components/hive-notification';
+import { useNotification } from './plugins/hive-notification';
 import HiveSplitter from './components/hive-splitter/hive-splitter.vue';
 import HivePane from './components/hive-splitter/hive-pane.vue';
 import HiveHtmlEditor from './components/hive-html-editor/hive-html-editor.vue';

@@ -147,7 +147,6 @@ export default function calculatePanesSize({
   const paneAfterMaxReached =
     paneAfter.max < 100 && dragPercentage <= 100 - (paneAfter.max + sumNextPanesSize(panes, splitterIndex + 1));
 
-  console.log(paneAfterMaxReached);
   if (paneBeforeMaxReached || paneAfterMaxReached) {
     if (paneBeforeMaxReached) {
       paneBefore.size = paneBefore.max;
@@ -170,15 +169,12 @@ export default function calculatePanesSize({
     touch,
   });
 
-  console.log('vars', vars);
-
   if (!vars) {
     return;
   }
   ({ sums, panesToResize } = vars);
   paneBefore = panes.value[panesToResize[0]] || null;
   paneAfter = panes.value[panesToResize[1]] || null;
-  console.log(paneBefore, paneAfter);
   if (paneBefore !== null) {
     paneBefore.size = Math.min(
       Math.max(dragPercentage - sums.prevPanesSize - sums.prevReachedMinPanes, paneBefore.min),

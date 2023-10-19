@@ -69,7 +69,6 @@ watch(
 watch(
   () => props.options,
   () => {
-    console.log('here', props.options);
     currentOptions.value = useOptions({
       options: props.options,
       modelValue: props.modelValue,

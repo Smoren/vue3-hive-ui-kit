@@ -28,7 +28,6 @@ export default function useHivePane({ size, minSize, maxSize }: PaneConfig): Pan
 
   const updatedStyle: Ref<Record<string, string>> = ref({});
   const updateStyle = (newStyle: Record<string, string>) => {
-    console.log(newStyle);
     updatedStyle.value = newStyle;
   };
 

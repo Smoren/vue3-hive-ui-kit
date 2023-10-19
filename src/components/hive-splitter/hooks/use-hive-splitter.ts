@@ -54,8 +54,6 @@ export default function useHiveSplitter(horizontal: boolean) {
   const updatePaneStyle = function (pane: Pane): void {
     const size: number | string | null = indexedPanes.value[pane.id]?.size ?? null;
 
-    console.log(pane);
-
     pane.updateStyle({
       [horizontal ? 'height' : 'width']: `${size !== null ? formatSize(size) : size}%`,
     });
@@ -248,7 +246,6 @@ export default function useHiveSplitter(horizontal: boolean) {
     const index = getPaneIndex(pane);
     const min = formatSize(getFormattedSize(pane.props.minSize));
     const max = formatSize(getFormattedSize(pane.props.maxSize));
-    console.log(pane);
     const newPane = {
       id: pane.props.id,
       index,
@@ -281,7 +278,6 @@ export default function useHiveSplitter(horizontal: boolean) {
 
   const onPaneUpdate: onPaneUpdate = ({ paneComponent, ...args }) => {
     const pane = indexedPanes.value[paneComponent._.uid];
-    console.log(paneComponent);
     Object.entries(args).forEach(([key, value]) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -314,7 +310,6 @@ export default function useHiveSplitter(horizontal: boolean) {
   watch(
     () => panes.value,
     () => {
-      console.log(panes.value);
       updatePaneComponents();
     },
     { deep: true, immediate: false },

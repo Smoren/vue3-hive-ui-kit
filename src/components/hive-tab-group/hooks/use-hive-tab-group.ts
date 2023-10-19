@@ -48,7 +48,6 @@ export default function useHiveTabGroup(modelValue: ModelValueType, withLocalSto
   const currentTab = computed(() => findTab(currentTabId.value));
 
   const selectTab = (tabId: string) => {
-    console.log(tabId);
     const selectedTab = findTab(tabId);
 
     if (!selectedTab) {

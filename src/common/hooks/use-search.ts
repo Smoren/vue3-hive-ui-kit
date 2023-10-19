@@ -44,6 +44,5 @@ export const smartSearch = (
         filteredOptions.value.set(item[fieldValue], item);
       }
     }
-    console.log(filteredOptions.value);
   }
 };

@@ -18,16 +18,12 @@ const props = withDefaults(defineProps<Props>(), {
   id: '',
 });
 
-console.log(props.id, uuidv4());
-
 const { onPaneUpdate, onPaneAdd, updateStyle, updatedStyle, formattedSize, formattedMinSize, formattedMaxSize } =
   useHivePane({
     size: props.size,
     minSize: props.minSize,
     maxSize: props.maxSize,
   });
-
-console.log(updateStyle);
 
 const pane = getCurrentInstance();
 
@@ -57,16 +53,6 @@ watch(formattedMaxSize, () => {
 });
 
 defineExpose({ updateStyle });
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-defineComponent({
-  mounted() {
-    console.log(this);
-  },
-});
 </script>
 
 <template>

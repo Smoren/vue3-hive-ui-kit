@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
 import './style.scss';
-import Notification from '@/components/hive-notification';
+import Notification from '@/plugins/hive-notification';
 
 const app = createApp(App);
 const pinia = createPinia();

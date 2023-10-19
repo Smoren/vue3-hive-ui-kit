@@ -56,12 +56,12 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { params } from '@/components/hive-notification/params';
-import { Id, listToDirection, Timer, NotificationItemWithTimer, emitter, parse } from '@/components/hive-notification/utils';
-import defaults from '@/components/hive-notification/defaults';
-import { NotificationItem, NotificationsOptions } from '@/components/hive-notification/types';
-import VelocityGroup from './group/VelocityGroup.vue';
-import CssGroup from './group/CssGroup.vue';
+import { params } from '@/plugins/hive-notification/params';
+import { Id, listToDirection, Timer, NotificationItemWithTimer, emitter, parse } from '@/plugins/hive-notification/utils';
+import defaults from '@/plugins/hive-notification/defaults';
+import { NotificationItem, NotificationsOptions } from '@/plugins/hive-notification/types';
+import VelocityGroup from './group/velocity-group.vue';
+import CssGroup from './group/css-group.vue';
 
 const STATE = {
   IDLE: 0,
