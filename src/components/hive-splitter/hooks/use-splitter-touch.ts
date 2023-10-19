@@ -32,6 +32,7 @@ export default function useSplitterTouch(
 
   const getCursorPosition = (event: TouchEvent | MouseEvent) => {
     const rect = (splitterRef.value as HTMLElement).getBoundingClientRect();
+    //@ts-ignore
     const { clientX, clientY } =
       'ontouchstart' in window && (event as TouchEvent).touches
         ? (event as TouchEvent).touches[0]
@@ -108,7 +109,7 @@ export default function useSplitterTouch(
       taps.value.splitterIndex = splitterIndex;
       taps.value.timeoutId = setTimeout(() => {
         taps.value.splitterIndex = null;
-      }, 500);
+      }, 500) as unknown as number;
     }
     if (!touch.value.isDragging) {
       // handleEvent(new Event('splitter-click'), panes.value[splitterIndex]);

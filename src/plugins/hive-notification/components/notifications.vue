@@ -1,7 +1,49 @@
+<template>
+  <div class="vue-notification-group" :style="styles">
+    <component :is="component" :name="animationName" @enter="enter" @leave="leave" @after-leave="clean">
+      <div
+        v-for="item in active"
+        :key="item.id"
+        class="vue-notification-wrapper"
+        :style="notifyWrapperStyle(item)"
+        :data-id="item.id"
+        @mouseenter="pauseTimeout"
+        @mouseleave="resumeTimeout"
+      >
+        <slot name="body" :class="[classes, item.type]" :item="item" :close="() => destroy(item)">
+          <!-- Default slot template -->
+          <div :class="notifyClass(item)" @click="destroyIfNecessary(item)">
+            <template v-if="dangerouslySetInnerHtml">
+              <div v-if="item.title" class="notification-title" v-html="item.title" />
+              <div class="notification-content" v-html="item.text" />
+            </template>
+
+            <template v-else>
+              <div v-if="item.title" class="notification-title">
+                {{ item.title }}
+              </div>
+              <div class="notification-content">
+                {{ item.text }}
+              </div>
+            </template>
+          </div>
+        </slot>
+      </div>
+    </component>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { params } from '@/plugins/hive-notification/params';
-import { Id, listToDirection, Timer, NotificationItemWithTimer, emitter, parse } from '@/plugins/hive-notification/utils';
+import {
+  Id,
+  listToDirection,
+  Timer,
+  NotificationItemWithTimer,
+  emitter,
+  parse,
+} from '@/plugins/hive-notification/utils';
 import defaults from '@/plugins/hive-notification/defaults';
 import { NotificationItem, NotificationsOptions } from '@/plugins/hive-notification/types';
 import VelocityGroup from './group/velocity-group.vue';
@@ -16,48 +58,53 @@ type NotificationItemState = typeof STATE;
 
 type NotificationItemExtended = NotificationItemWithTimer & {
   state: NotificationItemState[keyof NotificationItemState];
-}
+};
 
-const props = withDefaults(defineProps<{
-  group?: string;
-  width?: string | number;
-  reverse?: boolean;
-  position?: string | string[];
-  classes?: string;
-  animationType?: 'css' | 'velocity'
-  animation?: Record<'enter' | 'leave', unknown>
-  animationName?: string,
-  speed?: number
-  duration?: number
-  delay?: number
-  max?: number
-  ignoreDuplicates?: boolean
-  closeOnClick?: boolean
-  pauseOnHover?: boolean
-  dangerouslySetInnerHtml?: boolean
-}>(), {
-  group: '',
-  width: 300,
-  reverse: false,
-  position: defaults.position,
-  classes: 'vue-notification',
-  animationType: 'css',
-  animation: defaults.velocityAnimation,
-  animationName: defaults.cssAnimation,
-  speed: 300,
-  duration: 3000,
-  delay: 0,
-  max: Infinity,
-  ignoreDuplicates: false,
-  closeOnClick: true,
-  pauseOnHover: false,
-  dangerouslySetInnerHtml: false,
-});
+const props = withDefaults(
+  defineProps<{
+    group?: string;
+    width?: string | number;
+    reverse?: boolean;
+    position?: string | string[];
+    classes?: string;
+    animationType?: 'css' | 'velocity';
+    animation?: Record<'enter' | 'leave', unknown>;
+    animationName?: string;
+    speed?: number;
+    duration?: number;
+    delay?: number;
+    max?: number;
+    ignoreDuplicates?: boolean;
+    closeOnClick?: boolean;
+    pauseOnHover?: boolean;
+    dangerouslySetInnerHtml?: boolean;
+  }>(),
+  {
+    group: '',
+    width: 300,
+    reverse: false,
+    //@ts-ignore
+    position: defaults.position as string[],
+    classes: 'vue-notification',
+    animationType: 'css',
+    //@ts-ignore
+    animation: defaults.velocityAnimation as Record<'enter' | 'leave', unknown>,
+    animationName: defaults.cssAnimation,
+    speed: 300,
+    duration: 3000,
+    delay: 0,
+    max: Infinity,
+    ignoreDuplicates: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    dangerouslySetInnerHtml: false,
+  },
+);
 
 const emit = defineEmits<{
-  click: [item: NotificationItem],
-  destroy: [item: NotificationItem],
-  start: [item: NotificationItem],
+  click: [item: NotificationItem];
+  destroy: [item: NotificationItem];
+  start: [item: NotificationItem];
 }>();
 
 const list = ref<NotificationItemExtended[]>([]);
@@ -73,7 +120,7 @@ const component = computed(() => {
 });
 
 const active = computed<NotificationItemExtended[]>(() => {
-  return list.value.filter(v => v.state !== STATE.DESTROYED);
+  return list.value.filter((v) => v.state !== STATE.DESTROYED);
 });
 
 const actualWidth = computed(() => {
@@ -100,7 +147,6 @@ const styles = computed(() => {
     } else {
       styles[x] = '0px';
     }
-
   }
 
   return styles;
@@ -140,17 +186,12 @@ const addItem = (event: NotificationsOptions = {}): void => {
     return;
   }
 
-  const duration = typeof event.duration === 'number'
-    ? event.duration
-    : props.duration;
+  const duration = typeof event.duration === 'number' ? event.duration : props.duration;
 
-  const speed = typeof event.speed === 'number'
-    ? event.speed
-    : props.speed;
+  const speed = typeof event.speed === 'number' ? event.speed : props.speed;
 
-  const ignoreDuplicates = typeof event.ignoreDuplicates === 'boolean'
-    ? event.ignoreDuplicates
-    : props.ignoreDuplicates;
+  const ignoreDuplicates =
+    typeof event.ignoreDuplicates === 'boolean' ? event.ignoreDuplicates : props.ignoreDuplicates;
 
   const { title, text, type, data, id } = event;
 
@@ -169,13 +210,11 @@ const addItem = (event: NotificationsOptions = {}): void => {
     timerControl.value = new Timer(() => destroy(item), item.length, item);
   }
 
-  const direction = props.reverse
-    ? !botToTop.value
-    : botToTop.value;
+  const direction = props.reverse ? !botToTop.value : botToTop.value;
 
   let indexToDestroy = -1;
 
-  const isDuplicate = active.value.some(i => {
+  const isDuplicate = active.value.some((i) => {
     return i.title === event.title && i.text === event.text;
   });
 
@@ -201,27 +240,21 @@ const addItem = (event: NotificationsOptions = {}): void => {
     }
   }
 
-  if (indexToDestroy !== -1) {
-    destroy(active.value[indexToDestroy]);
+  if (indexToDestroy !== -1 && active.value[indexToDestroy]) {
+    destroy(active.value[indexToDestroy] as NotificationItemExtended);
   }
 };
- 
+
 const closeItem = (id: unknown) => {
   destroyById(id);
 };
 
 const notifyClass = (item: NotificationItemExtended): string[] => {
-  return [
-    'vue-notification-template',
-    props.classes,
-    item.type || '',
-  ];
+  return ['vue-notification-template', props.classes, item.type || ''];
 };
 
 const notifyWrapperStyle = (item: NotificationItemExtended) => {
-  return isVA.value
-    ? undefined
-    : { transition: `all ${item.speed}ms` };
+  return isVA.value ? undefined : { transition: `all ${item.speed}ms` };
 };
 
 const destroy = (item: NotificationItemExtended): void => {
@@ -233,8 +266,8 @@ const destroy = (item: NotificationItemExtended): void => {
   emit('destroy', item);
 };
 
-const destroyById = (id: unknown): void=>{
-  const item = list.value.find(i => i.id === id);
+const destroyById = (id: unknown): void => {
+  const item = list.value.find((i) => i.id === id);
 
   if (item) {
     destroy(item);
@@ -245,15 +278,13 @@ const destroyAll = (): void => {
   active.value.forEach(destroy);
 };
 
-const getAnimation = (index: 'enter' | 'leave', el: Element)=> {
+const getAnimation = (index: 'enter' | 'leave', el: Element) => {
   const animation = props.animation?.[index];
 
-  return typeof animation === 'function'
-    ? animation(el)
-    : animation;
+  return typeof animation === 'function' ? animation(el) : animation;
 };
 
-const enter = (el: Element, complete: () => void): void=> {
+const enter = (el: Element, complete: () => void): void => {
   if (!isVA.value) {
     return;
   }
@@ -265,7 +296,7 @@ const enter = (el: Element, complete: () => void): void=> {
   });
 };
 
-const leave = (el: Element, complete: () => void)=> {
+const leave = (el: Element, complete: () => void) => {
   if (!isVA.value) {
     return;
   }
@@ -278,71 +309,14 @@ const leave = (el: Element, complete: () => void)=> {
 };
 
 function clean() {
-  list.value = list.value.filter(item => item.state !== STATE.DESTROYED);
+  list.value = list.value.filter((item) => item.state !== STATE.DESTROYED);
 }
-
 
 onMounted(() => {
   emitter.on('add', addItem);
   emitter.on('close', closeItem);
 });
 </script>
-
-<template>
-  <div
-    class="vue-notification-group"
-    :style="styles"
-  >
-    <component
-      :is="component"
-      :name="animationName"
-      @enter="enter"
-      @leave="leave"
-      @after-leave="clean"
-    >
-      <div
-        v-for="item in active"
-        :key="item.id"
-        class="vue-notification-wrapper"
-        :style="notifyWrapperStyle(item)"
-        :data-id="item.id"
-        @mouseenter="pauseTimeout"
-        @mouseleave="resumeTimeout"
-      >
-        <slot
-          name="body"
-          :class="[classes, item.type]"
-          :item="item"
-          :close="() => destroy(item)"
-        >
-          <!-- Default slot template -->
-          <div
-            :class="notifyClass(item)"
-            @click="destroyIfNecessary(item)"
-          >
-            <template v-if="dangerouslySetInnerHtml">
-              <div
-                v-if="item.title"
-                class="notification-title"
-                v-html="item.title"
-              />
-              <div class="notification-content" v-html="item.text" />
-            </template>
-
-            <template v-else>
-              <div v-if="item.title" class="notification-title">
-                {{ item.title }}
-              </div>
-              <div class="notification-content">
-                {{ item.text }}
-              </div>
-            </template>
-          </div>
-        </slot>
-      </div>
-    </component>
-  </div>
-</template>
 
 <style lang="scss">
 .vue-notification-group {
@@ -379,8 +353,8 @@ onMounted(() => {
   margin: 0 5px 5px;
 
   color: white;
-  background: #44A4FC;
-  border-left: 5px solid #187FE7;
+  background: #44a4fc;
+  border-left: 5px solid #187fe7;
 }
 
 .vue-notification.warn {
@@ -389,20 +363,23 @@ onMounted(() => {
 }
 
 .vue-notification.error {
-  background: #E54D42;
-  border-left-color: #B82E24;
+  background: #e54d42;
+  border-left-color: #b82e24;
 }
 
 .vue-notification.success {
-  background: #68CD86;
-  border-left-color: #42A85F;
+  background: #68cd86;
+  border-left-color: #42a85f;
 }
 
-.vn-fade-enter-active, .vn-fade-leave-active, .vn-fade-move  {
-  transition: all .5s;
+.vn-fade-enter-active,
+.vn-fade-leave-active,
+.vn-fade-move {
+  transition: all 0.5s;
 }
 
-.vn-fade-enter-from, .vn-fade-leave-to {
+.vn-fade-enter-from,
+.vn-fade-leave-to {
   opacity: 0;
 }
 </style>

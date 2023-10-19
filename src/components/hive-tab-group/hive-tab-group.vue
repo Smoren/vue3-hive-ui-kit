@@ -46,7 +46,7 @@ watch(
         <slot name="afterTabs" />
       </div>
     </div>
-    <div class="tab-group__content" :class="state.tabClasses">
+    <div class="tab-group__content">
       <slot />
     </div>
   </div>

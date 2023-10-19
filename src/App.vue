@@ -243,12 +243,12 @@ const statusList = [
 const radioGroup = ref('женат');
 const checkbox = ref([0]);
 const check = ref(false);
-const checkName = 'Active'
+const checkName = 'Active';
 
 const checkCurrent = {
   title: 'Activ',
   value: false,
-}
+};
 const multiselect = ref(['74fd8aaa-e10a-4fd0-941b-6f6c7249003d']);
 
 const date: Ref<Date | undefined> = ref();
@@ -380,7 +380,6 @@ const tab = ref('');
       <widget-wrapper title="Radio">
         {{ radioGroup }}
         <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="title" />
-        <hive-input type="radio" checked />
       </widget-wrapper>
       <widget-wrapper title="Checkbox">
         {{ checkbox }}
@@ -390,7 +389,7 @@ const tab = ref('');
           title-field="title"
           value-field="classifier_id"
         /> -->
-         <!-- <hive-checkbox-group :options="maritalStatusList" v-model="check" title-field="title" value-field="id" /> -->
+        <!-- <hive-checkbox-group :options="maritalStatusList" v-model="check" title-field="title" value-field="id" /> -->
         <hive-checkbox :option="checkName" v-model="check" />
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
@@ -404,7 +403,11 @@ const tab = ref('');
       </widget-wrapper>
       <widget-wrapper title="Multiautocompelte">
         {{ autocomplete }}
-        <hive-multiautocomplete v-model="multiautocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
+        <hive-multiautocomplete
+          v-model="multiautocomplete"
+          :options="autoCompleteOptions"
+          :style="{ width: '300px' }"
+        />
       </widget-wrapper>
       <widget-wrapper title="HiveUploadFile">
         <hive-upload-file />

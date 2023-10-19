@@ -1,5 +1,5 @@
 import { computed, type ComputedRef, onMounted, provide, reactive, type Ref, ref, watch } from 'vue';
-import type { Tab, TabsProvider } from '@/ui-kit/src/components/hive-tab-group/types';
+import type { Tab, TabsProvider } from '@/components/hive-tab-group/types';
 
 type ModelValueType = string;
 
@@ -32,18 +32,18 @@ export default function useHiveTabGroup(modelValue: ModelValueType, withLocalSto
   });
 
   provide('updateTab', (id: string, tabData: Tab) => {
-    const tabIndex = state.tabs.findIndex((tab) => tab.id === id);
+    const tabIndex = state.tabs.findIndex((tab: Tab) => tab.id === id);
     state.tabs[tabIndex] = tabData;
   });
 
   provide('deleteTab', (id: string) => {
-    const tabIndex = state.tabs.findIndex((tab) => tab.id === id);
+    const tabIndex = state.tabs.findIndex((tab: Tab) => tab.id === id);
     state.tabs.splice(tabIndex, 1);
   });
 
   const storageKey = `hive-tab-group.cache.${window.location.host}${window.location.pathname}`;
 
-  const findTab = (id: string) => state.tabs.find((tab) => tab.id === id);
+  const findTab = (id: string) => state.tabs.find((tab: Tab) => tab.id === id);
 
   const currentTab = computed(() => findTab(currentTabId.value));
 
@@ -58,7 +58,7 @@ export default function useHiveTabGroup(modelValue: ModelValueType, withLocalSto
       return;
     }
 
-    state.tabs.forEach((tab) => {
+    state.tabs.forEach((tab: Tab) => {
       tab.isActive = tab.id === selectedTab.id;
     });
 
