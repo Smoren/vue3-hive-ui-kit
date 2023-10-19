@@ -1,6 +1,6 @@
 <template>
   <div class="vue-notification-group" :style="styles">
-    <component :is="component" :name="animationName" @enter="enter" @leave="leave" @after-leave="clean">
+    <component :is="component" :name="animationName" @after-leave="clean">
       <div
         v-for="item in active"
         :key="item.id"
@@ -111,12 +111,8 @@ const list = ref<NotificationItemExtended[]>([]);
 const timerControl = ref<Timer | null>(null);
 const velocity = ref(params.get('velocity'));
 
-const isVA = computed(() => {
-  return props.animationType === 'velocity';
-});
-
 const component = computed(() => {
-  return isVA.value ? VelocityGroup : CssGroup;
+  return CssGroup;
 });
 
 const active = computed<NotificationItemExtended[]>(() => {
@@ -254,7 +250,7 @@ const notifyClass = (item: NotificationItemExtended): string[] => {
 };
 
 const notifyWrapperStyle = (item: NotificationItemExtended) => {
-  return isVA.value ? undefined : { transition: `all ${item.speed}ms` };
+  return { transition: `all ${item.speed}ms` };
 };
 
 const destroy = (item: NotificationItemExtended): void => {
@@ -282,30 +278,6 @@ const getAnimation = (index: 'enter' | 'leave', el: Element) => {
   const animation = props.animation?.[index];
 
   return typeof animation === 'function' ? animation(el) : animation;
-};
-
-const enter = (el: Element, complete: () => void): void => {
-  if (!isVA.value) {
-    return;
-  }
-  const animation = getAnimation('enter', el);
-
-  velocity.value(el, animation, {
-    duration: props.speed,
-    complete,
-  });
-};
-
-const leave = (el: Element, complete: () => void) => {
-  if (!isVA.value) {
-    return;
-  }
-  const animation = getAnimation('leave', el);
-
-  velocity.value(el, animation, {
-    duration: props.speed,
-    complete,
-  });
 };
 
 function clean() {
