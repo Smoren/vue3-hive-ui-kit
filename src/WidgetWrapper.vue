@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 defineProps<{
   title: string;
 }>();
@@ -15,7 +15,7 @@ defineProps<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .wrapper {
   display: flex;
   gap: 10px;

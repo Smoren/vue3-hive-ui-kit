@@ -61,7 +61,7 @@ defineExpose({ updateStyle });
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .hive-splitter__pane {
   overflow-y: auto;
   overflow-x: auto;

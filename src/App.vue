@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { Ref, computed, onMounted, ref } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
@@ -452,7 +452,7 @@ const tab = ref('');
   <notifications position="bottom center" />
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .app {
   max-width: 1280px;
   margin: 0 auto;

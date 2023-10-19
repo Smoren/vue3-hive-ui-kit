@@ -1,15 +1,3 @@
-<template>
-  <transition-group
-    tag="span"
-    :css="false"
-    @enter="handleEnter"
-    @leave="handleLeave"
-    @after-leave="handleAfterLeave"
-  >
-    <slot />
-  </transition-group>
-</template>
-
 <script setup lang="ts">
 const emit = defineEmits<{
   (event: 'enter', element: Element, done: () => void): void,
@@ -29,3 +17,15 @@ const handleAfterLeave = () => {
   emit('after-leave');
 };
 </script>
+
+<template>
+  <transition-group
+    tag="span"
+    :css="false"
+    @enter="handleEnter"
+    @leave="handleLeave"
+    @after-leave="handleAfterLeave"
+  >
+    <slot />
+  </transition-group>
+</template>

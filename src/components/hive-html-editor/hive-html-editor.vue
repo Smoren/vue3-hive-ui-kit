@@ -1,17 +1,3 @@
-<template>
-  <QuillEditor
-    v-model:content="currentValue"
-    @update:content="onUpdateModelValue(emit, currentValue)"
-    :theme="theme"
-    :toolbar="toolbar"
-    :placeholder="placeholder"
-    :readOnly="disabled"
-    contentType="html"
-    @focus="onFocusin(emit)"
-    @blur="onFocusout(emit)"
-  />
-</template>
-
 <script setup lang="ts">
 import { watch, ref } from 'vue';
 import { QuillEditor } from '@vueup/vue-quill';
@@ -66,3 +52,17 @@ watch(currentValue, () => {
   onChange(emit, currentValue.value);
 });
 </script>
+
+<template>
+  <QuillEditor
+    v-model:content="currentValue"
+    @update:content="onUpdateModelValue(emit, currentValue)"
+    :theme="theme"
+    :toolbar="toolbar"
+    :placeholder="placeholder"
+    :readOnly="disabled"
+    contentType="html"
+    @focus="onFocusin(emit)"
+    @blur="onFocusout(emit)"
+  />
+</template>

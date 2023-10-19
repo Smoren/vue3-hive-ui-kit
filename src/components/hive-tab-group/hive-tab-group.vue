@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref, watch } from 'vue';
+import { watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
@@ -18,7 +18,7 @@ type Emit = Mount & Unmount & Update<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const { currentTabId, currentTab, state, selectTab } = useHiveTabGroup(props.modelValue, props.withLocalStorage);
+const { state, selectTab } = useHiveTabGroup(props.modelValue, props.withLocalStorage);
 
 watch(
   () => state.tabs.length,
@@ -27,10 +27,6 @@ watch(
     if (temp) selectTab(temp.id);
   },
 );
-
-// onUpdated(() => {
-//   state.tabs.sort((a, b) => Number(a.id) - Number(b.id));
-// });
 </script>
 
 <template>
@@ -56,7 +52,7 @@ watch(
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .tab-group {
   width: 100%;
   display: grid;

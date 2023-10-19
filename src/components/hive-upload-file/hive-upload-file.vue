@@ -112,7 +112,7 @@ function onInputChange(e: Event) {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .drop-area {
   width: 100%;
   max-width: 800px;

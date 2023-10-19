@@ -1,59 +1,3 @@
-<template>
-  <div
-    class="vue-notification-group"
-    :style="styles"
-  >
-    <component
-      :is="component"
-      :name="animationName"
-      @enter="enter"
-      @leave="leave"
-      @after-leave="clean"
-    >
-      <div
-        v-for="item in active"
-        :key="item.id"
-        class="vue-notification-wrapper"
-        :style="notifyWrapperStyle(item)"
-        :data-id="item.id"
-        @mouseenter="pauseTimeout"
-        @mouseleave="resumeTimeout"
-      >
-        <slot
-          name="body"
-          :class="[classes, item.type]"
-          :item="item"
-          :close="() => destroy(item)"
-        >
-          <!-- Default slot template -->
-          <div
-            :class="notifyClass(item)"
-            @click="destroyIfNecessary(item)"
-          >
-            <template v-if="dangerouslySetInnerHtml">
-              <div
-                v-if="item.title"
-                class="notification-title"
-                v-html="item.title"
-              />
-              <div class="notification-content" v-html="item.text" />
-            </template>
-
-            <template v-else>
-              <div v-if="item.title" class="notification-title">
-                {{ item.title }}
-              </div>
-              <div class="notification-content">
-                {{ item.text }}
-              </div>
-            </template>
-          </div>
-        </slot>
-      </div>
-    </component>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { params } from '@/plugins/hive-notification/params';
@@ -343,7 +287,64 @@ onMounted(() => {
   emitter.on('close', closeItem);
 });
 </script>
-<style>
+
+<template>
+  <div
+    class="vue-notification-group"
+    :style="styles"
+  >
+    <component
+      :is="component"
+      :name="animationName"
+      @enter="enter"
+      @leave="leave"
+      @after-leave="clean"
+    >
+      <div
+        v-for="item in active"
+        :key="item.id"
+        class="vue-notification-wrapper"
+        :style="notifyWrapperStyle(item)"
+        :data-id="item.id"
+        @mouseenter="pauseTimeout"
+        @mouseleave="resumeTimeout"
+      >
+        <slot
+          name="body"
+          :class="[classes, item.type]"
+          :item="item"
+          :close="() => destroy(item)"
+        >
+          <!-- Default slot template -->
+          <div
+            :class="notifyClass(item)"
+            @click="destroyIfNecessary(item)"
+          >
+            <template v-if="dangerouslySetInnerHtml">
+              <div
+                v-if="item.title"
+                class="notification-title"
+                v-html="item.title"
+              />
+              <div class="notification-content" v-html="item.text" />
+            </template>
+
+            <template v-else>
+              <div v-if="item.title" class="notification-title">
+                {{ item.title }}
+              </div>
+              <div class="notification-content">
+                {{ item.text }}
+              </div>
+            </template>
+          </div>
+        </slot>
+      </div>
+    </component>
+  </div>
+</template>
+
+<style lang="scss">
 .vue-notification-group {
   display: block;
   position: fixed;
@@ -404,5 +405,4 @@ onMounted(() => {
 .vn-fade-enter-from, .vn-fade-leave-to {
   opacity: 0;
 }
-
 </style>
