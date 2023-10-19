@@ -6,7 +6,7 @@ type Counter = {
   mode: number;
 };
 
-interface Props extends CommonProps {
+export interface Props extends CommonProps {
   counter: Counter | number;
 }
 const props = defineProps<Props>();

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 
-interface Props extends CommonProps {
+export interface Props extends CommonProps {
   modelValue: string;
   btnBackgroundColor?: string;
   isOpened?: boolean;

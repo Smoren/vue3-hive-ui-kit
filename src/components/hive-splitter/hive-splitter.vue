@@ -5,7 +5,7 @@ import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 
-interface Props extends CommonProps {
+export interface Props extends CommonProps {
   horizontal: boolean;
 }
 

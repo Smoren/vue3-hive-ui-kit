@@ -20,7 +20,7 @@ import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import { Value } from '@/common/types/select';
 
-interface Props extends CommonProps {
+export interface Props extends CommonProps {
   options: string[] | undefined;
   modelValue: Value;
   modelValueEventName?: string;
