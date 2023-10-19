@@ -16,6 +16,7 @@ export default function (initialFilesRef: Ref<IinitialFiles[]>) {
   }
 
   function fileExists(otherId: string) {
+    //@ts-ignore
     return files.value.some(({ id }) => id === otherId);
   }
 

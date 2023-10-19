@@ -1,6 +1,4 @@
-import type { Size } from '@/ui-kit/src/components/hive-splitter/types';
-
-export default function getFormattedSize(size: Size) {
+export default function getFormattedSize(size: string | number | null) {
   if (size === null || size === 0) {
     return 0;
   }

@@ -1,4 +1,4 @@
-import type { VueComponent } from '@/ui-kit/src/common/types';
+import type { VueComponent } from '@/common/types/value';
 
 type Size = null | number | string;
 type OnPaneAdd = (pane: VueComponent) => void;

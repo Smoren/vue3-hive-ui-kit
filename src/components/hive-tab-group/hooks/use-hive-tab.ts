@@ -4,7 +4,7 @@ import type {
   DeleteTabType,
   TabsProvider,
   UpdateTabType,
-} from '@/ui-kit/src/components/hive-tab-group/types';
+} from '@/components/hive-tab-group/types';
 
 interface TabConfig {
   name: string;

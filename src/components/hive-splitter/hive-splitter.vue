@@ -45,7 +45,7 @@ provide('onPaneUpdate', onPaneUpdate);
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .hive-splitter {
   display: flex;
   width: 100%;
