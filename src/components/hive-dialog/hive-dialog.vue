@@ -51,7 +51,7 @@ watch(
 <template>
   <teleport to="body">
     <transition name="backdrop">
-      <div v-if="modelValue" class="hive-dialog" ref="dialogRef" :tabindex="0" @keydown.esc="handleKeydown($event)">
+      <div v-if="modelValue" class="hive-dialog" ref="dialogRef" :tabindex="0" @keydown.esc="handleKeydown">
         <div
           class="hive-dialog__mask"
           :style="{ backgroundColor: maskBackground, zIndex: zIndex }"
@@ -61,7 +61,7 @@ watch(
           class="hive-dialog__content"
           :style="{ zIndex: zIndex, ...style }"
           v-bind="$attrs"
-          @keydown="handleKeydown($event)"
+          @keydown="handleKeydown"
         >
           <slot name="header" />
           <slot />
