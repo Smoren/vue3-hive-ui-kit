@@ -2,6 +2,7 @@
 import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
+import { mergeProps, nextTick, ref, watch } from 'vue';
 
 export interface Props extends CommonProps {
   modelValue: boolean;
@@ -9,7 +10,7 @@ export interface Props extends CommonProps {
   zIndex?: number;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
   maskBackground: '#262d34ad',
   zIndex: 10000,
@@ -22,18 +23,46 @@ useOnMount(emit);
 const handleHide = () => {
   onUpdateModelValue(emit, false);
 };
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    onUpdateModelValue(emit, false);
+  }
+};
+
+const dialogRef = ref();
+
+const focusDialog = () => {
+  dialogRef.value.focus();
+};
+
+watch(
+  () => props.modelValue,
+  () => {
+    if (props.modelValue) {
+      nextTick(() => {
+        focusDialog();
+      });
+    }
+  },
+);
 </script>
 
 <template>
   <teleport to="body">
     <transition name="backdrop">
-      <div v-if="modelValue" class="hive-dialog">
+      <div v-if="modelValue" class="hive-dialog" ref="dialogRef" :tabindex="0" @keydown.esc="handleKeydown($event)">
         <div
           class="hive-dialog__mask"
           :style="{ backgroundColor: maskBackground, zIndex: zIndex }"
           @click="handleHide"
         />
-        <div class="hive-dialog__content" :style="{ zIndex: zIndex, ...style }" v-bind="$attrs">
+        <div
+          class="hive-dialog__content"
+          :style="{ zIndex: zIndex, ...style }"
+          v-bind="$attrs"
+          @keydown="handleKeydown($event)"
+        >
           <slot name="header" />
           <slot />
           <slot name="footer" />
