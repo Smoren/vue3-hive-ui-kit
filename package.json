@@ -26,8 +26,9 @@
     "url": "git+https://github.com/hivebdsm/vue-hive-ui-kit.git"
   },
   "dependencies": {
-    "@vueup/vue-quill": "^1.2.0",
     "@types/uuid": "^9.0.6",
+    "@vueup/vue-quill": "^1.2.0",
+    "date-fns": "^2.30.0",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "remixicon": "^3.5.0",

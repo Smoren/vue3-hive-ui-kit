@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref } from 'vue';
+import { Ref, ref, onMounted } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Focusout,
@@ -28,6 +28,7 @@ export interface Props extends CommonProps {
   min?: number;
   max?: number;
   step?: number;
+  focusOnMount?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -43,6 +44,12 @@ type CurrentType = typeof props.modelValue;
 type Emit = Mount & Unmount & Update<CurrentType> & Focusin & Focusout & Keydown & Input<CurrentType>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
+
+onMounted(() => {
+  if (props.focusOnMount) {
+    forceFocus();
+  }
+});
 
 const inputRef: Ref<HTMLInputElement | null> = ref(null);
 

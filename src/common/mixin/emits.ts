@@ -77,3 +77,33 @@ export type Close = (e: 'close') => void;
 export const onClose = (emit: Close) => {
   emit('close');
 };
+
+export type BeforeEdit = (e: 'beforeEdit') => void;
+
+export const onBeforeEdit = (emit: BeforeEdit) => {
+  emit('beforeEdit');
+};
+
+export type AfterEdit = (e: 'afterEdit') => void;
+
+export const onAfterEdit = (emit: AfterEdit) => {
+  emit('afterEdit');
+};
+
+export type BeforeChange = (e: 'beforeChange') => void;
+
+export const onBeforChange = (emit: BeforeChange) => {
+  emit('beforeChange');
+};
+
+export type AfterChange = (e: 'afterChange') => void;
+
+export const onAfterChange = (emit: AfterChange) => {
+  emit('afterChange');
+};
+
+export type Updated = (e: 'updated') => void;
+
+export const onUpdated = (emit: Updated) => {
+  emit('updated');
+};

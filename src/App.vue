@@ -24,6 +24,7 @@ import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
 import HiveTab from './components/hive-tab-group/hive-tab.vue';
 import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
+import HiveGrid from './components/hive-grid/HiveGrid.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -278,6 +279,194 @@ const log = (value: string) => {
 };
 
 const tab = ref('');
+
+const fieldValid = (row) => {
+  return row.bool;
+};
+const fieldExact = (row) => {
+  return row.exact;
+};
+
+const funcValue = (row) => {
+  return row.age + 5;
+};
+
+const columns = ref([
+  {
+    title: 'Name',
+    field: 'name',
+    width: '200px',
+    editType: 'dropdown-list',
+    options: ['a', 'b', 'c'],
+  },
+  {
+    title: 'Age',
+    field: 'age',
+    type: 'number',
+  },
+]);
+
+setTimeout(() => {
+  if (rows.value[1]?.name) {
+    rows.value[1].name = 'asdasd';
+  }
+}, 10000);
+
+const rows = ref([
+  // { id:1, name:"John", age: 20, createdAt: '2018-02-18T00:00:43-05:00',score: 0.03343 },
+  {
+    id: 2,
+    name: 'Jane',
+    age: 24,
+    createdAt: '2011-10-31',
+    score: 0.03343,
+    bool: true,
+    exact: 'match',
+    average: 1,
+  },
+  {
+    id: 3,
+    name: 'Angel',
+    age: 16,
+    createdAt: '2011-10-30',
+    score: 0.03343,
+    bool: true,
+    exact: 'match',
+    average: null,
+  },
+  {
+    id: 4,
+    name: 'Chris',
+    age: 55,
+    createdAt: '2011-10-11',
+    score: 0.03343,
+    bool: false,
+    exact: null,
+  },
+  {
+    id: 5,
+    name: 'Dan',
+    age: 40,
+    createdAt: '',
+    score: 0.03343,
+    bool: null,
+    exact: 'rematch',
+    average: 2,
+  },
+  {
+    id: 5,
+    name: '193.23',
+    age: 20,
+    createdAt: null,
+    score: 0.03343,
+    bool: null,
+    exact: 'rematch',
+    average: 3,
+  },
+  {
+    id: 5,
+    name: 'Dan',
+    age: 34,
+    createdAt: null,
+    score: 0.03343,
+    bool: null,
+    exact: null,
+    average: 2,
+  },
+  {
+    id: 6,
+    name: 'John',
+    age: 20,
+    createdAt: '2011-10-31',
+    score: 0.03343,
+    bool: true,
+    exact: 'match',
+    average: 1.5,
+  },
+  {
+    id: 7,
+    name: 'Ángel',
+    age: 20,
+    createdAt: '2013-09-21',
+    score: null,
+    bool: 'false',
+    exact: null,
+    average: 1,
+  },
+  {
+    id: 8,
+    name: 'Susan',
+    age: 16,
+    createdAt: '2013-10-31',
+    score: 0.03343,
+    bool: true,
+    exact: 'rematch',
+    average: 1,
+  },
+]);
+
+const onSelectAll = (params) => {
+  console.log(params);
+  // this.unselectAll();
+  // if (params.selected) {
+  //   for (let i = 0; i < params.selectedRows.length; i++) {
+  //     // lets get the original index of the row
+  //     const originalIndex = params.selectedRows[i].originalIndex;
+  //     // now lets set that row's selected value to be true
+  //     this.$set(this.rows[originalIndex], 'selected', true);
+  //   }
+  // }
+};
+
+const onColumnFilter = (params) => {
+  // { currentPage: 1, currentPerPage: 10, total: 5 }
+  console.log('on-column-filters:');
+  console.log(params);
+};
+
+const onSortChange = (params) => {
+  console.log('on-sort-change:');
+  console.log(params);
+  const [nameFilter] = params;
+  console.log(typeof nameFilter.field === 'function');
+};
+
+const onPageChange = (evt) => {
+  // { currentPage: 1, currentPerPage: 10, total: 5 }
+  console.log('page-changed:');
+  console.log(evt);
+};
+
+const onPerPageChange = (evt) => {
+  // { currentPage: 1, currentPerPage: 10, total: 5 }
+  console.log('per-page-changed:');
+  console.log(evt);
+};
+
+const onSearch = (params) => {
+  console.log('on-search:');
+  console.log(params);
+};
+
+const onSelectChanged = (params) => {
+  console.log(params);
+  const selectedIds = params.selectedRows.reduce((acc, row) => {
+    acc.push(row.id);
+    return acc;
+  }, []);
+  console.log(params.selectedRows);
+  console.log(selectedIds);
+  this.selectedIds = selectedIds;
+};
+const paginationOptions = {
+  enabled: true,
+  mode: 'records',
+  perPage: 3,
+  perPageDropdown: [3, 5, 10, 200, 300, 500, 1000],
+  perPageDropdownEnabled: true,
+  jumpFirstOrLast: true,
+  // infoFn: (params) => `alala ${params.firstRecordOnPage} to ${params.lastRecordOnPage} of ${params.totalRecords}`,
+};
 </script>
 
 <template>
@@ -449,6 +638,9 @@ const tab = ref('');
       </widget-wrapper>
       <widget-wrapper title="Skeleton">
         <hive-skeleton :visible="true" />
+      </widget-wrapper>
+      <widget-wrapper title="Grid">
+        <HiveGrid :columns="columns" :data-items="rows"></HiveGrid>
       </widget-wrapper>
     </div>
   </div>
