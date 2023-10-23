@@ -12,6 +12,7 @@ import HiveListLoader from '@/components/hive-list-loader/hive-list-loader.vue';
 import HiveLoader from '@/components/hive-loader/hive-loader.vue';
 import HiveMultiautocomplete from '@/components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveMultiselect from '@/components/hive-multiselect/hive-multiselect.vue';
+import HivePane from './components/hive-splitter/hive-pane.vue';
 import HiveRadioGroup from '@/components/hive-radio-group/hive-radio-group.vue';
 import HiveSkeleton from '@/components/hive-skeleton/hive-skeleton.vue';
 import HiveSplitter from '@/components/hive-splitter/hive-splitter.vue';
@@ -33,6 +34,7 @@ export {
   HiveLoader,
   HiveMultiautocomplete,
   HiveMultiselect,
+  HivePane,
   HiveRadioGroup,
   HiveCheckbox,
   HiveCheckboxGroup,
