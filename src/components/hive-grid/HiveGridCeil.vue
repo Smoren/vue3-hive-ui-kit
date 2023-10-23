@@ -54,7 +54,7 @@ interface Props extends CommonProps {
   name: string;
   object: any;
   field: string;
-  fields: string;
+  fields: string[];
   editable: boolean;
   valueType: string;
   width: number;
@@ -104,7 +104,6 @@ const currentValue = useAllowedRef(props.object && props.field ? props.object[pr
 const viewValue = ref('');
 
 const onInput = (value: typeof currentValue.value) => {
-  console.log('here', value);
   currentValue.value = value;
 };
 
@@ -114,7 +113,6 @@ const customChange = (value: string, view = '') => {
 };
 
 const toggleFlag = () => {
-  console.log('here');
   if (flag.value) {
     onAfterEdit(emit);
   } else {

@@ -1,10 +1,9 @@
 <template>
   <div class="wrapper">
-    <table class="hive-grid" :class="{ ...classes }" style="style">
+    <table class="hive-grid" :style="style">
       <hive-grid-header
         :columns="columns"
         @sort="sort"
-        @event="logEvent"
         :show-add-buttons="showAddButtons"
         v-if="!hideHeader"
         :has-filter="hasFilter"
@@ -55,7 +54,7 @@
           >
             <template #edit="{ value, update, isChangeAllowed, toggle, customChange, row, hideEdit, emitOnAfterEdit }">
               <slot
-                :name="(element.field ?? element.fields[0]) + '-edit'"
+                :name="(element.field ?? (element.fields ? element.fields[0] : '')) + '-edit'"
                 :value="value"
                 :update="update"
                 :is-change-allowed="isChangeAllowed"
@@ -94,27 +93,11 @@
                   :model-value="value"
                   :options="element.options"
                   :is-invalid="!isChangeAllowed"
-                  @event="
-                    (event) =>
-                      autocompleteChangeHelper({
-                        event,
-                        handleChange: customChange,
-                        handleToggle: toggle,
-                      })
-                  "
                   @focusout="hideEdit"
                 />
                 <hive-multiselect
                   v-else-if="element.editType === 'multiselect'"
                   :model-value="value"
-                  @event="
-                    (event) =>
-                      multiselectChangeHelper({
-                        event,
-                        handleChange: customChange,
-                        handleToggle: toggle,
-                      })
-                  "
                   :options="element.options"
                 />
                 <div
@@ -123,7 +106,7 @@
                 >
                   <hive-checkbox
                     :model-value="value"
-                    @change="update($event, $event)"
+                    @change="update($event)"
                     :is-invalid="!isChangeAllowed"
                     @focus-out="hideEdit"
                     title=""
@@ -143,7 +126,7 @@
             </template>
             <template #view="{ value, view, row, setTrueFlag }">
               <slot
-                :name="element.field ?? element.fields[0]"
+                :name="element.field ?? (element.fields ? element.fields[0] : '')"
                 :item="(item as any)[element.field]"
                 :row="row"
                 :setTrueFlag="setTrueFlag"
@@ -292,22 +275,7 @@ useOnMount(emit);
 
 const loaded = ref(false);
 
-const {
-  items,
-  sort,
-  dropDownChangeHelper,
-  dateChangeHelper,
-  dateRangeChangeHelper,
-  dateTimeRangeChangeHelper,
-  timeChangeHelper,
-  timeRangeChangeHelper,
-  autocompleteChangeHelper,
-  multiselectChangeHelper,
-  deleteRow,
-  itemsLength,
-  addRow,
-  isLoading,
-} = useHiveGrid({
+const { items, sort, deleteRow, itemsLength, addRow, isLoading } = useHiveGrid({
   columns: props.columns,
   dataItems: computed(() => props.dataItems),
 } as GridConfig);
@@ -364,13 +332,13 @@ watch(itemsLength, () => {
   pagination(items);
 });
 
-const logEvent = (event: EventData) => {
-  if (event.type === 'addTop') {
-    addRow(true, 0);
-  } else if (event.type === 'addBottom') {
-    addRow(false, itemsLength.value - 1);
-  }
-};
+// const logEvent = (event: EventData) => {
+//   if (event.type === 'addTop') {
+//     addRow(true, 0);
+//   } else if (event.type === 'addBottom') {
+//     addRow(false, itemsLength.value - 1);
+//   }
+// };
 
 const rowClick = (item: any) => {
   // handleEvent(new Event('rowClick'), item);

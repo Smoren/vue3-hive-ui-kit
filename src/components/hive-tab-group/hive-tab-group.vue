@@ -57,6 +57,8 @@ watch(
   width: 100%;
   display: grid;
   grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: auto;
 
   &__header {
     margin: 0;
@@ -68,6 +70,7 @@ watch(
     border-bottom: 1px solid #d4d4d5;
     overflow-y: auto;
     display: flex;
+    gap: 25px;
 
     font-weight: 400;
 

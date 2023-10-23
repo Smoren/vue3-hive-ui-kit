@@ -107,3 +107,9 @@ export type Updated = (e: 'updated') => void;
 export const onUpdated = (emit: Updated) => {
   emit('updated');
 };
+
+export type Sort = (e: 'sort', value: string) => void;
+
+export const onSort = (emit: Sort, value: string) => {
+  emit('sort', value);
+};

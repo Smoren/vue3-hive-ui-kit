@@ -42,36 +42,41 @@ const getCurrentDragPercentage = (
 };
 
 const findPrevExpandedPane = (panes: Ref<Pane[]>, splitterIndex: number) => {
-  const pane = [...panes.value].reverse().find((p) => p.index < splitterIndex && p.size && Number(p.size) > p.min);
+  // @ts-ignore
+  const pane = [...panes.value].reverse().find((p) => p.index < splitterIndex && p.size && p.size > p.min);
   return pane || ({} as Pane);
 };
 
 const findNextExpandedPane = (panes: Ref<Pane[]>, splitterIndex: number) => {
-  const pane = panes.value.find((p) => p.index > splitterIndex + 1 && p.size && Number(p.size) > p.min);
+  // @ts-ignore
+  const pane = panes.value.find((p) => p.index > splitterIndex + 1 && p.size && p.size > p.min);
   return pane || ({} as Pane);
 };
 
 const doPushOtherPanes = ({ sums, panesCount, dragPercentage, panes, touch }: doPushOtherPanesConfig) => {
   const splitterIndex = touch.value.activeSplitterIndex as number;
   const panesToResize = [splitterIndex, splitterIndex + 1];
-  //@ts-ignore
-  if (panesToResize[0] && dragPercentage < sums.prevPanesSize + panes.value[panesToResize[0]].min) {
+
+  // @ts-ignore
+  if (dragPercentage < sums.prevPanesSize + panes.value[panesToResize[0]].min) {
     panesToResize[0] = findPrevExpandedPane(panes, splitterIndex).index;
     sums.prevReachedMinPanes = 0;
-
-    if (panesToResize[0] && panesToResize[0] < splitterIndex) {
+    // @ts-ignore
+    if (panesToResize[0] < splitterIndex) {
       panes.value.forEach((pane, i) => {
-        if (panesToResize[0] && i > panesToResize[0] && i <= splitterIndex) {
+        // @ts-ignore
+        if (i > panesToResize[0] && i <= splitterIndex) {
           pane.size = pane.min;
           sums.prevReachedMinPanes += pane.min;
         }
       });
     }
-    if (panesToResize[0]) sums.prevPanesSize = sumPrevPanesSize(panes, panesToResize[0]);
+    // @ts-ignore
+    sums.prevPanesSize = sumPrevPanesSize(panes, panesToResize[0]);
 
     if (panesToResize[0] === undefined) {
       sums.prevReachedMinPanes = 0;
-      //@ts-ignore
+      // @ts-ignore
       panes.value[0].size = panes.value[0].min;
       panes.value.forEach((pane, i) => {
         if (i > 0 && i <= splitterIndex) {
@@ -79,37 +84,33 @@ const doPushOtherPanes = ({ sums, panesCount, dragPercentage, panes, touch }: do
           sums.prevReachedMinPanes += pane.min;
         }
       });
-      if (panesToResize[1])
-        //@ts-ignore
-        panes.value[panesToResize[1]].size =
-          //@ts-ignore
-          100 - sums.prevReachedMinPanes - panes.value[0].min - sums.prevPanesSize - sums.nextPanesSize;
+      // @ts-ignore
+      panes.value[panesToResize[1]].size =
+        // @ts-ignore
+        100 - sums.prevReachedMinPanes - panes.value[0].min - sums.prevPanesSize - sums.nextPanesSize;
       return null;
     }
   }
-
-  if (
-    panesToResize[1] &&
-    panes.value[panesToResize[1]] &&
-    //@ts-ignore
-    dragPercentage > 100 - sums.nextPanesSize - panes.value[panesToResize[1]].min
-  ) {
+  // @ts-ignore
+  if (dragPercentage > 100 - sums.nextPanesSize - panes.value[panesToResize[1]].min) {
     panesToResize[1] = findNextExpandedPane(panes, splitterIndex).index;
     sums.nextReachedMinPanes = 0;
-
-    if (panesToResize[1] && panesToResize[1] > splitterIndex + 1) {
+    // @ts-ignore
+    if (panesToResize[1] > splitterIndex + 1) {
       panes.value.forEach((pane, i) => {
-        if (panesToResize[1] && i > splitterIndex && i < panesToResize[1]) {
+        // @ts-ignore
+        if (i > splitterIndex && i < panesToResize[1]) {
           pane.size = pane.min;
           sums.nextReachedMinPanes += pane.min;
         }
       });
     }
-    if (panesToResize[1]) sums.nextPanesSize = sumNextPanesSize(panes, panesToResize[1] - 1);
+    // @ts-ignore
+    sums.nextPanesSize = sumNextPanesSize(panes, panesToResize[1] - 1);
 
     if (panesToResize[1] === undefined) {
       sums.nextReachedMinPanes = 0;
-      //@ts-ignore
+      // @ts-ignore
       panes.value[panesCount.value - 1].size = panes.value[panesCount.value - 1].min;
       panes.value.forEach((pane, i) => {
         if (i < panesCount.value - 1 && i >= splitterIndex + 1) {
@@ -117,16 +118,14 @@ const doPushOtherPanes = ({ sums, panesCount, dragPercentage, panes, touch }: do
           sums.nextReachedMinPanes += pane.min;
         }
       });
-      if (panesToResize[0] && panes.value[panesToResize[0]] && panes.value[panesToResize[0]]?.size) {
-        //@ts-ignore
-        panes.value[panesToResize[0]].size =
-          100 -
-          sums.prevPanesSize -
-          sums.nextReachedMinPanes -
-          //@ts-ignore
-          panes.value[panesCount.value - 1].min -
-          sums.nextPanesSize;
-      }
+      // @ts-ignore
+      panes.value[panesToResize[0]].size =
+        100 -
+        sums.prevPanesSize -
+        sums.nextReachedMinPanes -
+        // @ts-ignore
+        panes.value[panesCount.value - 1].min -
+        sums.nextPanesSize;
       return null;
     }
   }
@@ -155,15 +154,15 @@ export default function calculatePanesSize({
     nextReachedMinPanes: 0,
   };
   let panesToResize = [splitterIndex, splitterIndex + 1];
-  let paneBefore = panesToResize[0] ? panes.value[panesToResize[0]] : null;
-  let paneAfter = panesToResize[1] ? panes.value[panesToResize[1]] : null;
-  const paneBeforeMaxReached =
-    (paneBefore?.max ?? 0) < 100 && dragPercentage >= (paneBefore?.max ?? 0) + sums.prevPanesSize;
+  // @ts-ignore
+  let paneBefore = panes.value[panesToResize[0]] || null;
+  // @ts-ignore
+  let paneAfter = panes.value[panesToResize[1]] || null;
+  const paneBeforeMaxReached = paneBefore.max < 100 && dragPercentage >= paneBefore.max + sums.prevPanesSize;
   const paneAfterMaxReached =
-    (paneAfter?.max ?? 0) < 100 &&
-    dragPercentage <= 100 - ((paneAfter?.max ?? 0) + sumNextPanesSize(panes, splitterIndex + 1));
+    paneAfter.max < 100 && dragPercentage <= 100 - (paneAfter.max + sumNextPanesSize(panes, splitterIndex + 1));
 
-  if ((paneBeforeMaxReached || paneAfterMaxReached) && paneBefore && paneAfter) {
+  if (paneBeforeMaxReached || paneAfterMaxReached) {
     if (paneBeforeMaxReached) {
       paneBefore.size = paneBefore.max;
       paneAfter.size = Math.max(100 - paneBefore.max - sums.prevPanesSize - sums.nextPanesSize, 0);
@@ -189,17 +188,17 @@ export default function calculatePanesSize({
     return;
   }
   ({ sums, panesToResize } = vars);
-  if (panesToResize[0] && panesToResize[1]) {
-    paneBefore = panes.value[panesToResize[0]] || null;
-    paneAfter = panes.value[panesToResize[1]] || null;
-  }
-  if (paneBefore) {
+  // @ts-ignore
+  paneBefore = panes.value[panesToResize[0]] || null;
+  // @ts-ignore
+  paneAfter = panes.value[panesToResize[1]] || null;
+  if (paneBefore !== null) {
     paneBefore.size = Math.min(
       Math.max(dragPercentage - sums.prevPanesSize - sums.prevReachedMinPanes, paneBefore.min),
       paneBefore.max,
     );
   }
-  if (paneAfter) {
+  if (paneAfter !== null) {
     paneAfter.size = Math.min(
       Math.max(100 - dragPercentage - sums.nextPanesSize - sums.nextReachedMinPanes, paneAfter.min),
       paneAfter.max,

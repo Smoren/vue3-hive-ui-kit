@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export interface GridColumns {
   field: string;
-  fields: string[];
+  fields?: string[];
   title: string;
   width?: number;
   editable?: boolean;
@@ -41,18 +41,6 @@ interface SortedFlags {
   field: string;
 }
 
-interface HelperFunctionConfig {
-  event: EventData;
-  handleChange: (value: EventData['value'], view?: unknown) => void;
-  handleToggle: () => void;
-}
-
-interface HelperFunction {
-  event: EventData;
-  handleChange: (value: EventData['value'], view?: VueComponent['value']) => void;
-  handleToggle: () => void;
-}
-
 export default function useHiveGrid({ columns, dataItems }: GridConfig) {
   const isLoading = ref(false);
 
@@ -72,6 +60,7 @@ export default function useHiveGrid({ columns, dataItems }: GridConfig) {
   };
 
   const getSelectedFields = (items: object) => {
+    //@ts-ignore
     const selectedFields = Object.keys(dataItems.value[0])
       .filter((key) => isKeyInColumns(columns, key))
       .reduce(
@@ -114,12 +103,16 @@ export default function useHiveGrid({ columns, dataItems }: GridConfig) {
     const res = useDeepClone(obj);
     for (let i in res) {
       if (i === 'id') {
+        //@ts-ignore
         res[i] = uuidv4();
       } else if (typeof res[i] === 'number') {
+        //@ts-ignore
         res[i] = 0;
       } else if (Array.isArray(res[i])) {
+        //@ts-ignore
         res[i] = null;
       } else {
+        //@ts-ignore
         res[i] = '';
       }
     }
@@ -128,6 +121,7 @@ export default function useHiveGrid({ columns, dataItems }: GridConfig) {
 
   const addRow = (up: boolean, index: number) => {
     const element = objectToDefault(rawItems.value[index]);
+    //@ts-ignore
     rawItems.value = rawItems.value.splice(up ? index : index + 1, 0, element);
     itemsLength.value++;
   };
@@ -154,8 +148,7 @@ export default function useHiveGrid({ columns, dataItems }: GridConfig) {
     const index = findByField(field);
 
     if (index === null) return;
-
-    const isSorted = sortedFlags[index].sorted;
+    const isSorted = sortedFlags[index]?.sorted;
     const element = columns[index];
 
     if (element !== undefined && element.sortable) {
@@ -167,81 +160,24 @@ export default function useHiveGrid({ columns, dataItems }: GridConfig) {
       } else if (element.sort !== undefined) {
         //@ts-ignore
         rawItems.value.sort((a, b) => element?.sort(a[field], b[field]));
-        sortedFlags[index].sorted = true;
+        if (sortedFlags[index]?.sorted !== undefined) {
+          //@ts-ignore
+          sortedFlags[index].sorted = true;
+        }
       } else {
         //@ts-ignore
         rawItems.value.sort((item1, item2) => item2[field] - item1[field]);
-        sortedFlags[index].sorted = true;
+        if (sortedFlags[index]?.sorted !== undefined) {
+          //@ts-ignore
+          sortedFlags[index].sorted = true;
+        }
       }
-    }
-  };
-
-  const dropDownChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'valueChange') {
-      handleChange(event.value);
-      handleToggle();
-    }
-  };
-
-  const dateChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'valueChange') {
-      handleChange(event.value, event.component.formattedDate);
-      handleToggle();
-    }
-  };
-
-  const dateRangeChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'valueChange') {
-      handleChange(event.value, event.component.formattedDates);
-      handleToggle();
-    }
-  };
-
-  const dateTimeRangeChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'valueChange') {
-      handleChange(event.component.currentValue, event.component.formattedDateTimeRange);
-      handleToggle();
-    }
-  };
-
-  const timeRangeChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'valueChange') {
-      handleChange(event.value, event.component.formattedTime);
-      handleToggle();
-    }
-  };
-
-  const timeChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'valueChange') {
-      handleChange(event.value, event.component.formattedTime);
-      handleToggle();
-    }
-  };
-
-  const autocompleteChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'valueChange') {
-      handleChange(event.value);
-    }
-  };
-
-  const multiselectChangeHelper = ({ event, handleChange, handleToggle }: HelperFunctionConfig) => {
-    if (event.type === 'focusout') {
-      handleChange(event.value);
-      handleToggle();
     }
   };
 
   return {
     items: rawItems,
     sort,
-    dropDownChangeHelper,
-    dateChangeHelper,
-    dateRangeChangeHelper,
-    dateTimeRangeChangeHelper,
-    timeChangeHelper,
-    timeRangeChangeHelper,
-    autocompleteChangeHelper,
-    multiselectChangeHelper,
     deleteRow,
     itemsLength,
     addRow,

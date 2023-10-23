@@ -13,7 +13,7 @@
       <th
         v-for="item in columns"
         :key="item.field"
-        @click="$emit('sort', item.field)"
+        @click="onSort(emit, item.field)"
         :class="{ 'cursor-pointer': item.sortable }"
       >
         {{ item.title }}
@@ -26,7 +26,7 @@
 import { type GridColumns } from '@/components/hive-grid/hooks/use-hive-grid';
 import { CommonProps } from '@/common/mixin/props';
 import { ref, watch } from 'vue';
-import { Focusin, Focusout, Keydown, Mount, Search, Unmount, Update } from '@/common/mixin/emits';
+import { Focusin, Focusout, Keydown, Mount, Search, Unmount, Update, Sort, onSort } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Value } from '@/common/types/select';
 import getRows from '@/components/hive-grid/helpers/get-rows';
@@ -45,7 +45,7 @@ const props = defineProps<Props>();
 
 const currentQuery = ref(props.query);
 
-type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
+type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string> & Sort;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
