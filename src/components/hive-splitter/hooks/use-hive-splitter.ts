@@ -53,10 +53,11 @@ export default function useHiveSplitter(horizontal: boolean) {
 
   const updatePaneStyle = function (pane: Pane): void {
     const size: number | string | null = indexedPanes.value[pane.id]?.size ?? null;
-
-    pane.updateStyle({
-      [horizontal ? 'height' : 'width']: `${size !== null ? formatSize(size) : size}%`,
-    });
+    if (pane.updateStyle) {
+      pane.updateStyle({
+        [horizontal ? 'height' : 'width']: `${size !== null ? formatSize(size) : size}%`,
+      });
+    }
   };
 
   const readjustSizes = async (spaceToAllocate: number, ungrowablePanes: string[], unshrinkablePanes: string[]) => {
@@ -246,6 +247,7 @@ export default function useHiveSplitter(horizontal: boolean) {
     const index = getPaneIndex(pane);
     const min = formatSize(getFormattedSize(pane.props.minSize));
     const max = formatSize(getFormattedSize(pane.props.maxSize));
+    console.log(pane);
     const newPane = {
       id: pane.props.id,
       index,

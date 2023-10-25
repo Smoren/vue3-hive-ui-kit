@@ -558,15 +558,8 @@ const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
       </widget-wrapper>
       <widget-wrapper title="Splitter" :class="{ 123: 1 }">
         <hive-splitter style="height: 400px">
-          <hive-pane min-size="20">1</hive-pane>
-          <hive-pane>
-            <hive-splitter horizontal>
-              <hive-pane>2</hive-pane>
-              <hive-pane>3</hive-pane>
-              <hive-pane>4</hive-pane>
-            </hive-splitter>
-          </hive-pane>
-          <hive-pane>5</hive-pane>
+          <hive-pane min-size="20" id="1">1</hive-pane>
+          <hive-pane id="2">5</hive-pane>
         </hive-splitter>
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
