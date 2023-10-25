@@ -1,69 +1,61 @@
-<script setup lang="ts">
-import { CommonProps } from '@/common/mixin/props';
-import { onMounted, watch, ref, getCurrentInstance } from 'vue';
-import useHivePane from '@/components/hive-splitter/hooks/use-hive-pane';
-import { v4 as uuidv4 } from 'uuid';
-
-export interface Props extends CommonProps {
-  size?: number | string | null;
-  minSize?: number | string;
-  maxSize?: number | string;
-  id?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  size: null,
-  minSize: '0%',
-  maxSize: '100%',
-  id: '',
-});
-
-const { onPaneUpdate, onPaneAdd, updateStyle, updatedStyle, formattedSize, formattedMinSize, formattedMaxSize } =
-  useHivePane({
-    size: props.size,
-    minSize: props.minSize,
-    maxSize: props.maxSize,
-  });
-
-const pane = getCurrentInstance();
-
-onMounted(() => {
-  if (onPaneAdd && pane) {
-    onPaneAdd(pane);
-  }
-});
-
-watch(formattedSize, () => {
-  if (onPaneUpdate && pane) {
-    onPaneUpdate({ paneComponent: pane, size: formattedSize.value });
-  }
-});
-
-watch(formattedMinSize, () => {
-  if (onPaneUpdate && pane) {
-    onPaneUpdate({ paneComponent: pane, min: formattedMinSize.value });
-  }
-});
-
-watch(formattedMaxSize, () => {
-  if (onPaneUpdate && pane) {
-    onPaneUpdate({ paneComponent: pane, max: formattedMaxSize.value });
-  }
-});
-
-defineExpose({ updateStyle });
-</script>
-
 <template>
-  <div class="hive-splitter__pane" :style="{ ...style, ...updatedStyle }">
+  <div class="splitpanes__pane" @click="onPaneClick($event, _.uid)" :style="style">
     <slot />
   </div>
 </template>
 
-<style scoped lang="scss">
-.hive-splitter__pane {
-  overflow-y: auto;
-  overflow-x: auto;
-  height: 100%;
-}
-</style>
+<script lang="ts">
+export default {
+  // eslint-disable-next-line vue/multi-word-component-names
+  inject: ['requestUpdate', 'onPaneAdd', 'onPaneRemove', 'onPaneClick'],
+
+  props: {
+    size: { type: [Number, String], default: null },
+    minSize: { type: [Number, String], default: 0 },
+    maxSize: { type: [Number, String], default: 100 },
+  },
+
+  data: () => ({
+    style: {},
+  }),
+
+  mounted() {
+    this.onPaneAdd(this);
+  },
+
+  beforeUnmount() {
+    this.onPaneRemove(this);
+  },
+
+  methods: {
+    // Called from the splitpanes component.
+    update(style) {
+      this.style = style;
+    },
+  },
+
+  computed: {
+    sizeNumber() {
+      return this.size || this.size === 0 ? parseFloat(this.size) : null;
+    },
+    minSizeNumber() {
+      return parseFloat(this.minSize);
+    },
+    maxSizeNumber() {
+      return parseFloat(this.maxSize);
+    },
+  },
+
+  watch: {
+    sizeNumber(size) {
+      this.requestUpdate({ target: this, size });
+    },
+    minSizeNumber(min) {
+      this.requestUpdate({ target: this, min });
+    },
+    maxSizeNumber(max) {
+      this.requestUpdate({ target: this, max });
+    },
+  },
+};
+</script>

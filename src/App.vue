@@ -291,7 +291,7 @@ const columns: Ref<GridColumns[]> = ref([
   {
     title: 'bool',
     field: 'bool',
-    editType: 'checkbox'
+    editType: 'checkbox',
   },
 ]);
 
@@ -401,7 +401,7 @@ watch(grid, () => {
   console.log(grid.value);
 });
 
-const log = (...args) => {
+const log = (args: unknown) => {
   console.log('log', args);
 };
 </script>
@@ -539,9 +539,16 @@ const log = (...args) => {
         <hive-upload-file />
       </widget-wrapper>
       <widget-wrapper title="Splitter" :class="{ 123: 1 }">
-        <hive-splitter style="height: 700px">
-          <hive-pane :id="uuidv4()" size="400">1</hive-pane>
-          <hive-pane :id="uuidv4()">2</hive-pane>
+        <hive-splitter style="height: 400px">
+          <hive-pane min-size="20">1</hive-pane>
+          <hive-pane>
+            <hive-splitter horizontal>
+              <hive-pane>2</hive-pane>
+              <hive-pane>3</hive-pane>
+              <hive-pane>4</hive-pane>
+            </hive-splitter>
+          </hive-pane>
+          <hive-pane>5</hive-pane>
         </hive-splitter>
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
