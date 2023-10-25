@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CommonProps } from '@/common/mixin/props';
 import { ref, watch, customRef, computed } from 'vue';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Updated, onUpdated } from '../../common/mixin/emits';
@@ -15,6 +14,7 @@ import {
   Unmount,
   Mount,
 } from '@/common/mixin/emits';
+import type { CommonProps } from '@/common/mixin/props';
 
 interface Props extends CommonProps {
   name: string;

@@ -1,4 +1,6 @@
-interface ColumnWithoutChildren {
+import type { ComputedRef } from 'vue';
+
+export type ColumnWithoutChildren = {
   id: string;
   children: undefined;
   field: string;
@@ -7,9 +9,9 @@ interface ColumnWithoutChildren {
   width?: string;
   cell: string;
   colspan: number;
-}
+};
 
-interface ColumnWithChildren {
+export type ColumnWithChildren = {
   id: string;
   children?: ColumnWithoutChildren[] | ColumnWithChildren[];
   title: string;
@@ -18,13 +20,45 @@ interface ColumnWithChildren {
   width: undefined;
   cell: undefined;
   colspan: number;
-}
+};
 
-interface ColgroupItem {
+export type ColgroupItem = {
   id: string;
   field: string;
   width: string;
   cell: string;
-}
+};
 
-export type { ColumnWithoutChildren, ColgroupItem, ColumnWithChildren };
+export type GridColumns = {
+  field: string;
+  fields?: string[];
+  title: string;
+  width?: number;
+  editable?: boolean;
+  editType?:
+    | 'text'
+    | 'number'
+    | 'date'
+    | 'dropdown-list'
+    | 'date-range'
+    | 'date-time-range'
+    | 'time-range'
+    | 'date-time'
+    | 'time'
+    | 'textarea'
+    | 'autocomplete'
+    | 'checkbox'
+    | 'multiselect';
+  sortable?: boolean;
+  sort?: (a: object, b: object) => number;
+  viewType?: 'text' | 'list' | 'checkbox' | 'file' | 'function';
+  separator?: string;
+  options?: string[];
+  inEditMode?: boolean;
+  function?: (...args: any) => void;
+};
+
+export type GridConfig = {
+  columns: GridColumns[];
+  dataItems: ComputedRef<object[]>;
+};

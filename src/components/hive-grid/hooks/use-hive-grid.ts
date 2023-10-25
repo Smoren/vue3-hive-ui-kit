@@ -1,45 +1,12 @@
-import { computed, ComputedRef, provide, reactive, ref, watch, watchEffect } from 'vue';
-import { useDeepClone } from '@/common/hooks/use-deep-clone';
+import { computed, ref} from 'vue';
 import { v4 as uuidv4 } from 'uuid';
+import { useDeepClone } from '@/common/hooks/use-deep-clone';
+import type { GridColumns, GridConfig } from '../types';
 
-export interface GridColumns {
-  field: string;
-  fields?: string[];
-  title: string;
-  width?: number;
-  editable?: boolean;
-  editType?:
-    | 'text'
-    | 'number'
-    | 'date'
-    | 'dropdown-list'
-    | 'date-range'
-    | 'date-time-range'
-    | 'time-range'
-    | 'date-time'
-    | 'time'
-    | 'textarea'
-    | 'autocomplete'
-    | 'checkbox'
-    | 'multiselect';
-  sortable?: boolean;
-  sort?: (a: object, b: object) => number;
-  viewType?: 'text' | 'list' | 'checkbox' | 'file' | 'function';
-  separator?: string;
-  options?: string[];
-  inEditMode?: boolean;
-  function?: (...args: any) => void;
-}
-
-export interface GridConfig {
-  columns: GridColumns[];
-  dataItems: ComputedRef<object[]>;
-}
-
-interface SortedFlags {
+type SortedFlags = {
   sorted: boolean;
   field: string;
-}
+};
 
 export default function useHiveGrid({ columns, dataItems }: GridConfig) {
   const isLoading = ref(false);

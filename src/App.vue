@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Ref, computed, onMounted, ref, watch } from 'vue';
+import { type Ref, computed, onMounted, ref, watch } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
@@ -17,7 +18,6 @@ import { useNotification } from './plugins/hive-notification';
 import HiveSplitter from './components/hive-splitter/hive-splitter.vue';
 import HivePane from './components/hive-splitter/hive-pane.vue';
 import HiveHtmlEditor from './components/hive-html-editor/hive-html-editor.vue';
-import { v4 as uuidv4 } from 'uuid';
 import HiveAutocomplete from './components/hive-autocomplete/hive-autocomplete.vue';
 import HiveMultiautocomplete from './components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
@@ -25,8 +25,8 @@ import HiveTab from './components/hive-tab-group/hive-tab.vue';
 import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 import HiveGrid from './components/hive-grid/hive-grid.vue';
-import { GridColumns } from './components/hive-grid/hooks/use-hive-grid';
-import { VueComponent } from './common/types/value';
+import type { GridColumns } from './components/hive-grid/types';
+
 
 const text = ref('text');
 const num = ref(0);

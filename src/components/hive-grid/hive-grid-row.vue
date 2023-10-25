@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import useHiveGrid, { type GridColumns, type GridConfig } from '@/components/hive-grid/hooks/use-hive-grid';
+import { ref } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import { ref, computed, Ref, WritableComputedRef, watch, onMounted, getCurrentInstance } from 'vue';
 import {
   Focusin,
   Focusout,
@@ -21,6 +20,7 @@ import {
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Value } from '@/common/types/select';
+import { type GridColumns } from './types';
 
 interface Props extends CommonProps {
   item: Record<string, unknown>;

@@ -22,6 +22,8 @@ import HiveTab from '@/components/hive-tab-group/hive-tab.vue';
 import HiveTextarea from '@/components/hive-textarea/hive-textarea.vue';
 import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
 
+import { GridColumns } from '@/components/hive-grid/types'
+
 export {
   HiveAutocomplete,
   HiveBadge,
@@ -46,4 +48,5 @@ export {
   HiveTab,
   HiveTextarea,
   HiveUploadFile,
+  type GridColumns,
 };

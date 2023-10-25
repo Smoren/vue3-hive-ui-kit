@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import useHiveGrid, { type GridColumns, type GridConfig } from '@/components/hive-grid/hooks/use-hive-grid';
+import { ref, computed, type Ref, WritableComputedRef, watch, onMounted, getCurrentInstance } from 'vue';
+import useHiveGrid from './hooks/use-hive-grid';
 import { CommonProps } from '@/common/mixin/props';
-import { ref, computed, Ref, WritableComputedRef, watch, onMounted, getCurrentInstance } from 'vue';
 import {
   Focusin,
   Focusout,
@@ -24,7 +24,7 @@ import {
   onBeforeChange,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { Value } from '@/common/types/select';
+import type { Value } from '@/common/types/select';
 import HiveGridHeader from './hive-grid-header.vue';
 import HiveGridCeil from './hive-grid-ceil.vue';
 import HiveInput from '../hive-input/hive-input.vue';
@@ -36,6 +36,7 @@ import HiveMultiselect from '../hive-multiselect/hive-multiselect.vue';
 import HiveCheckbox from '../hive-checkbox/hive-checkbox.vue';
 import HiveGridRow from './hive-grid-row.vue';
 import { VueComponent } from '../../../src/common/types/value';
+import type { GridColumns, GridConfig } from './types';
 
 interface Props extends CommonProps {
   dataItems: any[] | undefined;
