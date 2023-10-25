@@ -255,7 +255,7 @@ export default function useHiveSplitter(horizontal: boolean) {
       max: Number.isNaN(max) || max === undefined ? 100 : max,
       size: pane.props.size === null ? null : getFormattedSize(pane.props.size),
       givenSize: pane.props.size,
-      updateStyle: pane.setupState.updateStyle,
+      updateStyle: pane.updateStyle,
     };
 
     addPane(panes, newPane);

@@ -27,6 +27,11 @@ const { onPaneUpdate, onPaneAdd, updateStyle, updatedStyle, formattedSize, forma
 
 const pane = getCurrentInstance();
 
+if (pane) {
+  // @ts-ignore
+  pane.updateStyle = updateStyle;
+}
+
 onMounted(() => {
   if (onPaneAdd && pane) {
     onPaneAdd(pane);
