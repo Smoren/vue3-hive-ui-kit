@@ -79,23 +79,20 @@ const customChange = (value: string, view = '') => {
 };
 
 const toggleFlag = () => {
-  if (flag.value) {
-    onAfterEdit(emit, props.object);
-  } else {
-    onBeforeEdit(emit, props.object);
-  }
   setTimeout(() => {
     flag.value = !flag.value;
   }, 0);
 };
 
-const emitOnAfterEdit = () => {
-  onAfterEdit(emit, props.object);
-};
+watch(flag, () => {
+  if (flag.value) {
+    onBeforeEdit(emit, props.object);
+  } else {
+    onAfterEdit(emit, props.object);
+  }
+});
 
 const hideEdit = () => {
-  onAfterEdit(emit, props.object);
-
   setTimeout(() => {
     flag.value = false;
   }, 10);
@@ -134,7 +131,7 @@ watch(currentObject, () => {
 <template>
   <td
     class="ceil"
-    @click="toggleFlag"
+    @click="setTrueFlag"
     @keydown.enter="hideEdit"
     :width="width ? width : ''"
     :style="{ 'background-color': object?.backgroundColor }"
@@ -151,7 +148,6 @@ watch(currentObject, () => {
       :customChange="customChange"
       :row="object"
       :hideEdit="hideEdit"
-      :emitOnAfterEdit="emitOnAfterEdit"
     />
     <slot
       v-else

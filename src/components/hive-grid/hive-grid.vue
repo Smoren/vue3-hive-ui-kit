@@ -203,7 +203,7 @@ defineExpose({ items, grid });
             :in-edit-mode="element.inEditMode ?? false"
             :border-top="!colorAlternation"
           >
-            <template #edit="{ value, update, isChangeAllowed, toggle, customChange, row, hideEdit, emitOnAfterEdit }">
+            <template #edit="{ value, update, isChangeAllowed, toggle, customChange, row, hideEdit }">
               <slot
                 :name="(element.field ?? (element.fields ? element.fields[0] : '')) + '-edit'"
                 :value="value"
@@ -213,7 +213,6 @@ defineExpose({ items, grid });
                 :customChange="customChange"
                 :row="row"
                 :hideEdit="hideEdit"
-                :emitOnAfterEdit="emitOnAfterEdit"
               >
                 <hive-input
                   v-if="element.editType === 'number'"
