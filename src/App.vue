@@ -407,6 +407,8 @@ watch(grid, () => {
   console.log(grid.value);
 });
 
+const currentTab = ref('1')
+
 const prevRow: Ref<VueComponent | null> = ref(null);
 
 const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
@@ -574,7 +576,7 @@ const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
           :style="{ width: '300px' }"
         />
       </widget-wrapper>
-      <widget-wrapper title="Multiautocompelte">
+      <widget-wrapper title="Tab">
         {{ autocomplete }}
         <hive-tab-group v-model="tab">
           <hive-tab name="first" id="1">asd</hive-tab>

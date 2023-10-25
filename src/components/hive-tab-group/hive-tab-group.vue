@@ -4,6 +4,7 @@ import { CommonProps } from '@/common/mixin/props';
 import { Mount, Unmount, Update } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import useHiveTabGroup from './hooks/use-hive-tab-group';
+import { onUpdateModelValue } from '../../common/mixin/emits';
 
 export interface Props extends CommonProps {
   modelValue: string;
@@ -18,13 +19,23 @@ type Emit = Mount & Unmount & Update<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const { state, selectTab } = useHiveTabGroup(props.modelValue, props.withLocalStorage);
+const { currentTabId, currentTab, state, selectTab } = useHiveTabGroup(props.modelValue, props.withLocalStorage);
 
 watch(
   () => state.tabs.length,
   () => {
     const temp = state.tabs[0];
     if (temp) selectTab(temp.id);
+  },
+);
+
+watch(currentTabId, () => {
+  onUpdateModelValue(emit, currentTabId.value);
+});
+watch(
+  () => props.modelValue,
+  () => {
+    currentTabId.value = props.modelValue;
   },
 );
 </script>
