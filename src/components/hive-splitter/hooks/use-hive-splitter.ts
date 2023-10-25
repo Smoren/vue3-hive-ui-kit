@@ -243,7 +243,6 @@ export default function useHiveSplitter(horizontal: boolean) {
   };
 
   const onPaneAdd = async (pane: VueComponent) => {
-    console.log(pane);
     const index = getPaneIndex(pane);
     const min = formatSize(getFormattedSize(pane.props.minSize));
     const max = formatSize(getFormattedSize(pane.props.maxSize));

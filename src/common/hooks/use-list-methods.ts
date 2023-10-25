@@ -118,8 +118,6 @@ export const useListMethods = ({
     // if (searchQuery.value) {
     //   filteredOptions.value.clear();
 
-    //   console.log(currentOptions.value.values());
-
     //   for (const item of currentOptions.value.values()) {
     //     if (item[1][fieldTitle].toLowerCase().indexOf(searchQuery.value.toLowerCase()) !== -1) {
     //       if (Array.isArray(modelValue)) {

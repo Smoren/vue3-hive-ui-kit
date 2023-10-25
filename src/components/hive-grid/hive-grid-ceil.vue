@@ -129,10 +129,6 @@ watch(currentObject, () => {
   currentValue.value = props.object && props.field ? props.object[props.field] : '';
   onUpdated(emit);
 });
-
-const logEvent = (event: Event) => {
-  console.log(event);
-};
 </script>
 
 <template>

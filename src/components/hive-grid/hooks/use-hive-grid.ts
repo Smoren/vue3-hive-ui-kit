@@ -1,6 +1,5 @@
 import { computed, ComputedRef, provide, reactive, ref, watch, watchEffect } from 'vue';
 import { useDeepClone } from '@/common/hooks/use-deep-clone';
-import type { VueComponent } from '@/common/types/value';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface GridColumns {
@@ -75,10 +74,6 @@ export default function useHiveGrid({ columns, dataItems }: GridConfig) {
     return selectedFields;
   };
 
-  watchEffect(() => {
-    // console.log('here1');
-    // console.log(dataItems);
-  });
   const rawItems = computed({
     get() {
       const rawItems: object[] = [];
