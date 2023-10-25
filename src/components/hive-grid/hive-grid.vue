@@ -29,8 +29,11 @@ import HiveGridHeader from './hive-grid-header.vue';
 import HiveGridCeil from './hive-grid-ceil.vue';
 import HiveInput from '../hive-input/hive-input.vue';
 import HiveDropDown from '../hive-drop-down/hive-drop-down.vue';
-import hiveAutocomplete from '../hive-autocomplete/hive-autocomplete.vue';
-import hiveTextarea from '../hive-textarea/hive-textarea.vue';
+import HiveAutocomplete from '../hive-autocomplete/hive-autocomplete.vue';
+import HiveTextarea from '../hive-textarea/hive-textarea.vue';
+import HiveButton from '../hive-button/hive-button.vue';
+import HiveMultiselect from '../hive-multiselect/hive-multiselect.vue';
+import HiveCheckbox from '../hive-checkbox-group/hive-checkbox-group.vue';
 
 interface Props extends CommonProps {
   dataItems: any[] | undefined;
