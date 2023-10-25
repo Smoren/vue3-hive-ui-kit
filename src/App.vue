@@ -26,6 +26,7 @@ import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 import HiveGrid from './components/hive-grid/hive-grid.vue';
 import { GridColumns } from './components/hive-grid/hooks/use-hive-grid';
+import { VueComponent } from '../dist/src/common/types/value';
 
 const text = ref('text');
 const num = ref(0);
@@ -293,6 +294,11 @@ const columns: Ref<GridColumns[]> = ref([
     field: 'bool',
     editType: 'checkbox',
   },
+  {
+    title: 'Действия',
+    field: 'actions',
+    editable: false,
+  },
 ]);
 
 setTimeout(() => {
@@ -401,8 +407,20 @@ watch(grid, () => {
   console.log(grid.value);
 });
 
-const log = (...args: any[]) => {
-  console.log('log', args);
+const prevRow: Ref<VueComponent | null> = ref(null);
+
+const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
+  if (rowRef && rowRef.style) {
+    rowRef.style.background = 'red';
+    if (prevRow.value?.style?.background) {
+      prevRow.value.style.background = null;
+    }
+    if (prevRow.value !== rowRef) {
+      prevRow.value = rowRef;
+    } else {
+      prevRow.value = null;
+    }
+  }
 };
 </script>
 
@@ -583,7 +601,9 @@ const log = (...args: any[]) => {
         <hive-skeleton :visible="true" />
       </widget-wrapper>
       <widget-wrapper title="Grid">
-        <HiveGrid ref="grid" :columns="columns" :data-items="rows" @after-edit="log"></HiveGrid>
+        <HiveGrid ref="grid" :columns="columns" :data-items="rows" @row-click="log">
+          <template #actions>asdasd</template>
+        </HiveGrid>
       </widget-wrapper>
     </div>
   </div>

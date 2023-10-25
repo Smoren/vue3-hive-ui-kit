@@ -1,3 +1,5 @@
+import { VueComponent } from '../types/value';
+
 export type Mount = (e: 'mount') => void;
 
 export const onMount = (emit: Mount) => {
@@ -120,8 +122,8 @@ export const onQueryUpdate = (emit: QueryUpdate, value: string) => {
   emit('queryUpdate', value);
 };
 
-export type RowClick = (e: 'rowClick', row: Record<string, unknown>) => void;
+export type RowClick = (e: 'rowClick', row: Record<string, unknown>, rowRef: VueComponent | null) => void;
 
-export const onRowClick = (emit: RowClick, row: Record<string, unknown>) => {
-  emit('rowClick', row);
+export const onRowClick = (emit: RowClick, row: Record<string, unknown>, rowRef: VueComponent | null) => {
+  emit('rowClick', row, rowRef);
 };
