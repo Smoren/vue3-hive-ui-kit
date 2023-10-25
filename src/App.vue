@@ -407,22 +407,26 @@ watch(grid, () => {
   console.log(grid.value);
 });
 
-const currentTab = ref('1')
+const currentTab = ref('1');
 
-const prevRow: Ref<VueComponent | null> = ref(null);
+// const prevRow: Ref<VueComponent | null> = ref(null);
 
-const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
-  if (rowRef && rowRef.style) {
-    rowRef.style.background = 'red';
-    if (prevRow.value?.style?.background) {
-      prevRow.value.style.background = null;
-    }
-    if (prevRow.value !== rowRef) {
-      prevRow.value = rowRef;
-    } else {
-      prevRow.value = null;
-    }
-  }
+// const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
+//   if (rowRef && rowRef.style) {
+//     rowRef.style.background = 'red';
+//     if (prevRow.value?.style?.background) {
+//       prevRow.value.style.background = null;
+//     }
+//     if (prevRow.value !== rowRef) {
+//       prevRow.value = rowRef;
+//     } else {
+//       prevRow.value = null;
+//     }
+//   }
+// };
+
+const log = () => {
+  console.log('here');
 };
 </script>
 
@@ -596,7 +600,7 @@ const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
         <hive-skeleton :visible="true" />
       </widget-wrapper>
       <widget-wrapper title="Grid">
-        <HiveGrid ref="grid" :columns="columns" :data-items="rows" @row-click="log">
+        <HiveGrid ref="grid" :columns="columns" :data-items="rows" @after-edit="log">
           <template #actions>asdasd</template>
         </HiveGrid>
       </widget-wrapper>

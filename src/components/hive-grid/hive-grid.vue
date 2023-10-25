@@ -172,10 +172,6 @@ defineExpose({ items, grid });
           :color-alternation="colorAlternation"
           :add-row="addRow"
           :delete-row="deleteRow"
-          @after-edit="onAfterEdit(emit, $event)"
-          @after-change="onAfterChange(emit, $event)"
-          @before-edit="onBeforeEdit(emit, $event)"
-          @before-change="onBeforeChange(emit, $event)"
           @row-click="rowClicked"
         >
           <hive-grid-ceil v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
@@ -211,6 +207,10 @@ defineExpose({ items, grid });
             :width="element.width"
             :in-edit-mode="element.inEditMode ?? false"
             :border-top="!colorAlternation"
+            @after-edit="onAfterEdit(emit, $event)"
+            @after-change="onAfterChange(emit, $event)"
+            @before-edit="onBeforeEdit(emit, $event)"
+            @before-change="onBeforeChange(emit, $event)"
           >
             <template #edit="{ value, update, isChangeAllowed, toggle, customChange, row, hideEdit }">
               <slot
