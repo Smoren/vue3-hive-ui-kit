@@ -134,7 +134,7 @@ watch(currentObject, () => {
 <template>
   <td
     class="ceil"
-    @click="toggleFlag"
+    @click="setTrueFlag"
     @keydown.enter="hideEdit"
     :width="width ? width : ''"
     :style="{ 'background-color': object?.backgroundColor }"
