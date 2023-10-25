@@ -243,6 +243,7 @@ export default function useHiveSplitter(horizontal: boolean) {
   };
 
   const onPaneAdd = async (pane: VueComponent) => {
+    console.log(pane);
     const index = getPaneIndex(pane);
     const min = formatSize(getFormattedSize(pane.props.minSize));
     const max = formatSize(getFormattedSize(pane.props.maxSize));
@@ -251,7 +252,7 @@ export default function useHiveSplitter(horizontal: boolean) {
       index,
       min: Number.isNaN(min) || min === undefined ? 0 : min,
       max: Number.isNaN(max) || max === undefined ? 100 : max,
-      size: pane.size === null ? null : getFormattedSize(pane.size),
+      size: pane.props.size === null ? null : getFormattedSize(pane.props.size),
       givenSize: pane.props.size,
       updateStyle: pane.setupState.updateStyle,
     };

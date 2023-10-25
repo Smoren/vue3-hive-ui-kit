@@ -28,7 +28,6 @@ const { onPaneUpdate, onPaneAdd, updateStyle, updatedStyle, formattedSize, forma
 const pane = getCurrentInstance();
 
 onMounted(() => {
-  props.id = uuidv4();
   if (onPaneAdd && pane) {
     onPaneAdd(pane);
   }

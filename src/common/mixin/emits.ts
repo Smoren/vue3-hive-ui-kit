@@ -92,7 +92,7 @@ export const onAfterEdit = (emit: AfterEdit) => {
 
 export type BeforeChange = (e: 'beforeChange') => void;
 
-export const onBeforChange = (emit: BeforeChange) => {
+export const onBeforeChange = (emit: BeforeChange) => {
   emit('beforeChange');
 };
 
@@ -112,4 +112,16 @@ export type Sort = (e: 'sort', value: string) => void;
 
 export const onSort = (emit: Sort, value: string) => {
   emit('sort', value);
+};
+
+export type QueryUpdate = (e: 'queryUpdate', value: string) => void;
+
+export const onQueryUpdate = (emit: QueryUpdate, value: string) => {
+  emit('queryUpdate', value);
+};
+
+export type RowClick = (e: 'rowClick', row: Record<string, unknown>) => void;
+
+export const onRowClick = (emit: RowClick, row: Record<string, unknown>) => {
+  emit('rowClick', row);
 };

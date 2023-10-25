@@ -1,27 +1,3 @@
-<template>
-  <thead class="hive-grid__header">
-    <tr v-if="hasFilter">
-      <th :colspan="columns?.length">
-        <hive-input-search v-model="currentQuery" :is-opened="true" placeholder="Поиск" />
-      </th>
-    </tr>
-    <tr>
-      <th v-if="showAddButtons">
-        <hive-button text="Add Top" @click="addTop" />
-        <hive-button text="Add Bottom" @click="addBottom" />
-      </th>
-      <th
-        v-for="item in columns"
-        :key="item.field"
-        @click="onSort(emit, item.field)"
-        :class="{ 'cursor-pointer': item.sortable }"
-      >
-        {{ item.title }}
-      </th>
-    </tr>
-  </thead>
-</template>
-
 <script setup lang="ts">
 import { type GridColumns } from '@/components/hive-grid/hooks/use-hive-grid';
 import { CommonProps } from '@/common/mixin/props';
@@ -68,6 +44,30 @@ watch(currentQuery, () => {
   // context.emit('queryUpdate', currentQuery.value);
 });
 </script>
+
+<template>
+  <thead class="hive-grid__header">
+    <tr v-if="hasFilter">
+      <th :colspan="columns?.length">
+        <hive-input-search v-model="currentQuery" :is-opened="true" placeholder="Поиск" />
+      </th>
+    </tr>
+    <tr>
+      <th v-if="showAddButtons">
+        <hive-button text="Add Top" @click="addTop" />
+        <hive-button text="Add Bottom" @click="addBottom" />
+      </th>
+      <th
+        v-for="item in columns"
+        :key="item.field"
+        @click="onSort(emit, item.field)"
+        :class="{ 'cursor-pointer': item.sortable }"
+      >
+        {{ item.title }}
+      </th>
+    </tr>
+  </thead>
+</template>
 
 <style lang="scss" scoped>
 .hive-grid__header {

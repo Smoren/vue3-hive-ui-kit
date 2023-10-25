@@ -25,10 +25,11 @@ export interface GridColumns {
     | 'multiselect';
   sortable?: boolean;
   sort?: (a: object, b: object) => number;
-  viewType?: 'text' | 'list' | 'checkbox' | 'file';
+  viewType?: 'text' | 'list' | 'checkbox' | 'file' | 'function';
   separator?: string;
-  options?: string[] | number[];
+  options?: string[];
   inEditMode?: boolean;
+  function?: (...args: any) => void;
 }
 
 export interface GridConfig {

@@ -1,3 +1,147 @@
+<script setup lang="ts">
+import useHiveGrid, { type GridColumns, type GridConfig } from '@/components/hive-grid/hooks/use-hive-grid';
+import { CommonProps } from '@/common/mixin/props';
+import { ref, computed, Ref, WritableComputedRef, watch, onMounted, getCurrentInstance } from 'vue';
+import {
+  Focusin,
+  Focusout,
+  Keydown,
+  Mount,
+  Search,
+  Unmount,
+  Update,
+  QueryUpdate,
+  AfterEdit,
+  AfterChange,
+  onQueryUpdate,
+  RowClick,
+  onRowClick,
+  BeforeEdit,
+  BeforeChange,
+  onAfterEdit,
+  onAfterChange,
+  onBeforeEdit,
+  onBeforeChange,
+} from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
+import { Value } from '@/common/types/select';
+import HiveGridHeader from './hive-grid-header.vue';
+import HiveGridCeil from './hive-grid-ceil.vue';
+import HiveInput from '../hive-input/hive-input.vue';
+import HiveDropDown from '../hive-drop-down/hive-drop-down.vue';
+import hiveAutocomplete from '../hive-autocomplete/hive-autocomplete.vue';
+import hiveTextarea from '../hive-textarea/hive-textarea.vue';
+
+interface Props extends CommonProps {
+  dataItems: any[] | undefined;
+  columns: GridColumns[];
+  itemsOnPage?: number;
+  showAddButtons?: boolean;
+  hasFilter?: boolean;
+  colorAlternation?: boolean;
+  hideHeader?: boolean;
+  query?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showAddButtons: false,
+  itemsOnPage: 10,
+  hasFilter: false,
+  colorAlternation: true,
+  hideHeader: false,
+  query: '',
+});
+
+type Emit = Mount &
+  Unmount &
+  Update<Value> &
+  Focusin &
+  Focusout &
+  Keydown &
+  Search<string> &
+  QueryUpdate &
+  RowClick &
+  AfterChange &
+  AfterEdit &
+  BeforeEdit &
+  BeforeChange;
+const emit = defineEmits<Emit>();
+useOnMount(emit);
+
+const loaded = ref(false);
+
+const { items, sort, deleteRow, itemsLength, addRow, isLoading } = useHiveGrid({
+  columns: props.columns,
+  dataItems: computed(() => props.dataItems),
+} as GridConfig);
+
+const arrayOfSplittedItems: Ref<Record<string, any>[][]> = ref([]);
+const currentPage = ref(1);
+
+const prevPage = (page?: number) => {
+  if (currentPage.value === 1) return;
+  page === undefined ? currentPage.value-- : (currentPage.value = page);
+};
+
+const nextPage = (page?: number) => {
+  if (currentPage.value === arrayOfSplittedItems.value.length) return;
+  page === undefined ? currentPage.value++ : (currentPage.value = page);
+};
+
+const pagination = (items: WritableComputedRef<object[]>) => {
+  arrayOfSplittedItems.value.length = 0;
+  if (props.itemsOnPage === 0) return;
+  for (let i = 0; i < items.value.length / props.itemsOnPage; i++) {
+    arrayOfSplittedItems.value.push(
+      items.value.slice(i * props.itemsOnPage, i * props.itemsOnPage + props.itemsOnPage),
+    );
+  }
+};
+
+const getRowIndex = (index: number) => {
+  return (currentPage.value - 1) * props.itemsOnPage + index;
+};
+
+const currentQuery = ref(props.query);
+
+const updateQuery = (query: string) => {
+  currentQuery.value = query;
+};
+
+const grid = getCurrentInstance();
+
+watch(currentQuery, () => {
+  onQueryUpdate(emit, currentQuery.value);
+});
+
+onMounted(() => {
+  pagination(items);
+});
+
+watch(items, () => {
+  pagination(items);
+  if (itemsLength.value <= 1) currentPage.value = 1;
+});
+
+watch(itemsLength, () => {
+  pagination(items);
+});
+
+// const logEvent = (event: EventData) => {
+//   if (event.type === 'addTop') {
+//     addRow(true, 0);
+//   } else if (event.type === 'addBottom') {
+//     addRow(false, itemsLength.value - 1);
+//   }
+// };
+
+const rowClick = (item: Record<string, unknown>) => {
+  onRowClick(emit, item);
+};
+
+defineExpose({ items, grid });
+</script>
+
 <template>
   <div class="wrapper">
     <table class="hive-grid" :style="style">
@@ -16,7 +160,7 @@
           v-for="(item, index) in arrayOfSplittedItems.length === 0 ? items : arrayOfSplittedItems[currentPage - 1]"
           :key="(item as any).id"
           :class="[!colorAlternation || index % 2 === 0 ? 'even' : 'odd']"
-          @click="rowClick(item)"
+          @click="rowClick(item as Record<string, unknown>)"
         >
           <hive-grid-ceil v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
             <template #view>
@@ -40,6 +184,10 @@
             </template>
           </hive-grid-ceil>
           <hive-grid-ceil
+            @after-edit="onAfterEdit(emit)"
+            @after-change="onAfterChange(emit)"
+            @before-edit="onBeforeEdit(emit)"
+            @before-change="onBeforeChange(emit)"
             v-for="element in columns"
             :key="element.field"
             :text="(item as any)[element.field]?.text ?? (item as any)[element.field]"
@@ -77,19 +225,21 @@
                   :model-value="value"
                   :options="element.options"
                   :is-invalid="!isChangeAllowed"
+                  focusOnMount
                   @model-value-updated="update"
                   @focusout="toggle"
                 />
-                <HiveTextarea
+                <hive-textarea
                   v-else-if="element.editType === 'textarea'"
                   :model-value="value"
-                  :options="element.options"
                   :is-invalid="!isChangeAllowed"
                   @input="update"
+                  @focusout="hideEdit"
                 />
-                <HiveAutocomplete
+                <hive-autocomplete
                   style="width: fit-content"
                   v-else-if="element.editType === 'autocomplete'"
+                  @change="update($event)"
                   :model-value="value"
                   :options="element.options"
                   :is-invalid="!isChangeAllowed"
@@ -112,7 +262,7 @@
                     title=""
                   />
                 </div>
-                <HiveInput
+                <hive-input
                   v-else
                   @click.stop
                   :model-value="element.viewType === 'list' ? value.join(',') : value"
@@ -148,6 +298,9 @@
                 </template>
                 <template v-else-if="element.viewType === 'file'">
                   <img :src="view" alt="Картинка" class="hive-image" />
+                </template>
+                <template v-else-if="element.viewType === 'function'">
+                  <hive-button @click="element.function" />
                 </template>
                 <div v-else>
                   {{ view ? view : value }}
@@ -235,117 +388,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import useHiveGrid, { type GridColumns, type GridConfig } from '@/components/hive-grid/hooks/use-hive-grid';
-import { CommonProps } from '@/common/mixin/props';
-import { ref, computed, Ref, WritableComputedRef, watch, onMounted } from 'vue';
-import { Focusin, Focusout, Keydown, Mount, Search, Unmount, Update } from '@/common/mixin/emits';
-import { useOnMount } from '@/common/hooks/use-mount';
-import { Value } from '@/common/types/select';
-import HiveGridHeader from './HiveGridHeader.vue';
-import HiveGridCeil from './HiveGridCeil.vue';
-import HiveInput from '../hive-input/hive-input.vue';
-import HiveDropDown from '../hive-drop-down/hive-drop-down.vue';
-import { ModelValueUpdated } from '../../common/mixin/emits';
-
-interface Props extends CommonProps {
-  dataItems: any[] | undefined;
-  columns: GridColumns[];
-  itemsOnPage?: number;
-  showAddButtons?: boolean;
-  hasFilter?: boolean;
-  colorAlternation?: boolean;
-  hideHeader?: boolean;
-  query?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  showAddButtons: false,
-  itemsOnPage: 10,
-  hasFilter: false,
-  colorAlternation: true,
-  hideHeader: false,
-  query: '',
-});
-
-type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
-const emit = defineEmits<Emit>();
-useOnMount(emit);
-
-const loaded = ref(false);
-
-const { items, sort, deleteRow, itemsLength, addRow, isLoading } = useHiveGrid({
-  columns: props.columns,
-  dataItems: computed(() => props.dataItems),
-} as GridConfig);
-
-const arrayOfSplittedItems: Ref<Record<string, any>[][]> = ref([]);
-const currentPage = ref(1);
-
-const prevPage = (page?: number) => {
-  if (currentPage.value === 1) return;
-  page === undefined ? currentPage.value-- : (currentPage.value = page);
-};
-
-const nextPage = (page?: number) => {
-  if (currentPage.value === arrayOfSplittedItems.value.length) return;
-  page === undefined ? currentPage.value++ : (currentPage.value = page);
-};
-
-const pagination = (items: WritableComputedRef<object[]>) => {
-  arrayOfSplittedItems.value.length = 0;
-  if (props.itemsOnPage === 0) return;
-  for (let i = 0; i < items.value.length / props.itemsOnPage; i++) {
-    arrayOfSplittedItems.value.push(
-      items.value.slice(i * props.itemsOnPage, i * props.itemsOnPage + props.itemsOnPage),
-    );
-  }
-};
-
-const getRowIndex = (index: number) => {
-  return (currentPage.value - 1) * props.itemsOnPage + index;
-};
-
-const currentQuery = ref(props.query);
-
-const updateQuery = (query: string) => {
-  // console.log(query);
-  currentQuery.value = query;
-};
-
-watch(currentQuery, () => {
-  // console.log(currentQuery.value);
-  // context.emit('queryUpdate', currentQuery.value);
-});
-
-onMounted(() => {
-  pagination(items);
-});
-
-watch(items, () => {
-  pagination(items);
-  if (itemsLength.value <= 1) currentPage.value = 1;
-});
-
-watch(itemsLength, () => {
-  pagination(items);
-});
-
-// const logEvent = (event: EventData) => {
-//   if (event.type === 'addTop') {
-//     addRow(true, 0);
-//   } else if (event.type === 'addBottom') {
-//     addRow(false, itemsLength.value - 1);
-//   }
-// };
-
-const rowClick = (item: any) => {
-  // handleEvent(new Event('rowClick'), item);
-};
-
-defineExpose({ items });
-</script>
 
 <style lang="scss" scoped>
 .wrapper {

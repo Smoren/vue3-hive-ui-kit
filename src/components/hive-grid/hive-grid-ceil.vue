@@ -1,37 +1,3 @@
-<template>
-  <td
-    class="ceil"
-    @click="setTrueFlag"
-    @keydown.enter="hideEdit"
-    :width="width ? width : ''"
-    :style="{ 'background-color': object?.backgroundColor }"
-    :class="{ borderTop: borderTop }"
-  >
-    <slot
-      @click.left="hideEdit"
-      name="edit"
-      v-if="flag && editable && object?.editable !== false"
-      :value="currentValue"
-      :update="onInput"
-      :isChangeAllowed="getIsChangeAllowed()"
-      :toggle="toggleFlag"
-      :customChange="customChange"
-      :row="object"
-      :hideEdit="hideEdit"
-      :emitOnAfterEdit="emitOnAfterEdit"
-    />
-    <slot
-      v-else
-      @click.stop="setTrueFlag"
-      name="view"
-      :value="currentValue"
-      :view="viewValue"
-      :row="object"
-      :setTrueFlag="setTrueFlag"
-    />
-  </td>
-</template>
-
 <script setup lang="ts">
 import { CommonProps } from '@/common/mixin/props';
 import { ref, watch, customRef, computed } from 'vue';
@@ -44,7 +10,7 @@ import {
   BeforeChange,
   AfterChange,
   onAfterEdit,
-  onBeforChange,
+  onBeforeChange,
   onAfterChange,
   Unmount,
   Mount,
@@ -145,7 +111,7 @@ const preventChange = () => {
 const getIsChangeAllowed = () => isChangeAllowed.value;
 
 watch(currentValue, (newValue) => {
-  onBeforChange(emit);
+  onBeforeChange(emit);
   if (props.object && props.field && isChangeAllowed.value) {
     // eslint-disable-next-line vue/no-mutating-props
     props.object[props.field] = newValue;
@@ -168,6 +134,40 @@ const logEvent = (event: Event) => {
   console.log(event);
 };
 </script>
+
+<template>
+  <td
+    class="ceil"
+    @click="setTrueFlag"
+    @keydown.enter="hideEdit"
+    :width="width ? width : ''"
+    :style="{ 'background-color': object?.backgroundColor }"
+    :class="{ borderTop: borderTop }"
+  >
+    <slot
+      @click.left="hideEdit"
+      name="edit"
+      v-if="flag && editable && object?.editable !== false"
+      :value="currentValue"
+      :update="onInput"
+      :isChangeAllowed="getIsChangeAllowed()"
+      :toggle="toggleFlag"
+      :customChange="customChange"
+      :row="object"
+      :hideEdit="hideEdit"
+      :emitOnAfterEdit="emitOnAfterEdit"
+    />
+    <slot
+      v-else
+      @click.stop="setTrueFlag"
+      name="view"
+      :value="currentValue"
+      :view="viewValue"
+      :row="object"
+      :setTrueFlag="setTrueFlag"
+    />
+  </td>
+</template>
 
 <style lang="scss" scoped>
 .ceil {

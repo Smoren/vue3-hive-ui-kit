@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref, watch } from 'vue';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '.';
 import HiveInput from './components/hive-input/hive-input.vue';
@@ -24,7 +24,7 @@ import HiveTabGroup from './components/hive-tab-group/hive-tab-group.vue';
 import HiveTab from './components/hive-tab-group/hive-tab.vue';
 import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
-import HiveGrid from './components/hive-grid/HiveGrid.vue';
+import HiveGrid from './components/hive-grid/hive-grid.vue';
 import { GridColumns } from './components/hive-grid/hooks/use-hive-grid';
 
 const text = ref('text');
@@ -275,23 +275,22 @@ const create = () =>
     type: 'success',
   });
 
-const log = (value: string) => {
-  console.log(value);
-};
-
 const tab = ref('');
 
 const columns: Ref<GridColumns[]> = ref([
   {
     title: 'Name',
     field: 'name',
-    width: 200,
     editType: 'dropdown-list',
     options: ['a', 'b', 'c'],
   },
   {
     title: 'Age',
     field: 'age',
+  },
+  {
+    title: 'asdsad',
+    field: 'asdsad',
   },
 ]);
 
@@ -393,6 +392,17 @@ const rows = ref([
     average: 1,
   },
 ]);
+
+const grid = ref(null);
+console.log(grid.value);
+
+watch(grid, () => {
+  console.log(grid.value);
+});
+
+const log = () => {
+  console.log('log');
+};
 </script>
 
 <template>
@@ -529,7 +539,7 @@ const rows = ref([
       </widget-wrapper>
       <widget-wrapper title="Splitter" :class="{ 123: 1 }">
         <hive-splitter style="height: 700px">
-          <hive-pane :id="uuidv4()">1</hive-pane>
+          <hive-pane :id="uuidv4()" size="400">1</hive-pane>
           <hive-pane :id="uuidv4()">2</hive-pane>
         </hive-splitter>
       </widget-wrapper>
@@ -565,7 +575,7 @@ const rows = ref([
         <hive-skeleton :visible="true" />
       </widget-wrapper>
       <widget-wrapper title="Grid">
-        <HiveGrid :columns="columns" :data-items="rows"></HiveGrid>
+        <HiveGrid ref="grid" :columns="columns" :data-items="rows" @after-edit="log"></HiveGrid>
       </widget-wrapper>
     </div>
   </div>
