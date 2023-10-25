@@ -19,10 +19,10 @@ import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
   modelValue: string;
-  theme: 'snow' | 'bubble' | '';
-  toolbar: 'essential' | 'minimal' | 'full' | '';
-  placeholder: string;
-  disabled: boolean;
+  theme?: 'snow' | 'bubble' | '';
+  toolbar?: 'essential' | 'minimal' | 'full' | '';
+  placeholder?: string;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {

@@ -5,10 +5,10 @@ import useHivePane from '@/components/hive-splitter/hooks/use-hive-pane';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface Props extends CommonProps {
-  size: number | string | null;
-  minSize: number | string;
-  maxSize: number | string;
-  id: string;
+  size?: number | string | null;
+  minSize?: number | string;
+  maxSize?: number | string;
+  id?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {

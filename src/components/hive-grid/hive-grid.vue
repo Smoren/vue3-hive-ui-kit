@@ -33,7 +33,7 @@ import HiveAutocomplete from '../hive-autocomplete/hive-autocomplete.vue';
 import HiveTextarea from '../hive-textarea/hive-textarea.vue';
 import HiveButton from '../hive-button/hive-button.vue';
 import HiveMultiselect from '../hive-multiselect/hive-multiselect.vue';
-import HiveCheckbox from '../hive-checkbox-group/hive-checkbox-group.vue';
+import HiveCheckbox from '../hive-checkbox/hive-checkbox.vue';
 
 interface Props extends CommonProps {
   dataItems: any[] | undefined;
@@ -258,11 +258,10 @@ defineExpose({ items, grid });
                   style="width: 100%; display: flex; align-items: center; justify-content: center"
                 >
                   <hive-checkbox
-                    :model-value="value"
-                    @change="update($event)"
+                    :checked="value"
                     :is-invalid="!isChangeAllowed"
-                    @focus-out="hideEdit"
                     title=""
+                    @change="update($event), hideEdit()"
                   />
                 </div>
                 <hive-input

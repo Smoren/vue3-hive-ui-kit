@@ -289,8 +289,9 @@ const columns: Ref<GridColumns[]> = ref([
     field: 'age',
   },
   {
-    title: 'asdsad',
-    field: 'asdsad',
+    title: 'bool',
+    field: 'bool',
+    editType: 'checkbox'
   },
 ]);
 

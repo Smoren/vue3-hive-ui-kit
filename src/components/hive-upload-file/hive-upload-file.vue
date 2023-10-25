@@ -21,10 +21,10 @@ import {
 } from '@/common/mixin/emits';
 
 export interface Props extends CommonProps {
-  fileTypes: string;
-  title: string;
-  initialFiles: string[] | null;
-  id: string;
+  fileTypes?: string;
+  title?: string;
+  initialFiles?: string[] | null;
+  id?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {

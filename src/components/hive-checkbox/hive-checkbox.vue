@@ -18,12 +18,13 @@ import { useOnMount } from '@/common/hooks/use-mount';
 import { CurrentOptions, Value } from '@/common/types/select';
 
 export interface Props extends CommonProps {
-  option: [string, CurrentOptions] | string | undefined;
+  option?: [string, CurrentOptions] | string | undefined;
   checked?: boolean;
   modelValue?: boolean;
   titleField?: string;
   valueField?: string;
   minusIcon?: boolean;
+  title?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -49,14 +50,16 @@ watch(currentValue, (newValue) => {
 
 let id: Value | Value[];
 if (Array.isArray(props.option)) {
-  id = props.option[1][props.valueField]
+  id = props.option[1][props.valueField];
+} else if (props.option) {
+  id = props.option;
 } else {
-  props.option ? id = props.option : uuidv4();
+  id = uuidv4();
 }
 </script>
 
 <template>
-  <div class="hive-checkbox__item" v-if="option">
+  <div class="hive-checkbox__item" @click.stop>
     <input
       v-model="currentValue"
       :checked="checked"
@@ -70,7 +73,7 @@ if (Array.isArray(props.option)) {
       @focusin="onFocusin(emit)"
     />
     <label :for="`hive-checkbox-${id}`" :class="{ minus: minusIcon }">
-      {{ id }}
+      {{ title ?? id }}
     </label>
   </div>
 </template>
