@@ -26,7 +26,7 @@ import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 import HiveGrid from './components/hive-grid/hive-grid.vue';
 import { GridColumns } from './components/hive-grid/hooks/use-hive-grid';
-import { VueComponent } from '../dist/src/common/types/value';
+import { VueComponent } from './common/types/value';
 
 const text = ref('text');
 const num = ref(0);
