@@ -34,6 +34,8 @@ import HiveTextarea from '../hive-textarea/hive-textarea.vue';
 import HiveButton from '../hive-button/hive-button.vue';
 import HiveMultiselect from '../hive-multiselect/hive-multiselect.vue';
 import HiveCheckbox from '../hive-checkbox/hive-checkbox.vue';
+import HiveGridRow from './hive-grid-row.vue';
+import { VueComponent } from '../../../src/common/types/value';
 
 interface Props extends CommonProps {
   dataItems: any[] | undefined;
@@ -101,14 +103,14 @@ const pagination = (items: WritableComputedRef<object[]>) => {
   }
 };
 
-const getRowIndex = (index: number) => {
-  return (currentPage.value - 1) * props.itemsOnPage + index;
-};
-
 const currentQuery = ref(props.query);
 
 const updateQuery = (query: string) => {
   currentQuery.value = query;
+};
+
+const getRowIndex = (index: number) => {
+  return (currentPage.value - 1) * props.itemsOnPage + index;
 };
 
 const grid = getCurrentInstance();
@@ -138,8 +140,8 @@ watch(itemsLength, () => {
 //   }
 // };
 
-const rowClick = (item: Record<string, unknown>) => {
-  onRowClick(emit, item);
+const rowClicked = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
+  onRowClick(emit, row, rowRef);
 };
 
 defineExpose({ items, grid });
@@ -158,12 +160,23 @@ defineExpose({ items, grid });
         @queryUpdate="updateQuery"
       />
       <tbody>
-        <tr
-          class="grid-row"
+        <hive-grid-row
           v-for="(item, index) in arrayOfSplittedItems.length === 0 ? items : arrayOfSplittedItems[currentPage - 1]"
           :key="(item as any).id"
-          :class="[!colorAlternation || index % 2 === 0 ? 'even' : 'odd']"
-          @click="rowClick(item as Record<string, unknown>)"
+          :index="index"
+          :columns="columns"
+          :item="(item as Record<string, unknown>)"
+          :items-on-page="itemsOnPage"
+          :current-page="currentPage"
+          :show-add-buttons="showAddButtons"
+          :color-alternation="colorAlternation"
+          :add-row="addRow"
+          :delete-row="deleteRow"
+          @after-edit="onAfterEdit(emit, $event)"
+          @after-change="onAfterChange(emit, $event)"
+          @before-edit="onBeforeEdit(emit, $event)"
+          @before-change="onBeforeChange(emit, $event)"
+          @row-click="rowClicked"
         >
           <hive-grid-ceil v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
             <template #view>
@@ -187,10 +200,6 @@ defineExpose({ items, grid });
             </template>
           </hive-grid-ceil>
           <hive-grid-ceil
-            @after-edit="onAfterEdit(emit, $event)"
-            @after-change="onAfterChange(emit, $event)"
-            @before-edit="onBeforeEdit(emit, $event)"
-            @before-change="onBeforeChange(emit, $event)"
             v-for="element in columns"
             :key="element.field"
             :text="(item as any)[element.field]?.text ?? (item as any)[element.field]"
@@ -309,7 +318,7 @@ defineExpose({ items, grid });
               </slot>
             </template>
           </hive-grid-ceil>
-        </tr>
+        </hive-grid-row>
       </tbody>
     </table>
     <div v-if="arrayOfSplittedItems.length > 1" class="pagination-item">
