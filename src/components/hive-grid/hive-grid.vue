@@ -187,10 +187,10 @@ defineExpose({ items, grid });
             </template>
           </hive-grid-ceil>
           <hive-grid-ceil
-            @after-edit="onAfterEdit(emit)"
-            @after-change="onAfterChange(emit)"
-            @before-edit="onBeforeEdit(emit)"
-            @before-change="onBeforeChange(emit)"
+            @after-edit="onAfterEdit(emit, $event)"
+            @after-change="onAfterChange(emit, $event)"
+            @before-edit="onBeforeEdit(emit, $event)"
+            @before-change="onBeforeChange(emit, $event)"
             v-for="element in columns"
             :key="element.field"
             :text="(item as any)[element.field]?.text ?? (item as any)[element.field]"

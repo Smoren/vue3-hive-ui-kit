@@ -78,28 +78,28 @@ export const onClose = (emit: Close) => {
   emit('close');
 };
 
-export type BeforeEdit = (e: 'beforeEdit') => void;
+export type BeforeEdit = (e: 'beforeEdit', value: unknown) => void;
 
-export const onBeforeEdit = (emit: BeforeEdit) => {
-  emit('beforeEdit');
+export const onBeforeEdit = (emit: BeforeEdit, value: unknown) => {
+  emit('beforeEdit', value);
 };
 
-export type AfterEdit = (e: 'afterEdit') => void;
+export type AfterEdit = (e: 'afterEdit', value: unknown) => void;
 
-export const onAfterEdit = (emit: AfterEdit) => {
-  emit('afterEdit');
+export const onAfterEdit = (emit: AfterEdit, value: unknown) => {
+  emit('afterEdit', value);
 };
 
-export type BeforeChange = (e: 'beforeChange') => void;
+export type BeforeChange = (e: 'beforeChange', value: unknown) => void;
 
-export const onBeforeChange = (emit: BeforeChange) => {
-  emit('beforeChange');
+export const onBeforeChange = (emit: BeforeChange, value: unknown) => {
+  emit('beforeChange', value);
 };
 
-export type AfterChange = (e: 'afterChange') => void;
+export type AfterChange = (e: 'afterChange', value: unknown) => void;
 
-export const onAfterChange = (emit: AfterChange) => {
-  emit('afterChange');
+export const onAfterChange = (emit: AfterChange, value: unknown) => {
+  emit('afterChange', value);
 };
 
 export type Updated = (e: 'updated') => void;

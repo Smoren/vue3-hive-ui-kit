@@ -42,7 +42,7 @@ useOnMount(emit);
 const flag = ref(props.inEditMode);
 
 const setTrueFlag = () => {
-  onBeforeEdit(emit);
+  onBeforeEdit(emit, props.object);
   flag.value = true;
 };
 
@@ -80,9 +80,9 @@ const customChange = (value: string, view = '') => {
 
 const toggleFlag = () => {
   if (flag.value) {
-    onAfterEdit(emit);
+    onAfterEdit(emit, props.object);
   } else {
-    onBeforeEdit(emit);
+    onBeforeEdit(emit, props.object);
   }
   setTimeout(() => {
     flag.value = !flag.value;
@@ -90,11 +90,11 @@ const toggleFlag = () => {
 };
 
 const emitOnAfterEdit = () => {
-  onAfterEdit(emit);
+  onAfterEdit(emit, props.object);
 };
 
 const hideEdit = () => {
-  onAfterEdit(emit);
+  onAfterEdit(emit, props.object);
 
   setTimeout(() => {
     flag.value = false;
@@ -111,11 +111,11 @@ const preventChange = () => {
 const getIsChangeAllowed = () => isChangeAllowed.value;
 
 watch(currentValue, (newValue) => {
-  onBeforeChange(emit);
+  onBeforeChange(emit, props.object);
   if (props.object && props.field && isChangeAllowed.value) {
     // eslint-disable-next-line vue/no-mutating-props
     props.object[props.field] = newValue;
-    onAfterChange(emit);
+    onAfterChange(emit, props.object);
   }
 });
 

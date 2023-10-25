@@ -401,8 +401,8 @@ watch(grid, () => {
   console.log(grid.value);
 });
 
-const log = () => {
-  console.log('log');
+const log = (...args) => {
+  console.log('log', args);
 };
 </script>
 
