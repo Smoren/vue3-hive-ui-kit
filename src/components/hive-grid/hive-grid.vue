@@ -37,6 +37,7 @@ import HiveCheckbox from '../hive-checkbox/hive-checkbox.vue';
 import HiveGridRow from './hive-grid-row.vue';
 import { VueComponent } from '../../../src/common/types/value';
 import type { GridColumns, GridConfig } from './types';
+import { filterItems } from './hooks/use-filter';
 
 interface Props extends CommonProps {
   dataItems: any[] | undefined;
@@ -47,6 +48,8 @@ interface Props extends CommonProps {
   colorAlternation?: boolean;
   hideHeader?: boolean;
   query?: string;
+  filterFields?: string[];
+  filterCaseSensitive?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -76,9 +79,19 @@ useOnMount(emit);
 
 const loaded = ref(false);
 
+const incomeData = ref(props.dataItems);
+
+watch(
+  () => props.dataItems,
+  () => {
+    incomeData.value = props.dataItems;
+  },
+  { deep: true },
+);
+
 const { items, sort, deleteRow, itemsLength, addRow, isLoading } = useHiveGrid({
   columns: props.columns,
-  dataItems: computed(() => props.dataItems),
+  dataItems: incomeData,
 } as GridConfig);
 
 const arrayOfSplittedItems: Ref<Record<string, any>[][]> = ref([]);
@@ -117,6 +130,12 @@ const getRowIndex = (index: number) => {
 const grid = getCurrentInstance();
 
 watch(currentQuery, () => {
+  incomeData.value = filterItems(
+    props.dataItems,
+    currentQuery.value,
+    props.filterFields ?? [],
+    props.filterCaseSensitive ?? false,
+  );
   onQueryUpdate(emit, currentQuery.value);
 });
 

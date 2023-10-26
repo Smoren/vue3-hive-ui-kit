@@ -27,7 +27,6 @@ import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 import HiveGrid from './components/hive-grid/hive-grid.vue';
 import type { GridColumns } from './components/hive-grid/types';
 
-
 const text = ref('text');
 const num = ref(0);
 const isOpenModal = ref(false);
@@ -301,14 +300,18 @@ const columns: Ref<GridColumns[]> = ref([
   },
 ]);
 
-setTimeout(() => {
-  if (rows.value[1]?.name) {
-    rows.value[1].name = 'asdasd';
-  }
-}, 10000);
-
 const rows = ref([
   // { id:1, name:"John", age: 20, createdAt: '2018-02-18T00:00:43-05:00',score: 0.03343 },
+  {
+    id: 2,
+    name: 'Jane',
+    age: 26,
+    createdAt: '2011-10-31',
+    score: 0.03343,
+    bool: false,
+    exact: 'match',
+    average: 1,
+  },
   {
     id: 2,
     name: 'Jane',
@@ -349,7 +352,7 @@ const rows = ref([
     average: 2,
   },
   {
-    id: 5,
+    id: 213213,
     name: '193.23',
     age: 20,
     createdAt: null,
@@ -357,16 +360,6 @@ const rows = ref([
     bool: null,
     exact: 'rematch',
     average: 3,
-  },
-  {
-    id: 5,
-    name: 'Dan',
-    age: 34,
-    createdAt: null,
-    score: 0.03343,
-    bool: null,
-    exact: null,
-    average: 2,
   },
   {
     id: 6,
@@ -600,7 +593,14 @@ const log = () => {
         <hive-skeleton :visible="true" />
       </widget-wrapper>
       <widget-wrapper title="Grid">
-        <HiveGrid ref="grid" :columns="columns" :data-items="rows" @after-edit="log">
+        <HiveGrid
+          ref="grid"
+          :columns="columns"
+          :data-items="rows"
+          @after-edit="log"
+          has-filter
+          :filter-fields="['name', 'bool', 'age']"
+        >
           <template #actions>asdasd</template>
         </HiveGrid>
       </widget-wrapper>

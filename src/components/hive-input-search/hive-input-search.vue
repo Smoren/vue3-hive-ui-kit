@@ -1,6 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
+import HiveInput from '../hive-input/hive-input.vue';
+import {
+  Focusin,
+  Focusout,
+  Input,
+  Keydown,
+  Mount,
+  Unmount,
+  Update,
+  onInput,
+  onUpdateModelValue,
+} from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
+import { useDebounce } from '../../common/hooks/use-debounce';
 
 export interface Props extends CommonProps {
   modelValue: string;
@@ -14,34 +28,24 @@ const props = withDefaults(defineProps<Props>(), {
   timeout: 250,
 });
 
-const emit = defineEmits(['update:modelValue']);
+type Emit = Mount & Unmount & Update<string> & Focusin & Focusout & Keydown & Input<string>;
+const emit = defineEmits<Emit>();
+useOnMount(emit);
 
-const searchInputRef = ref<HTMLElement | null>(null);
-const searchValue = ref('');
+const searchValue = ref(props.modelValue);
 
 const handleBtnClick = () => {
-  if (searchInputRef.value) {
-    searchInputRef.value.focus();
-  }
-
   if (props.modelValue.length) {
     searchValue.value = '';
-    emit('update:modelValue', searchValue.value);
+    onUpdateModelValue(emit, searchValue.value);
   }
 };
 
-const handleInput = (value: string) => {
-  if (searchInputRef.value) {
-    searchInputRef.value.focus();
-  }
+const debounceUpdate = useDebounce(() => onUpdateModelValue(emit, searchValue.value), props.timeout);
 
-  searchValue.value = value;
-
-  let delay;
-  if (delay) clearTimeout(delay);
-  delay = setTimeout(() => {
-    emit('update:modelValue', searchValue.value);
-  }, props.timeout);
+const handleInput = () => {
+  onInput(emit, searchValue.value);
+  debounceUpdate();
 };
 </script>
 
@@ -53,29 +57,19 @@ const handleInput = (value: string) => {
       @click="handleBtnClick"
       :class="{ opened: isOpened }"
     >
-      <img
-        class="img search__btn-img"
-        src="./icons/search.svg"
-        alt="Search button image"
-        v-show="!modelValue.length"
-      />
-      <img
-        class="img search__btn-img"
-        src="./icons/close.svg"
-        alt="Search button image"
-        v-show="modelValue.length"
-      />
+      <img class="img search__btn-img" src="./icons/search.svg" alt="Search button image" v-show="!modelValue.length" />
+      <img class="img search__btn-img" src="./icons/close.svg" alt="Search button image" v-show="modelValue.length" />
     </button>
     <label v-if="label" for="input" />
-    <input
+    <hive-input
+      v-model="searchValue"
       class="input search__input"
       :class="{ active: modelValue.length, opened: isOpened }"
       ref="searchInputRef"
       type="text"
       id="input"
-      :value="modelValue"
       :placeholder="placeholder"
-      @input="handleInput(($event.target as HTMLInputElement)?.value)"
+      @input="handleInput"
     />
   </div>
 </template>
@@ -102,6 +96,8 @@ const handleInput = (value: string) => {
     border-radius: 50%;
     box-shadow: $box-shadow-general;
     transform: translateY(-50%);
+    border: none;
+    background-color: #9a9a9a;
 
     &.opened {
       box-shadow: none;
@@ -121,8 +117,6 @@ const handleInput = (value: string) => {
     &.opened {
       width: 100%;
       padding: 15px;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow-btn;
     }
   }
 

@@ -10,6 +10,7 @@ import {
   type Unmount,
   type Update,
   type Sort,
+  type QueryUpdate,
   onSort,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
@@ -19,6 +20,7 @@ import type { ColumnWithChildren, ColumnWithoutChildren } from '@/components/hiv
 import HiveButton from '../hive-button/hive-button.vue';
 import HiveInputSearch from '../hive-input-search/hive-input-search.vue';
 import type { GridColumns } from './types';
+import { onQueryUpdate } from '../../common/mixin/emits';
 
 interface Props extends CommonProps {
   columns: GridColumns[];
@@ -31,11 +33,9 @@ const props = defineProps<Props>();
 
 const currentQuery = ref(props.query);
 
-type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string> & Sort;
+type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string> & Sort & QueryUpdate;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
-
-const rows = getRows(props.columns as ColumnWithChildren[] | ColumnWithoutChildren[]);
 
 const addTop = () => {
   // handleEvent(new Event('addTop'));
@@ -46,11 +46,11 @@ const addBottom = () => {
 };
 
 const updateQuery = () => {
-  // context.emit('queryUpdate', currentQuery.value);
+  onQueryUpdate(emit, currentQuery.value);
 };
 
 watch(currentQuery, () => {
-  // context.emit('queryUpdate', currentQuery.value);
+  updateQuery();
 });
 </script>
 

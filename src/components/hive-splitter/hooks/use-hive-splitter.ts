@@ -247,7 +247,6 @@ export default function useHiveSplitter(horizontal: boolean) {
     const index = getPaneIndex(pane);
     const min = formatSize(getFormattedSize(pane.props.minSize));
     const max = formatSize(getFormattedSize(pane.props.maxSize));
-    console.log(pane);
     const newPane = {
       id: pane.props.id,
       index,
