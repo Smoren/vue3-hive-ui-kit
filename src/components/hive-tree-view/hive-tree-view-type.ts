@@ -1,7 +1,7 @@
 export interface TreeView {
   img?: string | TreeViewImg;
   name: string;
-  children: TreeView[];
+  children?: TreeView[];
   checked?: boolean;
   choosen?: boolean;
   subdivision_id?: string;
@@ -10,7 +10,7 @@ export interface TreeView {
   hive_tree_node_id?: symbol;
 }
 
-interface TreeViewImg {
+export interface TreeViewImg {
   src: string;
   width: number;
   height: number;

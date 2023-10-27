@@ -26,6 +26,7 @@ import HiveListLoader from './components/hive-list-loader/hive-list-loader.vue';
 import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 import HiveGrid from './components/hive-grid/hive-grid.vue';
 import type { GridColumns } from './components/hive-grid/types';
+import HiveTreeView from './components/hive-tree-view/hive-tree-view.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -418,9 +419,130 @@ const currentTab = ref('1');
 //   }
 // };
 
-const log = () => {
-  console.log('here');
+const log = (...args: unknown[]) => {
+  console.log('here', args);
 };
+
+const treeNodes = ref([
+  {
+    name: '1',
+    id: '1',
+    children: [
+      {
+        name: '3',
+        id: '3',
+      },
+    ],
+  },
+  {
+    name: '2',
+    id: '2',
+  },
+  {
+    name: '4',
+    id: '4',
+    children: [
+      {
+        name: '5',
+        id: '5',
+      },
+      {
+        name: '6',
+        id: '6',
+        children: [
+          {
+            name: '7',
+            id: '7',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: '8',
+    id: '8',
+  },
+  {
+    name: '9',
+    id: '9',
+    children: [
+      {
+        name: '10',
+        id: '10',
+      },
+      {
+        name: '11',
+        id: '11',
+      },
+      {
+        name: '12',
+        id: '12',
+        children: [
+          {
+            name: '13',
+            id: '13',
+          },
+          {
+            name: '14',
+            id: '14',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: '15',
+    id: '15',
+    children: [
+      {
+        name: '16',
+        id: '16',
+        children: [
+          {
+            name: '17',
+            id: '17',
+          },
+          {
+            name: '18',
+            id: '18',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: '19',
+    id: '19',
+  },
+  {
+    name: '20',
+    id: '20',
+    children: [
+      {
+        name: '21',
+        id: '21',
+      },
+      {
+        name: '22',
+        id: '22',
+      },
+      {
+        name: '23',
+        id: '23',
+        children: [
+          {
+            name: '24',
+            id: '24',
+          },
+          {
+            name: '25',
+            id: '25',
+          },
+        ],
+      },
+    ],
+  },
+]);
 </script>
 
 <template>
@@ -603,6 +725,9 @@ const log = () => {
         >
           <template #actions>asdasd</template>
         </HiveGrid>
+      </widget-wrapper>
+      <widget-wrapper title="TreeView">
+        <hive-tree-view :nodes="treeNodes" checked-all checked-option="parent-checked-minus" />
       </widget-wrapper>
     </div>
   </div>

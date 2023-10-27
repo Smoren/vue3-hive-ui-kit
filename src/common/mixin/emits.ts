@@ -65,12 +65,12 @@ export const onInput = <T>(emit: Input<T>, value: T) => {
 
 export type FileAdd = (e: 'onFileAdd') => void;
 
-export const onFileAdd = <T>(emit: FileAdd) => {
+export const onFileAdd = (emit: FileAdd) => {
   emit('onFileAdd');
 };
 export type FileRemove = (e: 'onFileRemove') => void;
 
-export const onFileRemove = <T>(emit: FileRemove) => {
+export const onFileRemove = (emit: FileRemove) => {
   emit('onFileRemove');
 };
 
@@ -126,4 +126,46 @@ export type RowClick = (e: 'rowClick', row: Record<string, unknown>, rowRef: Vue
 
 export const onRowClick = (emit: RowClick, row: Record<string, unknown>, rowRef: VueComponent | null) => {
   emit('rowClick', row, rowRef);
+};
+
+export type DragStart<T> = (e: 'dragStart', value: T) => void;
+
+export const onDragStart = <T>(emit: DragStart<T>, value: T) => {
+  emit('dragStart', value);
+};
+
+export type DragEnd<T> = (e: 'dragEnd', value: T) => void;
+
+export const onDragEnd = <T>(emit: DragEnd<T>, value: T) => {
+  emit('dragEnd', value);
+};
+
+export type NodeChoose<T> = (e: 'nodeChoose', value: T) => void;
+
+export const onNodeChoose = <T>(emit: NodeChoose<T>, value: T) => {
+  emit('nodeChoose', value);
+};
+
+export type NodeCheck<T> = (e: 'nodeCheck', value: T, check: boolean) => void;
+
+export const onNodeCheck = <T>(emit: NodeCheck<T>, value: T, check: boolean) => {
+  emit('nodeCheck', value, check);
+};
+
+export type NodeMounted<T> = (e: 'nodeMounted', value: T) => void;
+
+export const onNodeMounted = <T>(emit: NodeMounted<T>, value: T) => {
+  emit('nodeMounted', value);
+};
+
+export type UpdateCheckedNodes<T> = (e: 'updateCheckedNodes', value: T) => void;
+
+export const onUpdateCheckedNodes = <T>(emit: UpdateCheckedNodes<T>, value: T) => {
+  emit('updateCheckedNodes', value);
+};
+
+export type ChildrenShow = (e: 'childrenShow', id: string, show: boolean) => void;
+
+export const onChildrenShow = (emit: ChildrenShow, id: string, show: boolean) => {
+  emit('childrenShow', id, show);
 };

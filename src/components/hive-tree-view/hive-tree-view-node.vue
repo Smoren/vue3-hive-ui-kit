@@ -1,3 +1,248 @@
+<script setup lang="ts">
+import { computed, type Ref, ref, toRef, watch, onMounted } from 'vue';
+import { CommonProps } from '@/common/mixin/props';
+import { TreeView, TreeImg, TreeViewImg } from './hive-tree-view-type';
+import { Unmount, Mount } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
+import {
+  DragStart,
+  DragEnd,
+  onDragStart,
+  onDragEnd,
+  NodeChoose,
+  onNodeChoose,
+  NodeCheck,
+  onNodeCheck,
+  NodeMounted,
+  onNodeMounted,
+  ChildrenShow,
+} from '@/common/mixin/emits';
+import HiveCheckbox from '@/components/hive-checkbox/hive-checkbox.vue';
+import HiveTreeViewNode from '@/components/hive-tree-view/hive-tree-view-node.vue';
+import { onChildrenShow } from '../../common/mixin/emits';
+
+export interface Props extends CommonProps {
+  node: TreeView;
+  show?: boolean;
+  withCheckbox?: boolean;
+  children: TreeView;
+  choosen?: Record<'node', TreeView | null>;
+  checkedAll?: boolean;
+  imgArray?: TreeImg[];
+  allClosed?: boolean;
+  checkedOption?: 'parent-checked' | 'parent-checked-minus' | 'parent-not-checked';
+  openedNodes: Set<string | unknown>;
+  updateOpened: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  show: true,
+  withCheckbox: true,
+  checkedAll: false,
+  allClosed: false,
+  checkedOption: 'parent-checked',
+});
+
+type Emit = Mount &
+  Unmount &
+  DragStart<TreeView> &
+  DragEnd<TreeView> &
+  NodeChoose<TreeView> &
+  NodeCheck<TreeView> &
+  NodeMounted<TreeView> &
+  ChildrenShow;
+const emit = defineEmits<Emit>();
+useOnMount(emit);
+
+const slots = defineSlots<{
+  main(props: {
+    choose: () => void;
+    img: string | TreeViewImg | undefined;
+    defaultImage: string | undefined;
+    node: TreeView;
+  }): any;
+  after(props: { node: TreeView }): any;
+}>();
+
+onMounted(() => {
+  onNodeMounted<TreeView>(emit, props.node);
+  if (!props.allClosed) {
+    props.openedNodes.add(props.node.id);
+  }
+  if (props.openedNodes.has(props.node.id)) {
+    isShown.value = true;
+  } else {
+    isShown.value = false;
+  }
+});
+
+const isShown = ref(props.show);
+
+if (props.allClosed) {
+  isShown.value = false;
+}
+
+const newUpdateOpened = ref(false);
+
+watch(
+  () => props.updateOpened,
+  () => {
+    newUpdateOpened.value = !newUpdateOpened.value;
+    if (props.openedNodes.has(props.node.id)) {
+      isShown.value = true;
+    } else {
+      isShown.value = false;
+    }
+  },
+);
+
+const toggleIsShown = () => {
+  isShown.value = !isShown.value;
+  if (isShown.value) {
+    props.openedNodes.add(props.node.id);
+  } else {
+    props.openedNodes.delete(props.node.id);
+  }
+};
+
+const hasChildren = computed(() => props.node?.children && props.node?.children.length !== 0);
+
+const options = computed(() => props.children);
+
+const check: Ref<boolean | undefined> = toRef(props.children!, 'checked');
+
+const dragStarted = ref(false);
+
+watch(
+  () => props.imgArray,
+  () => {
+    getImage();
+  },
+);
+
+const image: Ref<string | undefined> = ref('');
+
+const getImage = () => {
+  if (props.imgArray && props.imgArray?.length !== 0) {
+    for (let i = 0; i < props.imgArray?.length; i++) {
+      // @ts-ignore
+      if (props.node[props.imgArray[i].key] === props.imgArray[i].value && props.imgArray[i]?.img) {
+        image.value = props.imgArray[i]?.img;
+      }
+    }
+  }
+};
+
+watch(
+  () => props.imgArray?.length,
+  () => {
+    getImage();
+  },
+);
+
+const drag = (event: DragEvent) => {
+  if (!dragStarted.value) {
+    document.addEventListener('dragend', dragEnd);
+    onDragStart<TreeView>(emit, props.node);
+  }
+  dragStarted.value = true;
+};
+
+const dragEnd = (event: MouseEvent) => {
+  if (dragStarted.value) {
+    dragStarted.value = false;
+    document.removeEventListener('dragend', dragEnd);
+    onDragEnd<TreeView>(emit, props.node);
+  }
+};
+
+const choose = () => {
+  if (options.value) {
+    onNodeChoose<TreeView>(emit, options.value);
+    options.value.choosen = !options.value.choosen;
+  }
+  if (props.choosen?.node && props.choosen?.node.name !== options.value?.name) {
+    props.choosen.node.choosen = false;
+  }
+  if (options.value?.choosen) {
+    props.choosen!.node = options.value;
+  }
+};
+
+watch(check, () => {
+  onNodeCheck<TreeView>(emit, props.children, check.value ?? false);
+  let value = true;
+  props.children?.children?.forEach((el) => {
+    value = value && el.checked!;
+  });
+  if (check.value || value) {
+    props.children?.children?.forEach((el) => {
+      el.checked = check.value;
+    });
+  }
+});
+
+watch(
+  () => props.children?.checked,
+  () => {
+    check.value = props.children?.checked;
+  },
+);
+
+const minusIcon = ref(false);
+
+watch(
+  () => props.children?.children,
+  () => {
+    if (props.checkedOption === 'parent-checked' || props.checkedOption === 'parent-checked-minus') {
+      let value = true;
+      let oneChecked = false;
+      props.children?.children?.forEach((el) => {
+        if (el.checked) {
+          oneChecked = true;
+        }
+        value = value && el.checked!;
+      });
+      if (props.children?.children?.length && props.children?.children.length > 0) {
+        check.value = value;
+      }
+      if (props.checkedOption === 'parent-checked-minus' && oneChecked && !value) {
+        minusIcon.value = true;
+      } else if (props.checkedOption === 'parent-checked-minus' && !oneChecked && !value) {
+        minusIcon.value = false;
+      } else if (value) {
+        minusIcon.value = false;
+      }
+    }
+  },
+  { deep: true },
+);
+
+const nodeCheckPassHelper = (node: TreeView, value: boolean) => {
+  onNodeCheck<TreeView>(emit, node, value);
+};
+
+const nodeChoosePassHelper = (node: TreeView) => {
+  onNodeChoose<TreeView>(emit, node);
+};
+
+const nodeMountPassHelper = (node: TreeView) => {
+  onNodeMounted<TreeView>(emit, node);
+};
+
+const nodeDragEndPassHelper = (node: TreeView) => {
+  onDragEnd<TreeView>(emit, node);
+};
+
+const nodeDragStartPassHelper = (node: TreeView) => {
+  onDragStart<TreeView>(emit, node);
+};
+
+const childrenShowPassHelper = (id: string, show: boolean) => {
+  onChildrenShow(emit, id, show);
+};
+</script>
+
 <template>
   <li>
     <div
@@ -14,7 +259,14 @@
         <img class="arrow" src="./assets/arrow_right_FILL0_wght400_GRAD0_opsz48.svg" />
       </span>
 
-      <HiveCheckbox v-if="withCheckboxes" :name="node?.name" title="" v-model="check" class="name-checkbox" />
+      <HiveCheckbox
+        v-if="withCheckbox"
+        :name="node?.name"
+        title=""
+        v-model="check"
+        class="name-checkbox"
+        :minus-icon="minusIcon"
+      />
 
       <slot name="main" :choose="choose" :img="node?.img" :defaultImage="image" :node="node">
         <span class="name" @click="choose">
@@ -34,26 +286,39 @@
 
       <slot name="after" :node="node" />
     </div>
-    <template v-if="hasChildren">
+    <template v-if="hasChildren && options && options?.children">
       <div v-show="isShown">
         <ul>
           <HiveTreeViewNode
             v-for="(n, index) in node?.children"
-            :key="index"
+            :key="n.id"
             :node="n"
-            :children="options ? options?.children[index] : undefined"
+            :children="options?.children[index]!"
+            :opened-nodes="openedNodes"
             :choosen="choosen"
-            @event="emitHelper"
             :checked-all="checkedAll"
-            :with-checkboxes="withCheckboxes"
+            :with-checkboxe="withCheckbox"
             :img-array="imgArray"
             :allClosed="allClosed"
+            :update-opened="newUpdateOpened"
+            @node-check="nodeCheckPassHelper"
+            @node-choose="nodeChoosePassHelper"
+            @node-mounted="nodeMountPassHelper"
+            @drag-end="nodeDragEndPassHelper"
+            @drag-start="nodeDragStartPassHelper"
+            @children-show="childrenShowPassHelper"
           >
             <template #main="{ choose, node, defaultImage }">
-              <slot name="main" :choose="choose" :img="node?.img" :defaultImage="defaultImage" :node="node" />
+              <slot
+                name="main"
+                :choose="choose"
+                :img="node?.img"
+                :defaultImage="defaultImage"
+                :node="(node as TreeView)"
+              />
             </template>
             <template #after="{ node }">
-              <slot name="after" :node="node" />
+              <slot name="after" :node="(node as TreeView)" />
             </template>
           </HiveTreeViewNode>
         </ul>
@@ -61,236 +326,6 @@
     </template>
   </li>
 </template>
-
-<script lang="ts">
-import { computed, defineComponent, type PropType, type Ref, ref, toRef, watch, onMounted } from 'vue';
-import useComponent from '@/ui-kit/src/common/hooks/base/use-component';
-import useEventHandler, { EventData } from '@/ui-kit/src/common/hooks/base/use-event-handler';
-import HiveCheckbox from '../hive-checkbox/HiveCheckbox.vue';
-import useOnMount from '@/ui-kit/src/common/hooks/base/use-on-mount';
-import type { TreeImg, TreeView } from './hive-tree-view-type';
-import commonProps from '@/ui-kit/src/common/mixins/common-props';
-
-export default defineComponent({
-  name: 'HiveTreeViewNode',
-  props: {
-    node: Object as PropType<TreeView>,
-    show: {
-      type: Boolean,
-      default: true,
-    },
-    modelValueEventName: {
-      type: String,
-      default: 'onAfterChange',
-    },
-    withCheckboxes: {
-      type: Boolean,
-      default: true,
-    },
-    children: Object as PropType<TreeView>,
-    choosen: Object,
-    checkedAll: {
-      type: Boolean,
-      default: false,
-    },
-    imgArray: {
-      type: Object as PropType<TreeImg[]>,
-      required: false,
-    },
-    allClosed: {
-      type: Boolean,
-      default: false,
-    },
-    ...commonProps,
-  },
-  mounted() {
-    useOnMount(this);
-  },
-  emits: ['onDragStart', 'onDragEnd'],
-  setup(props, context) {
-    const { component } = useComponent(props);
-
-    const isShown = ref(props.show);
-
-    if (props.allClosed) {
-      isShown.value = false;
-    }
-
-    const toggleIsShown = () => {
-      isShown.value = !isShown.value;
-    };
-    const hasChildren = computed(() => props.node?.children && props.node?.children.length !== 0);
-
-    const options = computed(() => props.children);
-
-    const check: Ref<boolean | undefined> = toRef(props.children!, 'checked');
-
-    const dragStarted = ref(false);
-
-    watch(
-      () => props.imgArray,
-      () => {
-        getImage();
-      }
-    );
-
-    const image = ref('');
-    const getImage = () => {
-      if (props.imgArray && props.imgArray?.length !== 0) {
-        for (let i = 0; i < props.imgArray?.length; i++) {
-          // @ts-ignore
-          // console.log(props.node[props.imgArray[i].key], props.imgArray[i].value);
-          // @ts-ignore
-          if (props.node[props.imgArray[i].key] === props.imgArray[i].value) {
-            image.value = props.imgArray[i].img;
-          }
-        }
-      }
-    };
-
-    watch(
-      () => props.imgArray?.length,
-      () => {
-        getImage();
-      }
-    );
-
-    const handleEvent = useEventHandler({
-      props,
-      context,
-      modelValue: check,
-      component,
-      modelValueEventName: props.modelValueEventName,
-    });
-
-    const drag = (event: DragEvent) => {
-      if (!dragStarted.value) {
-        document.addEventListener('dragend', dragEnd);
-        console.log(event);
-        handleEvent(new Event('onDragStart'), { node: props.node });
-      }
-      dragStarted.value = true;
-    };
-
-    const dragEnd = (event: MouseEvent) => {
-      if (dragStarted.value) {
-        dragStarted.value = false;
-        document.removeEventListener('dragend', dragEnd);
-        console.log(event);
-        handleEvent(new Event('onDragEnd'), { node: props.node });
-      }
-    };
-
-    const choose = () => {
-      handleEvent(new Event('onChoose'), {
-        name: options.value?.name,
-        ...options.value,
-        id: options.value?.id,
-      });
-      options.value!.choosen = !options.value!.choosen;
-      if (props.choosen?.node && props.choosen?.node.name !== options.value?.name) {
-        props.choosen.node.choosen = false;
-      }
-      if (options.value?.choosen) {
-        props.choosen!.node = options.value;
-      }
-    };
-
-    watch(check, () => {
-      handleEvent(new Event('onCheck'), {
-        name: props.node?.name,
-        checked: check.value,
-        id: props.id,
-        ...props.node,
-      });
-      let value = true;
-      props.children?.children?.forEach((el) => {
-        value = value && el.checked!;
-      });
-      if (check.value || value) {
-        props.children?.children.forEach((el) => {
-          el.checked = check.value;
-        });
-      }
-    });
-
-    watch(
-      () => props.children?.checked,
-      () => {
-        check.value = props.children?.checked;
-      }
-    );
-
-    watch(
-      () => props.children?.children,
-      () => {
-        let value = true;
-        props.children?.children?.forEach((el) => {
-          value = value && el.checked!;
-        });
-        if (props.children?.children.length && props.children?.children.length > 0) {
-          check.value = value;
-        }
-      },
-      { deep: true }
-    );
-
-    onMounted(() => {
-      handleEvent(new Event('onMount'), {
-        id: props.id,
-        ...props.node,
-      });
-    });
-
-    const emitHelper = (event: EventData) => {
-      switch (event.type) {
-        case 'onCheck':
-          handleEvent(new Event(event.type), {
-            ...(event.data as object),
-          });
-          break;
-        case 'onChoose':
-          handleEvent(new Event(event.type), {
-            name: (event?.data as any).name,
-            subdivision_id: (event?.data as any).subdivision_id,
-            classifier_id: (event?.data as any).classifier_id,
-            id: (event?.data as any).id,
-          });
-          break;
-        case 'onMount':
-          handleEvent(new Event(event.type), {
-            ...(event.data as any),
-          });
-          break;
-        case 'onDragStart':
-          handleEvent(new Event(event.type), {
-            ...(event.data as any),
-          });
-        case 'onDragEnd':
-          handleEvent(new Event(event.type), {
-            ...(event.data as any),
-          });
-      }
-    };
-
-    return {
-      isShown,
-      hasChildren,
-      options,
-      check,
-      component,
-      image,
-      dragEnd,
-      handleEvent,
-      toggleIsShown,
-      choose,
-      emitHelper,
-      drag,
-    };
-  },
-  components: { HiveCheckbox },
-});
-</script>
 
 <style lang="scss" scoped>
 ul {

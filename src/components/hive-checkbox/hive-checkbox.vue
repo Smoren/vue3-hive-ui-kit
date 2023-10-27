@@ -48,6 +48,13 @@ watch(currentValue, (newValue) => {
   onUpdateModelValue(emit, newValue);
 });
 
+watch(
+  () => props.modelValue,
+  () => {
+    currentValue.value = props.modelValue;
+  },
+);
+
 let id: Value | Value[];
 if (Array.isArray(props.option)) {
   id = props.option[1][props.valueField];
@@ -121,6 +128,8 @@ $gap: 15px;
 
       &.minus {
         &::before {
+          background-image: $background-img-minus;
+
           background-size: 120%;
         }
       }
@@ -140,12 +149,6 @@ $gap: 15px;
       &::before {
         border-color: var(--border, $border);
         background-image: $background-img;
-      }
-
-      &.minus {
-        &::before {
-          background-image: $background-img-minus;
-        }
       }
     }
 
