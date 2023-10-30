@@ -46,6 +46,15 @@ const { currentOptions } = useOptions({
   fieldValue: props.valueField,
 });
 
+setTimeout(() => {
+  currentOptions.value = useOptions({
+    options: props.options,
+    modelValue: props.modelValue,
+    fieldTitle: props.titleField,
+    fieldValue: props.valueField,
+  }).currentOptions.value;
+});
+
 const changeValue = (value: Value) => {
   const includes = currentValue.value.includes(value);
 
@@ -91,8 +100,8 @@ watch(
       v-for="option in currentOptions"
       :key="option[1][valueField]"
       :option="option"
-      :title-field="titleField"
       :value-field="valueField"
+      :title="option[1][titleField]"
       :minus-icon="minusIcon"
       :checked="(currentValue as string[])?.includes(option[1][valueField])"
       @change="changeValue(option[1][valueField])"

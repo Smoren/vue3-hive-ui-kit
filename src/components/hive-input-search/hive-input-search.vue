@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
 import HiveInput from '../hive-input/hive-input.vue';
+import { CommonProps } from '@/common/mixin/props';
 import {
   Focusin,
   Focusout,
@@ -14,7 +14,7 @@ import {
   onUpdateModelValue,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { useDebounce } from '../../common/hooks/use-debounce';
+import { useDebounce } from '@/common/hooks/use-debounce';
 
 export interface Props extends CommonProps {
   modelValue: string;

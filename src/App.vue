@@ -177,11 +177,11 @@ const optionsArray = [
 // const dd4 = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d')
 const dd4 = ref(null);
 
-const optionsObject = ref(null);
+// const optionsObject = ref(null);
 
-setTimeout(() => {
+// setTimeout(() => {
   // @ts-ignore
-  optionsObject.value = {
+  const optionsObject = {
     '1': {
       title: 'Российская Федерация',
       id: '74fd8aaa-e10a-4fd0-941b-6f6c7249003d',
@@ -193,7 +193,7 @@ setTimeout(() => {
       classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
     },
   };
-}, 1000);
+// }, 1000);
 
 const maritalStatusList = ref([
   {
@@ -648,14 +648,14 @@ const treeNodes = ref([
       </widget-wrapper>
       <widget-wrapper title="Checkbox">
         {{ checkbox }}
-        <!-- <hive-checkbox-group
+        <hive-checkbox-group
           :options="optionsObject ?? undefined"
           v-model="checkbox"
           title-field="title"
           value-field="classifier_id"
-        /> -->
+        />
         <!-- <hive-checkbox-group :options="maritalStatusList" v-model="check" title-field="title" value-field="id" /> -->
-        <hive-checkbox :option="checkName" v-model="check" />
+        <!-- <hive-checkbox :option="checkName" v-model="check" /> -->
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}

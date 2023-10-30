@@ -21,14 +21,12 @@ export interface Props extends CommonProps {
   option?: [string, CurrentOptions] | string | undefined;
   checked?: boolean;
   modelValue?: boolean;
-  titleField?: string;
   valueField?: string;
   minusIcon?: boolean;
   title?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  titleField: 'title',
   valueField: 'value',
   minusIcon: false,
   checked: false,
