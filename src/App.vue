@@ -727,7 +727,7 @@ const treeNodes = ref([
         </HiveGrid>
       </widget-wrapper>
       <widget-wrapper title="TreeView">
-        <hive-tree-view :nodes="treeNodes" checked-all checked-option="parent-checked-minus" />
+        <hive-tree-view :nodes="treeNodes" checked-all checked-option="parent-checked-minus" :with-checkboxes="false"/>
       </widget-wrapper>
     </div>
   </div>

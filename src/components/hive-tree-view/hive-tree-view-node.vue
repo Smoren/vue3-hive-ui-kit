@@ -297,7 +297,7 @@ const childrenShowPassHelper = (id: string, show: boolean) => {
             :opened-nodes="openedNodes"
             :choosen="choosen"
             :checked-all="checkedAll"
-            :with-checkboxe="withCheckbox"
+            :with-checkbox="withCheckbox"
             :img-array="imgArray"
             :allClosed="allClosed"
             :update-opened="newUpdateOpened"

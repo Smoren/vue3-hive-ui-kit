@@ -153,7 +153,7 @@ const nodeDragStartPassHelper = (node: TreeView) => {
       :children="options[index]!"
       :choosen="choosen"
       :checked-all="checkedAll"
-      :with-checkboxes="withCheckboxes"
+      :with-checkbox="withCheckboxes"
       :imgArray="imgArray"
       :allClosed="allClosedRef"
       :checked-option="checkedOption"
