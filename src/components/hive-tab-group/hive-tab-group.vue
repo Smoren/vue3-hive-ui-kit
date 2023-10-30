@@ -74,6 +74,7 @@ watch(
   &__header {
     margin: 0;
     width: 100%;
+    height: 2.5rem;
     max-width: calc(100% + 2px);
     box-shadow: none;
     border: none;
