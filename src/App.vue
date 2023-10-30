@@ -180,19 +180,19 @@ const dd4 = ref(null);
 // const optionsObject = ref(null);
 
 // setTimeout(() => {
-  // @ts-ignore
-  const optionsObject = {
-    '1': {
-      title: 'Российская Федерация',
-      id: '74fd8aaa-e10a-4fd0-941b-6f6c7249003d',
-      classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae12',
-    },
-    '2': {
-      title: 'Республика Беларусь',
-      id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f',
-      classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
-    },
-  };
+// @ts-ignore
+const optionsObject = {
+  '1': {
+    title: 'Российская Федерация',
+    id: '74fd8aaa-e10a-4fd0-941b-6f6c7249003d',
+    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae12',
+  },
+  '2': {
+    title: 'Республика Беларусь',
+    id: 'cefa7ecc-9e64-425d-bfdb-2dc89a0c9c5f',
+    classifier_id: '2e72e478-2e35-437c-aeea-0d6da10138ae',
+  },
+};
 // }, 1000);
 
 const maritalStatusList = ref([
@@ -543,6 +543,31 @@ const treeNodes = ref([
     ],
   },
 ]);
+
+const click = () => {
+  treeNodes.value = [
+    {
+      name: '4',
+      id: '4',
+      children: [
+        {
+          name: '5',
+          id: '5',
+        },
+        {
+          name: '6',
+          id: '6',
+          children: [
+            {
+              name: '7',
+              id: '7',
+            },
+          ],
+        },
+      ],
+    },
+  ];
+};
 </script>
 
 <template>
@@ -562,7 +587,7 @@ const treeNodes = ref([
         <hive-button disabled />
         <hive-button />
         <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
-        <hive-button title="Classes" :class="'test'" @click="handleText" />
+        <hive-button title="Tree" :class="'test'" @click="click" />
         <hive-button title="Notify" :class="'test'" @click="create" />
       </widget-wrapper>
 
@@ -727,7 +752,7 @@ const treeNodes = ref([
         </HiveGrid>
       </widget-wrapper>
       <widget-wrapper title="TreeView">
-        <hive-tree-view :nodes="treeNodes" checked-all checked-option="parent-checked-minus" :with-checkboxes="false"/>
+        <hive-tree-view :nodes="treeNodes" checked-all checked-option="parent-checked-minus" :with-checkboxes="true" />
       </widget-wrapper>
     </div>
   </div>

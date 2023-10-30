@@ -95,12 +95,10 @@ const toReactive = (node?: TreeView[], child?: TreeView[]) => {
 };
 
 watch(
-  props.nodes,
+  () => props.nodes,
   () => {
     options.length = 0;
-    console.log(updateOpened.value);
     updateOpened.value = !updateOpened.value;
-    console.log(updateOpened.value);
     toReactive();
   },
   { deep: true, immediate: true },
