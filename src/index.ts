@@ -20,11 +20,14 @@ import HiveSplitter from '@/components/hive-splitter/hive-splitter.vue';
 import HiveTabGroup from '@/components/hive-tab-group/hive-tab-group.vue';
 import HiveTab from '@/components/hive-tab-group/hive-tab.vue';
 import HiveTextarea from '@/components/hive-textarea/hive-textarea.vue';
+import HiveTreeView from './components/hive-tree-view/hive-tree-view.vue';
+import HiveTreeViewNode from './components/hive-tree-view/hive-tree-view-node.vue';
 import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
 
 import type { VueComponent, Value } from '@/common/types/value';
 import type { UploadableFile } from '@/components/hive-upload-file/hooks/use-file-list';
 import type { GridColumns } from '@/components/hive-grid/types';
+import type { TreeView, TreeViewImg, ChoosenNode, TreeImg } from '@/components/hive-tree-view/hive-tree-view-type';
 
 export {
   HiveAutocomplete,
@@ -49,9 +52,15 @@ export {
   HiveTabGroup,
   HiveTab,
   HiveTextarea,
+  HiveTreeView,
+  HiveTreeViewNode,
   HiveUploadFile,
   type VueComponent,
   type Value,
   type UploadableFile,
   type GridColumns,
+  type TreeView,
+  type TreeViewImg,
+  type ChoosenNode,
+  type TreeImg,
 };
