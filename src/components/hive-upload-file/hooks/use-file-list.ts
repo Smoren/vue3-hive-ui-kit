@@ -1,10 +1,10 @@
-import { Ref, ref } from 'vue';
+import { type Ref, ref } from 'vue';
 
-export interface IinitialFiles {
+export interface InitialFiles {
   file: File;
 }
 
-export default function (initialFilesRef: Ref<IinitialFiles[]>) {
+export default function (initialFilesRef: Ref<InitialFiles[]>) {
   const files: Ref<File[]> = ref([]);
 
   function addFiles(newFiles: File[]) {
@@ -33,7 +33,7 @@ export default function (initialFilesRef: Ref<IinitialFiles[]>) {
   return { files, addFiles, removeFile };
 }
 
-class UploadableFile implements IUploadableFile {
+class UploadableFile implements UploadableFile {
   constructor(file: File) {
     this.file = file;
     this.id = `${file.name}-${file.size}-${file.lastModified}-${file.type}`;
@@ -46,11 +46,11 @@ class UploadableFile implements IUploadableFile {
   status: 'uploading' | 'done' | 'error' | null;
 }
 
-interface IUploadableFile {
+interface UploadableFile {
   file: File;
   id: string;
   url: string;
   status: 'uploading' | 'done' | 'error' | null;
 }
 
-export type { IUploadableFile };
+export type { UploadableFile };

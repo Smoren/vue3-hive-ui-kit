@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import { Ref, ref } from 'vue';
-import HiveUploadFileDropZone from './hive-upload-file-dropzone.vue';
-import FilePreview from './file-preview.vue';
-import useFileList, { IinitialFiles } from './hooks/use-file-list';
+import { type Ref, ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import { CommonProps } from '@/common/mixin/props';
-import { useOnMount } from '@/common/hooks/use-mount';
 import {
-  Mount,
-  Unmount,
-  Focusout,
-  Focusin,
-  Change,
+  type Mount,
+  type Unmount,
+  type Focusout,
+  type Focusin,
+  type Change,
   onFocusin,
   onFocusout,
-  FileAdd,
+  type FileAdd,
   onFileAdd,
-  FileRemove,
+  type FileRemove,
   onFileRemove,
 } from '@/common/mixin/emits';
+import { useOnMount } from '@/common/hooks/use-mount';
+import HiveUploadFileDropZone from './hive-upload-file-dropzone.vue';
+import FilePreview from './file-preview.vue';
+import useFileList, { type InitialFiles } from './hooks/use-file-list';
 
 export interface Props extends CommonProps {
+  id?: string;
   fileTypes?: string;
   title?: string;
   initialFiles?: string[] | null;
-  id?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  id: uuidv4(),
   fileTypes: '',
   title: 'Нажмите сюда чтобы выбрать файлы или перетащите их',
   initialFiles: null,
-  id: uuidv4(),
 });
 
 type Emit = Mount & Unmount & Focusout & Focusin & Change<string> & FileAdd & FileRemove;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const initialFilesRef: Ref<IinitialFiles[]> = ref([]);
+const initialFilesRef: Ref<InitialFiles[]> = ref([]);
 if (props.initialFiles && props.initialFiles.length > 0) {
   for (const name of props.initialFiles) {
     initialFilesRef.value.push({

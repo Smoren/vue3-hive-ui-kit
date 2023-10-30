@@ -9,7 +9,7 @@ import HiveGrid from './components/hive-grid/hive-grid.vue';
 import HiveHtmlEditor from '@/components/hive-html-editor/hive-html-editor.vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import HiveInputSearch from '@/components/hive-input-search/hive-input-search.vue';
-import HiveListLoader from '@/components/hive-list-loader/hive-list-loader.vue'; 
+import HiveListLoader from '@/components/hive-list-loader/hive-list-loader.vue';
 import HiveLoader from '@/components/hive-loader/hive-loader.vue';
 import HiveMultiautocomplete from '@/components/hive-multiautocomplete/hive-multiautocomplete.vue';
 import HiveMultiselect from '@/components/hive-multiselect/hive-multiselect.vue';
@@ -22,7 +22,9 @@ import HiveTab from '@/components/hive-tab-group/hive-tab.vue';
 import HiveTextarea from '@/components/hive-textarea/hive-textarea.vue';
 import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
 
-import { GridColumns } from '@/components/hive-grid/types'
+import type { VueComponent, Value } from '@/common/types/value';
+import type { UploadableFile } from '@/components/hive-upload-file/hooks/use-file-list';
+import type { GridColumns } from '@/components/hive-grid/types';
 
 export {
   HiveAutocomplete,
@@ -48,5 +50,8 @@ export {
   HiveTab,
   HiveTextarea,
   HiveUploadFile,
+  type VueComponent,
+  type Value,
+  type UploadableFile,
   type GridColumns,
 };
