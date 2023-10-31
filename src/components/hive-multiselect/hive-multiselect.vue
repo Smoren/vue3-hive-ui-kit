@@ -143,7 +143,7 @@ onMounted(() => {
             class="hive-multiselect__selected-item"
             @mousedown.stop.prevent
           >
-            {{ currentOptions.get(value)?.title ?? currentOptions.get(value) }}
+            {{ (currentOptions.get(value) && currentOptions.get(value)[titleField]) ?? currentOptions.get(value) }}
             <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
           </div>
         </template>
