@@ -18,7 +18,7 @@ import type { CommonProps } from '@/common/mixin/props';
 
 interface Props extends CommonProps {
   name: string;
-  object: any;
+  object: Record<string, unknown>;
   field: string;
   fields: string[];
   editable: boolean;
@@ -39,6 +39,27 @@ type Emit = Mount & Unmount & BeforeEdit & AfterEdit & BeforeChange & AfterChang
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
+const slots = defineSlots<{
+  edit(props: {
+    click: () => void;
+    value: unknown;
+    update: (value: unknown) => void;
+    isChangeAllowed: boolean;
+    toggle: () => void;
+    customChange: (value: string, view?: string) => void;
+    row: Record<string, unknown> | undefined;
+    hideEdit: () => void;
+    setTrueFlag: () => void;
+  }): any;
+  view(props: {
+    click: () => void;
+    value: unknown;
+    view: string;
+    row: Record<string, unknown> | undefined;
+    setTrueFlag: () => void;
+  }): any;
+}>();
+
 const flag = ref(props.inEditMode);
 
 const setTrueFlag = () => {
@@ -57,7 +78,9 @@ function useAllowedRef<T>(value: T) {
         if (isChangeAllowed.value) {
           value = newValue;
         } else {
-          value = props.object && props.field ? props.object[props.field] : '';
+          if (props.object && props.field) {
+            value = props.object[props.field] as T;
+          }
         }
         trigger();
       },
@@ -134,7 +157,7 @@ watch(currentObject, () => {
     @click="setTrueFlag"
     @keydown.enter="hideEdit"
     :width="width ? width : ''"
-    :style="{ 'background-color': object?.backgroundColor }"
+    :style="{ 'background-color': object?.backgroundColor as string }"
     :class="{ borderTop: borderTop }"
   >
     <slot
@@ -148,6 +171,7 @@ watch(currentObject, () => {
       :customChange="customChange"
       :row="object"
       :hideEdit="hideEdit"
+      :setTrueFlag="setTrueFlag"
     />
     <slot
       v-else

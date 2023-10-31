@@ -748,11 +748,17 @@ const click = () => {
           has-filter
           :filter-fields="['name', 'bool', 'age']"
         >
-          <template #actions>asdasd</template>
+          <template #actions-edit="{ value }">asdasd</template>
         </HiveGrid>
       </widget-wrapper>
       <widget-wrapper title="TreeView">
-        <hive-tree-view :nodes="treeNodes" checked-all checked-option="parent-checked-minus" :with-checkboxes="true" />
+        <hive-tree-view
+          :nodes="treeNodes"
+          checked-all
+          checked-option="parent-checked-minus"
+          :with-checkboxes="true"
+          all-closed
+        />
       </widget-wrapper>
     </div>
   </div>
