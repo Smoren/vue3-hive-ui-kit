@@ -1,7 +1,7 @@
 {
   "name": "vue-hive",
   "private": false,
-  "version": "0.13.7",
+  "version": "0.13.8",
   "type": "module",
   "description": "UI kit for Vue 3",
   "files": [
@@ -35,7 +35,7 @@
     "vue": "^3.3.7"
   },
   "devDependencies": {
-    "@types/node": "^20.8.9",
+    "@types/node": "^20.8.10",
     "@types/uuid": "^9.0.6",
     "@vitejs/plugin-vue": "^4.4.0",
     "sass": "^1.69.5",

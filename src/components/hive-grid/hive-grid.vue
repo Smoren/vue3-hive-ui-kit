@@ -155,7 +155,7 @@ watch(itemsLength, () => {
 
 const slots = useSlots();
 
-console.log(slots);
+// console.log(slots);
 // const logEvent = (event: EventData) => {
 //   if (event.type === 'addTop') {
 //     addRow(true, 0);
