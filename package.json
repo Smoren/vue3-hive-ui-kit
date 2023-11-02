@@ -1,7 +1,7 @@
 {
-  "name": "vue-hive",
+  "name": "vue-hive-ui-kit",
   "private": false,
-  "version": "0.13.8",
+  "version": "0.1.0",
   "type": "module",
   "description": "UI kit for Vue 3",
   "files": [
@@ -23,7 +23,7 @@
   "typings": "./dist/types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hivebdsm/vue-hive-ui-kit.git"
+    "url": "git+https://github.com/Smoren/vue-hive-ui-kit.git"
   },
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
@@ -45,8 +45,8 @@
     "vue-tsc": "^1.8.22"
   },
   "author": {
-    "name": "BDSM",
-    "url": "https://github.com/hivebdsm"
+    "name": "Smoren",
+    "url": "https://github.com/Smoren"
   },
   "contributors": [
     {
