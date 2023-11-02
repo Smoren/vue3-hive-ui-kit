@@ -1,5 +1,5 @@
 {
-  "name": "vue-hive-ui-kit",
+  "name": "vue3-hive-ui-kit",
   "private": false,
   "version": "0.1.0",
   "type": "module",
@@ -23,7 +23,7 @@
   "typings": "./dist/types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Smoren/vue-hive-ui-kit.git"
+    "url": "git+https://github.com/Smoren/vue3-hive-ui-kit.git"
   },
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
