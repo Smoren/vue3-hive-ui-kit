@@ -1,10 +1,10 @@
-import type { VueComponent } from '@/common/types/value';
+import { ComponentInternalInstance } from 'vue';
 
 type Size = null | number | string;
-type OnPaneAdd = (pane: VueComponent) => void;
+type OnPaneAdd = (pane: ComponentInternalInstance) => void;
 
 interface UpdateConfig {
-  paneComponent: VueComponent;
+  paneComponent: ComponentInternalInstance;
   size?: Size;
   min?: Size;
   max?: Size;

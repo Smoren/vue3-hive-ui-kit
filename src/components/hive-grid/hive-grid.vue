@@ -22,6 +22,8 @@ import {
   onAfterChange,
   onBeforeEdit,
   onBeforeChange,
+  UpdatePage,
+  onUpdatePage,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Value } from '@/common/types/select';
@@ -51,6 +53,7 @@ interface Props extends CommonProps {
   query?: string;
   filterFields?: string[];
   filterCaseSensitive?: boolean;
+  page?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -60,6 +63,7 @@ const props = withDefaults(defineProps<Props>(), {
   colorAlternation: true,
   hideHeader: false,
   query: '',
+  page: 1,
 });
 
 type Emit = Mount &
@@ -70,11 +74,12 @@ type Emit = Mount &
   Keydown &
   Search<string> &
   QueryUpdate &
-  RowClick &
+  RowClick<typeof HiveGridRow> &
   AfterChange &
   AfterEdit &
   BeforeEdit &
-  BeforeChange;
+  BeforeChange &
+  UpdatePage;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -96,8 +101,7 @@ const { items, sort, deleteRow, itemsLength, addRow, isLoading } = useHiveGrid({
 } as GridConfig);
 
 const arrayOfSplittedItems: Ref<Record<string, any>[][]> = ref([]);
-const currentPage = ref(1);
-
+const currentPage = ref(props.page);
 const prevPage = (page?: number) => {
   if (currentPage.value === 1) return;
   page === undefined ? currentPage.value-- : (currentPage.value = page);
@@ -115,6 +119,9 @@ const pagination = (items: WritableComputedRef<object[]>) => {
     arrayOfSplittedItems.value.push(
       items.value.slice(i * props.itemsOnPage, i * props.itemsOnPage + props.itemsOnPage),
     );
+  }
+  if (arrayOfSplittedItems.value.length < currentPage.value) {
+    currentPage.value = arrayOfSplittedItems.value.length;
   }
 };
 
@@ -164,8 +171,8 @@ const slots = useSlots();
 //   }
 // };
 
-const rowClicked = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
-  onRowClick(emit, row, rowRef);
+const rowClicked = (row: Record<string, unknown>, rowRef: VueComponent<typeof HiveGridRow> | null) => {
+  onRowClick<typeof HiveGridRow>(emit, row, rowRef);
 };
 
 defineExpose({ items, grid });
@@ -198,152 +205,156 @@ defineExpose({ items, grid });
           :delete-row="deleteRow"
           @row-click="rowClicked"
         >
-          <hive-grid-ceil v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
-            <template #view>
-              <div class="gap">
-                <HiveButton text="AddUp" @click="addRow(true, getRowIndex(index))">
-                  <template #after>
-                    <span class="delete-icon">+</span>
-                  </template>
-                </HiveButton>
-                <HiveButton text="Delete" @click="deleteRow(getRowIndex(index))">
-                  <template #after>
-                    <span class="delete-icon">&times;</span>
-                  </template>
-                </HiveButton>
-                <HiveButton text="AddDown" @click="addRow(false, getRowIndex(index))">
-                  <template #after>
-                    <span class="delete-icon">+</span>
-                  </template>
-                </HiveButton>
-              </div>
-            </template>
-          </hive-grid-ceil>
-          <hive-grid-ceil
-            v-for="element in columns"
-            :key="element.field"
-            :text="(item as any)[element.field]?.text ?? (item as any)[element.field]"
-            :object="(item as Record<string, unknown>)"
-            :field="element.field"
-            :fields="element.fields"
-            :editable="element.editable"
-            :valueType="element.viewType === 'list' ? 'array' : 'string'"
-            :width="element.width"
-            :in-edit-mode="element.inEditMode ?? false"
-            :border-top="!colorAlternation"
-            @after-edit="onAfterEdit(emit, $event)"
-            @after-change="onAfterChange(emit, $event)"
-            @before-edit="onBeforeEdit(emit, $event)"
-            @before-change="onBeforeChange(emit, $event)"
-          >
-            <template #view="{ value, view, row, setTrueFlag }">
-              <slot
-                :name="element.field ?? (element.fields ? element.fields[0] : '')"
-                :item="(item as any)[element.field]"
-                :row="row"
-                :setTrueFlag="setTrueFlag"
-              >
-                <template v-if="element.viewType === 'list'">
-                  <div v-if="!element.separator">
-                    <div v-for="e in value">
-                      {{ e }}
-                    </div>
-                  </div>
-                  <div v-else>
-                    {{ value !== null && Array.isArray(value) ? value.join(element.separator) : value }}
-                  </div>
-                </template>
-                <template v-else-if="element.viewType === 'checkbox'">
-                  <div style="width: 100%; display: flex; align-items: center; justify-content: center">
-                    {{ value ? '✔️' : '❌' }}
-                  </div>
-                </template>
-                <template v-else-if="element.viewType === 'file'">
-                  <img :src="view" alt="Картинка" class="hive-image" />
-                </template>
-                <template v-else-if="element.viewType === 'function'">
-                  <hive-button @click="element.function" />
-                </template>
-                <div v-else>
-                  {{ view ? view : value }}
+          <template #="{ rowRef }">
+            <hive-grid-ceil v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
+              <template #view>
+                <div class="gap">
+                  <HiveButton text="AddUp" @click="addRow(true, getRowIndex(index))">
+                    <template #after>
+                      <span class="delete-icon">+</span>
+                    </template>
+                  </HiveButton>
+                  <HiveButton text="Delete" @click="deleteRow(getRowIndex(index))">
+                    <template #after>
+                      <span class="delete-icon">&times;</span>
+                    </template>
+                  </HiveButton>
+                  <HiveButton text="AddDown" @click="addRow(false, getRowIndex(index))">
+                    <template #after>
+                      <span class="delete-icon">+</span>
+                    </template>
+                  </HiveButton>
                 </div>
-              </slot>
-            </template>
-            <template #edit="{ value, update, isChangeAllowed, toggle, customChange, row, hideEdit, setTrueFlag }">
-              <slot
-                :name="(element.field ?? (element.fields ? element.fields[0] : '')) + '-edit'"
-                :value="value"
-                :update="update"
-                :is-change-allowed="isChangeAllowed"
-                :toggle="toggle"
-                :customChange="customChange"
-                :row="row"
-                :hideEdit="hideEdit"
-                :item="(item as any)[element.field]"
-                :setTrueFlag="setTrueFlag"
-              >
-                <hive-input
-                  v-if="element.editType === 'number'"
-                  type="number"
-                  @click.stop
-                  :model-value="(value as number)"
-                  @input="update"
-                  :is-invalid="!isChangeAllowed"
-                />
-                <hive-drop-down
-                  v-else-if="element.editType === 'dropdown-list'"
-                  :model-value="(value as Value)"
-                  :options="element.options"
-                  :is-invalid="!isChangeAllowed"
-                  focusOnMount
-                  @model-value-updated="update"
-                  @focusout="toggle"
-                />
-                <hive-textarea
-                  v-else-if="element.editType === 'textarea'"
-                  :model-value="(value as string)"
-                  :is-invalid="!isChangeAllowed"
-                  @input="update"
-                  @focusout="hideEdit"
-                />
-                <hive-autocomplete
-                  style="width: fit-content"
-                  v-else-if="element.editType === 'autocomplete'"
-                  @change="update($event)"
-                  :model-value="(value as Value)"
-                  :options="element.options"
-                  :is-invalid="!isChangeAllowed"
-                  @focusout="hideEdit"
-                />
-                <hive-multiselect
-                  v-else-if="element.editType === 'multiselect'"
-                  :model-value="(value as Value[])"
-                  :options="element.options"
-                />
-                <div
-                  v-else-if="element.editType === 'checkbox'"
-                  style="width: 100%; display: flex; align-items: center; justify-content: center"
+              </template>
+            </hive-grid-ceil>
+            <hive-grid-ceil
+              v-for="element in columns"
+              :key="element.field"
+              :text="(item as any)[element.field]?.text ?? (item as any)[element.field]"
+              :object="(item as Record<string, unknown>)"
+              :field="element.field"
+              :fields="element.fields"
+              :editable="element.editable"
+              :valueType="element.viewType === 'list' ? 'array' : 'string'"
+              :width="element.width"
+              :in-edit-mode="element.inEditMode ?? false"
+              :border-top="!colorAlternation"
+              @after-edit="onAfterEdit(emit, $event)"
+              @after-change="onAfterChange(emit, $event)"
+              @before-edit="onBeforeEdit(emit, $event)"
+              @before-change="onBeforeChange(emit, $event)"
+            >
+              <template #view="{ value, view, row, setTrueFlag }">
+                <slot
+                  :name="element.field ?? (element.fields ? element.fields[0] : '')"
+                  :item="(item as any)[element.field]"
+                  :row="row"
+                  :setTrueFlag="setTrueFlag"
+                  :row-ref="rowRef"
                 >
-                  <hive-checkbox
-                    :checked="(value as boolean)"
+                  <template v-if="element.viewType === 'list'">
+                    <div v-if="!element.separator">
+                      <div v-for="e in value">
+                        {{ e }}
+                      </div>
+                    </div>
+                    <div v-else>
+                      {{ value !== null && Array.isArray(value) ? value.join(element.separator) : value }}
+                    </div>
+                  </template>
+                  <template v-else-if="element.viewType === 'checkbox'">
+                    <div style="width: 100%; display: flex; align-items: center; justify-content: center">
+                      {{ value ? '✔️' : '❌' }}
+                    </div>
+                  </template>
+                  <template v-else-if="element.viewType === 'file'">
+                    <img :src="view" alt="Картинка" class="hive-image" />
+                  </template>
+                  <template v-else-if="element.viewType === 'function'">
+                    <hive-button @click="element.function" />
+                  </template>
+                  <div v-else>
+                    {{ view ? view : value }}
+                  </div>
+                </slot>
+              </template>
+              <template #edit="{ value, update, isChangeAllowed, toggle, customChange, row, hideEdit, setTrueFlag }">
+                <slot
+                  :name="(element.field ?? (element.fields ? element.fields[0] : '')) + '-edit'"
+                  :value="value"
+                  :update="update"
+                  :is-change-allowed="isChangeAllowed"
+                  :toggle="toggle"
+                  :customChange="customChange"
+                  :row="row"
+                  :hideEdit="hideEdit"
+                  :item="(item as any)[element.field]"
+                  :setTrueFlag="setTrueFlag"
+                  :row-ref="rowRef"
+                >
+                  <hive-input
+                    v-if="element.editType === 'number'"
+                    type="number"
+                    @click.stop
+                    :model-value="(value as number)"
+                    @input="update"
                     :is-invalid="!isChangeAllowed"
-                    title=""
-                    @change="update($event), hideEdit()"
                   />
-                </div>
-                <hive-input
-                  v-else
-                  @click.stop
-                  :model-value="element.viewType === 'list' ? (value as unknown[]).join(',') : value as string"
-                  @input="update"
-                  :is-invalid="!isChangeAllowed"
-                  focus-on-mount
-                  @focusout="hideEdit"
-                  @keydown.enter="hideEdit"
-                />
-              </slot>
-            </template>
-          </hive-grid-ceil>
+                  <hive-drop-down
+                    v-else-if="element.editType === 'dropdown-list'"
+                    :model-value="(value as Value)"
+                    :options="element.options"
+                    :is-invalid="!isChangeAllowed"
+                    focusOnMount
+                    @model-value-updated="update"
+                    @focusout="toggle"
+                  />
+                  <hive-textarea
+                    v-else-if="element.editType === 'textarea'"
+                    :model-value="(value as string)"
+                    :is-invalid="!isChangeAllowed"
+                    @input="update"
+                    @focusout="hideEdit"
+                  />
+                  <hive-autocomplete
+                    style="width: fit-content"
+                    v-else-if="element.editType === 'autocomplete'"
+                    @change="update($event)"
+                    :model-value="(value as Value)"
+                    :options="element.options"
+                    :is-invalid="!isChangeAllowed"
+                    @focusout="hideEdit"
+                  />
+                  <hive-multiselect
+                    v-else-if="element.editType === 'multiselect'"
+                    :model-value="(value as Value[])"
+                    :options="element.options"
+                  />
+                  <div
+                    v-else-if="element.editType === 'checkbox'"
+                    style="width: 100%; display: flex; align-items: center; justify-content: center"
+                  >
+                    <hive-checkbox
+                      :checked="(value as boolean)"
+                      :is-invalid="!isChangeAllowed"
+                      title=""
+                      @change="update($event), hideEdit()"
+                    />
+                  </div>
+                  <hive-input
+                    v-else
+                    @click.stop
+                    :model-value="element.viewType === 'list' ? (value as unknown[]).join(',') : value as string"
+                    @input="update"
+                    :is-invalid="!isChangeAllowed"
+                    focus-on-mount
+                    @focusout="hideEdit"
+                    @keydown.enter="hideEdit"
+                  />
+                </slot>
+              </template>
+            </hive-grid-ceil>
+          </template>
         </hive-grid-row>
       </tbody>
     </table>

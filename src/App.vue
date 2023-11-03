@@ -27,6 +27,8 @@ import HiveSkeleton from './components/hive-skeleton/hive-skeleton.vue';
 import HiveGrid from './components/hive-grid/hive-grid.vue';
 import type { GridColumns } from './components/hive-grid/types';
 import HiveTreeView from './components/hive-tree-view/hive-tree-view.vue';
+import { VueComponent } from './common/types/value';
+import HiveGridRow from './components/hive-grid/hive-grid-row.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -395,31 +397,81 @@ const rows = ref([
 ]);
 
 const grid = ref(null);
-console.log(grid.value);
-
-watch(grid, () => {
-  console.log(grid.value);
-});
 
 const currentTab = ref('1');
 
-// const prevRow: Ref<VueComponent | null> = ref(null);
+const prevRow: Ref<InstanceType<typeof HiveGridRow> | null> = ref(null);
 
-// const log = (row: Record<string, unknown>, rowRef: VueComponent | null) => {
-//   if (rowRef && rowRef.style) {
-//     rowRef.style.background = 'red';
-//     if (prevRow.value?.style?.background) {
-//       prevRow.value.style.background = null;
-//     }
-//     if (prevRow.value !== rowRef) {
-//       prevRow.value = rowRef;
-//     } else {
-//       prevRow.value = null;
-//     }
-//   }
-// };
+const log = (row: Record<string, unknown>, rowRef: VueComponent<typeof HiveGridRow> | null) => {
+  if (rowRef && rowRef.style) {
+    rowRef.style.background = 'red';
+    if (prevRow.value?.style?.background) {
+      prevRow.value.style.background = 'inherit';
+    }
+    if (prevRow.value !== rowRef) {
+      prevRow.value = rowRef;
+    } else {
+      prevRow.value = null;
+    }
+  }
+};
 
-const log = (...args: unknown[]) => {
+const changeRows = () => {
+  rows.value = [
+    // { id:1, name:"John", age: 20, createdAt: '2018-02-18T00:00:43-05:00',score: 0.03343 },
+    {
+      id: 2,
+      name: 'Jane',
+      age: 26,
+      createdAt: '2011-10-31',
+      score: 0.03343,
+      bool: false,
+      exact: 'match',
+      average: 1,
+    },
+    {
+      id: 2,
+      name: 'Jane',
+      age: 24,
+      createdAt: '2011-10-31',
+      score: 0.03343,
+      bool: true,
+      exact: 'match',
+      average: 1,
+    },
+    {
+      id: 3,
+      name: 'Angel',
+      age: 16,
+      createdAt: '2011-10-30',
+      score: 0.03343,
+      bool: true,
+      exact: 'match',
+      average: null,
+    },
+    {
+      id: 4,
+      name: 'Chris',
+      age: 55,
+      createdAt: '2011-10-11',
+      score: 0.03343,
+      bool: false,
+      exact: null,
+    },
+    {
+      id: 5,
+      name: 'Dan',
+      age: 40,
+      createdAt: '',
+      score: 0.03343,
+      bool: null,
+      exact: 'rematch',
+      average: 2,
+    },
+  ];
+};
+
+const logArgs = (...args: unknown[]) => {
   console.log('here', args);
 };
 
@@ -740,15 +792,19 @@ const click = () => {
         <hive-skeleton :visible="true" />
       </widget-wrapper>
       <widget-wrapper title="Grid">
+        <hive-button @click="changeRows" />
         <HiveGrid
           ref="grid"
           :columns="columns"
           :data-items="rows"
-          @after-edit="log"
           has-filter
           :filter-fields="['name', 'bool', 'age']"
+          :items-on-page="2"
+          @row-click="log"
         >
-          <template #actions-edit="{ value }">asdasd</template>
+          <template #actions="{ value, rowRef }">
+            <div @click="logArgs(rowRef)">asdasd {{ rowRef }}</div>
+          </template>
         </HiveGrid>
       </widget-wrapper>
       <widget-wrapper title="TreeView">
