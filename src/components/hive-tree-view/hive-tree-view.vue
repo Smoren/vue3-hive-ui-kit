@@ -105,6 +105,12 @@ watch(
 );
 
 toReactive();
+  /**
+   * Updates a pane component with the provided arguments.
+   *
+   * @param {onPaneUpdate} paneComponent - The pane component to update.
+   * @param {...args} args - The arguments to update the pane component with.
+   */
 
 const allClosedRef = ref(props.allClosed);
 
