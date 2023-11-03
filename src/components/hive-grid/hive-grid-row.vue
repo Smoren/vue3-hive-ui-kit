@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { Ref, ref, getCurrentInstance } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
 import {
   Focusin,
@@ -12,7 +12,6 @@ import {
   QueryUpdate,
   AfterEdit,
   AfterChange,
-  onQueryUpdate,
   RowClick,
   onRowClick,
   BeforeEdit,
@@ -21,6 +20,7 @@ import {
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Value } from '@/common/types/select';
 import { type GridColumns } from './types';
+import { VueComponent } from '@/common/types/value';
 
 interface Props extends CommonProps {
   item: Record<string, unknown>;
@@ -55,7 +55,11 @@ type Emit = Mount &
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
-const row = ref(null);
+defineSlots<{
+  default(props: { rowRef: VueComponent | null }): any;
+}>();
+
+const row: Ref<VueComponent | null> = ref(null);
 
 const rowClick = (item: Record<string, unknown>) => {
   onRowClick(emit, item, row.value);
@@ -69,7 +73,7 @@ const rowClick = (item: Record<string, unknown>) => {
     :class="[!colorAlternation || index % 2 === 0 ? 'even' : 'odd']"
     @click="rowClick(item as Record<string, unknown>)"
   >
-    <slot />
+    <slot :row-ref="row" />
   </tr>
 </template>
 

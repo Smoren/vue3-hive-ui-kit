@@ -1,9 +1,8 @@
-import { computed, nextTick, type Ref, ref, watch } from 'vue';
+import { computed, nextTick, type Ref, ref, watch, ComponentInternalInstance } from 'vue';
 import getPaneIndex from '@/components/hive-splitter/hooks/helpers/get-pane-index';
 import useSplitterTouch from '@/components/hive-splitter/hooks/use-splitter-touch';
 import getFormattedSize from '@/components/hive-splitter/hooks/helpers/get-formatted-size';
-import type { Pane, onPaneUpdate, UpdateConfig } from '@/components/hive-splitter/types';
-import { VueComponent } from '../../../common/types/value';
+import type { Pane, onPaneUpdate, UpdateConfig, Size } from '@/components/hive-splitter/types';
 
 interface ChangedPane {
   addedPane?: Pane;
@@ -243,17 +242,18 @@ export default function useHiveSplitter(horizontal: boolean) {
     });
   };
 
-  const onPaneAdd = async (pane: VueComponent) => {
+  const onPaneAdd = async (pane: ComponentInternalInstance) => {
     const index = getPaneIndex(pane);
-    const min = formatSize(getFormattedSize(pane.props.minSize));
-    const max = formatSize(getFormattedSize(pane.props.maxSize));
+    const min = formatSize(getFormattedSize(pane.props.minSize as Size));
+    const max = formatSize(getFormattedSize(pane.props.maxSize as Size));
     const newPane = {
-      id: pane.props.id,
+      id: pane.props.id as string,
       index,
       min: Number.isNaN(min) || min === undefined ? 0 : min,
       max: Number.isNaN(max) || max === undefined ? 100 : max,
-      size: pane.props.size === null ? null : getFormattedSize(pane.props.size),
-      givenSize: pane.props.size,
+      size: pane.props.size === null ? null : getFormattedSize(pane.props.size as Size),
+      givenSize: pane.props.size as number,
+      //@ts-ignore
       updateStyle: pane.updateStyle,
     };
 
@@ -278,6 +278,7 @@ export default function useHiveSplitter(horizontal: boolean) {
   };
 
   const onPaneUpdate: onPaneUpdate = ({ paneComponent, ...args }) => {
+    //@ts-ignore
     const pane = indexedPanes.value[paneComponent._.uid];
     Object.entries(args).forEach(([key, value]) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

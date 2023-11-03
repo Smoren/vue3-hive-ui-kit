@@ -1,4 +1,5 @@
 import { VueComponent } from '../types/value';
+import { ComponentPublicInstance } from 'vue';
 
 export type Mount = (e: 'mount') => void;
 
@@ -122,9 +123,9 @@ export const onQueryUpdate = (emit: QueryUpdate, value: string) => {
   emit('queryUpdate', value);
 };
 
-export type RowClick = (e: 'rowClick', row: Record<string, unknown>, rowRef: VueComponent | null) => void;
+export type RowClick<T = ComponentPublicInstance> = (e: 'rowClick', row: Record<string, unknown>, rowRef: VueComponent<T> | null) => void;
 
-export const onRowClick = (emit: RowClick, row: Record<string, unknown>, rowRef: VueComponent | null) => {
+export const onRowClick = <T = ComponentPublicInstance>(emit: RowClick<T>, row: Record<string, unknown>, rowRef: VueComponent<T> | null) => {
   emit('rowClick', row, rowRef);
 };
 
@@ -168,4 +169,10 @@ export type ChildrenShow = (e: 'childrenShow', id: string, show: boolean) => voi
 
 export const onChildrenShow = (emit: ChildrenShow, id: string, show: boolean) => {
   emit('childrenShow', id, show);
+};
+
+export type UpdatePage = (e: 'update:page', page: number) => void;
+
+export const onUpdatePage = (emit: UpdatePage, page: number) => {
+  emit('update:page', page);
 };
