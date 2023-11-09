@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, type Ref, ref, toRef, watch, onMounted, reactive } from 'vue';
+import { type Ref, ref, watch, reactive } from 'vue';
 import { CommonProps } from '@/common/mixin/props';
-import { TreeView, TreeImg, ChoosenNode } from './hive-tree-view-type';
+import { TreeView, TreeImg } from './hive-tree-view-type';
 import { Unmount, Mount } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import {
@@ -109,7 +109,7 @@ toReactive();
 const allClosedRef = ref(props.allClosed);
 
 const debouncedCheck = useDebounce(onUpdateCheckedNodes, 300);
-const debouncedAllClosedChange = useDebounce(() => (allClosedRef.value = false), 300);
+const debouncedAllClosedChange = useDebounce(() => (allClosedRef.value = true), 300);
 
 const nodeCheckPassHelper = (node: TreeView, value: boolean) => {
   if (node.checked) {

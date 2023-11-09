@@ -5,7 +5,8 @@ import HiveCheckbox from '@/components/hive-checkbox/hive-checkbox.vue';
 import HiveCheckboxGroup from '@/components/hive-checkbox-group/hive-checkbox-group.vue';
 import HiveDialog from '@/components/hive-dialog/hive-dialog.vue';
 import HiveDropDown from '@/components/hive-drop-down/hive-drop-down.vue';
-import HiveGrid from './components/hive-grid/hive-grid.vue';
+import HiveGrid from '@/components/hive-grid/hive-grid.vue';
+import HiveGridRow from '@/components/hive-grid/hive-grid-row.vue';
 import HiveHtmlEditor from '@/components/hive-html-editor/hive-html-editor.vue';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import HiveInputSearch from '@/components/hive-input-search/hive-input-search.vue';
@@ -36,6 +37,7 @@ export {
   HiveDialog,
   HiveDropDown,
   HiveGrid,
+  HiveGridRow,
   HiveHtmlEditor,
   HiveInput,
   HiveInputSearch,
