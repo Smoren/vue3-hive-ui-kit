@@ -58,3 +58,4 @@ watch(isActive, () => {
   background-color: transparent;
 }
 </style>
+computed

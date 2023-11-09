@@ -67,9 +67,9 @@ watch(
 .tab-group {
   width: 100%;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 2.5rem 1fr;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
 
   &__header {
     margin: 0;
@@ -102,11 +102,8 @@ watch(
   }
 
   &__content {
-    margin-left: 0;
-    margin-top: 0;
-    margin-right: 0;
+    margin: 0;
     width: 100%;
-    margin-bottom: 1rem;
     bottom: 0;
     margin-top: 0;
     top: 0;
@@ -116,6 +113,8 @@ watch(
     height: 100%;
     position: relative;
     background: #fff;
+    overflow-x: auto;
+    box-sizing: border-box;
   }
 }
 
