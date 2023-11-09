@@ -16,6 +16,7 @@ import {
 } from '@/common/mixin/emits';
 import type { CommonProps } from '@/common/mixin/props';
 import type { CssClassConfig } from './types';
+import { getClassString } from './helpers/get-css-class';
 
 interface Props extends CommonProps {
   name?: string;
@@ -152,21 +153,7 @@ watch(currentObject, () => {
   onUpdated(emit);
 });
 
-const classString = computed(() => {
-  if (props.cssClass === undefined || !props.cssClass) {
-    return '';
-  }
-
-  if (typeof props.cssClass === 'function') {
-    return props.cssClass(props.row);
-  }
-
-  if (Array.isArray(props.cssClass)) {
-    return props.cssClass.join(' ');
-  }
-
-  return props.cssClass;
-});
+const classString = computed(() => getClassString(props.row, props.cssClass));
 </script>
 
 <template>

@@ -848,6 +848,7 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
           has-filter
           :filter-fields="['name', 'bool', 'age']"
           :items-on-page="2"
+          :row-css-class="(row: any) => [`aaa-${row['age']}`, 'bbb']"
           @row-click="log"
         >
           <template #actions="{ value, rowRef }">

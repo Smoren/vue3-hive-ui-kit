@@ -40,6 +40,7 @@ import HiveGridRow from './hive-grid-row.vue';
 import { VueComponent } from '../../../src/common/types/value';
 import type { GridColumns, GridConfig } from './types';
 import { filterItems } from './hooks/use-filter';
+import { CssClassConfig } from './types';
 
 interface Props extends CommonProps {
   dataItems: any[] | undefined;
@@ -53,6 +54,7 @@ interface Props extends CommonProps {
   filterFields?: string[];
   filterCaseSensitive?: boolean;
   page?: number;
+  rowCssClass?: CssClassConfig;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -161,15 +163,6 @@ watch(itemsLength, () => {
 
 const slots = useSlots();
 
-// console.log(slots);
-// const logEvent = (event: EventData) => {
-//   if (event.type === 'addTop') {
-//     addRow(true, 0);
-//   } else if (event.type === 'addBottom') {
-//     addRow(false, itemsLength.value - 1);
-//   }
-// };
-
 const rowClicked = (row: Record<string, unknown>, rowRef: VueComponent<typeof HiveGridRow> | null) => {
   onRowClick<typeof HiveGridRow>(emit, row, rowRef);
 };
@@ -195,13 +188,14 @@ defineExpose({ items, grid });
           :key="(item as any).id"
           :index="index"
           :columns="columns"
-          :item="(item as Record<string, unknown>)"
+          :row="(item as Record<string, unknown>)"
           :items-on-page="itemsOnPage"
           :current-page="currentPage"
           :show-add-buttons="showAddButtons"
           :color-alternation="colorAlternation"
           :add-row="addRow"
           :delete-row="deleteRow"
+          :css-class="rowCssClass"
           @row-click="rowClicked"
         >
           <template #="{ rowRef }">
