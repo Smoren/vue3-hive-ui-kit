@@ -29,6 +29,8 @@ export type ColgroupItem = {
   cell: string;
 };
 
+export type CssClassConfig = string | string[] | ((row: Record<string, unknown>) => string[] | string);
+
 export type GridColumns = {
   field: string;
   fields?: string[];
@@ -55,7 +57,8 @@ export type GridColumns = {
   separator?: string;
   options?: string[];
   inEditMode?: boolean;
-  function?: (...args: any) => void;
+  cssClass?: CssClassConfig;
+  function?: (...args: any) => void; // TODO переименовать логично
 };
 
 export type GridConfig = {
