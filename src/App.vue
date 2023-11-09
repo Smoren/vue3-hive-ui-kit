@@ -290,6 +290,7 @@ const columns: Ref<GridColumns[]> = ref([
   {
     title: 'Age',
     field: 'age',
+    cssClass: (row) => (row.age > 18 ? 'name-grid' : ''),
   },
   {
     title: 'bool',
@@ -820,6 +821,12 @@ const click = () => {
   </div>
   <notifications position="bottom center" />
 </template>
+
+<style lang="scss">
+.name-grid {
+  background-color: red;
+}
+</style>
 
 <style scoped lang="scss">
 .app {

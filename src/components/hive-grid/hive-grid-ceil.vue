@@ -15,20 +15,22 @@ import {
   Mount,
 } from '@/common/mixin/emits';
 import type { CommonProps } from '@/common/mixin/props';
+import type { CssClassConfig } from './types';
 
 interface Props extends CommonProps {
-  name: string;
-  object: Record<string, unknown>;
-  field: string;
-  fields: string[];
-  editable: boolean;
-  valueType: string;
-  width: number;
-  borderTop: boolean;
-  inEditMode: boolean;
+  name?: string;
+  row: Record<string, unknown>; // TODO переименовать ЪуЪ
+  field?: string;
+  fields?: string[];
+  editable?: boolean;
+  valueType?: string;
+  width?: number;
+  borderTop?: boolean;
+  inEditMode?: boolean;
+  cssClass?: CssClassConfig;
 }
 
-const props = withDefaults(defineProps<Partial<Props>>(), {
+const props = withDefaults(defineProps<Props>(), {
   editable: true,
   valueType: 'string',
   borderTop: false,
@@ -63,7 +65,7 @@ const slots = defineSlots<{
 const flag = ref(props.inEditMode);
 
 const setTrueFlag = () => {
-  onBeforeEdit(emit, props.object);
+  onBeforeEdit(emit, props.row);
   flag.value = true;
 };
 
@@ -78,8 +80,8 @@ function useAllowedRef<T>(value: T) {
         if (isChangeAllowed.value) {
           value = newValue;
         } else {
-          if (props.object && props.field) {
-            value = props.object[props.field] as T;
+          if (props.row && props.field) {
+            value = props.row[props.field] as T;
           }
         }
         trigger();
@@ -88,7 +90,7 @@ function useAllowedRef<T>(value: T) {
   });
 }
 
-const currentValue = useAllowedRef(props.object && props.field ? props.object[props.field] : '');
+const currentValue = useAllowedRef(props.row && props.field ? props.row[props.field] : '');
 
 const viewValue = ref('');
 
@@ -109,9 +111,9 @@ const toggleFlag = () => {
 
 watch(flag, () => {
   if (flag.value) {
-    onBeforeEdit(emit, props.object);
+    onBeforeEdit(emit, props.row);
   } else {
-    onAfterEdit(emit, props.object);
+    onAfterEdit(emit, props.row);
   }
 });
 
@@ -121,7 +123,7 @@ const hideEdit = () => {
   }, 10);
 };
 
-const currentObject = computed(() => props.object);
+const currentObject = computed(() => props.row);
 const isChangeAllowed = ref(true);
 
 const preventChange = () => {
@@ -131,45 +133,61 @@ const preventChange = () => {
 const getIsChangeAllowed = () => isChangeAllowed.value;
 
 watch(currentValue, (newValue) => {
-  onBeforeChange(emit, props.object);
-  if (props.object && props.field && isChangeAllowed.value) {
+  onBeforeChange(emit, props.row);
+  if (props.row && props.field && isChangeAllowed.value) {
     // eslint-disable-next-line vue/no-mutating-props
-    props.object[props.field] = newValue;
-    onAfterChange(emit, props.object);
+    props.row[props.field] = newValue;
+    onAfterChange(emit, props.row);
   }
 });
 
 watch(isChangeAllowed, (newValue) => {
   if (!newValue) {
-    currentValue.value = props.object && props.field ? props.object[props.field] : '';
+    currentValue.value = props.row && props.field ? props.row[props.field] : '';
   }
 });
 
 watch(currentObject, () => {
-  currentValue.value = props.object && props.field ? props.object[props.field] : '';
+  currentValue.value = props.row && props.field ? props.row[props.field] : '';
   onUpdated(emit);
+});
+
+const classString = computed(() => {
+  if (props.cssClass === undefined || !props.cssClass) {
+    return '';
+  }
+
+  if (typeof props.cssClass === 'function') {
+    return props.cssClass(props.row);
+  }
+
+  if (Array.isArray(props.cssClass)) {
+    return props.cssClass.join(' ');
+  }
+
+  return props.cssClass;
 });
 </script>
 
 <template>
   <td
-    class="ceil"
+    class="cell"
     @click="setTrueFlag"
     @keydown.enter="hideEdit"
     :width="width ? width : ''"
-    :style="{ 'background-color': object?.backgroundColor as string }"
-    :class="{ borderTop: borderTop }"
+    :style="{ 'background-color': row?.backgroundColor as string }"
+    :class="[{ borderTop: borderTop }, classString]"
   >
     <slot
       @click.left="hideEdit"
       name="edit"
-      v-if="flag && editable && object?.editable !== false"
+      v-if="flag && editable && row?.editable !== false"
       :value="currentValue"
       :update="onInput"
       :isChangeAllowed="getIsChangeAllowed()"
       :toggle="toggleFlag"
       :customChange="customChange"
-      :row="object"
+      :row="row"
       :hideEdit="hideEdit"
       :setTrueFlag="setTrueFlag"
     />
@@ -179,14 +197,14 @@ watch(currentObject, () => {
       name="view"
       :value="currentValue"
       :view="viewValue"
-      :row="object"
+      :row="row"
       :setTrueFlag="setTrueFlag"
     />
   </td>
 </template>
 
 <style lang="scss" scoped>
-.ceil {
+.cell {
   border-width: 0 0 1px 1px;
   border-style: solid;
   border-color: inherit;
