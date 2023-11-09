@@ -31,8 +31,6 @@ import { VueComponent } from './common/types/value';
 import HiveGridRow from './components/hive-grid/hive-grid-row.vue';
 import hiveContextMenu from './components/hive-context-menu/hive-context-menu.vue';
 import { ContextMenuItems } from './components/hive-context-menu/types';
-import { VueComponent } from './common/types/value';
-import HiveGridRow from './components/hive-grid/hive-grid-row.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -294,7 +292,7 @@ const columns: Ref<GridColumns[]> = ref([
   {
     title: 'Age',
     field: 'age',
-    cssClass: (row) => (row.age > 18 ? 'name-grid' : ''),
+    cssClass: (row) => ((row as any)?.age > 18 ? 'name-grid' : ''),
   },
   {
     title: 'bool',
@@ -421,65 +419,6 @@ const log = (row: Record<string, unknown>, rowRef: VueComponent<typeof HiveGridR
   }
 };
 
-const universachangeRows = () => {
-  rows.valLue = [
-    // { id:1, name:"John", age: 20, createdAt: '2018-02-18T00:00:43-05:00',score: 0.03343 },
-    {
-      id: 2,
-      name: 'Jane',
-      age: 26,
-      createdAt: '2011-10-31',
-      score: 0.03343,
-      bool: false,
-      exact: 'match',
-      average: 1,
-    },
-    {
-      id: 2,
-      name: 'Jane',
-      age: 24,
-      createdAt: '2011-10-31',
-      score: 0.03343,
-      bool: true,
-      exact: 'match',
-      average: 1,
-    },
-    {
-      id: 3,
-      name: 'Angel',
-      age: 16,
-      createdAt: '2011-10-30',
-      score: 0.03343,
-      bool: true,
-      exact: 'match',
-      average: null,
-    },
-    {
-      id: 4,
-      name: 'Chris',
-      age: 55,
-      createdAt: '2011-10-11',
-      score: 0.03343,
-      bool: false,
-      exact: null,
-    },
-    {
-      id: 5,
-      name: 'Dan',
-      age: 40,
-      createdAt: '',
-      score: 0.03343,
-      bool: null,
-      exact: 'rematch',
-      average: 2,
-    },
-  ];
-};
-
-const logArgs = (...args: unknown[]) => {
-  console.log(args);
-};
-
 const changeRows = () => {
   rows.value = [
     // { id:1, name:"John", age: 20, createdAt: '2018-02-18T00:00:43-05:00',score: 0.03343 },
@@ -535,8 +474,8 @@ const changeRows = () => {
   ];
 };
 
-const logArgs = (...args: unknown[]) => {
-  console.log('here', args);
+const universalLog = (...args: unknown[]) => {
+  console.log(args);
 };
 
 const treeNodes = ref([
@@ -912,7 +851,7 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
           @row-click="log"
         >
           <template #actions="{ value, rowRef }">
-            <div @click="logArgs(rowRef)">asdasd {{ rowRef }}</div>
+            <div @click="universalLog(rowRef)">asdasd {{ rowRef }}</div>
           </template>
         </HiveGrid>
       </widget-wrapper>
