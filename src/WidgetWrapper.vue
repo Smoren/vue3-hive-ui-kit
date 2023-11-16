@@ -31,7 +31,6 @@ defineProps<{
     gap: 10px;
     flex-direction: column;
     flex-grow: 100;
-    overflow: hidden;
   }
 }
 </style>

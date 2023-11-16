@@ -293,6 +293,9 @@ defineExpose({ items, grid });
                     :model-value="(value as number)"
                     @input="update"
                     :is-invalid="!isChangeAllowed"
+                    focus-on-mount
+                    @focusout="hideEdit"
+                    @keydown.enter="hideEdit"
                   />
                   <hive-drop-down
                     v-else-if="column.editType === 'dropdown-list'"

@@ -292,6 +292,7 @@ const columns: Ref<GridColumns[]> = ref([
   {
     title: 'Age',
     field: 'age',
+    editType: 'number',
     cssClass: (row) => ((row as any)?.age > 18 ? 'name-grid' : ''),
   },
   {
@@ -737,9 +738,7 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
         <br />
         {{ mm }}
         {{ dropdown }}
-        <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" value-field="id" />
-        <hive-drop-down v-model="dd3" :options="optionsObjectSort" value-field="value" title-field="title" />
-        <hive-drop-down v-model="dd3" :options="optionsObjectSort" title-field="titl" value-field="valu" />
+
         <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
         <hive-drop-down v-model="dropdown" :options="options" />
         <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
@@ -771,7 +770,13 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
-        <hive-multiselect :options="yearList" v-model="multiselect" title-field="user_name" value-field="user_id" />
+        <hive-multiselect
+          :options="yearList"
+          v-model="multiselect"
+          title-field="user_name"
+          value-field="user_id"
+          with-null
+        />
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
