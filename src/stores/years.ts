@@ -18,12 +18,15 @@ export const useYearStore = defineStore('years', () => {
       //   { title: '2022', value: 2022 },
       // ];
       years.value = [
-        { user_name: '2023y', user_id: 2023 },
+        {
+          user_name:
+            '2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y 2023y ',
+          user_id: 2023,
+        },
         { user_name: '2021y', user_id: 2021 },
       ];
     }, 1000);
   };
-
 
   return { years, getYears };
 });

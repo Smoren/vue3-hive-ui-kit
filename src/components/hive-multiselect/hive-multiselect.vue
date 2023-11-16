@@ -55,7 +55,7 @@ const configOptions = reactive({
   options: props.options,
   modelValue: props.modelValue,
   withUndefined: props.withUndefined,
-  withNull: props.withNull,
+  withNull: false,
   nullTitle: props.nullTitle,
   fieldTitle: props.titleField,
   fieldValue: props.valueField,
@@ -273,7 +273,7 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
       display: flex;
       align-items: center;
       gap: 5px;
-      white-space: nowrap;
+      white-space: break-spaces;
 
       &__img {
         width: 15px;
