@@ -88,6 +88,15 @@ watch(
   },
 );
 
+watch(
+  () => props.modelValue,
+  () => {
+    if (!Array.isArray(props.modelValue)) {
+      updateCurrentValue(props.modelValue);
+    }
+  },
+);
+
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
 });

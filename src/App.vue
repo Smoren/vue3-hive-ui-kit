@@ -738,7 +738,6 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
         <br />
         {{ mm }}
         {{ dropdown }}
-
         <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
         <hive-drop-down v-model="dropdown" :options="options" />
         <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
@@ -781,6 +780,7 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
         {{ autocomplete }}
+        <hive-button @click="autocomplete = 'sadasd'" />
         <hive-autocomplete v-model="autocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
       </widget-wrapper>
       <widget-wrapper title="Multiautocompelte">
@@ -855,8 +855,10 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
           :items-on-page="2"
           :row-css-class="(row: any) => [`aaa-${row['age']}`, 'bbb']"
           @row-click="log"
+          :extension-fields="['score']"
         >
-          <template #actions="{ value, rowRef }">
+          <template #actions="{ value, row, rowRef }">
+            {{ row }}
             <div @click="universalLog(rowRef)">asdasd {{ rowRef }}</div>
           </template>
         </HiveGrid>
