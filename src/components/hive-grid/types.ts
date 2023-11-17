@@ -64,5 +64,6 @@ export type GridColumns = {
 export type GridConfig = {
   columns: GridColumns[];
   dataItems: ComputedRef<object[]>;
+  extensionFields?: string[];
   rowCssClass?: CssClassConfig;
 };

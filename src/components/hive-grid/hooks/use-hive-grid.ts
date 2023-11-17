@@ -1,4 +1,4 @@
-import { computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import { useDeepClone } from '@/common/hooks/use-deep-clone';
 import type { GridColumns, GridConfig } from '../types';
@@ -8,12 +8,18 @@ type SortedFlags = {
   field: string;
 };
 
-export default function useHiveGrid({ columns, dataItems }: GridConfig) {
+export default function useHiveGrid({ columns, dataItems, extensionFields }: GridConfig) {
   const isLoading = ref(false);
 
   const isKeyInColumns = (columns: GridColumns[], key: string): boolean => {
     let hasKey = false;
-    if (key === 'id' || key === 'backgroundColor' || key === 'editable' || key === 'viewType') {
+    if (
+      key === 'id' ||
+      key === 'backgroundColor' ||
+      key === 'editable' ||
+      key === 'viewType' ||
+      extensionFields?.includes(key)
+    ) {
       hasKey = true;
     } else {
       columns.forEach((column) => {

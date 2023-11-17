@@ -55,6 +55,7 @@ interface Props extends CommonProps {
   filterCaseSensitive?: boolean;
   page?: number;
   rowCssClass?: CssClassConfig;
+  extensionFields?: string[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -99,6 +100,7 @@ watch(
 const { items, sort, deleteRow, itemsLength, addRow, isLoading } = useHiveGrid({
   columns: props.columns,
   dataItems: incomeData,
+  extensionFields: props.extensionFields,
 } as GridConfig);
 
 const arrayOfSplittedItems: Ref<Record<string, any>[][]> = ref([]);
