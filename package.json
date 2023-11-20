@@ -15,7 +15,8 @@
     "serve": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "preview": "vite preview",
-    "test": "exit 0"
+    "test": "exit 0",
+    "prepublishOnly": "npm run build"
   },
   "main": "./dist/vue-hive.umd.js",
   "module": "./dist/vue-hive.es.js",
