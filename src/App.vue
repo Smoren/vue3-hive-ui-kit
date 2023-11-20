@@ -656,6 +656,7 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
     closeOnClick: true,
   },
 ]);
+
 </script>
 
 <template>

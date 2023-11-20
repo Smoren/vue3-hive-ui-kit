@@ -23,7 +23,6 @@ import { Options, Value } from '@/common/types/select';
 export interface Props extends CommonProps {
   options: Options | undefined;
   modelValue: Value;
-  modelValueEventName?: string;
   disabled?: boolean;
   withUndefined?: boolean;
   withNull?: boolean;
@@ -100,6 +99,8 @@ watch(
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
 });
+
+defineExpose({ current });
 </script>
 
 <template>
@@ -116,7 +117,7 @@ onMounted(() => {
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
-        @keydown.enter="updateCurrentValue(activeValue)"
+        @keydown.enter="updateCurrentValue(activeValue), onUpdateModelValue<Value>(emit, activeValue)"
         @keydown.esc="collapse"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
