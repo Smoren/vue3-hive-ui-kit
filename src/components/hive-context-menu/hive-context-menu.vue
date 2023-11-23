@@ -15,7 +15,7 @@ import {
   onCloseContextMenu,
 } from '@/common/mixin/emits';
 import { onContextItemClick } from '../../common/mixin/emits';
-import { useIsOutOfBorders } from './hooks/use-is-out-of-borders';
+import { useIsOutOfBordersWidth, useIsOutOfBordersHeight } from './hooks/use-is-out-of-borders';
 
 export interface Props extends CommonProps {
   items: ContextMenuItems | undefined;
@@ -50,11 +50,25 @@ const position = reactive({
   top: props.top,
 });
 
-const showContextMenu = (e: PointerEvent) => {
+const showContextMenu = async (e: PointerEvent) => {
   e.preventDefault();
   show.value = true;
   position.left = e.pageX;
   position.top = e.pageY;
+  await nextTick();
+  if (contextMenu.value && show.value) {
+    useIsOutOfBordersHeight(contextMenu.value);
+    if (useIsOutOfBordersWidth(contextMenu.value)) {
+      outOfBorders.value = true;
+      position.left = position.left - contextMenu.value.offsetWidth;
+    }
+    if (useIsOutOfBordersHeight(contextMenu.value)) {
+      position.top = position.top - contextMenu.value.offsetHeight;
+      outOfBorders.value = true;
+    } else {
+      outOfBorders.value = false;
+    }
+  }
 };
 
 const hideContextMenu = () => {
@@ -63,18 +77,6 @@ const hideContextMenu = () => {
 };
 
 const outOfBorders = ref(props.onLeftSide);
-
-watch(show, async () => {
-  await nextTick();
-  if (contextMenu.value && show.value) {
-    if (useIsOutOfBorders(contextMenu.value)) {
-      outOfBorders.value = true;
-      position.left = position.left - contextMenu.value.offsetWidth;
-    } else {
-      outOfBorders.value = false;
-    }
-  }
-});
 
 onMounted(() => {
   parentNode.value = instance?.parent?.vnode.el;

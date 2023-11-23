@@ -81,7 +81,7 @@ const handleClick = (event: MouseEvent) => {
     v-else-if="isItem"
     class="item"
     @mouseover="showChildren = true"
-    @mouseleave="showChildren = true"
+    @mouseleave="showChildren = false"
     @click="handleClick"
     :class="{'has-children': (item as ContextMenuItem).items !== undefined}"
   >

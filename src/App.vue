@@ -628,25 +628,6 @@ const click = () => {
 const contextMenuItems: Ref<ContextMenuItems> = ref([
   {
     label: 'Дейтсвия',
-    items: [
-      {
-        label: 'Скачать',
-        function: () => {
-          console.log('вы кликлнули на скачать');
-        },
-      },
-      {
-        label: 'Удалить',
-        items: [
-          {
-            label: 'Точно?',
-            function: () => {
-              console.log('вы кликлнули на скачать');
-            },
-          },
-        ],
-      },
-    ],
   },
   {
     separator: true,
@@ -656,7 +637,6 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
     closeOnClick: true,
   },
 ]);
-
 </script>
 
 <template>
