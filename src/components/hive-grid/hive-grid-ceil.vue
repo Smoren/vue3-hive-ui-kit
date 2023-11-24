@@ -23,7 +23,7 @@ interface Props extends CommonProps {
   row: Record<string, unknown>; // TODO переименовать ЪуЪ
   field?: string;
   fields?: string[];
-  editable?: boolean;
+  editable?: boolean | ((row: Record<string, unknown>) => boolean);
   valueType?: string;
   width?: number;
   borderTop?: boolean;
@@ -168,7 +168,7 @@ const classString = computed(() => getClassString(props.row, props.cssClass));
     <slot
       @click.left="hideEdit"
       name="edit"
-      v-if="flag && editable && row?.editable !== false"
+      v-if="flag && (typeof editable === 'boolean' ? editable : editable(row)) && row?.editable !== false"
       :value="currentValue"
       :update="onInput"
       :isChangeAllowed="getIsChangeAllowed()"

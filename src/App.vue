@@ -288,6 +288,7 @@ const columns: Ref<GridColumns[]> = ref([
     field: 'name',
     editType: 'dropdown-list',
     options: ['a', 'b', 'c'],
+    editable: (row) => row?.age > 18,
   },
   {
     title: 'Age',
