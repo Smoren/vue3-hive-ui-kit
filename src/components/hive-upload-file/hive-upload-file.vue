@@ -25,6 +25,7 @@ export interface Props extends CommonProps {
   fileTypes?: string;
   title?: string;
   initialFiles?: string[] | null;
+  multiple?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   fileTypes: '',
   title: 'Нажмите сюда чтобы выбрать файлы или перетащите их',
   initialFiles: null,
+  multiple: false,
 });
 
 type Emit = Mount & Unmount & Focusout & Focusin & Change<string> & FileAdd & FileRemove;
@@ -59,13 +61,16 @@ const handleAdd = () => {
 };
 
 function onInputChange(e: Event) {
-  console.log('here');
   if (e.target === null) return;
   addFiles((e.target as HTMLInputElement).files as unknown as File[]);
   handleAdd();
   //@ts-ignore
   e.target.value = null;
 }
+
+defineExpose({
+  files,
+});
 </script>
 
 <template>
@@ -90,6 +95,7 @@ function onInputChange(e: Event) {
           @focusin="onFocusin(emit)"
           @focusout="onFocusout(emit)"
           :accept="fileTypes !== ' ' ? fileTypes : '*'"
+          :multiple="multiple"
         />
       </label>
       <ul class="image-list" v-show="files.length !== 0 || initialFilesRef.length !== 0">

@@ -31,6 +31,7 @@ import { VueComponent } from '../common/types/value';
 import HiveGridRow from '../components/hive-grid/hive-grid-row.vue';
 import hiveContextMenu from '../components/hive-context-menu/hive-context-menu.vue';
 import { ContextMenuItems } from '../components/hive-context-menu/types';
+import type { HiveUploadFilesType } from '@/components/hive-upload-file/hive-upload-file-type.ts';
 
 const text = ref('text');
 const num = ref(0);
@@ -638,8 +639,12 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
   },
 ]);
 
+const files: Ref<HiveUploadFilesType | null> = ref(null);
+
 const handleAdd = () => {
-  console.log('add');
+  if (files.value?.files[0]) {
+    console.log('add', files.value?.files[0].url);
+  }
 };
 </script>
 
@@ -777,7 +782,7 @@ const handleAdd = () => {
         />
       </widget-wrapper>
       <widget-wrapper title="HiveUploadFile">
-        <hive-upload-file @file-add="handleAdd" />
+        <hive-upload-file @file-add="handleAdd" ref="files" multiple />
       </widget-wrapper>
       <widget-wrapper title="Splitter" :class="{ 123: 1 }">
         <hive-splitter style="height: 400px">

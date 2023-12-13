@@ -29,6 +29,7 @@ import type { VueComponent, Value } from '@/common/types/value';
 import type { UploadableFile } from '@/components/hive-upload-file/hooks/use-file-list';
 import type { GridColumns } from '@/components/hive-grid/types';
 import type { TreeView, TreeViewImg, ChoosenNode, TreeImg } from '@/components/hive-tree-view/hive-tree-view-type';
+import type { HiveUploadFilesType } from './components/hive-upload-file/hive-upload-file-type';
 
 export {
   HiveAutocomplete,
@@ -65,4 +66,5 @@ export {
   type TreeViewImg,
   type ChoosenNode,
   type TreeImg,
+  type HiveUploadFilesType,
 };
