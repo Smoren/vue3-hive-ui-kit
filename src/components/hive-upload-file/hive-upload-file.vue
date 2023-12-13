@@ -59,6 +59,7 @@ const handleAdd = () => {
 };
 
 function onInputChange(e: Event) {
+  console.log('here');
   if (e.target === null) return;
   addFiles((e.target as HTMLInputElement).files as unknown as File[]);
   handleAdd();

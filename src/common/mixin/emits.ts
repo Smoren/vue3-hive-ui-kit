@@ -65,15 +65,15 @@ export const onInput = <T>(emit: Input<T>, value: T) => {
   emit('input', value);
 };
 
-export type FileAdd = (e: 'onFileAdd') => void;
+export type FileAdd = (e: 'fileAdd') => void;
 
 export const onFileAdd = (emit: FileAdd) => {
-  emit('onFileAdd');
+  emit('fileAdd');
 };
-export type FileRemove = (e: 'onFileRemove') => void;
+export type FileRemove = (e: 'fileRemove') => void;
 
 export const onFileRemove = (emit: FileRemove) => {
-  emit('onFileRemove');
+  emit('fileRemove');
 };
 
 export type Close = (e: 'close') => void;

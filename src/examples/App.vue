@@ -637,6 +637,10 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
     closeOnClick: true,
   },
 ]);
+
+const handleAdd = () => {
+  console.log('add');
+};
 </script>
 
 <template>
@@ -773,7 +777,7 @@ const contextMenuItems: Ref<ContextMenuItems> = ref([
         />
       </widget-wrapper>
       <widget-wrapper title="HiveUploadFile">
-        <hive-upload-file />
+        <hive-upload-file @file-add="handleAdd" />
       </widget-wrapper>
       <widget-wrapper title="Splitter" :class="{ 123: 1 }">
         <hive-splitter style="height: 400px">
