@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import HiveInput from '../hive-input/hive-input.vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import {
   Focusin,
   Focusout,

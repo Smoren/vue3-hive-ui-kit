@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, provide } from 'vue';
 import useHiveSplitter from '@/components/hive-splitter/hooks/use-hive-splitter';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { Mount, Unmount } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 

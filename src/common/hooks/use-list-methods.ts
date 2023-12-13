@@ -1,8 +1,9 @@
-import { Ref, computed, ref, toRaw, watch } from 'vue';
-import { InputExpose } from '@/components/hive-input/hive-input.vue';
-import { Value, Options, CurrentOptionsRef } from '@/common/types/select';
+import { Ref, computed, ref, watch } from 'vue';
+import type { InputExpose } from '@/components/hive-input/hive-input.vue';
+import type { Options } from '@/common/types/option';
+import { Value, CurrentOptionsRef } from '@/common/types/select';
 import { useOptions } from '@/common/hooks/use-options';
-import { smartSearch } from './use-search';
+import { useSearch } from './use-search';
 
 export type ListMethodsConfig = {
   options: Options | undefined;
@@ -113,7 +114,7 @@ export const useListMethods = ({
   };
 
   watch(searchQuery, () => {
-    smartSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions);
+    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions);
 
     // if (searchQuery.value) {
     //   filteredOptions.value.clear();

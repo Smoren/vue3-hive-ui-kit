@@ -1,7 +1,7 @@
 import { Ref } from 'vue';
 import { Value } from '../types/value';
 
-export const smartSearch = (
+export const useSearch = (
   input: Ref<Map<any, any>>,
   searchString: string,
   modelValue: Value | Value[],

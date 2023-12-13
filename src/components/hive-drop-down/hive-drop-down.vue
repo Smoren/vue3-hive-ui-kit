@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, watch } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
   Focusout,
@@ -18,7 +18,8 @@ import {
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from '@/common/hooks/use-list-methods';
-import { Options, Value } from '@/common/types/select';
+import type { Options } from '@/common/types/option';
+import { Value } from '@/common/types/select';
 
 export interface Props extends CommonProps {
   options: Options | undefined;

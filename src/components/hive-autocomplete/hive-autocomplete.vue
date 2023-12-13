@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, watch } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
   Focusout,

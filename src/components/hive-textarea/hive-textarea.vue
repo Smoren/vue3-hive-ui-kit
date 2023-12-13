@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 

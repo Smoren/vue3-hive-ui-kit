@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { ContextMenuItem, ContextMenuItems } from './types';
 import HiveContextMenuItem from './hive-context-menu-item.vue';
 import { getCurrentInstance, ref, onMounted, reactive, onUnmounted, watch } from 'vue';

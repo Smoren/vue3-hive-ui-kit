@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Ref, ref, getCurrentInstance, computed } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import {
   Focusin,
   Focusout,

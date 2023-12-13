@@ -5,5 +5,4 @@ export type VueComponent<T = ComponentPublicInstance> = T extends abstract new (
   : ComponentPublicInstance;
 export type Value = string | number | boolean | unknown | string[];
 
-export type CurrentValue = Ref<Value>;
 export type ActiveValue = Ref<Value | null>;

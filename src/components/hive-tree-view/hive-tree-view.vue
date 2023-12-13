@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type Ref, ref, watch, reactive } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { TreeView, TreeImg } from './hive-tree-view-type';
 import { Unmount, Mount } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
@@ -105,12 +105,6 @@ watch(
 );
 
 toReactive();
-  /**
-   * Updates a pane component with the provided arguments.
-   *
-   * @param {onPaneUpdate} paneComponent - The pane component to update.
-   * @param {...args} args - The arguments to update the pane component with.
-   */
 
 const allClosedRef = ref(props.allClosed);
 

@@ -9,7 +9,7 @@ defineEmits(['remove']);
 
 <template>
   <component :is="tag" class="file-preview">
-    <img src="@/components/hive-upload-file/assets/attach_file_FILL0_wght400_GRAD0_opsz48.svg" />
+    <img src="@/components/hive-upload-file/assets/attach_file.svg" />
     <div>
       {{ file.file.name }}
     </div>

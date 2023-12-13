@@ -1,7 +1,7 @@
 import { computed, nextTick, type Ref, ref, watch, ComponentInternalInstance } from 'vue';
-import getPaneIndex from '@/components/hive-splitter/hooks/helpers/get-pane-index';
+import getPaneIndex from '@/components/hive-splitter/helpers/get-pane-index';
 import useSplitterTouch from '@/components/hive-splitter/hooks/use-splitter-touch';
-import getFormattedSize from '@/components/hive-splitter/hooks/helpers/get-formatted-size';
+import getFormattedSize from '@/components/hive-splitter/helpers/get-formatted-size';
 import type { Pane, onPaneUpdate, UpdateConfig, Size } from '@/components/hive-splitter/types';
 
 interface ChangedPane {
@@ -142,7 +142,7 @@ export default function useHiveSplitter(horizontal: boolean) {
       }
     });
 
-    if (Math.abs(spaceToAllocate) < 0.1) return; // Ok.
+    if (Math.abs(spaceToAllocate) < 0.1) return;
     panes.value.forEach((pane) => {
       if (!addedPane || addedPane.givenSize === null || addedPane.id === pane.id) {
         pane.size = formatSize(Math.max(Math.min(equalSpace, pane.max), pane.min));
@@ -189,16 +189,6 @@ export default function useHiveSplitter(horizontal: boolean) {
       equalizeAfterAdd(changedPane);
     } else {
       equalize();
-    }
-    if (isReady.value) {
-      // handleEvent(
-      //   new Event('resized'),
-      //   panes.value.map((pane) => ({
-      //     min: pane.min,
-      //     max: pane.max,
-      //     size: pane.size,
-      //   })),
-      // );
     }
   };
 
@@ -264,15 +254,6 @@ export default function useHiveSplitter(horizontal: boolean) {
       await nextTick(() => {
         redoSplitters();
         resetPaneSizes({ addedPane: panes.value[index] });
-
-        // handleEvent(new Event('pane-add'), {
-        //   index,
-        //   panes: panes.value.map((pane) => ({
-        //     min: pane.min,
-        //     max: pane.max,
-        //     size: pane.size,
-        //   })),
-        // });
       });
     }
   };

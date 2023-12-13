@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { onMounted, watch, ref, getCurrentInstance } from 'vue';
 import useHivePane from '@/components/hive-splitter/hooks/use-hive-pane';
 import { v4 as uuidv4 } from 'uuid';

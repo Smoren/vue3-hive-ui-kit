@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, watch } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import HiveInput from '@/components/hive-input/hive-input.vue';
 import {
   Focusout,
@@ -17,7 +17,8 @@ import {
   onSearch,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { Options, Value } from '@/common/types/select';
+import type { Options } from '@/common/types/option';
+import { Value } from '@/common/types/select';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 

@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import App from './App.vue';
+import App from './examples/App.vue';
 import './style.scss';
 import Notification from '@/plugins/hive-notification';
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { ContextMenuSeparator, ContextMenuItem } from './types';
 import { computed, ref, onMounted, getCurrentInstance, reactive, watch } from 'vue';
 import { useIsSeparator } from './hooks/use-is-separator';

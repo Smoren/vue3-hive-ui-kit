@@ -1,6 +1,6 @@
 import { computed, type ComputedRef, inject, type Ref, ref } from 'vue';
 import type { OnPaneAdd, Size, onPaneUpdate } from '@/components/hive-splitter/types';
-import getFormattedSize from '@/components/hive-splitter/hooks/helpers/get-formatted-size';
+import getFormattedSize from '@/components/hive-splitter/helpers/get-formatted-size';
 
 interface PaneConfig {
   size: Size;

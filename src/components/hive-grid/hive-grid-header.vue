@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import {
   type Focusin,
   type Focusout,
@@ -14,9 +14,7 @@ import {
   onSort,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
-import getRows from '@/components/hive-grid/helpers/get-rows';
 import type { Value } from '@/common/types/select';
-import type { ColumnWithChildren, ColumnWithoutChildren } from '@/components/hive-grid/types';
 import HiveButton from '../hive-button/hive-button.vue';
 import HiveInputSearch from '../hive-input-search/hive-input-search.vue';
 import type { GridColumns } from './types';

@@ -14,9 +14,10 @@ import {
   Unmount,
   Mount,
 } from '@/common/mixin/emits';
-import type { CommonProps } from '@/common/mixin/props';
+import type { CommonProps } from '@/common/types/props';
 import type { CssClassConfig } from './types';
 import { getClassString } from './helpers/get-css-class';
+import { useAllowedRef } from './hooks/use-allowed-ref';
 
 interface Props extends CommonProps {
   name?: string;
@@ -70,28 +71,14 @@ const setTrueFlag = () => {
   flag.value = true;
 };
 
-function useAllowedRef<T>(value: T) {
-  return customRef((track, trigger) => {
-    return {
-      get() {
-        track();
-        return value;
-      },
-      set(newValue: T) {
-        if (isChangeAllowed.value) {
-          value = newValue;
-        } else {
-          if (props.row && props.field) {
-            value = props.row[props.field] as T;
-          }
-        }
-        trigger();
-      },
-    };
-  });
-}
+const isChangeAllowed = ref(true);
 
-const currentValue = useAllowedRef(props.row && props.field ? props.row[props.field] : '');
+const currentValue = useAllowedRef(
+  props.row && props.field ? props.row[props.field] : '',
+  isChangeAllowed,
+  props.row,
+  props.field,
+);
 
 const viewValue = ref('');
 
@@ -125,7 +112,6 @@ const hideEdit = () => {
 };
 
 const currentObject = computed(() => props.row);
-const isChangeAllowed = ref(true);
 
 const preventChange = () => {
   isChangeAllowed.value = false;

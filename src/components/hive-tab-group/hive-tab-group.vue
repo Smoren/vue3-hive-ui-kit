@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { Mount, Unmount, Update } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import useHiveTabGroup from './hooks/use-hive-tab-group';

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type Ref, ref, toRef, watch, onMounted } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import { TreeView, TreeImg, TreeViewImg } from './hive-tree-view-type';
 import { Unmount, Mount } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
@@ -256,7 +256,7 @@ const childrenShowPassHelper = (id: string, show: boolean) => {
       @drag="drag"
     >
       <span v-if="hasChildren" class="collapse-item" @click="toggleIsShown" :class="{ rotated: isShown }">
-        <img class="arrow" src="./assets/arrow_right_FILL0_wght400_GRAD0_opsz48.svg" />
+        <img class="arrow" src="./assets/arrow_right.svg" />
       </span>
 
       <HiveCheckbox

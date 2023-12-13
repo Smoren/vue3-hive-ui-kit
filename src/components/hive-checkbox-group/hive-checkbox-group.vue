@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Ref, ref, watch } from 'vue';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import {
   Mount,
   Unmount,
@@ -13,7 +13,8 @@ import {
 } from '@/common/mixin/emits';
 import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
-import { Options, Value } from '@/common/types/select';
+import type { Options } from '@/common/types/option';
+import { Value } from '@/common/types/select';
 import HiveCheckbox from '@/components/hive-checkbox/hive-checkbox.vue';
 
 export interface Props extends CommonProps {

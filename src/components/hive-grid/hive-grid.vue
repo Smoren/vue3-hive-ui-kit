@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, type Ref, WritableComputedRef, watch, onMounted, getCurrentInstance, useSlots } from 'vue';
+import { ref, type Ref, WritableComputedRef, watch, onMounted, getCurrentInstance, useSlots } from 'vue';
 import useHiveGrid from './hooks/use-hive-grid';
-import { CommonProps } from '@/common/mixin/props';
+import { CommonProps } from '@/common/types/props';
 import {
   Focusin,
   Focusout,
@@ -23,12 +23,11 @@ import {
   onBeforeEdit,
   onBeforeChange,
   UpdatePage,
-  onUpdatePage,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Value } from '@/common/types/select';
 import HiveGridHeader from './hive-grid-header.vue';
-import HiveGridCeil from './hive-grid-ceil.vue';
+import HiveGridCell from './hive-grid-cell.vue';
 import HiveInput from '../hive-input/hive-input.vue';
 import HiveDropDown from '../hive-drop-down/hive-drop-down.vue';
 import HiveAutocomplete from '../hive-autocomplete/hive-autocomplete.vue';
@@ -201,7 +200,7 @@ defineExpose({ items, grid });
           @row-click="rowClicked"
         >
           <template #="{ rowRef }">
-            <hive-grid-ceil v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
+            <hive-grid-cell v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
               <template #view>
                 <div class="gap">
                   <HiveButton text="AddUp" @click="addRow(true, getRowIndex(index))">
@@ -221,8 +220,8 @@ defineExpose({ items, grid });
                   </HiveButton>
                 </div>
               </template>
-            </hive-grid-ceil>
-            <hive-grid-ceil
+            </hive-grid-cell>
+            <hive-grid-cell
               v-for="column in columns"
               :key="column.field"
               :text="(item as any)[column.field]?.text ?? (item as any)[column.field]"
@@ -352,7 +351,7 @@ defineExpose({ items, grid });
                   />
                 </slot>
               </template>
-            </hive-grid-ceil>
+            </hive-grid-cell>
           </template>
         </hive-grid-row>
       </tbody>

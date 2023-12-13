@@ -1,7 +1,8 @@
 import { ref } from 'vue';
-import { CurrentOptions, CurrentOptionsRef, Options, Value } from '@/common/types/select';
+import type { Options } from '@/common/types/option';
+import { CurrentOptions, CurrentOptionsRef, Value } from '@/common/types/select';
 
-export type FilterConfig = {
+export type OptionsConfig = {
   options: Options | undefined;
   modelValue: Value | Value[];
   fieldTitle: string;
@@ -19,7 +20,7 @@ export const useOptions = ({
   nullTitle = '',
   fieldTitle,
   fieldValue,
-}: FilterConfig) => {
+}: OptionsConfig) => {
   const currentOptions = ref(new Map());
   const nullOption: CurrentOptionsRef = ref({
     [fieldTitle]: nullTitle,

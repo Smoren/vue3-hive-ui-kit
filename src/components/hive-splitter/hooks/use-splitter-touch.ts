@@ -1,6 +1,6 @@
 import { type ComputedRef, type Ref, ref } from 'vue';
 import type { Pane, TouchSplitter } from '@/components/hive-splitter/types';
-import calculatePanesSize from '@/components/hive-splitter/hooks/helpers/calculate-panes-size';
+import calculatePanesSize from '@/components/hive-splitter/helpers/calculate-panes-size';
 
 interface Taps {
   splitterIndex: number | null;
@@ -55,28 +55,11 @@ export default function useSplitterTouch(
         horizontal,
         splitterRef,
       });
-      // handleEvent(
-      //   new Event('onResize'),
-      //   panes.value.map((pane) => ({
-      //     min: pane.min,
-      //     max: pane.max,
-      //     size: pane.size,
-      //   })),
-      // );
+
     }
   };
 
   const onMouseUp = () => {
-    // if (touch.value.isDragging) {
-    //   handleEvent(
-    //     new Event('onResized'),
-    //     panes.value.map((pane) => ({
-    //       min: pane.min,
-    //       max: pane.max,
-    //       size: pane.size,
-    //     })),
-    //   );
-    // }
     touch.value.mouseDown = false;
     setTimeout(() => {
       touch.value.isDragging = false;
@@ -111,9 +94,6 @@ export default function useSplitterTouch(
       taps.value.timeoutId = setTimeout(() => {
         taps.value.splitterIndex = null;
       }, 500);
-    }
-    if (!touch.value.isDragging) {
-      // handleEvent(new Event('splitter-click'), panes.value[splitterIndex]);
     }
   };
 
