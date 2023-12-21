@@ -643,7 +643,7 @@ const files: Ref<HiveUploadFilesType | null> = ref(null);
 
 const handleAdd = () => {
   if (files.value?.files[0]) {
-    console.log('add', files.value?.files[0].url);
+    console.log('add', files.value?.files);
   }
 };
 </script>
