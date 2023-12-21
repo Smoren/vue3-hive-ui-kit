@@ -24,7 +24,10 @@ import HiveTextarea from '@/components/hive-textarea/hive-textarea.vue';
 import HiveTreeView from './components/hive-tree-view/hive-tree-view.vue';
 import HiveTreeViewNode from './components/hive-tree-view/hive-tree-view-node.vue';
 import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
+import Notification from '@/plugins/hive-notification';
+import { notify, useNotification } from '@/plugins/hive-notification';
 
+import type { NotificationsOptions, NotificationsPluginOptions, NotificationItem } from '@/plugins/hive-notification';
 import type { VueComponent, Value } from '@/common/types/value';
 import type { UploadableFile } from '@/components/hive-upload-file/hooks/use-file-list';
 import type { GridColumns } from '@/components/hive-grid/types';
@@ -58,6 +61,12 @@ export {
   HiveTreeView,
   HiveTreeViewNode,
   HiveUploadFile,
+  Notification,
+  notify,
+  useNotification,
+  type NotificationsOptions,
+  type NotificationsPluginOptions,
+  type NotificationItem,
   type VueComponent,
   type Value,
   type UploadableFile,
