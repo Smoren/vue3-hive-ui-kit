@@ -24,12 +24,14 @@ export interface Props extends CommonProps {
   valueField?: string;
   minusIcon?: boolean;
   title?: string;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   valueField: 'value',
   minusIcon: false,
   checked: false,
+  disabled: false,
 });
 
 type Emit = Mount & Unmount & Update<boolean> & Change<boolean> & Focusout & Focusin;
@@ -73,6 +75,7 @@ if (Array.isArray(props.option)) {
       class="hive-checkbox__input"
       tabindex="0"
       type="checkbox"
+      :disabled="disabled"
       @change="onChange(emit, currentValue)"
       @focusout="onFocusout(emit)"
       @focusin="onFocusin(emit)"
