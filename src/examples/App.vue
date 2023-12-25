@@ -38,7 +38,7 @@ const num = ref(0);
 const isOpenModal = ref(false);
 const dropdown = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d');
 const autocomplete = ref('');
-const multiautocomplete = ref([]);
+const multiautocomplete = ref(null);
 const dd3 = ref(0);
 
 const handleText = () => {
@@ -257,7 +257,7 @@ const checkCurrent = {
   title: 'Activ',
   value: false,
 };
-const multiselect = ref(['74fd8aaa-e10a-4fd0-941b-6f6c7249003d']);
+const multiselect = ref(null);
 
 const date: Ref<Date | undefined> = ref();
 
@@ -802,10 +802,10 @@ const handleAdd = () => {
           :style="{ width: '300px' }"
         />
       </widget-wrapper>
-      <widget-wrapper title="Tab" style="max-height: 200px">
+      <widget-wrapper title="Tab">
         {{ autocomplete }}
         <hive-tab-group v-model="tab">
-          <hive-tab name="first" id="1" style="height: 600px">
+          <hive-tab name="first" id="1">
             <div style="">asd</div>
             <div style="">asd</div>
             <div style="">asd</div>
@@ -826,6 +826,7 @@ const handleAdd = () => {
       </widget-wrapper>
       <widget-wrapper title="HtmlEditor" :class="{ 123: 1 }">
         {{ textEditor }}
+        <div v-html="textEditor" />
         <hive-html-editor v-model="textEditor" />
       </widget-wrapper>
       <widget-wrapper title="ListLoader">

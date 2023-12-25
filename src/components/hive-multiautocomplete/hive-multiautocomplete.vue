@@ -53,7 +53,7 @@ useOnMount(emit);
 
 const configOptions = reactive({
   options: props.options,
-  modelValue: props.modelValue,
+  modelValue: props.modelValue === null ? [] : props.modelValue,
   withUndefined: props.withUndefined,
   withNull: props.withNull,
   nullTitle: props.nullTitle,

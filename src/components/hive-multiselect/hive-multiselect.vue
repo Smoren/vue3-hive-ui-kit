@@ -24,7 +24,7 @@ import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 
 export interface Props extends CommonProps {
   options: Options | undefined;
-  modelValue: Value[];
+  modelValue: Value[] | null;
   inline?: boolean;
   titleField?: string;
   valueField?: string;
@@ -54,7 +54,7 @@ useOnMount(emit);
 
 const configOptions = reactive({
   options: props.options,
-  modelValue: props.modelValue,
+  modelValue: props.modelValue === null ? [] : props.modelValue,
   withUndefined: props.withUndefined,
   withNull: false,
   nullTitle: props.nullTitle,
