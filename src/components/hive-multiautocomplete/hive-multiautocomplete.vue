@@ -23,7 +23,7 @@ import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 
 export interface Props extends CommonProps {
   options: string[] | undefined;
-  modelValue: Value[];
+  modelValue: Value[] | null;
   inline?: boolean;
   titleField?: string;
   valueField?: string;
