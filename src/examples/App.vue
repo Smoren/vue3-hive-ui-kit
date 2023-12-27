@@ -35,6 +35,8 @@ import type { HiveUploadFilesType } from '@/components/hive-upload-file/hive-upl
 
 const text = ref('text');
 const num = ref(0);
+const numMin = ref(0);
+const inputText = ref('');
 const isOpenModal = ref(false);
 const dropdown = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d');
 const autocomplete = ref('');
@@ -287,8 +289,6 @@ const columns: Ref<GridColumns[]> = ref([
   {
     title: 'Name',
     field: 'name',
-    editType: 'dropdown-list',
-    options: ['a', 'b', 'c'],
   },
   {
     title: 'Age',
@@ -682,9 +682,10 @@ const handleAdd = () => {
         <hive-button title="Classes" :class="'test'" @click="handleNum" />
 
         <hive-input v-model="text" disabled />
-        <hive-input v-model="num" type="number" />
-        <hive-input v-model="num" type="number" :step="1" />
+        <hive-input v-model="num" type="number" :min="1" :max="10" />
+        <hive-input v-model="numMin" type="number" :min="1" :max="10" :step="1" />
         <hive-input v-model="num" type="text" integer :min="5" :max="6" />
+        <hive-input v-model="inputText" />
         <hive-input v-model="num" :mask="/^\d+$/" />
         <!-- <hive-input v-model="date" type="date" /> -->
         <hive-badge :counter="4" />
@@ -847,12 +848,7 @@ const handleAdd = () => {
           :row-css-class="(row: any) => [`aaa-${row['age']}`, 'bbb']"
           @row-click="log"
           :extension-fields="['score']"
-        >
-          <template #actions="{ value, row, rowRef }">
-            {{ row }}
-            <div @click="universalLog(rowRef)">asdasd {{ rowRef }}</div>
-          </template>
-        </HiveGrid>
+        ></HiveGrid>
       </widget-wrapper>
       <widget-wrapper title="TreeView">
         <hive-tree-view

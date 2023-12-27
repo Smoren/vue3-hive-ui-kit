@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref, onMounted } from 'vue';
+import { Ref, ref, onMounted, watch } from 'vue';
 import { CommonProps } from '@/common/types/props';
 import {
   Focusout,
@@ -59,10 +59,38 @@ const forceFocus = () => {
   }
 };
 
-const handleInput = (value: CurrentType) => {
-  onUpdateModelValue(emit, value);
-  onInput(emit, value);
+const handleInput = (event: InputEvent) => {
+  const value = (event.target as HTMLInputElement).value;
+  if (
+    !(
+      props.type === 'number' &&
+      ((props.max && Number(value) > props.max) || (props.min && Number(value) < props.min))
+    ) ||
+    value === ''
+  ) {
+    onUpdateModelValue(emit, value);
+    onInput(emit, value);
+  } else {
+    (event.target as HTMLInputElement).value = String(props.modelValue);
+  }
 };
+
+watch(
+  () => props.modelValue,
+  () => {
+    if (
+      props.type === 'number' &&
+      ((props.max && Number(props.modelValue) > props.max) || (props.min && Number(props.modelValue) < props.min)) &&
+      props.modelValue !== ''
+    ) {
+      if (props.max && Number(props.modelValue) > props.max) {
+        onUpdateModelValue(emit, props.max);
+      } else if (props.min) {
+        onUpdateModelValue(emit, props.min);
+      }
+    }
+  },
+);
 
 const handleKeydown = (event: KeyboardEvent) => {
   onKeydown(emit, event);
@@ -101,7 +129,7 @@ const isDateTime = props.type === 'date' || props.type === 'time';
     :step="integer ? '1' : step"
     :min="min"
     :max="max"
-    @input="handleInput(($event.target as HTMLInputElement)?.value)"
+    @input="handleInput($event as InputEvent)"
     @focusin="onFocusin(emit)"
     @focusout="onFocusout(emit)"
     @keydown="handleKeydown($event)"

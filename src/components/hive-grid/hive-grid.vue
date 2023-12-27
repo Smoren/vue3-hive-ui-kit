@@ -297,6 +297,7 @@ defineExpose({ items, grid });
                     focus-on-mount
                     @focusout="hideEdit"
                     @keydown.enter="hideEdit"
+                    style="width: 100%"
                   />
                   <hive-drop-down
                     v-else-if="column.editType === 'dropdown-list'"
@@ -306,6 +307,7 @@ defineExpose({ items, grid });
                     focusOnMount
                     @model-value-updated="update"
                     @focusout="toggle"
+                    style="width: 100%"
                   />
                   <hive-textarea
                     v-else-if="column.editType === 'textarea'"
@@ -313,6 +315,7 @@ defineExpose({ items, grid });
                     :is-invalid="!isChangeAllowed"
                     @input="update"
                     @focusout="hideEdit"
+                    style="width: 100%"
                   />
                   <hive-autocomplete
                     style="width: fit-content"
@@ -327,6 +330,7 @@ defineExpose({ items, grid });
                     v-else-if="column.editType === 'multiselect'"
                     :model-value="(value as Value[])"
                     :options="column.options"
+                    style="width: 100%"
                   />
                   <div
                     v-else-if="column.editType === 'checkbox'"
@@ -348,6 +352,7 @@ defineExpose({ items, grid });
                     focus-on-mount
                     @focusout="hideEdit"
                     @keydown.enter="hideEdit"
+                    style="width: 100%"
                   />
                 </slot>
               </template>
