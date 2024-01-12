@@ -16,13 +16,14 @@ import {
   onUpdateModelValue,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
+import { vMaska } from 'maska';
 
 export interface Props extends CommonProps {
   modelValue: string | number;
   modelValueEventName?: string;
   type?: 'text' | 'number' | 'password' | 'email' | 'tel' | 'url' | 'search';
   placeholder?: string;
-  mask?: RegExp;
+  mask?: string;
   invalid?: boolean;
   integer?: boolean;
   min?: number;
@@ -59,15 +60,11 @@ const forceFocus = () => {
   }
 };
 
+const isInRange = (value: number) => (props.max && value > props.max) || (props.min && value < props.min);
+
 const handleInput = (event: InputEvent) => {
   const value = (event.target as HTMLInputElement).value;
-  if (
-    !(
-      props.type === 'number' &&
-      ((props.max && Number(value) > props.max) || (props.min && Number(value) < props.min))
-    ) ||
-    value === ''
-  ) {
+  if (!(props.type === 'number' && isInRange(Number(value))) || value === '') {
     onUpdateModelValue(emit, value);
     onInput(emit, value);
   } else {
@@ -78,11 +75,7 @@ const handleInput = (event: InputEvent) => {
 watch(
   () => props.modelValue,
   () => {
-    if (
-      props.type === 'number' &&
-      ((props.max && Number(props.modelValue) > props.max) || (props.min && Number(props.modelValue) < props.min)) &&
-      props.modelValue !== ''
-    ) {
+    if (props.type === 'number' && isInRange(Number(props.modelValue)) && props.modelValue !== '') {
       if (props.max && Number(props.modelValue) > props.max) {
         onUpdateModelValue(emit, props.max);
       } else if (props.min) {
@@ -96,10 +89,6 @@ const handleKeydown = (event: KeyboardEvent) => {
   onKeydown(emit, event);
 
   if (event.key === 'Backspace' || event.key == 'Delete') return;
-
-  if (props.mask && !props.mask.test(event.key)) {
-    event.preventDefault();
-  }
 
   if (props.integer && !/^\d+$/.test(event.key)) {
     event.preventDefault();
@@ -133,6 +122,8 @@ const isDateTime = props.type === 'date' || props.type === 'time';
     @focusin="onFocusin(emit)"
     @focusout="onFocusout(emit)"
     @keydown="handleKeydown($event)"
+    v-maska
+    :data-maska="props.mask"
   />
 </template>
 

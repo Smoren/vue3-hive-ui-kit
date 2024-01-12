@@ -646,6 +646,8 @@ const handleAdd = () => {
     console.log('add', files.value?.files);
   }
 };
+
+const mask = "###-###-###";
 </script>
 
 <template>
@@ -681,12 +683,8 @@ const handleAdd = () => {
         <div>{{ num }}</div>
         <hive-button title="Classes" :class="'test'" @click="handleNum" />
 
-        <hive-input v-model="text" disabled />
-        <hive-input v-model="num" type="number" :min="1" :max="10" />
-        <hive-input v-model="numMin" type="number" :min="1" :max="10" :step="1" />
-        <hive-input v-model="num" type="text" integer :min="5" :max="6" />
-        <hive-input v-model="inputText" />
-        <hive-input v-model="num" :mask="/^\d+$/" />
+        <hive-input v-model="text" />
+        <hive-input v-model="num" :mask="mask" title="Title" />
         <!-- <hive-input v-model="date" type="date" /> -->
         <hive-badge :counter="4" />
       </widget-wrapper>
