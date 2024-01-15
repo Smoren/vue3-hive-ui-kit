@@ -159,5 +159,9 @@ const isDateTime = props.type === 'date' || props.type === 'time';
   &.datetime {
     color: #3f3f3f80;
   }
+
+  &.error {
+    border-color: var(--border-error, $border-error);
+  }
 }
 </style>

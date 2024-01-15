@@ -647,7 +647,7 @@ const handleAdd = () => {
   }
 };
 
-const mask = "###-###-###";
+const mask = '###-###-###';
 </script>
 
 <template>
@@ -683,7 +683,7 @@ const mask = "###-###-###";
         <div>{{ num }}</div>
         <hive-button title="Classes" :class="'test'" @click="handleNum" />
 
-        <hive-input v-model="text" />
+        <hive-input v-model="text" invalid />
         <hive-input v-model="num" :mask="mask" title="Title" />
         <!-- <hive-input v-model="date" type="date" /> -->
         <hive-badge :counter="4" />
@@ -703,7 +703,7 @@ const mask = "###-###-###";
           Hello
 
           <div :style="{ display: 'flex', flexDirection: 'column', gap: '10px', height: '500px' }">
-            <hive-input v-model="text" />
+            <hive-input v-model="text" invalid />
             <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
