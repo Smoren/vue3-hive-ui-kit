@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
   resizable: true,
   resizeDirection: 'both',
   theme: 'snow',
-  toolbar: '',
+  toolbar: 'full',
   placeholder: '',
   disabled: false,
 });
@@ -55,6 +55,7 @@ watch(currentValue, () => {
 
 <template>
   <QuillEditor
+    :style="style"
     v-model:content="currentValue"
     @update:content="onUpdateModelValue(emit, currentValue)"
     :theme="theme"

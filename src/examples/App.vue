@@ -826,7 +826,7 @@ const mask = '###-###-###';
       <widget-wrapper title="HtmlEditor" :class="{ 123: 1 }">
         {{ textEditor }}
         <div v-html="textEditor" />
-        <hive-html-editor v-model="textEditor" />
+        <hive-html-editor v-model="textEditor" :style="{height: '300px'}" />
       </widget-wrapper>
       <widget-wrapper title="ListLoader">
         <hive-list-loader :visible="true" />
