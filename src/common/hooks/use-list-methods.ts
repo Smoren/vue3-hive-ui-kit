@@ -34,8 +34,6 @@ export const useListMethods = ({
   const searchRef: Ref<InputExpose | null> = ref(null);
   const searchInput = computed(() => searchRef.value?.input);
 
-  console.log(modelValue);
-
   const { currentOptions, nullOption } = useOptions({
     options,
     modelValue,

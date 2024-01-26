@@ -5,10 +5,14 @@ import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
   visible?: boolean;
+  colorMain?: string;
+  colorSpinner?: string;
 }
 
 withDefaults(defineProps<Props>(), {
   visible: false,
+  colorMain: '#b0ddff6c',
+  colorSpinner: '#6bbfff',
 });
 
 type Emit = Mount & Unmount;
@@ -23,8 +27,8 @@ useOnMount(emit);
 </template>
 
 <style scoped lang="scss">
-$loader-spinner: #6bbfff;
-$loader-main: #b0ddff6c;
+$loader-spinner: v-bind(colorSpinner);
+$loader-main: v-bind(colorMain);
 
 .loader {
   width: 16px;

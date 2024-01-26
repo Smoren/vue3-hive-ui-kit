@@ -647,6 +647,10 @@ const handleAdd = () => {
   }
 };
 
+const onInput = (value: unknown) => {
+  console.log('input', value);
+};
+
 const mask = '###-###-###';
 </script>
 
@@ -683,9 +687,10 @@ const mask = '###-###-###';
         <div>{{ num }}</div>
         <hive-button title="Classes" :class="'test'" @click="handleNum" />
 
-        <hive-input v-model="text" invalid />
-        <hive-input v-model="num" :mask="mask" title="Title" />
-        <!-- <hive-input v-model="date" type="date" /> -->
+        <hive-input v-model="text" invalid @input="onInput" />
+        <hive-input v-model="input" invalid @input="onInput" />
+        <!-- <hive-input v-model="num" :mask="mask" title="Title" @input="onInput" /> -->
+        <hive-input v-model="num" type="number" @input="onInput" />
         <hive-badge :counter="4" />
       </widget-wrapper>
 
@@ -829,7 +834,7 @@ const mask = '###-###-###';
         <hive-html-editor v-model="textEditor" :style="{height: '300px'}" />
       </widget-wrapper>
       <widget-wrapper title="ListLoader">
-        <hive-list-loader :visible="true" />
+        <hive-list-loader :visible="true" colorMain="red" colorSpinner="#0bef12" />
       </widget-wrapper>
       <widget-wrapper title="Skeleton">
         <hive-skeleton :visible="true" />

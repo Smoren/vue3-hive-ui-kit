@@ -32,6 +32,7 @@ watch(
 watch(currentTabId, () => {
   onUpdateModelValue(emit, currentTabId.value);
 });
+
 watch(
   () => props.modelValue,
   () => {
@@ -66,8 +67,6 @@ watch(
 <style scoped lang="scss">
 .tab-group {
   width: 100%;
-  display: grid;
-  grid-template-rows: 2.5rem 1fr;
   height: 100%;
   overflow: hidden;
 

@@ -63,6 +63,7 @@ const forceFocus = () => {
 const isInRange = (value: number) => (props.max && value > props.max) || (props.min && value < props.min);
 
 const handleInput = (event: InputEvent) => {
+  console.log('here');
   const value = (event.target as HTMLInputElement).value;
   if (!(props.type === 'number' && isInRange(Number(value))) || value === '') {
     onUpdateModelValue(emit, value);
@@ -118,7 +119,7 @@ const isDateTime = props.type === 'date' || props.type === 'time';
     :step="integer ? '1' : step"
     :min="min"
     :max="max"
-    @input="handleInput($event as InputEvent)"
+    @input.prevent="handleInput($event as InputEvent)"
     @focusin="onFocusin(emit)"
     @focusout="onFocusout(emit)"
     @keydown="handleKeydown($event)"

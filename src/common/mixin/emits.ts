@@ -62,6 +62,7 @@ export const onSearch = <T>(emit: Search<T>, query: T) => {
 export type Input<T> = (e: 'input', value: T) => void;
 
 export const onInput = <T>(emit: Input<T>, value: T) => {
+  console.log('input event')
   emit('input', value);
 };
 
