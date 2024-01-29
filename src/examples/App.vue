@@ -651,7 +651,8 @@ const onInput = (value: unknown) => {
   console.log('input', value);
 };
 
-const mask = '###-###-###';
+const mask = 'C*@A.A';
+const tokens = 'C:[A-z0-9]|*:[0-9A-z.,_]:multiple|A:[a-z]:multiple|@:@';
 </script>
 
 <template>
@@ -689,8 +690,8 @@ const mask = '###-###-###';
 
         <hive-input v-model="text" invalid @input="onInput" />
         <hive-input v-model="input" invalid @input="onInput" />
-        <!-- <hive-input v-model="num" :mask="mask" title="Title" @input="onInput" /> -->
-        <hive-input v-model="num" type="number" @input="onInput" />
+        <hive-input v-model="num" :mask="mask" :tokens="tokens" title="Title" @input="onInput" />
+        <!-- <hive-input v-model="num" type="number" @input="onInput" /> -->
         <hive-badge :counter="4" />
       </widget-wrapper>
 
@@ -831,7 +832,7 @@ const mask = '###-###-###';
       <widget-wrapper title="HtmlEditor" :class="{ 123: 1 }">
         {{ textEditor }}
         <div v-html="textEditor" />
-        <hive-html-editor v-model="textEditor" :style="{height: '300px'}" />
+        <hive-html-editor v-model="textEditor" :style="{ height: '300px' }" />
       </widget-wrapper>
       <widget-wrapper title="ListLoader">
         <hive-list-loader :visible="true" colorMain="red" colorSpinner="#0bef12" />

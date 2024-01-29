@@ -24,6 +24,7 @@ export interface Props extends CommonProps {
   type?: 'text' | 'number' | 'password' | 'email' | 'tel' | 'url' | 'search';
   placeholder?: string;
   mask?: string;
+  tokens?: string;
   invalid?: boolean;
   integer?: boolean;
   min?: number;
@@ -125,6 +126,7 @@ const isDateTime = props.type === 'date' || props.type === 'time';
     @keydown="handleKeydown($event)"
     v-maska
     :data-maska="props.mask"
+    :data-maska-tokens="props.tokens"
   />
 </template>
 
