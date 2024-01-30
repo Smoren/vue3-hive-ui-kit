@@ -35,7 +35,7 @@ export type GridColumns = {
   field: string;
   fields?: string[];
   title: string;
-  width?: number;
+  width?: string | number;
   editable?: boolean | ((row: Record<string, unknown>) => boolean);
   editType?:
     | 'text'

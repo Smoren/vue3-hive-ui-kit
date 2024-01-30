@@ -289,6 +289,7 @@ const columns: Ref<GridColumns[]> = ref([
   {
     title: 'Name',
     field: 'name',
+    width: 300
   },
   {
     title: 'Age',

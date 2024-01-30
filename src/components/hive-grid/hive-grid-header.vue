@@ -69,6 +69,7 @@ watch(currentQuery, () => {
         :key="item.field"
         @click="onSort(emit, item.field)"
         :class="{ 'cursor-pointer': item.sortable }"
+        :width="item.width"
       >
         {{ item.title }}
       </th>
