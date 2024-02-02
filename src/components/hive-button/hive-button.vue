@@ -61,7 +61,7 @@ useOnMount(emit);
   &[disabled] {
     border-color: var(--border-disabled, $border-disabled);
     opacity: 0.4;
-    pointer-events: none;
+    //pointer-events: none;
 
     &:hover {
       background: var(--bg-button, $bg-button);
