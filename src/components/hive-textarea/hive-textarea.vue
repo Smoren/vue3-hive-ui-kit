@@ -9,6 +9,7 @@ export interface Props extends CommonProps {
   rowsCount?: number;
   resizable?: boolean;
   resizeDirection?: 'both' | 'vertical' | 'horizontal';
+  invalid?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -25,7 +26,7 @@ useOnMount(emit);
 <template>
   <textarea
     class="hive-textaria"
-    :class="[{ resizable: resizable }, resizeDirection]"
+    :class="[{ resizable: resizable, error: invalid }, resizeDirection]"
     :style="style"
     :value="modelValue"
     @input="onUpdateModelValue(emit, ($event.target as HTMLTextAreaElement)?.value)"
@@ -74,6 +75,10 @@ useOnMount(emit);
     border-color: var(--border-disabled, $border-disabled);
     opacity: 0.6;
     pointer-events: none;
+  }
+
+  &.error {
+    border-color: var(--border-error, $border-error);
   }
 }
 </style>
