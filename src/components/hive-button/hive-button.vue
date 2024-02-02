@@ -21,7 +21,6 @@ useOnMount(emit);
 <template>
   <button
     class="hive-button"
-    :class="{ disabled: disabled }"
     :style="style"
     :disabled="disabled"
     @click="onClick(emit, $event)"
@@ -59,7 +58,7 @@ useOnMount(emit);
     outline: none;
   }
 
-  &.disabled {
+  &[disabled] {
     border-color: var(--border-disabled, $border-disabled);
     opacity: 0.4;
     pointer-events: none;
