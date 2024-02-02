@@ -38,7 +38,7 @@ const num = ref(0);
 const numMin = ref(0);
 const inputText = ref('');
 const isOpenModal = ref(false);
-const dropdown = ref('74fd8aaa-e10a-4fd0-941b-6f6c7249003d');
+const dropdown = ref();
 const autocomplete = ref('');
 const multiautocomplete = ref(null);
 const dd3 = ref(0);
@@ -289,7 +289,7 @@ const columns: Ref<GridColumns[]> = ref([
   {
     title: 'Name',
     field: 'name',
-    width: 300
+    width: 300,
   },
   {
     title: 'Age',

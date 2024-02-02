@@ -14,7 +14,9 @@ export const useSearch = (
   }
   filteredOptions.value.clear();
 
-  searchString = searchString.toLowerCase();
+  if (typeof searchString === 'string') {
+    searchString = searchString.toLowerCase();
+  }
 
   const words = searchString.replace(/[ \t\n]+/, ' ').split(' ');
 
@@ -26,7 +28,7 @@ export const useSearch = (
     const matchCount = words
       .map((word) =>
         Number(
-          item[fieldTitle]
+          String(item[fieldTitle])
             .toLowerCase()
             .replace(/[ \t\n]+/, ' ')
             .split(' ')
