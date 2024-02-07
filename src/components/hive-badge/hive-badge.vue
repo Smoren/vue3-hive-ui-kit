@@ -2,12 +2,12 @@
 import { CommonProps } from '@/common/types/props';
 
 type Counter = {
-  count: number;
+  count: number | string;
   mode: number;
 };
 
 export interface Props extends CommonProps {
-  counter: Counter | number;
+  counter: Counter | number | string;
 }
 const props = defineProps<Props>();
 
