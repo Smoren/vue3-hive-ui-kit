@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CommonProps } from '@/common/types/props';
+import { computed } from 'vue';
 
 type Counter = {
   count: number | string;
@@ -8,19 +9,32 @@ type Counter = {
 
 export interface Props extends CommonProps {
   counter: Counter | number | string;
+  mode?: number;
 }
 const props = defineProps<Props>();
 
-const isNum = typeof props.counter === 'number';
-const countObj = props.counter as Counter;
+const value = computed(() => {
+  if (typeof props.counter === 'object') {
+    return (props.counter as Counter).count;
+  }
+  return props.counter;
+});
+
+const isVisible = computed(() => {
+  return !!value.value;
+});
+
+const isFlashing = computed(() => {
+  const cond1 = typeof props.counter === 'object' && (props.counter as Counter).mode === 1;
+  const cond2 = props.mode === 1;
+  return cond1 || cond2;
+});
+
 </script>
 
 <template>
-  <div v-if="isNum && counter" class="badge">
-    {{ counter }}
-  </div>
-  <div v-else-if="countObj.count" class="badge" :class="{ pulse: countObj.mode === 1 }">
-    {{ countObj.count }}
+  <div v-if="isVisible" class="badge" :class="{ pulse: isFlashing }">
+    {{ value }}
   </div>
 </template>
 

@@ -693,7 +693,7 @@ const tokens = 'C:[A-z0-9]|*:[0-9A-z.,_]:multiple|A:[a-z]:multiple|@:@';
         <hive-input v-model="input" invalid @input="onInput" />
         <hive-input v-model="num" :mask="mask" :tokens="tokens" title="Title" @input="onInput" />
         <!-- <hive-input v-model="num" type="number" @input="onInput" /> -->
-        <hive-badge :counter="4" />
+        <hive-badge :counter="5" :mode='1' />
       </widget-wrapper>
 
       <!-- Modal -->
