@@ -41,6 +41,10 @@ const handleBtnClick = () => {
   }
 };
 
+watch(() => props.modelValue, (value: string) => {
+  searchValue.value = value;
+});
+
 const debounceUpdate = useDebounce(() => onUpdateModelValue(emit, searchValue.value), props.timeout);
 
 const handleInput = () => {

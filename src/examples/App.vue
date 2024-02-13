@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import WidgetWrapper from '@/WidgetWrapper.vue';
 import { HiveButton, HiveDialog, HiveLoader, HiveTextarea } from '../.';
 import HiveInput from '../components/hive-input/hive-input.vue';
+import HiveInputSearch from '../components/hive-input-search/hive-input-search.vue';
 import HiveDropDown from '../components/hive-drop-down/hive-drop-down.vue';
 import HiveRadioGroup from '../components/hive-radio-group/hive-radio-group.vue';
 import HiveCheckboxGroup from '../components/hive-checkbox-group/hive-checkbox-group.vue';
@@ -654,6 +655,8 @@ const onInput = (value: unknown) => {
 
 const mask = 'C*@A.A';
 const tokens = 'C:[A-z0-9]|*:[0-9A-z.,_]:multiple|A:[a-z]:multiple|@:@';
+
+const searchString = ref('');
 </script>
 
 <template>
@@ -661,6 +664,14 @@ const tokens = 'C:[A-z0-9]|*:[0-9A-z.,_]:multiple|A:[a-z]:multiple|@:@';
 
   <div class="app">
     <div class="wrapper">
+      <hive-input-search
+        v-model="searchString"
+        :is-opened="true"
+        placeholder="Поиск"
+        btn-background-color="#33333340"
+      />
+      <hive-button title='clear search' @click="searchString = ''" />
+
       <!-- Button -->
       <widget-wrapper title="Button">
         <hive-button>
