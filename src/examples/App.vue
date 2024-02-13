@@ -66,7 +66,7 @@ const textEditor = ref('');
 
 let optionsTest: Option[] | undefined;
 
-const autoCompleteOptions = ['bsh', 'asd', 'uip', 'lszv'];
+const autoCompleteOptions = ['И', 'ИЛИ', 'НЕ', '(', ')', '<->', '<2>'];
 
 setTimeout(() => {
   optionsTest = [
@@ -704,7 +704,7 @@ const searchString = ref('');
         <hive-input v-model="input" invalid @input="onInput" />
         <hive-input v-model="num" :mask="mask" :tokens="tokens" title="Title" @input="onInput" />
         <!-- <hive-input v-model="num" type="number" @input="onInput" /> -->
-        <hive-badge :counter="5" :mode='1' />
+        <hive-badge :counter="5" :mode="1" />
       </widget-wrapper>
 
       <!-- Modal -->
@@ -796,6 +796,7 @@ const searchString = ref('');
           v-model="multiautocomplete"
           :options="autoCompleteOptions"
           :style="{ width: '300px' }"
+          :disctinct="false"
         />
       </widget-wrapper>
       <widget-wrapper title="HiveUploadFile">

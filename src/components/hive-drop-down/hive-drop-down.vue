@@ -76,6 +76,7 @@ const {
   currentOptions,
   setPrevActiveValue,
   setNextActiveValue,
+  menuRef,
 } = useListMethods(configOptions);
 
 watch(
@@ -127,6 +128,7 @@ defineExpose({ current });
       <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
       <transition name="fade" appear>
         <div
+          ref="menuRef"
           v-if="isExpanded"
           class="hive-drop-down__menu"
           :style="{
@@ -143,6 +145,7 @@ defineExpose({ current });
             @click="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
+            :data-value="item[1][valueField]"
           >
             {{ item[1][titleField] }}
           </div>

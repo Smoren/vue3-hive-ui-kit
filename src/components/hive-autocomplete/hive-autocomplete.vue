@@ -77,6 +77,7 @@ const {
   setPrevActiveValue,
   setNextActiveValue,
   currentValue,
+  menuRef,
 } = useListMethods(configOptions);
 
 watch(
@@ -88,6 +89,11 @@ watch(
     current.value = useListMethods(configOptions).current.value;
   },
 );
+
+const onInputSearch = () => {
+  onSearch(emit, searchQuery.value);
+  updateActiveValue(null);
+};
 
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
@@ -116,11 +122,12 @@ onMounted(() => {
         @keydown.esc="collapse"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
-        @input="onSearch<string>(emit, $event as string)"
+        @input="onInputSearch"
       />
       <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
       <transition name="fade" appear>
         <div
+          ref="menuRef"
           v-if="isExpanded"
           class="hive-multiselect__menu"
           :style="{
@@ -137,6 +144,7 @@ onMounted(() => {
             @click="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
+            :data-value="item[1][valueField]"
           >
             {{ item[1][titleField] }}
           </div>

@@ -34,6 +34,7 @@ export interface Props extends CommonProps {
   nullTitle?: string;
   disabled?: boolean;
   focusOnMount?: boolean;
+  disctinct?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -45,6 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   nullTitle: 'Не выбрано',
   focusOnMount: false,
+  disctinct: true,
 });
 
 type Emit = Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
@@ -59,6 +61,7 @@ const configOptions = reactive({
   nullTitle: props.nullTitle,
   fieldTitle: props.titleField,
   fieldValue: props.valueField,
+  disctinct: props.disctinct,
 });
 
 const {
@@ -76,12 +79,13 @@ const {
   setPrevActiveValue,
   setNextActiveValue,
   currentValue,
+  menuRef,
 } = useListMethods(configOptions);
 
 const changeValue = (value: Value) => {
   if (!currentValue.value || !value || !Array.isArray(currentValue.value)) return;
 
-  const includes = currentValue.value?.includes(value);
+  const includes = props.disctinct ? currentValue.value?.includes(value) : false;
 
   if (!includes) {
     currentValue.value?.push(value);
@@ -127,6 +131,11 @@ watch(
   { deep: true },
 );
 
+const onInputSearch = () => {
+  onSearch(emit, searchQuery.value);
+  updateActiveValue(null);
+};
+
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
 });
@@ -165,7 +174,7 @@ onMounted(() => {
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
         @keydown.delete="deleteLast((currentValue as Value[])?.at(-1))"
-        @input="onSearch<string>(emit, $event as string)"
+        @input="onInputSearch()"
       />
     </div>
     <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
@@ -186,6 +195,7 @@ onMounted(() => {
           @click="changeValue(item[1][valueField])"
           @mouseover="updateActiveValue(item[1][valueField])"
           @mousedown.prevent
+          :data-value="item[1][valueField]"
         >
           {{ item[1][titleField] }}
         </div>
@@ -196,7 +206,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
-
 $drop-down-z_menu: 1;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);

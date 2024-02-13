@@ -14,6 +14,7 @@ export type ListMethodsConfig = {
   fieldTitle: string;
   fieldValue: string;
   autocomplete?: boolean;
+  disctinct?: boolean;
 };
 
 export const useListMethods = ({
@@ -25,6 +26,7 @@ export const useListMethods = ({
   fieldTitle,
   fieldValue,
   autocomplete = false,
+  disctinct = true,
 }: ListMethodsConfig) => {
   const isExpanded = ref(false);
   const activeValue: Ref<Value | undefined> = ref();
@@ -32,6 +34,7 @@ export const useListMethods = ({
   const current: CurrentOptionsRef = ref();
   const searchQuery = ref('');
   const searchRef: Ref<InputExpose | null> = ref(null);
+  const menuRef: Ref<HTMLDivElement | null> = ref(null);
   const searchInput = computed(() => searchRef.value?.input);
 
   const { currentOptions, nullOption } = useOptions({
@@ -62,7 +65,9 @@ export const useListMethods = ({
     }
   };
 
-  distinct();
+  if (disctinct) {
+    distinct();
+  }
 
   if (withNull || withUndefined) {
     current.value = nullOption.value;
@@ -76,6 +81,14 @@ export const useListMethods = ({
 
   const updateActiveValue = (value: Value) => {
     activeValue.value = value;
+    let element = menuRef.value?.querySelector(`[data-value='${value}']`);
+    console.log(element, value);
+    if (element) {
+      (element as unknown as HTMLElement).scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+    }
   };
 
   const updateCurrentValue = (value: Value | undefined) => {
@@ -141,6 +154,16 @@ export const useListMethods = ({
 
     if (node?.prev !== undefined) {
       updateActiveValue(node.prev);
+    } else {
+      let i = 0;
+      const size = filteredOptions.value.size;
+      for (const key of filteredOptions.value.keys()) {
+        i = i + 1;
+        if (i === size) {
+          updateActiveValue(key);
+          break;
+        }
+      }
     }
   };
 
@@ -174,5 +197,6 @@ export const useListMethods = ({
     currentOptions,
     setPrevActiveValue,
     setNextActiveValue,
+    menuRef,
   };
 };

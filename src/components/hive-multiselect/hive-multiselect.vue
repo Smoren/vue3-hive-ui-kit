@@ -77,6 +77,7 @@ const {
   setPrevActiveValue,
   setNextActiveValue,
   currentValue,
+  menuRef,
 } = useListMethods(configOptions);
 
 const changeValue = (value: Value) => {
@@ -188,6 +189,7 @@ onMounted(() => {
             @click="changeValue(item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
+            :data-value="item[1][valueField]"
           >
             {{ item[1][titleField] }}
           </div>
