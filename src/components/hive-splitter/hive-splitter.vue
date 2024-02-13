@@ -2,7 +2,7 @@
 import { onMounted, provide } from 'vue';
 import useHiveSplitter from '@/components/hive-splitter/hooks/use-hive-splitter';
 import { CommonProps } from '@/common/types/props';
-import { Mount, Unmount } from '@/common/mixin/emits';
+import { Mount, Unmount, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 
 interface Props extends CommonProps {
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
   horizontal: false,
 });
 
-type Emit = Mount & Unmount;
+type Emit = Event & Mount & Unmount;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

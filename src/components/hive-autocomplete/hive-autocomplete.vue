@@ -15,7 +15,7 @@ import {
   onUpdateModelValue,
   Search,
   onSearch,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import { Value } from '@/common/types/select';
@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
   focusOnMount: false,
 });
 
-type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
+type Emit = Event & Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

@@ -14,6 +14,7 @@ import {
   onFileAdd,
   type FileRemove,
   onFileRemove,
+  Event,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import HiveUploadFileDropZone from './hive-upload-file-dropzone.vue';
@@ -36,7 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
   multiple: false,
 });
 
-type Emit = Mount & Unmount & Focusout & Focusin & Change<string> & FileAdd & FileRemove;
+type Emit = Event & Mount & Unmount & Focusout & Focusin & Change<string> & FileAdd & FileRemove;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -61,7 +62,9 @@ const handleAdd = () => {
 };
 
 function onInputChange(e: Event) {
+  //@ts-ignore
   if (e.target === null) return;
+  //@ts-ignore
   addFiles((e.target as HTMLInputElement).files as unknown as File[]);
   handleAdd();
   //@ts-ignore
@@ -91,7 +94,7 @@ defineExpose({
         <input
           type="file"
           :id="id"
-          @change="onInputChange"
+          @change="onInputChange($event as unknown as Event)"
           @focusin="onFocusin(emit)"
           @focusout="onFocusout(emit)"
           :accept="fileTypes !== ' ' ? fileTypes : '*'"

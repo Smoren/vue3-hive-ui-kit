@@ -10,7 +10,7 @@ import {
   onFocusout,
   Focusin,
   onFocusin,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOptions } from '@/common/hooks/use-options';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Options } from '@/common/types/option';
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
   name: 'radio-group',
 });
 
-type Emit = Mount & Unmount & Update<Value> & Focusout & Focusin;
+type Emit = Event & Mount & Unmount & Update<Value> & Focusout & Focusin;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import { CommonProps } from '@/common/types/props';
-import { Mount, Unmount, Update } from '@/common/mixin/emits';
+import { Mount, Unmount, Update, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import useHiveTabGroup from './hooks/use-hive-tab-group';
 import { onUpdateModelValue } from '../../common/mixin/emits';
@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
   withLocalStorage: true,
 });
 
-type Emit = Mount & Unmount & Update<string>;
+type Emit = Event & Mount & Unmount & Update<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

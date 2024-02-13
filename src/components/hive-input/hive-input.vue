@@ -14,7 +14,7 @@ import {
   Input,
   onInput,
   onUpdateModelValue,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { vMaska } from 'maska';
 
@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 type CurrentType = typeof props.modelValue;
 
-type Emit = Mount & Unmount & Update<CurrentType> & Focusin & Focusout & Keydown & Input<CurrentType>;
+type Emit = Event & Mount & Unmount & Update<CurrentType> & Focusin & Focusout & Keydown & Input<CurrentType>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

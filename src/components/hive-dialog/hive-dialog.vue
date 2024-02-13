@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CommonProps } from '@/common/types/props';
-import { Mount, Unmount, Update, onUpdateModelValue } from '@/common/mixin/emits';
+import { Mount, Unmount, Update, onUpdateModelValue, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { mergeProps, nextTick, ref, watch } from 'vue';
 
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
   zIndex: 1000,
 });
 
-type Emit = Mount & Unmount & Update<boolean>;
+type Emit = Event & Mount & Unmount & Update<boolean>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

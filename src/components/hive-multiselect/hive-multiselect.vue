@@ -15,7 +15,7 @@ import {
   onUpdateModelValue,
   Search,
   onSearch,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Options } from '@/common/types/option';
 import { Value } from '@/common/types/select';
@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
   focusOnMount: false,
 });
 
-type Emit = Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
+type Emit = Event & Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -266,17 +266,18 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
       border: 1px solid transparent;
       border-radius: var(--border-radius, $border-radius);
       box-shadow: 0 0 0 1px #22242626 inset;
-      padding: 3px 3px;
+      padding: 3px 9px;
       margin: 3px 0;
       vertical-align: baseline;
       background-color: #e8e8e8;
       color: #0009;
       text-transform: none;
-      font-weight: 700;
+      font-weight: 500;
       display: flex;
       align-items: center;
       gap: 5px;
       white-space: break-spaces;
+      font-size: 14px;
 
       &__img {
         width: 15px;

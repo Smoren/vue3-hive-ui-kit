@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Ref, ref, watch } from 'vue';
 import { CommonProps } from '@/common/types/props';
-import { Mount, Unmount, Update } from '@/common/mixin/emits';
+import { Mount, Unmount, Update, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import useHiveTab from './hooks/use-hive-tab';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   id: uuidv4(),
 });
 
-type Emit = Mount & Unmount & Update<string>;
+type Emit = Event & Mount & Unmount & Update<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

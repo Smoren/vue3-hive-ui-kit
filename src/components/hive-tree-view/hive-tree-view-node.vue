@@ -2,7 +2,7 @@
 import { computed, type Ref, ref, toRef, watch, onMounted } from 'vue';
 import { CommonProps } from '@/common/types/props';
 import { TreeView, TreeImg, TreeViewImg } from './hive-tree-view-type';
-import { Unmount, Mount } from '@/common/mixin/emits';
+import { Unmount, Mount, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import {
   DragStart,
@@ -43,7 +43,8 @@ const props = withDefaults(defineProps<Props>(), {
   checkedOption: 'parent-checked',
 });
 
-type Emit = Mount &
+type Emit = Event &
+  Mount &
   Unmount &
   DragStart<TreeView> &
   DragEnd<TreeView> &

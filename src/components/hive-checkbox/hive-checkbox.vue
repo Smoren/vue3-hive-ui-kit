@@ -13,7 +13,7 @@ import {
   onFocusout,
   Focusin,
   onFocusin,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { CurrentOptions, Value } from '@/common/types/select';
 
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
 });
 
-type Emit = Mount & Unmount & Update<boolean> & Change<boolean> & Focusout & Focusin;
+type Emit = Event & Mount & Unmount & Update<boolean> & Change<boolean> & Focusout & Focusin;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

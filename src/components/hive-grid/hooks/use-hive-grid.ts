@@ -12,6 +12,7 @@ export default function useHiveGrid({ columns, dataItems, extensionFields }: Gri
   const isLoading = ref(false);
 
   const isKeyInColumns = (columns: GridColumns[], key: string): boolean => {
+    return true;
     let hasKey = false;
     if (
       key === 'id' ||

@@ -12,7 +12,7 @@ import {
   Update,
   onInput,
   onUpdateModelValue,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useDebounce } from '@/common/hooks/use-debounce';
 
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   timeout: 250,
 });
 
-type Emit = Mount & Unmount & Update<string> & Focusin & Focusout & Keydown & Input<string>;
+type Emit = Event & Mount & Unmount & Update<string> & Focusin & Focusout & Keydown & Input<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

@@ -16,7 +16,7 @@ import {
   onRowClick,
   BeforeEdit,
   BeforeChange,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Value } from '@/common/types/select';
 import { type GridColumns, CssClassConfig } from './types';
@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
   colorAlternation: false,
 });
 
-type Emit = Mount &
+type Emit = Event & Mount &
   Unmount &
   Update<Value> &
   Focusin &
@@ -64,6 +64,7 @@ defineSlots<{
 const row: Ref<VueComponent | null> = ref(null);
 
 const rowClick = (item: Record<string, unknown>) => {
+  // @ts-ignore
   onRowClick(emit, item, row.value);
 };
 const classString = computed(() => getClassString(props.row, props.cssClass));

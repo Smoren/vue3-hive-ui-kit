@@ -13,7 +13,7 @@ import {
   ContextItemClick,
   onClick,
   onCloseContextMenu,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { onContextItemClick } from '../../common/mixin/emits';
 import { useIsOutOfBordersWidth, useIsOutOfBordersHeight } from './hooks/use-is-out-of-borders';
 
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
   onLeftSide: false,
 });
 
-type Emit = Mount & Unmount & Click & CloseContextMenu & ContextItemClick;
+type Emit = Event & Mount & Unmount & Click & CloseContextMenu & ContextItemClick;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

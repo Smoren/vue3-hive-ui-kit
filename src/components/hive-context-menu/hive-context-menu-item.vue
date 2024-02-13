@@ -5,7 +5,7 @@ import { computed, ref, onMounted, getCurrentInstance, reactive, watch } from 'v
 import { useIsSeparator } from './hooks/use-is-separator';
 import { useIsItem } from './hooks/use-is-item';
 import hiveContextMenu from './hive-context-menu.vue';
-import { Click, Mount, Unmount } from '@/common/mixin/emits';
+import { Click, Mount, Unmount, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import {
   CloseContextMenu,
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   outOfBorders: false,
 });
 
-type Emit = Mount & Unmount & Click & CloseContextMenu & ContextItemClick;
+type Emit = Event & Mount & Unmount & Click & CloseContextMenu & ContextItemClick;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

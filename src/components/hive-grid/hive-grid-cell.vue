@@ -13,7 +13,7 @@ import {
   onAfterChange,
   Unmount,
   Mount,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import type { CommonProps } from '@/common/types/props';
 import type { CssClassConfig } from './types';
 import { getClassString } from './helpers/get-css-class';
@@ -26,7 +26,7 @@ interface Props extends CommonProps {
   fields?: string[];
   editable?: boolean | ((row: Record<string, unknown>) => boolean);
   valueType?: string;
-  width?: number;
+  width?: number | string;
   borderTop?: boolean;
   inEditMode?: boolean;
   cssClass?: CssClassConfig;
@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
   inEditMode: false,
 });
 
-type Emit = Mount & Unmount & BeforeEdit & AfterEdit & BeforeChange & AfterChange & Updated;
+type Emit = Event & Mount & Unmount & BeforeEdit & AfterEdit & BeforeChange & AfterChange & Updated;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

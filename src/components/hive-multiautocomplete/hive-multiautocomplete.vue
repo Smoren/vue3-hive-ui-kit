@@ -15,6 +15,7 @@ import {
   onUpdateModelValue,
   Search,
   onSearch,
+  Event,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { Value } from '@/common/types/select';
@@ -49,7 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
   disctinct: true,
 });
 
-type Emit = Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
+type Emit = Event & Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -103,6 +104,13 @@ const deleteLast = (value: Value) => {
   }
 };
 
+const deleteValue = (index: number) => {
+  if (!currentValue.value && !Array.isArray(currentValue.value)) return;
+  if (Array.isArray(currentValue.value)) {
+    currentValue.value.splice(index, 1);
+  }
+};
+
 watch(
   () => props.modelValue,
   () => {
@@ -146,13 +154,13 @@ onMounted(() => {
     <div class="hive-multiselect__selected">
       <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
         <div
-          v-for="value in currentValue"
+          v-for="(value, i) in currentValue"
           :key="Array.isArray(value) ? value[0] : value"
           class="hive-multiselect__selected-item"
           @mousedown.stop.prevent
         >
           {{ value }}
-          <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
+          <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="deleteValue(i)" />
         </div>
       </template>
       <hive-input
@@ -245,24 +253,25 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
 
     &-item {
       box-sizing: content-box;
-      border: 1px solid transparent;
       border-radius: var(--border-radius, $border-radius);
       box-shadow: 0 0 0 1px #22242626 inset;
-      padding: 3px 3px;
+      padding: 3px 9px;
       margin: 3px 0;
       vertical-align: baseline;
       background-color: #e8e8e8;
       color: #0009;
       text-transform: none;
-      font-weight: 700;
+      font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       white-space: nowrap;
+      text-transform: none;
+      font-size: 14px;
 
       &__img {
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
         margin-top: 2px;
 
         &:hover {

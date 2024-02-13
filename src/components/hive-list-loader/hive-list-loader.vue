@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CommonProps } from '@/common/types/props';
-import { Mount, Unmount } from '@/common/mixin/emits';
+import { Mount, Unmount, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
@@ -15,7 +15,7 @@ withDefaults(defineProps<Props>(), {
   colorSpinner: '#6bbfff',
 });
 
-type Emit = Mount & Unmount;
+type Emit = Event & Mount & Unmount;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 </script>

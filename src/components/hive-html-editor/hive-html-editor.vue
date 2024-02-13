@@ -14,7 +14,7 @@ import {
   onFocusin,
   Change,
   onChange,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 
 export interface Props extends CommonProps {
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
 });
 
-type Emit = Mount & Unmount & Update<string> & Focusout & Focusin & Change<string>;
+type Emit = Event & Mount & Unmount & Update<string> & Focusout & Focusin & Change<string>;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

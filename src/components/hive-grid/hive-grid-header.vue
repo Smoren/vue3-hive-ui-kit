@@ -12,7 +12,7 @@ import {
   type Sort,
   type QueryUpdate,
   onSort,
-} from '@/common/mixin/emits';
+ Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Value } from '@/common/types/select';
 import HiveButton from '../hive-button/hive-button.vue';
@@ -31,7 +31,7 @@ const props = defineProps<Props>();
 
 const currentQuery = ref(props.query);
 
-type Emit = Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string> & Sort & QueryUpdate;
+type Emit = Event & Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string> & Sort & QueryUpdate;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 

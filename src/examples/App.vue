@@ -478,7 +478,8 @@ const changeRows = () => {
   ];
 };
 
-const universalLog = (...args: unknown[]) => {
+// @ts-ignore
+const universalLog = (...args: any[]) => {
   console.log(args);
 };
 
@@ -670,7 +671,7 @@ const searchString = ref('');
         placeholder="Поиск"
         btn-background-color="#33333340"
       />
-      <hive-button title='clear search' @click="searchString = ''" />
+      <hive-button title="clear search" @click="searchString = ''" />
 
       <!-- Button -->
       <widget-wrapper title="Button">
@@ -818,6 +819,7 @@ const searchString = ref('');
           v-model="multiautocomplete"
           :options="autoCompleteOptions"
           :style="{ width: '300px' }"
+          :disctinct="false"
         />
       </widget-wrapper>
       <widget-wrapper title="Tab">
@@ -863,7 +865,6 @@ const searchString = ref('');
           :filter-fields="['name', 'bool', 'age']"
           :items-on-page="2"
           :row-css-class="(row: any) => [`aaa-${row['age']}`, 'bbb']"
-          @row-click="log"
           :extension-fields="['score']"
         ></HiveGrid>
       </widget-wrapper>

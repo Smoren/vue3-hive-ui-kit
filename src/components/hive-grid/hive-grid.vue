@@ -23,6 +23,7 @@ import {
   onBeforeEdit,
   onBeforeChange,
   UpdatePage,
+  Event,
 } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Value } from '@/common/types/select';
@@ -40,6 +41,7 @@ import { VueComponent } from '../../../src/common/types/value';
 import type { GridColumns, GridConfig } from './types';
 import { filterItems } from './hooks/use-filter';
 import { CssClassConfig } from './types';
+import { ComponentPublicInstance } from 'vue';
 
 interface Props extends CommonProps {
   dataItems: any[] | undefined;
@@ -67,7 +69,8 @@ const props = withDefaults(defineProps<Props>(), {
   page: 1,
 });
 
-type Emit = Mount &
+type Emit = Event &
+  Mount &
   Unmount &
   Update<Value> &
   Focusin &
@@ -164,7 +167,8 @@ watch(itemsLength, () => {
 
 const slots = useSlots();
 
-const rowClicked = (row: Record<string, unknown>, rowRef: VueComponent<typeof HiveGridRow> | null) => {
+const rowClicked = (row: Record<string, unknown>, rowRef: ComponentPublicInstance | null) => {
+  // @ts-ignore
   onRowClick<typeof HiveGridRow>(emit, row, rowRef);
 };
 
@@ -195,12 +199,17 @@ defineExpose({ items, grid });
           :show-add-buttons="showAddButtons"
           :color-alternation="colorAlternation"
           :add-row="addRow"
+          @row-click="rowClicked"
           :delete-row="deleteRow"
           :css-class="rowCssClass"
-          @row-click="rowClicked"
         >
           <template #="{ rowRef }">
-            <hive-grid-cell v-if="showAddButtons" :editable="false" :border-top="!colorAlternation">
+            <hive-grid-cell
+              v-if="showAddButtons"
+              :editable="false"
+              :border-top="!colorAlternation"
+              :row="(item as Record<string, unknown>)"
+            >
               <template #view>
                 <div class="gap">
                   <HiveButton text="AddUp" @click="addRow(true, getRowIndex(index))">
@@ -230,7 +239,7 @@ defineExpose({ items, grid });
               :fields="column.fields"
               :editable="column.editable"
               :valueType="column.viewType === 'list' ? 'array' : 'string'"
-              :width="column.width"
+              :width="column.width ?? 'auto'"
               :in-edit-mode="column.inEditMode ?? false"
               :border-top="!colorAlternation"
               :css-class="column.cssClass"
