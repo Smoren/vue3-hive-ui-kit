@@ -60,7 +60,24 @@ const handleR = () => {
 
 const input = ref('');
 
-const options = [5, 2, 1, 4, 3, 6];
+const options = [
+  {
+    title: '1',
+    id: '1',
+  },
+  {
+    title: '2',
+    id: '2',
+  },
+  {
+    title: '3',
+    id: '3',
+  },
+  {
+    title: '4',
+    id: '4',
+  },
+];
 
 const textEditor = ref('');
 
@@ -747,7 +764,7 @@ const searchString = ref('');
         {{ mm }}
         {{ dropdown }}
         <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
-        <hive-drop-down v-model="dropdown" :options="options" />
+        <hive-drop-down v-model="dropdown" :options="options" value-field="title" title-field="title" with-null />
         <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
         <hive-drop-down
           v-model="mm"

@@ -15,7 +15,8 @@ import {
   onUpdateModelValue,
   Search,
   onSearch,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Options } from '@/common/types/option';
 import { Value } from '@/common/types/select';
@@ -145,7 +146,11 @@ onMounted(() => {
             class="hive-multiselect__selected-item"
             @mousedown.stop.prevent
           >
-            {{ (currentOptions.get(value) && currentOptions.get(value)[titleField]) ?? currentOptions.get(value) }}
+            {{
+              (currentOptions.get(value) && (currentOptions.get(value)[titleField] ?? nullTitle)) ??
+              currentOptions.get(value) ??
+              nullTitle
+            }}
             <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
           </div>
         </template>
@@ -191,7 +196,7 @@ onMounted(() => {
             @mousedown.prevent
             :data-value="item[1][valueField]"
           >
-            {{ item[1][titleField] }}
+            {{ item[1][titleField] ?? nullTitle }}
           </div>
         </template>
       </div>

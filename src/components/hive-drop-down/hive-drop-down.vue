@@ -15,7 +15,8 @@ import {
   onUpdateModelValue,
   Search,
   onSearch,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import type { Options } from '@/common/types/option';
@@ -112,7 +113,7 @@ defineExpose({ current });
         v-model="searchQuery"
         ref="searchRef"
         :disabled="disabled"
-        :placeholder="current ? String(current[titleField]) : ''"
+        :placeholder="current ? String(current[titleField] ?? nullTitle) : ''"
         class="hive-drop-down__search"
         :class="{ valueNull: (modelValue === null && withNull) || modelValue === undefined }"
         :style="{ height }"
@@ -147,7 +148,7 @@ defineExpose({ current });
             @mousedown.prevent
             :data-value="item[1][valueField]"
           >
-            {{ item[1][titleField] }}
+            {{ item[1][titleField] ?? nullTitle }}
           </div>
         </div>
       </transition>
