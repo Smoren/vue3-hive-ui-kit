@@ -149,6 +149,10 @@ export const useListMethods = ({
     // }
   });
 
+  watch(filteredOptions, () => {
+    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions);
+  });
+
   const setPrevActiveValue = () => {
     const node = filteredOptions.value.get(activeValue.value);
 

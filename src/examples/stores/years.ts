@@ -28,5 +28,9 @@ export const useYearStore = defineStore('years', () => {
     }, 1000);
   };
 
-  return { years, getYears };
+  const a = ref(['a', 'b', 'c', 'd']);
+
+  const b = ref('');
+
+  return { years, getYears, a, b };
 });

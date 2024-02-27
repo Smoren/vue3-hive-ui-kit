@@ -83,7 +83,7 @@ const textEditor = ref('');
 
 let optionsTest: Option[] | undefined;
 
-const autoCompleteOptions = ['И', 'ИЛИ', 'НЕ', '(', ')', '<->', '<2>'];
+const autoCompleteOptions = ref(['И', 'ИЛИ', 'НЕ', '(', ')', '<->', '<2>']);
 
 setTimeout(() => {
   optionsTest = [
@@ -675,6 +675,10 @@ const mask = 'C*@A.A';
 const tokens = 'C:[A-z0-9]|*:[0-9A-z.,_]:multiple|A:[a-z]:multiple|@:@';
 
 const searchString = ref('');
+
+const store = useYearStore();
+
+const a = computed(() => store.a);
 </script>
 
 <template>
@@ -721,7 +725,7 @@ const searchString = ref('');
         <hive-input v-model="text" invalid @input="onInput" />
         <hive-input v-model="input" invalid @input="onInput" />
         <hive-input v-model="num" :mask="mask" :tokens="tokens" title="Title" @input="onInput" />
-        <!-- <hive-input v-model="num" type="number" @input="onInput" /> -->
+        <hive-input v-model="num" type="number" @input="onInput" :step="1" />
         <hive-badge :counter="5" :mode="1" />
       </widget-wrapper>
 
@@ -794,13 +798,7 @@ const searchString = ref('');
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
-        <hive-multiselect
-          :options="yearList"
-          v-model="multiselect"
-          title-field="user_name"
-          value-field="user_id"
-          with-null
-        />
+        <!-- <hive-multiselect :options="a" v-model="store" with-null /> -->
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">

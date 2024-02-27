@@ -21,6 +21,7 @@ import { useOnMount } from '@/common/hooks/use-mount';
 import { Value } from '@/common/types/select';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
+import HiveMultiautocompleteItem from './hive-multiautocomplete-item.vue';
 
 export interface Props extends CommonProps {
   options: string[] | undefined;
@@ -144,24 +145,34 @@ const onInputSearch = () => {
   updateActiveValue(null);
 };
 
+watch(searchQuery, () => {
+  onSearch(emit, searchQuery.value);
+  updateActiveValue(null);
+});
+
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
 });
+
+const editCurrentValue = (value: Value, index: number) => {
+  if (Array.isArray(currentValue.value)) {
+    currentValue.value[index] = value;
+  }
+};
 </script>
 
 <template>
   <div class="hive-multiselect__wrap" :class="{ expand: isExpanded, disable: disabled }">
     <div class="hive-multiselect__selected">
       <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
-        <div
+        <hive-multiautocomplete-item
           v-for="(value, i) in currentValue"
           :key="Array.isArray(value) ? value[0] : value"
-          class="hive-multiselect__selected-item"
-          @mousedown.stop.prevent
-        >
-          {{ value }}
-          <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="deleteValue(i)" />
-        </div>
+          :value="value"
+          :index="i"
+          @delete="deleteValue(i)"
+          @edit="editCurrentValue"
+        />
       </template>
       <hive-input
         v-model="searchQuery"
@@ -181,8 +192,7 @@ onMounted(() => {
         @keydown.esc="collapse"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
-        @keydown.delete="deleteLast((currentValue as Value[])?.at(-1))"
-        @input="onInputSearch()"
+        @keydown.delete="!searchQuery ? deleteValue((currentValue as Value[]).length - 1) : null"
       />
     </div>
     <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
