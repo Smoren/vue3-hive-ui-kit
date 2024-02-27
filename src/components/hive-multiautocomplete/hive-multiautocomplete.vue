@@ -36,7 +36,7 @@ export interface Props extends CommonProps {
   nullTitle?: string;
   disabled?: boolean;
   focusOnMount?: boolean;
-  disctinct?: boolean;
+  distinct?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   nullTitle: 'Не выбрано',
   focusOnMount: false,
-  disctinct: true,
+  distinct: true,
 });
 
 type Emit = Event & Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
@@ -63,7 +63,7 @@ const configOptions = reactive({
   nullTitle: props.nullTitle,
   fieldTitle: props.titleField,
   fieldValue: props.valueField,
-  disctinct: props.disctinct,
+  distinct: props.distinct,
 });
 
 const {
@@ -87,7 +87,7 @@ const {
 const changeValue = (value: Value) => {
   if (!currentValue.value || !value || !Array.isArray(currentValue.value)) return;
 
-  const includes = props.disctinct ? currentValue.value?.includes(value) : false;
+  const includes = props.distinct ? currentValue.value?.includes(value) : false;
 
   if (!includes) {
     currentValue.value?.push(value);
@@ -224,7 +224,7 @@ const editCurrentValue = (value: Value, index: number) => {
 
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
-$drop-down-z_menu: 1;
+$drop-down-z_menu: 100;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);
 $drop-down-selected_background: rgba(0, 0, 0, 0.03);
@@ -256,49 +256,18 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     display: flex;
     align-items: center;
     gap: 0 5px;
-    margin: 0 5px;
+    margin: 3px 5px;
     box-sizing: border-box;
     flex-wrap: wrap;
     width: 100%;
-
-    &-item {
-      box-sizing: content-box;
-      border-radius: var(--border-radius, $border-radius);
-      box-shadow: 0 0 0 1px #22242626 inset;
-      padding: 3px 9px;
-      margin: 3px 0;
-      vertical-align: baseline;
-      background-color: #e8e8e8;
-      color: #0009;
-      text-transform: none;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-      text-transform: none;
-      font-size: 14px;
-
-      &__img {
-        width: 12px;
-        height: 12px;
-        margin-top: 2px;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
   }
 
   &__wrap {
-    border: 1px solid transparent;
+    border: 1px solid var(--border, $border);
     border-radius: var(--border-radius, $border-radius);
-    border-color: var(--border, $border);
     position: relative;
     width: 100%;
     display: flex;
-    background-color: none;
     cursor: default;
 
     &.expand {
@@ -381,13 +350,13 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     border-top: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    z-index: 100;
 
     &-item {
       border-top: 1px solid $drop-down-border-top;
       padding: $p-input !important;
       white-space: normal;
       word-wrap: normal;
+      text-align: left;
 
       &.selected {
         background: $drop-down-selected_background;

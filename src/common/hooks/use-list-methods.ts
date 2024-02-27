@@ -14,7 +14,7 @@ export type ListMethodsConfig = {
   fieldTitle: string;
   fieldValue: string;
   autocomplete?: boolean;
-  disctinct?: boolean;
+  distinct?: boolean;
 };
 
 export const useListMethods = ({
@@ -25,8 +25,7 @@ export const useListMethods = ({
   nullTitle,
   fieldTitle,
   fieldValue,
-  autocomplete = false,
-  disctinct = true,
+  distinct = true,
 }: ListMethodsConfig) => {
   const isExpanded = ref(false);
   const activeValue: Ref<Value | undefined> = ref();
@@ -49,7 +48,7 @@ export const useListMethods = ({
 
   const filteredOptions = ref(new Map(currentOptions.value));
 
-  const distinct = () => {
+  const applyDistinct = () => {
     for (let key of filteredOptions.value.keys()) {
       if (Array.isArray(modelValue) && modelValue.includes(key)) {
         const next = filteredOptions.value.get(key).next;
@@ -65,8 +64,8 @@ export const useListMethods = ({
     }
   };
 
-  if (disctinct) {
-    distinct();
+  if (distinct) {
+    applyDistinct();
   }
 
   if (withNull || withUndefined) {
@@ -96,11 +95,8 @@ export const useListMethods = ({
 
     if (value === undefined || value === null) {
       current.value = nullOption.value;
-    } else if (autocomplete) {
-      // current.value = value;
     } else {
-      let key = value;
-      current.value = filteredOptions.value.get(key);
+      current.value = filteredOptions.value.get(value);
     }
 
     collapse();
@@ -128,25 +124,6 @@ export const useListMethods = ({
 
   watch(searchQuery, () => {
     useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions);
-
-    // if (searchQuery.value) {
-    //   filteredOptions.value.clear();
-
-    //   for (const item of currentOptions.value.values()) {
-    //     if (item[1][fieldTitle].toLowerCase().indexOf(searchQuery.value.toLowerCase()) !== -1) {
-    //       if (Array.isArray(modelValue)) {
-    //         if (!modelValue.includes(item[1][fieldValue])) {
-    //           filteredOptions.value.set(item[1][fieldValue], item[1]);
-    //         }
-    //       } else {
-    //         filteredOptions.value.set(item[1][fieldValue], item[1]);
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   filteredOptions.value = new Map(JSON.parse(JSON.stringify([...currentOptions.value])));
-    //   distinct();
-    // }
   });
 
   watch(filteredOptions, () => {

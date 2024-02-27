@@ -812,7 +812,7 @@ const a = computed(() => store.a);
           v-model="multiautocomplete"
           :options="autoCompleteOptions"
           :style="{ width: '300px' }"
-          :disctinct="false"
+          :distinct="false"
         />
       </widget-wrapper>
       <widget-wrapper title="HiveUploadFile">
@@ -834,7 +834,7 @@ const a = computed(() => store.a);
           v-model="multiautocomplete"
           :options="autoCompleteOptions"
           :style="{ width: '300px' }"
-          :disctinct="false"
+          :distinct="false"
         />
       </widget-wrapper>
       <widget-wrapper title="Tab">

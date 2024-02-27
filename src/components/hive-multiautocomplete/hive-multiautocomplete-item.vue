@@ -48,24 +48,23 @@ const edit = () => {
   box-sizing: content-box;
   border-radius: var(--border-radius, $border-radius);
   box-shadow: 0 0 0 1px #22242626 inset;
-  padding: 3px 9px;
+  padding: 5px 11px;
   margin: 3px 0;
   vertical-align: baseline;
   background-color: #e8e8e8;
   color: #0009;
   text-transform: none;
-  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   white-space: nowrap;
   text-transform: none;
-  font-size: 14px;
+  font-size: 1em;
+  font-weight: 500;
 
   &__img {
-    width: 12px;
-    height: 12px;
-    margin-top: 2px;
+    width: 1em;
+    height: 1em;
 
     &:hover {
       cursor: pointer;

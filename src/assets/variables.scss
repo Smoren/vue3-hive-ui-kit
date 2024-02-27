@@ -6,9 +6,9 @@ $bg-hover: #d3eafff5;
 $text: #3f3f3f;
 
 //* Borders
-$border: #bfbfbf;
-$border-disabled: #bfbfbf7c;
-$border-focus: #b2d6f8; //#96c8da
+$border: rgb(205, 205, 205);
+$border-disabled: rgba(205, 205, 205, 0.7);
+$border-focus: rgb(150, 200, 218);
 $border-radius: 5px;
 $border-error: #df0000;
 
