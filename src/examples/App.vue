@@ -83,7 +83,7 @@ const textEditor = ref('');
 
 let optionsTest: Option[] | undefined;
 
-const autoCompleteOptions = ref(['И', 'ИЛИ', 'НЕ', '(', ')', '<->', '<2>']);
+const autoCompleteOptions = ref(['И', 'НЕ', 'ИЛИ', '(', ')', '<->', '<2>']);
 
 setTimeout(() => {
   optionsTest = [

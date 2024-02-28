@@ -20,6 +20,7 @@ export const useSearch = (
   }
 
   const words = searchString.replace(/[ \t\n]+/, ' ').split(' ');
+  let prev = null;
 
   for (const item of input.value.values()) {
     if (item.id === null || item[fieldTitle] === null) {
@@ -41,10 +42,20 @@ export const useSearch = (
     if (matchCount === words.length) {
       if (Array.isArray(modelValue)) {
         if (!distinct || !modelValue.includes(item[fieldValue])) {
+          if (prev) {
+            item.prev = prev[fieldValue];
+            prev.next = item[fieldValue];
+          }
           filteredOptions.value.set(item[fieldValue], item);
+          prev = item;
         }
       } else {
+        if (prev) {
+          item.prev = prev[fieldValue];
+          prev.next = item[fieldValue];
+        }
         filteredOptions.value.set(item[fieldValue], item);
+        prev = item;
       }
     }
   }
