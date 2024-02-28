@@ -135,7 +135,6 @@ watch(
   currentValue,
   () => {
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
-    console.log(filteredOptions.value);
   },
   { deep: true },
 );
