@@ -8,6 +8,7 @@ export const useSearch = (
   fieldTitle: string,
   fieldValue: string,
   filteredOptions: Ref<Map<any, any>>,
+  distinct: boolean,
 ) => {
   if (!searchString) {
     filteredOptions.value = new Map(JSON.parse(JSON.stringify([...input.value])));
@@ -39,7 +40,7 @@ export const useSearch = (
 
     if (matchCount === words.length) {
       if (Array.isArray(modelValue)) {
-        if (!modelValue.includes(item[fieldValue])) {
+        if (!distinct || !modelValue.includes(item[fieldValue])) {
           filteredOptions.value.set(item[fieldValue], item);
         }
       } else {

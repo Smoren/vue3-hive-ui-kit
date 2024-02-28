@@ -135,7 +135,7 @@ watch(
   currentValue,
   () => {
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
-    setNextActiveValue();
+    console.log(filteredOptions.value);
   },
   { deep: true },
 );
@@ -157,6 +157,18 @@ onMounted(() => {
 const editCurrentValue = (value: Value, index: number) => {
   if (Array.isArray(currentValue.value)) {
     currentValue.value[index] = value;
+  }
+};
+
+const iconClick = () => {
+  if (isExpanded.value) {
+    if (Array.isArray(currentValue.value) && currentValue.value.length) {
+      currentValue.value.length = 0;
+    } else {
+      toggle();
+    }
+  } else {
+    toggle();
   }
 };
 </script>
@@ -195,7 +207,11 @@ const editCurrentValue = (value: Value, index: number) => {
         @keydown.delete="!searchQuery ? deleteValue((currentValue as Value[]).length - 1) : null"
       />
     </div>
-    <i class="hive-multiselect__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
+    <i
+      class="hive-multiselect__icon"
+      :class="{ expand: isExpanded, deleteIcon: Array.isArray(currentValue) && currentValue.length }"
+      @mousedown="iconClick"
+    />
     <div
       ref="menuRef"
       v-if="isExpanded"
@@ -301,6 +317,13 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     &.expand {
       &:before {
         content: '▲';
+      }
+
+      &.deleteIcon {
+        &:before {
+          content: 'x';
+          font-size: larger;
+        }
       }
     }
   }

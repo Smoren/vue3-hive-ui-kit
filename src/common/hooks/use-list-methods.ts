@@ -49,6 +49,7 @@ export const useListMethods = ({
   const filteredOptions = ref(new Map(currentOptions.value));
 
   const applyDistinct = () => {
+    console.log('here');
     for (let key of filteredOptions.value.keys()) {
       if (Array.isArray(modelValue) && modelValue.includes(key)) {
         const next = filteredOptions.value.get(key).next;
@@ -65,8 +66,10 @@ export const useListMethods = ({
   };
 
   if (distinct) {
+    console.log('here disctinct');
     applyDistinct();
   }
+  console.log('here not disctinct', filteredOptions.value);
 
   if (withNull || withUndefined) {
     current.value = nullOption.value;
@@ -81,7 +84,7 @@ export const useListMethods = ({
   const updateActiveValue = (value: Value) => {
     activeValue.value = value;
     let element = menuRef.value?.querySelector(`[data-value='${value}']`);
-    console.log(element, value);
+    console.log(element, value, menuRef.value);
     if (element) {
       (element as unknown as HTMLElement).scrollIntoView({
         behavior: 'smooth',
@@ -123,11 +126,11 @@ export const useListMethods = ({
   };
 
   watch(searchQuery, () => {
-    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions);
+    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
   });
 
   watch(filteredOptions, () => {
-    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions);
+    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
   });
 
   const setPrevActiveValue = () => {

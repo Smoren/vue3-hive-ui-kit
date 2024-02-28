@@ -29,6 +29,11 @@ const edit = () => {
     editRef.value = false;
   }
 };
+
+const cancelEdit = () => {
+  editValue.value = props.value as string;
+  editRef.value = false;
+};
 </script>
 
 <template>
@@ -37,7 +42,14 @@ const edit = () => {
       {{ value }}
       <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click.stop="deleteValue()" />
     </template>
-    <hive-input v-else v-model="editValue" @focusout="edit" />
+    <hive-input
+      v-else
+      v-model="editValue"
+      focus-on-mount
+      @focusout="edit"
+      @keydown.enter="edit"
+      @keydown.esc="cancelEdit"
+    />
   </div>
 </template>
 
