@@ -149,7 +149,7 @@ onMounted(() => {
             {{
               (currentOptions.get(value) && (currentOptions.get(value)[titleField] ?? nullTitle)) ??
               currentOptions.get(value) ??
-              nullTitle
+              value
             }}
             <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
           </div>
