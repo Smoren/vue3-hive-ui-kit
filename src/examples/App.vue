@@ -33,6 +33,7 @@ import HiveGridRow from '../components/hive-grid/hive-grid-row.vue';
 import hiveContextMenu from '../components/hive-context-menu/hive-context-menu.vue';
 import { ContextMenuItems } from '../components/hive-context-menu/types';
 import type { HiveUploadFilesType } from '@/components/hive-upload-file/hive-upload-file-type.ts';
+import FilterNew from './components/filter-new.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -495,6 +496,8 @@ const changeRows = () => {
   ];
 };
 
+const mltsval = ref([]);
+
 // @ts-ignore
 const universalLog = (...args: any[]) => {
   console.log(args);
@@ -685,217 +688,7 @@ const a = computed(() => store.a);
   <hive-loader :visible="false" />
 
   <div class="app">
-    <div class="wrapper">
-      <hive-input-search
-        v-model="searchString"
-        :is-opened="true"
-        placeholder="Поиск"
-        btn-background-color="#33333340"
-      />
-      <hive-button title="clear search" @click="searchString = ''" />
-
-      <!-- Button -->
-      <widget-wrapper title="Button">
-        <hive-button>
-          <template #before>Before</template>
-          <img src="@/assets/search.svg" alt="image after" class="img" />
-          Click
-          <img src="@/assets/search.svg" alt="image before" class="img" />
-          <template #after>After</template>
-        </hive-button>
-        <hive-button disabled />
-        <hive-button />
-        <hive-button :style="{ backgroundColor: 'red' }" @click.right.prevent="handleR" />
-        <hive-button title="Tree" :class="'test'" @click="click" />
-        <hive-button title="Notify" :class="'test'" @click="create" />
-      </widget-wrapper>
-
-      <!-- Textarea -->
-      <widget-wrapper title="Textarea">
-        {{ text }}
-        <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
-      </widget-wrapper>
-
-      <!-- Input -->
-      <widget-wrapper title="Input">
-        <div>{{ text }}</div>
-        <div>{{ num }}</div>
-        <hive-button title="Classes" :class="'test'" @click="handleNum" />
-
-        <hive-input v-model="text" invalid @input="onInput" />
-        <hive-input v-model="input" invalid @input="onInput" />
-        <hive-input v-model="num" :mask="mask" :tokens="tokens" title="Title" @input="onInput" />
-        <hive-input v-model="num" type="number" @input="onInput" :step="1" />
-        <hive-badge :counter="5" :mode="1" />
-      </widget-wrapper>
-
-      <!-- Modal -->
-      <widget-wrapper title="Modal">
-        <hive-button @click="isOpenModal = true" />
-
-        <hive-dialog v-model="isOpenModal">
-          <template #header>
-            <!-- <hive-button title="close" /> -->
-            ривэд эдвэд
-            FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-          </template>
-
-          Hello
-
-          <div :style="{ display: 'flex', flexDirection: 'column', gap: '10px', height: '500px' }">
-            <hive-input v-model="text" invalid />
-            <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
-            <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
-            <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
-            <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" /> -->
-            <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" /> -->
-            <!-- <hive-drop-down v-model="mm" :options="yearList" title-field="title" value-field="id" /> -->
-            <hive-button />
-          </div>
-
-          <template #footer>
-            <hive-button title="close" />
-          </template>
-        </hive-dialog>
-      </widget-wrapper>
-
-      <!-- DropDown -->
-      <widget-wrapper title="DropDown">
-        {{ dd3 }}
-        <br />
-        {{ dd4 }}
-        <br />
-        {{ mm }}
-        {{ dropdown }}
-        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
-        <hive-drop-down v-model="dropdown" :options="options" value-field="title" title-field="title" with-null />
-        <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
-        <hive-drop-down
-          v-model="mm"
-          :options="maritalStatusList"
-          title-field="title"
-          value-field="id"
-          with-null
-          height="100px"
-        />
-        <hive-drop-down v-model="mm" :options="statusList" title-field="title" value-field="id" />
-      </widget-wrapper>
-      <!-- RadioGroup -->
-      <widget-wrapper title="Radio">
-        {{ radioGroup }}
-        <hive-radio-group :options="maritalStatusList" v-model="radioGroup" title-field="title" value-field="title" />
-      </widget-wrapper>
-      <widget-wrapper title="Checkbox">
-        {{ checkbox }}
-        <hive-checkbox-group
-          :options="optionsObject ?? undefined"
-          v-model="checkbox"
-          title-field="title"
-          value-field="classifier_id"
-        />
-        <!-- <hive-checkbox-group :options="maritalStatusList" v-model="check" title-field="title" value-field="id" /> -->
-        <!-- <hive-checkbox :option="checkName" v-model="check" /> -->
-      </widget-wrapper>
-      <widget-wrapper title="Multiselect">
-        {{ checkbox }}
-        <!-- <hive-multiselect :options="a" v-model="store" with-null /> -->
-        <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
-      </widget-wrapper>
-      <widget-wrapper title="Autocompelte">
-        {{ autocomplete }}
-        <hive-button @click="autocomplete = 'sadasd'" />
-        <hive-autocomplete v-model="autocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
-      </widget-wrapper>
-      <widget-wrapper title="Multiautocompelte">
-        {{ autocomplete }}
-        <hive-multiautocomplete
-          v-model="multiautocomplete"
-          :options="autoCompleteOptions"
-          :style="{ width: '300px' }"
-          :distinct="false"
-        />
-      </widget-wrapper>
-      <widget-wrapper title="HiveUploadFile">
-        <hive-upload-file @file-add="handleAdd" ref="files" multiple />
-      </widget-wrapper>
-      <widget-wrapper title="Splitter" :class="{ 123: 1 }">
-        <hive-splitter style="height: 400px">
-          <hive-pane min-size="20" id="1">1</hive-pane>
-          <hive-pane id="2">5</hive-pane>
-        </hive-splitter>
-      </widget-wrapper>
-      <widget-wrapper title="Autocompelte">
-        {{ autocomplete }}
-        <hive-autocomplete v-model="autocomplete" :options="autoCompleteOptions" :style="{ width: '300px' }" />
-      </widget-wrapper>
-      <widget-wrapper title="Multiautocompelte">
-        {{ autocomplete }}
-        <hive-multiautocomplete
-          v-model="multiautocomplete"
-          :options="autoCompleteOptions"
-          :style="{ width: '300px' }"
-          :distinct="false"
-        />
-      </widget-wrapper>
-      <widget-wrapper title="Tab">
-        {{ autocomplete }}
-        <hive-tab-group v-model="tab">
-          <hive-tab name="first" id="1">
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-            <div style="">asd</div>
-          </hive-tab>
-          <hive-tab name="second" id="2">cvb</hive-tab>
-          <hive-tab name="third" id="3">fgh</hive-tab>
-          <hive-tab name="fourth" id="4">ytiu</hive-tab>
-        </hive-tab-group>
-      </widget-wrapper>
-      <widget-wrapper title="HtmlEditor" :class="{ 123: 1 }">
-        {{ textEditor }}
-        <div v-html="textEditor" />
-        <hive-html-editor v-model="textEditor" :style="{ height: '300px' }" />
-      </widget-wrapper>
-      <widget-wrapper title="ListLoader">
-        <hive-list-loader :visible="true" colorMain="red" colorSpinner="#0bef12" />
-      </widget-wrapper>
-      <widget-wrapper title="Skeleton">
-        <hive-skeleton :visible="true" />
-      </widget-wrapper>
-      <widget-wrapper title="Grid">
-        <hive-button @click="changeRows" />
-        <HiveGrid
-          ref="grid"
-          :columns="columns"
-          :data-items="rows"
-          has-filter
-          :filter-fields="['name', 'bool', 'age']"
-          :items-on-page="2"
-          :row-css-class="(row: any) => [`aaa-${row['age']}`, 'bbb']"
-          :extension-fields="['score']"
-        ></HiveGrid>
-      </widget-wrapper>
-      <widget-wrapper title="TreeView">
-        <hive-tree-view
-          :nodes="treeNodes"
-          checked-all
-          checked-option="parent-checked-minus"
-          :with-checkboxes="true"
-          all-closed
-        />
-      </widget-wrapper>
-      <widget-wrapper title="ContextMenu" style="height: 500px">
-        <hive-context-menu :items="contextMenuItems" @context-item-click="universalLog" />
-      </widget-wrapper>
-    </div>
+    <filter-new />
   </div>
   <notifications position="bottom center" />
 </template>
