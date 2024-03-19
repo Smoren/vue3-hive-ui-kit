@@ -1,133 +1,88 @@
+import _default from '../../../dist/vite.config';
 <script setup lang="ts">
-import { computed, watch } from 'vue';
-import { HiveMultiautocomplete, HiveMultiselect, HiveButton } from '../../index';
-import { useFilterStore } from '../stores/cityhaze';
-import { getDefaultOwnerId } from '../stores/helpers';
-import type { FilterConfig } from '../services/types';
-
-const emit = defineEmits<{
-  (e: 'submit', filterConfig: FilterConfig): void;
-}>();
-
-const filterStore = useFilterStore(getDefaultOwnerId());
-
-const submitForm = () => {
-  console.log(filterStore.getFilterConfig());
-  emit('submit', filterStore.getFilterConfig());
+const variant = {
+  matrix_1: [
+    [1, 4, 5, 3],
+    [0.25, 1, 3, 2],
+    [0.2, 0.3333333333333333, 1, 1],
+    [0.3333333333333333, 0.5, 1, 1],
+  ],
+  matrix_2: [
+    [1, 0.5, 2],
+    [2, 1, 3],
+    [0.5, 0.3333333333333333, 1],
+  ],
+  matrix_3: [
+    [1, 0.5, 0.25],
+    [2, 1, 0.3333333333333333],
+    [4, 3, 1],
+  ],
+  matrix_4: [
+    [1, 8, 3],
+    [0.125, 1, 2],
+    [0.3333333333333333, 0.5, 1],
+  ],
+  matrix_5: [
+    [1, 0.25, 0.3333333333333333],
+    [4, 1, 2],
+    [3, 0.5, 1],
+  ],
 };
 
-document.addEventListener('keydown', (event) => {
-  if (event.ctrlKey && event.key == 'Enter') {
-    submitForm();
-  }
-});
-
-const handleFormulaOnSearch = (value: string) => {
-  filterStore.loadFormulaOptions(value);
+const roundTwoDigits = (value: number) => {
+  return +value.toFixed(2);
 };
 
-const handleFormulaOnChange = () => {
-  filterStore.loadDefaultFormulaOptions();
-};
+const firstMatrix = variant.matrix_1;
 
-const handleFormulaOnKeydown = (event: Event) => {
-  //@ts-ignore
-  if (event.data?.event?.key === ' ') {
-    // TODO
-    // if (event.component.searchQuery.trim() !== "") {
-    //   event.component.addToCurrentValue();
-    // }
-    //@ts-ignore
-    event.data?.prevent();
-  }
-};
+const calculatePriorityElement = (arr: number[]) =>
+  roundTwoDigits(
+    Math.pow(
+      arr.reduce((acc, value) => acc * value, 1),
+      1 / arr.length,
+    ),
+  );
 
-const handleAuthorsOnSearch = (value: string) => {
-  filterStore.loadAuthors(value);
-};
+const calculatePriorityVector = (matrix: number[][]) => matrix.map((arr) => calculatePriorityElement(arr));
 
-const handleTagsOnSearch = (value: string) => {
-  if (value !== '') {
-    filterStore.loadTags(value);
-  }
-};
+const priorityVector = calculatePriorityVector(firstMatrix);
 
-const formulaValues = computed(() => filterStore.formulaValues);
-const formulaOptions = computed(() => filterStore.formulaOptions);
+const priorityVectorSum = priorityVector.reduce((acc, value) => acc + value, 0);
 
-const categoriesValues = computed(() => filterStore.categoriesValues);
-const categoriesOptions = computed(() => filterStore.categoriesOptions);
+const calculateWeightElement = (vectorElement: number, vectorSum: number) => roundTwoDigits(vectorElement / vectorSum);
 
-const authorsValues = computed(() => filterStore.authorsValues);
-const authorsOptions = computed(() => filterStore.authorsOptions);
+const calculateWeightVector = (vector: number[]) =>
+  vector.map((element) => calculateWeightElement(element, priorityVectorSum));
 
-const tagsValues = computed(() => filterStore.tagsValues);
-const tagsOptions = computed(() => filterStore.tagsOptions);
+const weightVector = calculateWeightVector(priorityVector);
+
+const calculateMatrixWeightElement = (matrixRow: number[], weightVector: number[]) =>
+  roundTwoDigits(matrixRow.reduce((acc, value, index) => acc + value * weightVector[index]!, 0));
+
+const calculateMatrixWeightVector = (matrix: number[][]) =>
+  matrix.map((matrixRow) => calculateMatrixWeightElement(matrixRow, weightVector));
+
+const matrixWeightVector = calculateMatrixWeightVector(firstMatrix);
+
+const calculateLambdaVector = (weightVector: number[], matrixWeightVector: number[]) =>
+  matrixWeightVector.map((value, index) => roundTwoDigits(value / weightVector[index]!));
+
+const lambdaVector = calculateLambdaVector(weightVector, matrixWeightVector);
+
+const calculateEigenvalue = (lambdaVector: number[]) => Math.max(...lambdaVector);
+
+const eigenvalue = calculateEigenvalue(lambdaVector);
+
+const calculateConsistencyIndex = (eigenvalue: number, lambdaVector: number[]) =>
+  roundTwoDigits((eigenvalue - lambdaVector.length) / (lambdaVector.length - 1));
+
+const consistencyIndex = calculateConsistencyIndex(eigenvalue, lambdaVector);
+
+console.log(priorityVector, weightVector, matrixWeightVector, lambdaVector, eigenvalue, consistencyIndex);
 </script>
 
 <template>
-  <div class="alert alert-warning" v-if="filterStore.warningMessage" role="alert" style="width: 100%">
-    {{ filterStore.warningMessage }}
-  </div>
-  <div class="fields">
-    <div class="field">
-      <span class="field-title">Формула</span>
-      <hive-multiautocomplete
-        placeholder="Введите формулу..."
-        v-model="formulaValues"
-        :options="formulaOptions"
-        :show-on-input="true"
-        :distinct="false"
-        @search="handleFormulaOnSearch"
-        @change="handleFormulaOnChange"
-        @keydown="handleFormulaOnKeydown"
-      ></hive-multiautocomplete>
-    </div>
-    <div class="field">
-      <span class="field-title">Категории</span>
-      <hive-multiselect
-        placeholder="Введите категорию..."
-        v-model="categoriesValues"
-        :options="categoriesOptions"
-        title-field="name"
-        value-field="value"
-      />
-    </div>
-    <div class="field">
-      <span class="field-title">Авторы</span>
-      <hive-multiselect
-        placeholder="Введите имя автора..."
-        v-model="authorsValues"
-        :options="authorsOptions"
-        title-field="name"
-        value-field="name"
-        @search="handleAuthorsOnSearch"
-      />
-    </div>
-    <div class="field">
-      <span class="field-title">Теги</span>
-      <hive-multiselect
-        placeholder="Введите тег..."
-        v-model="tagsValues"
-        :options="tagsOptions"
-        title-field="name"
-        value-field="name"
-        @search="handleTagsOnSearch"
-      />
-    </div>
-    <div class="dates">
-      <div>
-        <div>Дата начала поиска</div>
-        <hive-input-date v-model="filterStore.dateFromValue" />
-      </div>
-      <div>
-        <div>Дата конца поиска</div>
-        <hive-input-date v-model="filterStore.dateUntilValue" />
-      </div>
-    </div>
-    <faq />
-    <hive-button class="button" @click="submitForm" text="Поиск" />
-  </div>
+  <div class="fields"></div>
 </template>
 
 <style scoped lang="scss">
