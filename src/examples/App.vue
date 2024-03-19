@@ -688,9 +688,9 @@ const a = computed(() => store.a);
   <hive-loader :visible="false" />
 
   <div class="app">
-    <!-- <filter-new /> -->
-    <hive-drop-down v-model="searchString" :options="rows" title-field="id" value-field="id"/>
-    <hive-drop-down v-model="searchString" :options="rows" title-field="id" value-field="id"/>
+    <filter-new />
+    <!-- <hive-drop-down v-model="searchString" :options="rows" title-field="id" value-field="id"/>
+    <hive-drop-down v-model="searchString" :options="rows" title-field="id" value-field="id"/> -->
   </div>
   <notifications position="bottom center" />
 </template>

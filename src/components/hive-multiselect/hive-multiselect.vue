@@ -105,6 +105,7 @@ const deleteLast = (value: Value) => {
 watch(
   () => props.modelValue,
   () => {
+    console.log('here modelValue');
     currentValue.value = props.modelValue;
   },
   { deep: true },
@@ -113,6 +114,7 @@ watch(
 watch(
   () => props.options,
   () => {
+    console.log('here options');
     configOptions.options = props.options;
     currentOptions.value = useListMethods(configOptions).currentOptions.value;
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
@@ -124,6 +126,7 @@ watch(
 watch(
   currentValue,
   () => {
+    console.log('here currentValue');
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
     setNextActiveValue();
   },

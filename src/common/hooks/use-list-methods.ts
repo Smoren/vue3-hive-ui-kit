@@ -122,12 +122,16 @@ export const useListMethods = ({
   };
 
   watch(searchQuery, () => {
+    console.log('here searchQuery');
     useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
   });
 
-  watch(filteredOptions, () => {
-    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
-  });
+  useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
+
+  // watch(filteredOptions, () => {
+  //   console.log('here filteredOptions');
+  //   useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
+  // });
 
   const setPrevActiveValue = () => {
     const node = filteredOptions.value.get(activeValue.value);
