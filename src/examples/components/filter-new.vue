@@ -1,4 +1,3 @@
-import _default from '../../../dist/vite.config';
 <script setup lang="ts">
 const variant = {
   matrix_1: [
@@ -29,11 +28,24 @@ const variant = {
   ],
 };
 
+const mathExpectationsOfConsistencyIndex: Record<number, number> = {
+  1: 0,
+  2: 0,
+  3: 0.58,
+  4: 0.9,
+  5: 1.12,
+  6: 1.24,
+  7: 1.32,
+  8: 1.41,
+  9: 1.45,
+  10: 1.49,
+};
+
 const roundTwoDigits = (value: number) => {
   return +value.toFixed(2);
 };
 
-const firstMatrix = variant.matrix_1;
+const firstMatrix = variant.matrix_5;
 
 const calculatePriorityElement = (arr: number[]) =>
   roundTwoDigits(
@@ -78,7 +90,22 @@ const calculateConsistencyIndex = (eigenvalue: number, lambdaVector: number[]) =
 
 const consistencyIndex = calculateConsistencyIndex(eigenvalue, lambdaVector);
 
-console.log(priorityVector, weightVector, matrixWeightVector, lambdaVector, eigenvalue, consistencyIndex);
+const calculateConsistencyRatio = (matrix: number[][], consistencyIndex: number) =>
+  roundTwoDigits(consistencyIndex / mathExpectationsOfConsistencyIndex[matrix.length]!);
+
+const consistencyRatio = calculateConsistencyRatio(firstMatrix, consistencyIndex);
+
+console.log(
+  `
+  ${priorityVector}
+  ${weightVector}
+  ${matrixWeightVector}
+  ${lambdaVector}
+  ${eigenvalue}
+  ${consistencyIndex}
+  ${consistencyRatio}
+  `,
+);
 </script>
 
 <template>
