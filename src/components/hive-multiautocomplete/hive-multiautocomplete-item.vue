@@ -55,13 +55,13 @@ const cancelEdit = () => {
 
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
+$item-height: calc($common-widget-height - 10px);
 
 .hive-multiselect__selected-item {
-  box-sizing: content-box;
+  box-sizing: border-box;
   border-radius: var(--border-radius, $border-radius);
   box-shadow: 0 0 0 1px #22242626 inset;
   padding: 5px 11px;
-  margin: 3px 0;
   vertical-align: baseline;
   background-color: #e8e8e8;
   color: #0009;
@@ -73,6 +73,7 @@ const cancelEdit = () => {
   text-transform: none;
   font-size: 1em;
   font-weight: 500;
+  height: 30px;
 
   &__img {
     width: 1em;

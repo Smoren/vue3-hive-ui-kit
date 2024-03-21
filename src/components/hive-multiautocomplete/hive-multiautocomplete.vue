@@ -195,7 +195,6 @@ const iconClick = () => {
           valueNull: (modelValue === null && withNull) || modelValue === undefined,
           'no-padding': Array.isArray(currentValue) && currentValue.length,
         }"
-        :style="{ height }"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
@@ -247,6 +246,7 @@ $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 $drop-down-padding: 0.5em 1em 0.5em 1em;
+$height: var(--height, $common-widget-height);
 
 .hive-multiselect {
   width: 100%;
@@ -270,8 +270,8 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
   &__selected {
     display: flex;
     align-items: center;
-    gap: 0 5px;
-    margin: 3px 5px;
+    gap: 5px;
+    margin: 5px;
     box-sizing: border-box;
     flex-wrap: wrap;
     width: 100%;
@@ -283,6 +283,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     position: relative;
     width: 100%;
     display: flex;
+    box-sizing: border-box;
     cursor: default;
 
     &.expand {
@@ -334,6 +335,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     font-size: inherit;
     border: none;
     flex-grow: 100;
+    height: 100%;
 
     &::placeholder {
       opacity: 1;
