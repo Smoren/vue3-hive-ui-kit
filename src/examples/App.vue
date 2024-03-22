@@ -804,7 +804,7 @@ const a = computed(() => store.a);
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
-        <hive-multiselect :options="a" v-model="store" with-null />
+        <!-- <hive-multiselect :options="a" v-model="store" with-null /> -->
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">

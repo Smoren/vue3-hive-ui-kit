@@ -136,18 +136,18 @@ export const useListMethods = ({
   const setPrevActiveValue = () => {
     const node = filteredOptions.value.get(activeValue.value);
 
-    if (node?.prev !== undefined) {
+    if (node?.prev !== undefined && node.prev !== null) {
       updateActiveValue(node.prev);
     } else {
-      let i = 0;
-      const size = filteredOptions.value.size;
-      for (const key of filteredOptions.value.keys()) {
-        i = i + 1;
-        if (i === size) {
-          updateActiveValue(key);
-          break;
-        }
-      }
+      // let i = 0;
+      // const size = filteredOptions.value.size;
+      // for (const key of filteredOptions.value.keys()) {
+      //   i = i + 1;
+      //   if (i === size) {
+      //     updateActiveValue(key);
+      //     break;
+      //   }
+      // }
     }
   };
 
@@ -160,7 +160,16 @@ export const useListMethods = ({
         break;
       }
     } else {
-      updateActiveValue(node.next);
+      if (node.next !== null) {
+        updateActiveValue(node.next);
+      }
+    }
+  };
+
+  const setFirstActiveValue = () => {
+    for (const key of filteredOptions.value.keys()) {
+      updateActiveValue(key);
+      break;
     }
   };
 
@@ -182,5 +191,6 @@ export const useListMethods = ({
     setPrevActiveValue,
     setNextActiveValue,
     menuRef,
+    setFirstActiveValue,
   };
 };

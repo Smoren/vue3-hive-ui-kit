@@ -49,13 +49,14 @@ const cancelEdit = () => {
       @focusout="edit"
       @keydown.enter="edit"
       @keydown.esc="cancelEdit"
+      class="hive-multiselect__selected-item__change"
     />
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
-$item-height: calc($common-widget-height - 10px);
+$height: var(--height, calc($common-widget-height - 10px));
 
 .hive-multiselect__selected-item {
   box-sizing: border-box;
@@ -68,12 +69,12 @@ $item-height: calc($common-widget-height - 10px);
   text-transform: none;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   white-space: nowrap;
   text-transform: none;
   font-size: 1em;
   font-weight: 500;
-  height: 30px;
+  height: $height;
 
   &__img {
     width: 1em;
@@ -82,6 +83,15 @@ $item-height: calc($common-widget-height - 10px);
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__change {
+    height: 100%;
+    width: fit-content;
+    min-width: none;
+    font-size: 14px;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 </style>

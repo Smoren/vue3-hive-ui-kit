@@ -22,6 +22,7 @@ import { Value } from '@/common/types/select';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 import HiveMultiautocompleteItem from './hive-multiautocomplete-item.vue';
+import { computed } from 'vue';
 
 export interface Props extends CommonProps {
   options: string[] | undefined;
@@ -37,6 +38,9 @@ export interface Props extends CommonProps {
   disabled?: boolean;
   focusOnMount?: boolean;
   distinct?: boolean;
+  placeholder?: string;
+  isPlaceholderSeenWithValues?: boolean;
+  keysToEnterValue?: string[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -49,6 +53,8 @@ const props = withDefaults(defineProps<Props>(), {
   nullTitle: 'Не выбрано',
   focusOnMount: false,
   distinct: true,
+  placeholder: '',
+  isPlaceholderSeenWithValues: false,
 });
 
 type Emit = Event & Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
@@ -82,6 +88,7 @@ const {
   setNextActiveValue,
   currentValue,
   menuRef,
+  setFirstActiveValue,
 } = useListMethods(configOptions);
 
 const changeValue = (value: Value) => {
@@ -149,8 +156,12 @@ watch(searchQuery, () => {
   updateActiveValue(null);
 });
 
+const forceFocusInput = () => {
+  searchRef.value?.forceFocus();
+};
+
 onMounted(() => {
-  if (props.focusOnMount) searchRef.value?.forceFocus();
+  if (props.focusOnMount) forceFocusInput();
 });
 
 const editCurrentValue = (value: Value, index: number) => {
@@ -170,11 +181,25 @@ const iconClick = () => {
     toggle();
   }
 };
+
+const computedPlaceholder = computed(() =>
+  current.value ? String(current.value[props.titleField]) : props.isPlaceholderSeenWithValues ? props.placeholder : '',
+);
+
+const handleKeydown = (event: KeyboardEvent) => {
+  onKeydown(emit, event);
+  if ((props.keysToEnterValue && props.keysToEnterValue.includes(event.key)) || event.key === 'Enter') {
+    changeValue(activeValue.value ?? searchQuery.value);
+  }
+  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+    setFirstActiveValue();
+  }
+};
 </script>
 
 <template>
   <div class="hive-multiselect__wrap" :class="{ expand: isExpanded, disable: disabled }">
-    <div class="hive-multiselect__selected">
+    <div class="hive-multiselect__selected" @click="forceFocusInput()">
       <template v-if="currentValue && Array.isArray(currentValue) && currentValue.length">
         <hive-multiautocomplete-item
           v-for="(value, i) in currentValue"
@@ -189,7 +214,7 @@ const iconClick = () => {
         v-model="searchQuery"
         ref="searchRef"
         :disabled="disabled"
-        :placeholder="current ? String(current[titleField]) : ''"
+        :placeholder="computedPlaceholder"
         class="hive-multiselect__search"
         :class="{
           valueNull: (modelValue === null && withNull) || modelValue === undefined,
@@ -197,8 +222,7 @@ const iconClick = () => {
         }"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
-        @keydown="onKeydown(emit, $event)"
-        @keydown.enter="changeValue(activeValue ?? searchQuery)"
+        @keydown="handleKeydown"
         @keydown.esc="collapse"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
@@ -246,7 +270,7 @@ $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 $drop-down-padding: 0.5em 1em 0.5em 1em;
-$height: var(--height, $common-widget-height);
+$height: var(--height, calc($common-widget-height - 10px));
 
 .hive-multiselect {
   width: 100%;
@@ -309,17 +333,28 @@ $height: var(--height, $common-widget-height);
     font-style: normal;
     margin: auto 0;
     margin-right: 15px;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: -30px;
 
     &:before {
-      content: '▼';
+      content: '🢓';
+      // content: '🡻';
     }
 
     &.expand {
+      font-size: 30px;
+      margin-top: -8px;
+      // margin-bottom: 10px;
       &:before {
-        content: '▲';
+        content: '🢑';
       }
 
       &.deleteIcon {
+        margin: auto 0;
+        margin-right: 15px;
+        font-size: 18px;
+
         &:before {
           content: 'x';
           font-size: larger;
@@ -335,7 +370,7 @@ $height: var(--height, $common-widget-height);
     font-size: inherit;
     border: none;
     flex-grow: 100;
-    height: 100%;
+    height: $height;
 
     &::placeholder {
       opacity: 1;
