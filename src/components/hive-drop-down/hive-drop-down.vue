@@ -33,7 +33,6 @@ export interface Props extends CommonProps {
   valueField?: string;
   mask?: RegExp;
   menuHeight?: string;
-  height?: string;
   focusOnMount?: boolean;
 }
 
@@ -44,7 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
   titleField: 'title',
   valueField: 'value',
   menuHeight: '10rem',
-  height: '2.2rem',
   focusOnMount: false,
 });
 
@@ -116,7 +114,6 @@ defineExpose({ current });
         :placeholder="current ? String(current[titleField] ?? nullTitle) : ''"
         class="hive-drop-down__search"
         :class="{ valueNull: (modelValue === null && withNull) || modelValue === undefined }"
-        :style="{ height }"
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
@@ -167,6 +164,7 @@ $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 $drop-down-padding: 0.5em 1em 0.5em 1em;
+$height: var(--height, calc($common-widget-height));
 
 .hive-drop-down {
   width: 100%;
@@ -215,6 +213,7 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     width: calc(100% - 2rem);
     cursor: default;
     font-size: inherit;
+    height: $height;
 
     &::placeholder {
       opacity: 1;

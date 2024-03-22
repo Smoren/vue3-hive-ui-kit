@@ -19,12 +19,7 @@ useOnMount(emit);
 </script>
 
 <template>
-  <button
-    class="hive-button"
-    :style="style"
-    :disabled="disabled"
-    @click="onClick(emit, $event)"
-  >
+  <button class="hive-button" :style="style" :disabled="disabled" @click="onClick(emit, $event)">
     <slot name="before" />
     <slot>
       {{ title }}
@@ -35,7 +30,7 @@ useOnMount(emit);
 
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
-
+$height: var(--height, calc($common-widget-height + 2px));
 .hive-button {
   cursor: pointer;
   width: 100%;
@@ -48,6 +43,7 @@ useOnMount(emit);
   background-color: var(--bg-button, $bg-button);
   font-size: 1rem;
   color: var(--text);
+  height: $height;
 
   &:hover {
     background: var(--bg-hover, $bg-hover);
