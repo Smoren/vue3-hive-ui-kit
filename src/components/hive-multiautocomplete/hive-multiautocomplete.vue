@@ -290,6 +290,8 @@ $height: var(--height, calc($common-widget-height - 10px));
   animation-duration: 300ms;
   animation-timing-function: ease;
   animation-fill-mode: both;
+  height: 100%;
+  align-items: center;
 
   &__selected {
     display: flex;
@@ -328,33 +330,23 @@ $height: var(--height, calc($common-widget-height - 10px));
   &__icon {
     cursor: auto;
     line-height: 1.2rem;
-    opacity: 0.7;
+    opacity: 0.55;
     background: none !important;
     font-style: normal;
-    margin: auto 0;
-    margin-right: 15px;
-    font-size: 30px;
-    margin-top: 20px;
-    margin-bottom: -30px;
+    // margin: auto 0;
+    align-self: center;
+    margin-right: 13px;
 
     &:before {
-      content: '🢓';
-      // content: '🡻';
+      content: '▼';
     }
 
     &.expand {
-      font-size: 30px;
-      margin-top: -8px;
-      // margin-bottom: 10px;
       &:before {
-        content: '🢑';
+        content: '▲';
       }
 
       &.deleteIcon {
-        margin: auto 0;
-        margin-right: 15px;
-        font-size: 18px;
-
         &:before {
           content: 'x';
           font-size: larger;

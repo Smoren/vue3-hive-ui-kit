@@ -248,6 +248,7 @@ $height: var(--height, calc($common-widget-height));
     &.expand {
       &:before {
         content: '▲';
+        
       }
     }
   }

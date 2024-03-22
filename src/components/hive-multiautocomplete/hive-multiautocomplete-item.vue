@@ -37,7 +37,7 @@ const cancelEdit = () => {
 </script>
 
 <template>
-  <div class="hive-multiselect__selected-item" @click="editRef = true">
+  <div class="hive-multiselect__selected-item" @click.stop="editRef = true">
     <template v-if="!editRef">
       {{ value }}
       <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click.stop="deleteValue()" />
