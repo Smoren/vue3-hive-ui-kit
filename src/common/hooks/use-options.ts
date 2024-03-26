@@ -85,10 +85,28 @@ export const useOptions = ({
         if (prev !== undefined) {
           const temp = currentOptions.value.get(prev);
           currentOptions.value.set(prev, { ...temp, next: key });
-          currentOptions.value.set(key, { ...(options[key] as object), prev, next: null });
+          if (typeof options[key] === 'object') {
+            currentOptions.value.set(key, { ...(options[key] as object), prev, next: null });
+          } else if (typeof options[key] === 'string') {
+            currentOptions.value.set(key, {
+              title: options[key] as string,
+              value: key,
+              prev,
+              next: null,
+            });
+          }
           prev = key;
         } else {
-          currentOptions.value.set(key, { ...(options[key] as object), prev: null, next: null });
+          if (typeof options[key] === 'object') {
+            currentOptions.value.set(key, { ...(options[key] as object), prev: null, next: null });
+          } else if (typeof options[key] === 'string') {
+            currentOptions.value.set(key, {
+              title: options[key] as string,
+              value: key,
+              prev: null,
+              next: null,
+            });
+          }
           prev = key;
         }
       }

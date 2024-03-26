@@ -144,6 +144,7 @@ $gap: 15px;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 50% 50%;
+        background-color: var(--bg-input, $bg-input);
       }
     }
 
@@ -169,7 +170,7 @@ $gap: 15px;
 
     &:checked + label::before {
       border-color: var(--border, $border);
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='fff'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' /%3e%3c/svg%3e");
     }
   }
 }

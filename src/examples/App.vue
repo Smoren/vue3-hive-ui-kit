@@ -682,12 +682,17 @@ const searchString = ref('');
 const store = useYearStore();
 
 const a = computed(() => store.a);
+
+const optionsObject1 = {
+  a: 'b',
+  c: 'd',
+};
 </script>
 
 <template>
   <hive-loader :visible="false" />
 
-  <div class="app">
+  <div class="app hive-dark-theme">
     <!-- <filter-new />
      <hive-drop-down v-model="searchString" :options="rows" title-field="id" value-field="id"/>
     <hive-drop-down v-model="searchString" :options="rows" title-field="id" value-field="id"/> -->
@@ -773,7 +778,7 @@ const a = computed(() => store.a);
         <br />
         {{ mm }}
         {{ dropdown }}
-        <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" with-null />
+        <hive-drop-down v-model="dd3" :options="optionsObject1" />
         <hive-drop-down v-model="dropdown" :options="options" value-field="title" title-field="title" with-null />
         <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
         <hive-drop-down
@@ -909,11 +914,17 @@ const a = computed(() => store.a);
 
 <style lang="scss">
 .name-grid {
-  background-color: red;
+  // background-color: red;
+}
+
+:root {
+  // --bg-input: rgb(197, 105, 105);
 }
 </style>
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+$bg-input: black;
 .app {
   max-width: 1280px;
   margin: 0 auto;
@@ -936,7 +947,7 @@ const a = computed(() => store.a);
 }
 
 .test {
-  background-color: aqua;
+  // background-color: aqua;
   z-index: 1;
 }
 </style>

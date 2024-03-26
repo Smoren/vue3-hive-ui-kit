@@ -26,3 +26,27 @@ $accent-red: #b74a4a;
 //* Sizes variables
 $common-widget-height: 2.2rem;
 $common-widget-inner-height: 26px;
+
+.hive-dark-theme {
+  color-scheme: dark;
+  //* Core
+  --bg-button: #000000;
+  --bg-input: #000000;
+  --bg-hover: #000000f5;
+
+  --text: #ffffff;
+
+  //* Borders
+  --border: rgb(20, 20, 20);
+  --border-disabled: rgba(20, 20, 20, 0.7);
+  --border-focus: rgb(50, 50, 50);
+  --border-error: #df0000;
+
+  //* Shadow styles start
+  --box-shadow-general: -4px -4px 17px 1px rgb(255 255 255 / 41%), 4px 4px 17px 1px rgb(16 35 47 / 14%);
+  --box-shadow-btn: 0px 0px 5px 1px #d0d0d04d;
+
+  //* Colors variables start
+  --secondary: #000000;
+  --accent-red: #b74a4a;
+}

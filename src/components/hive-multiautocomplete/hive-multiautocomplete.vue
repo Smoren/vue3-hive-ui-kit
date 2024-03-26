@@ -311,6 +311,7 @@ $height: var(--height, calc($common-widget-height - 10px));
     display: flex;
     box-sizing: border-box;
     cursor: default;
+    background-color: var(--bg-input, $bg-input);
 
     &.expand {
       z-index: $drop-down-z_menu + 1;
@@ -330,12 +331,13 @@ $height: var(--height, calc($common-widget-height - 10px));
   &__icon {
     cursor: auto;
     line-height: 1.2rem;
-    opacity: 0.55;
+    opacity: 0.7;
     background: none !important;
     font-style: normal;
     // margin: auto 0;
     align-self: center;
     margin-right: 13px;
+    color: var(--text, $text);
 
     &:before {
       content: '▼';
