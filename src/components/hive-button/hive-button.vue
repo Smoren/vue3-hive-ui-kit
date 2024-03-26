@@ -56,7 +56,7 @@ $height: var(--height, calc($common-widget-height + 2px));
 
   &[disabled] {
     border-color: var(--border-disabled, $border-disabled);
-    opacity: 0.4;
+    color: var(--text-disabled, $text-disabled);
     //pointer-events: none;
 
     &:hover {

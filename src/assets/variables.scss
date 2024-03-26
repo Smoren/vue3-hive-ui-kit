@@ -3,7 +3,8 @@ $bg-button: #f2f2f2;
 $bg-input: #ffffff;
 $bg-hover: #d3eafff5;
 
-$text: #3f3f3f;
+$text: rgb(25, 25, 25);
+$text-disabled: rgba(25, 25, 25, 0.7);
 
 //* Borders
 $border: rgb(205, 205, 205);
@@ -27,19 +28,20 @@ $accent-red: #b74a4a;
 $common-widget-height: 2.2rem;
 $common-widget-inner-height: 26px;
 
-.hive-dark-theme {
+[hive-theme=dark] {
   color-scheme: dark;
   //* Core
   --bg-button: #000000;
   --bg-input: #000000;
-  --bg-hover: #000000f5;
+  --bg-hover: #303030f5;
 
-  --text: #ffffff;
+  --text: rgb(170, 170, 170);
+  --text-disabled: rgba(170, 170, 170, 0.7);
 
   //* Borders
-  --border: rgb(20, 20, 20);
-  --border-disabled: rgba(20, 20, 20, 0.7);
-  --border-focus: rgb(50, 50, 50);
+  --border: rgb(90, 90, 90);
+  --border-disabled: rgba(90, 90, 90, 0.7);
+  --border-focus: rgb(120, 120, 120);
   --border-error: #df0000;
 
   //* Shadow styles start

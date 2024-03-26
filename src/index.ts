@@ -34,6 +34,8 @@ import type { GridColumns } from '@/components/hive-grid/types';
 import type { TreeView, TreeViewImg, ChoosenNode, TreeImg } from '@/components/hive-tree-view/hive-tree-view-type';
 import type { HiveUploadFilesType } from './components/hive-upload-file/hive-upload-file-type';
 
+import '@/assets/variables.scss';
+
 export {
   HiveAutocomplete,
   HiveBadge,
@@ -48,8 +50,8 @@ export {
   HiveListLoader,
   HiveLoader,
   HiveMultiautocomplete,
-  HiveMultiselect,
   HivePane,
+  HiveMultiselect,
   HiveRadioGroup,
   HiveCheckbox,
   HiveCheckboxGroup,
@@ -64,16 +66,19 @@ export {
   Notification,
   notify,
   useNotification,
-  type NotificationsOptions,
-  type NotificationsPluginOptions,
-  type NotificationItem,
-  type VueComponent,
-  type Value,
-  type UploadableFile,
-  type GridColumns,
-  type TreeView,
-  type TreeViewImg,
-  type ChoosenNode,
-  type TreeImg,
-  type HiveUploadFilesType,
 };
+
+export type {
+  NotificationsOptions,
+  NotificationsPluginOptions,
+  NotificationItem,
+  VueComponent,
+  Value,
+  UploadableFile,
+  GridColumns,
+  TreeView,
+  TreeViewImg,
+  ChoosenNode,
+  TreeImg,
+  HiveUploadFilesType,
+}

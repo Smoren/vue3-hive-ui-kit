@@ -16,6 +16,9 @@ defineProps<{
 </template>
 
 <style scoped lang="scss">
+
+@import "@/assets/variables";
+
 .wrapper {
   display: flex;
   gap: 10px;
@@ -23,8 +26,9 @@ defineProps<{
   padding-bottom: 15px;
   border-bottom: 1px solid rgba(53, 55, 80, 0.322);
   .title {
+    background: var(--bg-input, $bg-input);
+    color: var(--text, $text);
     font-size: 24px;
-    background-color: azure;
   }
   .content {
     display: flex;

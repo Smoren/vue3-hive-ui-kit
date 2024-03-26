@@ -54,16 +54,26 @@ watch(currentValue, () => {
 </script>
 
 <template>
-  <QuillEditor
-    :style="style"
-    v-model:content="currentValue"
-    @update:content="onUpdateModelValue(emit, currentValue)"
-    :theme="theme"
-    :toolbar="toolbar"
-    :placeholder="placeholder"
-    :readOnly="disabled"
-    contentType="html"
-    @focus="onFocusin(emit)"
-    @blur="onFocusout(emit)"
-  />
+  <div class="editor">
+    <QuillEditor
+      :style="style"
+      v-model:content="currentValue"
+      @update:content="onUpdateModelValue(emit, currentValue)"
+      :theme="theme"
+      :toolbar="toolbar"
+      :placeholder="placeholder"
+      :readOnly="disabled"
+      contentType="html"
+      @focus="onFocusin(emit)"
+      @blur="onFocusout(emit)"
+    />
+  </div>
 </template>
+
+<style lang="scss" scoped>
+
+.editor {
+  gap: 0;
+}
+
+</style>

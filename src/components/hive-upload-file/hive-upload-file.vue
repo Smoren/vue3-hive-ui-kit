@@ -123,6 +123,8 @@ defineExpose({
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .drop-area {
   width: 100%;
   max-width: 800px;
@@ -139,13 +141,15 @@ defineExpose({
 }
 
 .uploader {
-  border: 2px solid rgb(223, 229, 255);
+  border: 1px solid transparent;
+  border-color: var(--border, $border);
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: rgb(248, 252, 255);
+  background-color: var(--bg-input, $bg-input);
+  color: var(--text, $text);
 }
 
 label {
