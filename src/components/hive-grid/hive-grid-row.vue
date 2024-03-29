@@ -75,7 +75,7 @@ const classString = computed(() => getClassString(props.row, props.cssClass));
     ref="row"
     class="grid-row"
     :class="[!colorAlternation || index % 2 === 0 ? 'even' : 'odd', classString]"
-    @click="rowClick(row as Record<string, unknown>)"
+    @click="rowClick(row as unknown as Record<string, unknown>)"
   >
     <slot :row-ref="row" />
   </tr>
