@@ -2,7 +2,7 @@
 import { type Ref, computed, onMounted, ref, watch } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import WidgetWrapper from '@/WidgetWrapper.vue';
-import {  } from '../../.';
+import {} from '../../.';
 import {
   HiveInput,
   HiveInputSearch,

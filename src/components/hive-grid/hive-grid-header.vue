@@ -12,7 +12,8 @@ import {
   type Sort,
   type QueryUpdate,
   onSort,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import type { Value } from '@/common/types/select';
 import HiveButton from '../hive-button/hive-button.vue';
@@ -31,7 +32,16 @@ const props = defineProps<Props>();
 
 const currentQuery = ref(props.query);
 
-type Emit = Event & Mount & Unmount & Update<Value> & Focusin & Focusout & Keydown & Search<string> & Sort & QueryUpdate;
+type Emit = Event &
+  Mount &
+  Unmount &
+  Update<Value> &
+  Focusin &
+  Focusout &
+  Keydown &
+  Search<string> &
+  Sort &
+  QueryUpdate;
 const emit = defineEmits<Emit>();
 useOnMount(emit);
 
@@ -78,8 +88,10 @@ watch(currentQuery, () => {
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .hive-grid__header {
-  background-color: #fafafa;
+  background-color: var(--bg-input, $bg-input);
   border: 1px solid rgba(0, 0, 0, 0.08);
   position: sticky;
   top: 0;

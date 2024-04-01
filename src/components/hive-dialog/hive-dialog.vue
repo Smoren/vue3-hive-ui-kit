@@ -33,7 +33,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 const dialogRef = ref();
 
 const focusDialog = () => {
-  dialogRef.value.focus();
+  // dialogRef.value.focus();
 };
 
 watch(
@@ -75,7 +75,7 @@ watch(
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
 
-$dialog-bg: #ffffff;
+$dialog-bg: var(--bg-input, $bg-input);
 $dialog-trait: lightgrey;
 $dialog-transition: 0.25s linear;
 $dialog-padding-content: 15px;
@@ -137,17 +137,16 @@ $dialog-width-min: 100px;
   }
 }
 
-.backdrop-enter-active,
-.backdrop-leave-active {
+.backdrop-enter-active {
   transition: opacity 0.25s ease-in;
 }
 .backdrop-enter-active .hive-dialog__content {
   animation: modal-door-enter 400ms both cubic-bezier(0.4, 0, 0, 1.5);
   transition-delay: 0.25s;
 }
-.backdrop-leave-active .hive-dialog__content {
-  animation: modal-door-leave 400ms both ease-out;
-}
+// .backdrop-leave-active .hive-dialog__content {
+//   animation: modal-door-leave 400ms both ease-out;
+// }
 
 @keyframes modal-door-enter {
   from {
@@ -155,12 +154,12 @@ $dialog-width-min: 100px;
   }
 }
 
-@keyframes modal-door-leave {
-  60% {
-    transform: scale3d(0.01, 1, 1);
-  }
-  to {
-    transform: scale3d(0, 1, 0.1);
-  }
-}
+// @keyframes modal-door-leave {
+//   60% {
+//     transform: scale3d(0.01, 1, 1);
+//   }
+//   to {
+//     transform: scale3d(0, 1, 0.1);
+//   }
+// }
 </style>

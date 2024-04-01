@@ -13,7 +13,8 @@ import {
   onFocusout,
   Focusin,
   onFocusin,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { CurrentOptions, Value } from '@/common/types/select';
 
@@ -89,9 +90,6 @@ if (Array.isArray(props.option)) {
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
 
-$background-img: url('./assets/check-mark.svg');
-$background-img-minus: url('./assets/minus-icon.svg');
-
 $gap: 15px;
 
 .hive-checkbox {
@@ -129,7 +127,7 @@ $gap: 15px;
 
       &.minus {
         &::before {
-          background-image: $background-img-minus;
+          background-image: var(--bg-checkbox-minus, $bg-checkbox-minus);
 
           background-size: 120%;
         }
@@ -149,7 +147,7 @@ $gap: 15px;
     &:checked + label {
       &::before {
         border-color: var(--border, $border);
-        background-image: $background-img;
+        background-image: var(--bg-checkbox, $bg-checkbox);
       }
     }
 

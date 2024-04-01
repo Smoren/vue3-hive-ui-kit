@@ -46,6 +46,8 @@ provide('onPaneUpdate', onPaneUpdate);
 </template>
 
 <style lang="scss">
+@import '@/assets/variables.scss';
+
 .hive-splitter {
   display: flex;
   width: 100%;
@@ -98,11 +100,11 @@ provide('onPaneUpdate', onPaneUpdate);
 
 .hive-splitter.default-theme {
   .hive-splitter__pane {
-    background-color: #f2f2f2;
+    background-color: var(--bg-splitter, $bg-splitter);
   }
 
   .hive-splitter__splitter {
-    background-color: #fff;
+    background-color: var(--splitter-color, $splitter-color);
     position: relative;
     flex-shrink: 0;
 
@@ -112,13 +114,13 @@ provide('onPaneUpdate', onPaneUpdate);
       position: absolute;
       top: 50%;
       left: 50%;
-      background-color: rgba(0, 0, 0, 0.15);
+      background-color: var(--splitter-color-after, $splitter-color-after);
       transition: background-color 0.3s;
     }
 
     &:hover:before,
     &:hover:after {
-      background-color: rgba(0, 0, 0, 0.25);
+      background-color: var(--splitter-color-after, $splitter-color-after);
     }
 
     &:first-child {
@@ -134,7 +136,6 @@ provide('onPaneUpdate', onPaneUpdate);
   &.hive-splitter--vertical > .hive-splitter__splitter,
   .hive-splitter--vertical > .hive-splitter__splitter {
     width: 7px;
-    border-left: 1px solid #eee;
     margin-left: -1px;
 
     &:before,

@@ -449,6 +449,8 @@ defineExpose({ items, grid });
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/variables.scss';
+
 .wrapper {
   height: fit-content;
   overflow-y: visible;
@@ -468,7 +470,7 @@ defineExpose({ items, grid });
   }
 
   & tr.even {
-    background-color: #ffffff;
+    background-color: var(--bg-input, $bg-input);
   }
 
   & tr.odd {
