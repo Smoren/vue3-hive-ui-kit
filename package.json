@@ -27,6 +27,11 @@
     "url": "git+https://github.com/Smoren/vue3-hive-ui-kit.git"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-regular-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/vue-fontawesome": "^3.0.6",
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.6.7",
     "date-fns": "^2.30.0",
