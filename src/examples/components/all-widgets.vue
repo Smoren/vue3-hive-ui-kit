@@ -50,6 +50,15 @@ const autocomplete = ref('');
 const multiautocomplete = ref(null);
 const dd3 = ref(0);
 
+withDefaults(
+  defineProps<{
+    dark?: boolean;
+  }>(),
+  {
+    dark: false,
+  },
+);
+
 const handleText = () => {
   console.log('click');
   text.value = 'onClick';
@@ -739,7 +748,7 @@ const optionsObject1 = {
         <hive-button title="Classes" :class="'test'" @click="handleNum" />
 
         <hive-input v-model="text" invalid @input="onInput" />
-        <hive-input v-model="input" invalid @input="onInput" />
+        <hive-input v-model="input" invalid @input="onInput" placeholder="Placeholder" />
         <hive-input v-model="num" :mask="mask" :tokens="tokens" title="Title" @input="onInput" />
         <hive-input v-model="num" type="number" @input="onInput" :step="1" />
         <hive-badge :counter="5" :mode="1" />
@@ -749,7 +758,7 @@ const optionsObject1 = {
       <widget-wrapper title="Modal">
         <hive-button @click="isOpenModal = true" />
 
-        <hive-dialog v-model="isOpenModal">
+        <hive-dialog v-model="isOpenModal" :hive-theme="dark ? 'dark' : 'light'" withCloseButton title="Hello world">
           <template #header>
             <!-- <hive-button title="close" /> -->
             ривэд эдвэд

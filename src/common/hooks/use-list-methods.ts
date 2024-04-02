@@ -89,7 +89,7 @@ export const useListMethods = ({
     }
   };
 
-  const updateCurrentValue = (value: Value | undefined) => {
+  const updateCurrentValue = (value: Value | undefined, clearSerachQuery = true) => {
     currentValue.value = value;
 
     if (value === undefined || value === null) {
@@ -98,7 +98,7 @@ export const useListMethods = ({
       current.value = filteredOptions.value.get(value);
     }
 
-    collapse();
+    collapse(clearSerachQuery);
   };
 
   const expand = () => {
@@ -109,9 +109,11 @@ export const useListMethods = ({
     }
   };
 
-  const collapse = () => {
+  const collapse = (clearSerachQuery = true) => {
     isExpanded.value = false;
-    searchQuery.value = '';
+    if (clearSerachQuery) {
+      searchQuery.value = '';
+    }
     searchInput.value?.blur();
   };
 
@@ -122,32 +124,16 @@ export const useListMethods = ({
   };
 
   watch(searchQuery, () => {
-    console.log('here searchQuery');
     useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
   });
 
   useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
-
-  // watch(filteredOptions, () => {
-  //   console.log('here filteredOptions');
-  //   useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
-  // });
 
   const setPrevActiveValue = () => {
     const node = filteredOptions.value.get(activeValue.value);
 
     if (node?.prev !== undefined && node.prev !== null) {
       updateActiveValue(node.prev);
-    } else {
-      // let i = 0;
-      // const size = filteredOptions.value.size;
-      // for (const key of filteredOptions.value.keys()) {
-      //   i = i + 1;
-      //   if (i === size) {
-      //     updateActiveValue(key);
-      //     break;
-      //   }
-      // }
     }
   };
 

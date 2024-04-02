@@ -31,10 +31,10 @@ useOnMount(emit);
 
 @keyframes skeleton-loading {
   0% {
-    background-color: hsl(200, 20%, 80%);
+    background-color: var(--skeleton-first-color, $skeleton-first-color);
   }
   100% {
-    background-color: hsl(200, 20%, 95%);
+    background-color: var(--skeleton-second-color, $skeleton-second-color);
   }
 }
 
@@ -44,4 +44,3 @@ useOnMount(emit);
   border-radius: var(--border-radius, $border-radius);
 }
 </style>
-  

@@ -103,8 +103,10 @@ const handleClick = (event: MouseEvent) => {
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/variables.scss';
+
 .separator {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border, $border);
   margin: 0.25rem 0;
 }
 
@@ -120,7 +122,7 @@ const handleClick = (event: MouseEvent) => {
   box-sizing: border-box;
 
   &:hover {
-    background-color: #f3f4f6;
+    background-color: var(--bg-hover, $bg-hover);
   }
 }
 

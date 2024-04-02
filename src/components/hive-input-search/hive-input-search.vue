@@ -12,7 +12,8 @@ import {
   Update,
   onInput,
   onUpdateModelValue,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useDebounce } from '@/common/hooks/use-debounce';
 
@@ -41,9 +42,12 @@ const handleBtnClick = () => {
   }
 };
 
-watch(() => props.modelValue, (value: string) => {
-  searchValue.value = value;
-});
+watch(
+  () => props.modelValue,
+  (value: string) => {
+    searchValue.value = value;
+  },
+);
 
 const debounceUpdate = useDebounce(() => onUpdateModelValue(emit, searchValue.value), props.timeout);
 
@@ -55,14 +59,14 @@ const handleInput = () => {
 
 <template>
   <div class="search">
-    <button
-      class="btn search__btn"
-      :style="{ backgroundColor: btnBackgroundColor }"
-      @click="handleBtnClick"
-      :class="{ opened: isOpened }"
-    >
-      <img class="img search__btn-img" src="./icons/search.svg" alt="Search button image" v-show="!modelValue.length" />
-      <img class="img search__btn-img" src="./icons/close.svg" alt="Search button image" v-show="modelValue.length" />
+    <button class="btn search__btn" @click="handleBtnClick" :class="{ opened: isOpened }">
+      <font-awesome-icon class="img search__btn-img" icon="fa-solid fa-search" v-show="!searchValue.length" size="lg" />
+      <font-awesome-icon
+        class="img search__btn-img close"
+        v-show="searchValue.length"
+        icon="fa-solid fa-xmark"
+        size="lg"
+      />
     </button>
     <label v-if="label" for="input" />
     <hive-input
@@ -97,11 +101,11 @@ const handleInput = () => {
     justify-content: center;
     align-items: center;
     padding: 7px;
-    border-radius: 50%;
-    box-shadow: $box-shadow-general;
     transform: translateY(-50%);
     border: none;
-    background-color: #9a9a9a;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
 
     &.opened {
       box-shadow: none;
@@ -109,6 +113,11 @@ const handleInput = () => {
 
     &-img {
       max-width: 25px;
+      color: var(--text, $text);
+
+      &.close {
+        cursor: pointer;
+      }
     }
   }
 

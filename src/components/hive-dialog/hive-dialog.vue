@@ -8,12 +8,15 @@ export interface Props extends CommonProps {
   modelValue: boolean;
   maskBackground?: string;
   zIndex?: number;
+  title?: string;
+  withCloseButton?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
-  maskBackground: '#262d34ad',
+  maskBackground: '#39434ead',
   zIndex: 1000,
+  withCloseButton: false,
 });
 
 type Emit = Event & Mount & Unmount & Update<boolean>;
@@ -39,6 +42,7 @@ const focusDialog = () => {
 watch(
   () => props.modelValue,
   () => {
+    document.body.classList.toggle('no-overflow', props.modelValue);
     if (props.modelValue) {
       nextTick(() => {
         focusDialog();
@@ -63,7 +67,18 @@ watch(
           v-bind="$attrs"
           @keydown="handleKeydown"
         >
-          <slot name="header" />
+          <slot name="header">
+            <div v-if="title !== undefined || withCloseButton" class="hive-dialog__title">
+              <div v-if="title !== undefined" class="hive-dialog__title-text">{{ title }}</div>
+              <font-awesome-icon
+                v-if="withCloseButton"
+                class="hive-dialog__title-close"
+                icon="fa-solid fa-xmark"
+                size="lg"
+                @click="handleHide"
+              />
+            </div>
+          </slot>
           <slot />
           <slot name="footer" />
         </div>
@@ -109,6 +124,7 @@ $dialog-width-min: 100px;
     margin: auto;
     display: flex;
     flex-direction: column;
+    color: var(--text, $text);
   }
 }
 

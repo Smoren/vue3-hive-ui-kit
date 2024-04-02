@@ -100,7 +100,7 @@ watch(currentQuery, () => {
   & th {
     border-width: 0 0 1px 1px;
     border-style: solid;
-    border-color: rgba(0, 0, 0, 0.08);
+    border-color: var(--border-grid, $border-grid);
     padding: 4px;
     user-select: none;
 

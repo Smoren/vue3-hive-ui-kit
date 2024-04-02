@@ -13,7 +13,8 @@ import {
   ContextItemClick,
   onClick,
   onCloseContextMenu,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { onContextItemClick } from '../../common/mixin/emits';
 import { useIsOutOfBordersWidth, useIsOutOfBordersHeight } from './hooks/use-is-out-of-borders';
 
@@ -125,14 +126,14 @@ const handleContextItemClick = (item: ContextMenuItem) => {
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/variables.scss';
 .context-menu {
   position: absolute;
   z-index: 1001;
   padding: 0.25rem 0;
-  background: #ffffff;
-  color: #4b5563;
-  border: 0 none;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background: var(--bg-input, $bg-input);
+  color: var(--text, $text);
+  border: 1px solid var(--border, $border);
   border-radius: 6px;
   width: 12.5rem;
 }
@@ -141,8 +142,8 @@ const handleContextItemClick = (item: ContextMenuItem) => {
   position: absolute;
   z-index: 1;
   padding: 0.25rem 0;
-  background: #ffffff;
-  color: #4b5563;
+  background: var(--bg-input, $bg-input);
+  color: var(--text, $text);
   border: 0 none;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 6px;

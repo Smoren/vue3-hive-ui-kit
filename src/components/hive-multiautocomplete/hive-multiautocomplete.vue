@@ -265,7 +265,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 $drop-down-z_menu: 100;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);
-$drop-down-selected_background: rgba(0, 0, 0, 0.03);
+$drop-down-selected_background: var(--bg-selected, $bg-selected);
 $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
@@ -405,7 +405,7 @@ $height: var(--height, calc($common-widget-height - 10px));
     border-top-right-radius: 0;
 
     &-item {
-      border-top: 1px solid $drop-down-border-top;
+      border-top: 1px solid var(--drop-down-border-top, $drop-down-border-top);
       padding: $p-input !important;
       white-space: normal;
       word-wrap: normal;
@@ -413,7 +413,6 @@ $height: var(--height, calc($common-widget-height - 10px));
 
       &.selected {
         background: $drop-down-selected_background;
-        color: $drop-down-selected_color;
       }
     }
   }

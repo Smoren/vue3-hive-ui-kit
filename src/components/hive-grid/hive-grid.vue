@@ -460,7 +460,7 @@ defineExpose({ items, grid });
 .hive-grid {
   height: 100%;
   border-spacing: 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-grid, $border-grid);
   overflow-y: visible;
   overflow-x: visible;
   width: 100%;
@@ -474,14 +474,14 @@ defineExpose({ items, grid });
   }
 
   & tr.odd {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: var(--bg-grid-odd, $bg-grid-odd);
   }
 
   & td {
     padding: 8px 12px;
     border-width: 0 0 0 1px;
     border-style: solid;
-    border-color: rgba(0, 0, 0, 0.08);
+    border-color: var(--border-grid, $border-grid);
   }
 
   &.hideBorders td {

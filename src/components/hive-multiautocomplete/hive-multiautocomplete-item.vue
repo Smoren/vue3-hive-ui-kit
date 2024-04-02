@@ -40,7 +40,7 @@ const cancelEdit = () => {
   <div class="hive-multiselect__selected-item" @click.stop="editRef = true">
     <template v-if="!editRef">
       {{ value }}
-      <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click.stop="deleteValue()" />
+      <font-awesome-icon class="hive-multiselect__selected-item__img" icon="fa-solid fa-xmark" size="md" />
     </template>
     <hive-input
       v-else
@@ -64,8 +64,8 @@ $height: var(--height, calc($common-widget-height - 10px));
   box-shadow: 0 0 0 1px #22242626 inset;
   padding: 5px 11px;
   vertical-align: baseline;
-  background-color: #e8e8e8;
-  color: #0009;
+  background-color: var(--bg-multiautocomplete-item, $bg-multiautocomplete-item);
+  color: var(--text, $text);
   text-transform: none;
   display: flex;
   align-items: center;
@@ -79,6 +79,7 @@ $height: var(--height, calc($common-widget-height - 10px));
   &__img {
     width: 1em;
     height: 1em;
+    color: var(--text, $text);
 
     &:hover {
       cursor: pointer;

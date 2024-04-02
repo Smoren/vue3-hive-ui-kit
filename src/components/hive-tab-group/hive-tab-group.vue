@@ -65,6 +65,8 @@ watch(
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/variables.scss';
+
 .tab-group {
   width: 100%;
   height: 100%;
@@ -78,7 +80,7 @@ watch(
     box-shadow: none;
     border: none;
     background: none transparent;
-    border-bottom: 1px solid #d4d4d5;
+    border-bottom: 1px solid var(--border, $border);
     overflow-y: auto;
     display: flex;
     gap: 25px;
@@ -96,7 +98,7 @@ watch(
     }
 
     .active {
-      border-bottom: 3px solid #2c3e50db;
+      border-bottom: 3px solid var(--tab-active, $tab-active);
     }
   }
 
@@ -108,10 +110,10 @@ watch(
     top: 0;
     max-width: calc(100% + 2px);
     box-shadow: none;
-    border: 1px solid #d4d4d5;
+    border: 1px solid var(--border, $border);
     height: 100%;
     position: relative;
-    background: #fff;
+    background: var(--bg-input, $bg-input);
     overflow-x: auto;
     box-sizing: border-box;
   }

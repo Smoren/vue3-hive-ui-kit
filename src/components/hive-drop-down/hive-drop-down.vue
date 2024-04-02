@@ -34,6 +34,7 @@ export interface Props extends CommonProps {
   mask?: RegExp;
   menuHeight?: string;
   focusOnMount?: boolean;
+  placeholder?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -97,8 +98,12 @@ watch(
   },
 );
 
+const focusSearch = () => {
+  searchRef.value?.forceFocus();
+};
+
 onMounted(() => {
-  if (props.focusOnMount) searchRef.value?.forceFocus();
+  if (props.focusOnMount) focusSearch();
 });
 
 defineExpose({ current });
@@ -106,24 +111,32 @@ defineExpose({ current });
 
 <template>
   <div v-if="options" class="hive-drop-down__wrap">
-    <div class="hive-drop-down" :class="{ expand: isExpanded, disable: disabled }">
-      <hive-input
-        v-model="searchQuery"
-        ref="searchRef"
-        :disabled="disabled"
-        :placeholder="current ? String(current[titleField] ?? nullTitle) : ''"
-        class="hive-drop-down__search"
-        :class="{ valueNull: (modelValue === null && withNull) || modelValue === undefined }"
-        @focusin="expand(), onFocusin(emit)"
-        @focusout="collapse(), onFocusout(emit)"
-        @keydown="onKeydown(emit, $event)"
-        @keydown.enter="updateCurrentValue(activeValue), onUpdateModelValue<Value>(emit, activeValue)"
-        @keydown.esc="collapse"
-        @keydown.up.prevent="setPrevActiveValue"
-        @keydown.down.prevent="setNextActiveValue"
-        @input="onSearch<string>(emit, $event as string)"
-      />
-      <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
+    <div class="hive-drop-down" :class="{ expand: isExpanded, disable: disabled }" @click="focusSearch">
+      <div class="hive-drop-down__content" :class="{ 'no-padding': isExpanded }">
+        <div class="hive-drop-down__title" v-if="!isExpanded">
+          {{ current ? String(current[titleField] ?? nullTitle) : '' }}
+        </div>
+        <hive-input
+          v-model="searchQuery"
+          ref="searchRef"
+          :disabled="disabled"
+          :placeholder="placeholder"
+          class="hive-drop-down__search"
+          :class="{
+            'value-null': (modelValue === null && withNull) || modelValue === undefined,
+            'no-width': !isExpanded,
+          }"
+          @focusin="expand(), onFocusin(emit)"
+          @focusout="collapse(), onFocusout(emit)"
+          @keydown="onKeydown(emit, $event)"
+          @keydown.enter="updateCurrentValue(activeValue), onUpdateModelValue<Value>(emit, activeValue)"
+          @keydown.esc="collapse"
+          @keydown.up.prevent="setPrevActiveValue"
+          @keydown.down.prevent="setNextActiveValue"
+          @input="onSearch<string>(emit, $event as string)"
+        />
+        <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
+      </div>
       <transition name="fade" appear>
         <div
           ref="menuRef"
@@ -140,7 +153,7 @@ defineExpose({ current });
             :class="{
               selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
             }"
-            @click="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
+            @click.stop="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
             :data-value="item[1][valueField]"
@@ -159,7 +172,7 @@ defineExpose({ current });
 $drop-down-z_menu: 1;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);
-$drop-down-selected_background: rgba(0, 0, 0, 0.03);
+$drop-down-selected_background: var(--bg-selected, $bg-selected);
 $drop-down-selected_color: rgba(0, 0, 0, 0.95);
 $drop-down-border-top: #fafafa;
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
@@ -185,6 +198,14 @@ $height: var(--height, calc($common-widget-height));
   animation-timing-function: ease;
   animation-fill-mode: both;
 
+  .no-width {
+    width: 0;
+  }
+
+  .no-padding {
+    padding: 0;
+  }
+
   &.expand {
     z-index: $drop-down-z_menu + 1;
     border-color: var(--border-focus, $border-focus);
@@ -207,6 +228,11 @@ $height: var(--height, calc($common-widget-height));
     cursor: default;
   }
 
+  &__content {
+    display: flex;
+    padding-right: 1em;
+  }
+
   &__search {
     border: none;
     padding: $drop-down-padding;
@@ -214,11 +240,6 @@ $height: var(--height, calc($common-widget-height));
     cursor: default;
     font-size: inherit;
     height: $height;
-
-    &::placeholder {
-      opacity: 1;
-      color: $text;
-    }
 
     &:focus {
       cursor: text;
@@ -228,9 +249,17 @@ $height: var(--height, calc($common-widget-height));
       }
     }
 
-    &.valueNull {
+    &.value-null {
       opacity: 0.8;
     }
+  }
+
+  &__title {
+    padding: $drop-down-padding;
+    width: calc(100% - 2rem);
+    height: $height;
+    box-sizing: border-box;
+    line-height: 18px;
   }
 
   &__icon {
@@ -248,7 +277,6 @@ $height: var(--height, calc($common-widget-height));
     &.expand {
       &:before {
         content: '▲';
-        
       }
     }
   }
@@ -270,14 +298,13 @@ $height: var(--height, calc($common-widget-height));
     border-top-right-radius: 0;
 
     &-item {
-      border-top: 1px solid $drop-down-border-top;
+      border-top: 1px solid var(--drop-down-border-top, $drop-down-border-top);
       padding: $p-input !important;
       white-space: normal;
       word-wrap: normal;
 
       &.selected {
         background: $drop-down-selected_background;
-        color: $drop-down-selected_color;
       }
     }
   }

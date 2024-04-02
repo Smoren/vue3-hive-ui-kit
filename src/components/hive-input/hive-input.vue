@@ -14,7 +14,8 @@ import {
   Input,
   onInput,
   onUpdateModelValue,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { vMaska } from 'maska';
 
@@ -61,6 +62,12 @@ const forceFocus = () => {
   }
 };
 
+const forceBlur = () => {
+  if (inputRef.value) {
+    inputRef.value.blur();
+  }
+};
+
 const isInRange = (value: number) => (props.max && value > props.max) || (props.min && value < props.min);
 
 const handleInput = (event: InputEvent) => {
@@ -99,9 +106,10 @@ const handleKeydown = (event: KeyboardEvent) => {
 export interface InputExpose {
   input: HTMLInputElement | null;
   forceFocus: () => void;
+  forceBlur: () => void;
 }
 
-defineExpose({ input: inputRef, forceFocus });
+defineExpose({ input: inputRef, forceFocus, forceBlur });
 
 // @ts-ignore
 const isDateTime = props.type === 'date' || props.type === 'time';
@@ -145,6 +153,10 @@ const isDateTime = props.type === 'date' || props.type === 'time';
   font-size: 1rem;
   box-sizing: border-box;
   max-width: 100%;
+
+  &::placeholder {
+    color: var(--placeholder, $placeholder);
+  }
 
   &:focus,
   focus-visible {

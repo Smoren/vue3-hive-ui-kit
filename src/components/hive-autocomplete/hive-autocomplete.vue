@@ -15,7 +15,8 @@ import {
   onUpdateModelValue,
   Search,
   onSearch,
- Event } from '@/common/mixin/emits';
+  Event,
+} from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import { Value } from '@/common/types/select';
@@ -98,6 +99,11 @@ const onInputSearch = () => {
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
 });
+
+const updateCurrentValueAutocomplteHandler = (value: Value | undefined) => {
+  searchQuery.value = (value ?? '') as string;
+  updateCurrentValue(value, false);
+};
 </script>
 
 <template>
@@ -113,13 +119,13 @@ onMounted(() => {
         :class="{ valueNull: (modelValue === null && withNull) || modelValue === undefined }"
         :style="{ height }"
         @focusin="expand(), onFocusin(emit)"
-        @focusout="collapse(), onFocusout(emit)"
+        @focusout="collapse(false), onFocusout(emit)"
         @keydown="onKeydown(emit, $event)"
         @keydown.enter="
           onUpdateModelValue<Value>(emit, activeValue ?? searchQuery);
-          updateCurrentValue(activeValue ?? searchQuery);
+          updateCurrentValueAutocomplteHandler(activeValue ?? searchQuery);
         "
-        @keydown.esc="collapse"
+        @keydown.esc="collapse(false)"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
         @input="onInputSearch"
@@ -141,7 +147,10 @@ onMounted(() => {
             :class="{
               selected: item[1][valueField] === activeValue || (item[1][valueField] === null && activeValue === 'null'),
             }"
-            @click="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
+            @click="
+              updateCurrentValueAutocomplteHandler(item[1][valueField]),
+                onUpdateModelValue<Value>(emit, item[1][valueField])
+            "
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
             :data-value="item[1][valueField]"
@@ -160,9 +169,7 @@ onMounted(() => {
 $drop-down-z_menu: 1;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);
-$drop-down-selected_background: rgba(0, 0, 0, 0.03);
-$drop-down-selected_color: rgba(0, 0, 0, 0.95);
-$drop-down-border-top: #fafafa;
+$drop-down-selected_background: var(--bg-selected, $bg-selected);
 $drop-down-box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 $drop-down-padding: 0.5em 1em 0.5em 1em;
 
@@ -269,14 +276,13 @@ $drop-down-padding: 0.5em 1em 0.5em 1em;
     border-top-right-radius: 0;
 
     &-item {
-      border-top: 1px solid $drop-down-border-top;
+      border-top: 1px solid var(--drop-down-border-top, $drop-down-border-top);
       padding: $p-input !important;
       white-space: normal;
       word-wrap: normal;
 
       &.selected {
         background: $drop-down-selected_background;
-        color: $drop-down-selected_color;
       }
     }
   }
