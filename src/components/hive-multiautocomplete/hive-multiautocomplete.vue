@@ -223,7 +223,7 @@ const handleKeydown = (event: KeyboardEvent) => {
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="handleKeydown"
-        @keydown.esc="collapse"
+        @keydown.esc="collapse()"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"
         @keydown.delete="!searchQuery ? deleteValue((currentValue as Value[]).length - 1) : null"

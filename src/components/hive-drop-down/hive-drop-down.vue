@@ -130,7 +130,7 @@ defineExpose({ current });
           @focusout="collapse(), onFocusout(emit)"
           @keydown="onKeydown(emit, $event)"
           @keydown.enter="updateCurrentValue(activeValue), onUpdateModelValue<Value>(emit, activeValue)"
-          @keydown.esc="collapse"
+          @keydown.esc="collapse()"
           @keydown.up.prevent="setPrevActiveValue"
           @keydown.down.prevent="setNextActiveValue"
           @input="onSearch<string>(emit, $event as string)"
