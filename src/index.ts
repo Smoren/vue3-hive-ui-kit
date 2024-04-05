@@ -36,6 +36,15 @@ import type { HiveUploadFilesType } from './components/hive-upload-file/hive-upl
 
 import '@/assets/variables.scss';
 
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+/* import specific icons */
+import { faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
+
 export {
   HiveAutocomplete,
   HiveBadge,
@@ -66,6 +75,10 @@ export {
   Notification,
   notify,
   useNotification,
+  library,
+  FontAwesomeIcon,
+  faSearch,
+  faXmark,
 };
 
 export type {
@@ -81,4 +94,4 @@ export type {
   ChoosenNode,
   TreeImg,
   HiveUploadFilesType,
-}
+};

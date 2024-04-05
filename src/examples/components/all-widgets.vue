@@ -237,15 +237,15 @@ const optionsObject = {
 
 const maritalStatusList = ref([
   {
-    id: 0,
+    id: 1,
     title: 'холост',
   },
   {
-    id: 1,
+    id: 2,
     title: 'женат',
   },
   {
-    id: 2,
+    id: 3,
     title: 'женат2',
   },
 ]);
@@ -823,7 +823,7 @@ const optionsObject1 = {
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
-        <!-- <hive-multiselect :options="a" v-model="store" with-null /> -->
+        <hive-multiselect :options="maritalStatusList" v-model="multiselect" title-field="title" value-field="id" />
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">

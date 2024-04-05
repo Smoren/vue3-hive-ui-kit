@@ -104,6 +104,8 @@ export const useListMethods = ({
   const expand = () => {
     isExpanded.value = true;
 
+    setFirstActiveValue();
+
     if (currentValue.value && !Array.isArray(currentValue.value)) {
       activeValue.value = currentValue.value;
     }
