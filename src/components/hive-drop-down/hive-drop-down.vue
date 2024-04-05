@@ -271,6 +271,7 @@ $height: var(--height, calc($common-widget-height));
     background: none !important;
     font-style: normal;
     margin: auto 0;
+    margin-right: 1rem;
 
     &:before {
       content: '▼';
