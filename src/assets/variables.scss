@@ -7,6 +7,7 @@ $bg-grid-odd: rgba(0, 0, 0, 0.04);
 
 $text: rgb(25, 25, 25);
 $text-disabled: rgba(25, 25, 25, 0.7);
+$multiselect-text: #0009;
 
 $placeholder: rgba(25, 25, 25, 0.589);
 
@@ -62,6 +63,8 @@ $bg-multiautocomplete-item: #e8e8e8;
 
   --text: rgb(170, 170, 170);
   --text-disabled: rgba(170, 170, 170, 0.7);
+
+  --multiselect-text: rgb(170, 170, 170);
 
   --placeholder: rgba(255, 255, 255, 0.39);
 

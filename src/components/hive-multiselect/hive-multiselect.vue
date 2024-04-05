@@ -154,7 +154,12 @@ onMounted(() => {
               currentOptions.get(value) ??
               value
             }}
-            <img :src="DeleteIcon" class="hive-multiselect__selected-item__img" @click="changeValue(value)" />
+            <font-awesome-icon
+              class="hive-multiselect__selected-item__img"
+              icon="fa-solid fa-xmark"
+              size="md"
+              @click="changeValue(value)"
+            />
           </div>
         </template>
         <hive-input
@@ -278,7 +283,7 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
       margin: 3px 0;
       vertical-align: baseline;
       background-color: #e8e8e8;
-      color: #0009;
+      color: var(--multiselect-text, $multiselect-text);
       text-transform: none;
       font-weight: 500;
       display: flex;

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
 import { ref } from 'vue';
 import { Value } from '@/common/types/value';
 import HiveInput from '../hive-input/hive-input.vue';
@@ -40,7 +39,12 @@ const cancelEdit = () => {
   <div class="hive-multiselect__selected-item" @click.stop="editRef = true">
     <template v-if="!editRef">
       {{ value }}
-      <font-awesome-icon class="hive-multiselect__selected-item__img" icon="fa-solid fa-xmark" size="md" />
+      <font-awesome-icon
+        class="hive-multiselect__selected-item__img"
+        icon="fa-solid fa-xmark"
+        size="md"
+        @click="deleteValue"
+      />
     </template>
     <hive-input
       v-else
@@ -65,7 +69,7 @@ $height: var(--height, calc($common-widget-height - 10px));
   padding: 5px 11px;
   vertical-align: baseline;
   background-color: var(--bg-multiautocomplete-item, $bg-multiautocomplete-item);
-  color: var(--text, $text);
+  color: var(--multiselect-text, $multiselect-text);
   text-transform: none;
   display: flex;
   align-items: center;
