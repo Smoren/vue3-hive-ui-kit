@@ -44,6 +44,7 @@ $height: var(--height, calc($common-widget-height + 2px));
   font-size: 1rem;
   color: var(--text);
   height: $height;
+  line-height: 1rem;
 
   &:hover {
     background: var(--bg-hover, $bg-hover);

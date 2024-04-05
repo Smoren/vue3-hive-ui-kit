@@ -793,7 +793,14 @@ const optionsObject1 = {
         {{ mm }}
         {{ dropdown }}
         <hive-drop-down v-model="dd3" :options="optionsObject1" />
-        <hive-drop-down v-model="dropdown" :options="options" value-field="title" title-field="title" with-null />
+        <hive-drop-down
+          v-model="dropdown"
+          :options="options"
+          value-field="title"
+          title-field="title"
+          with-null
+          style="width: 300px"
+        />
         <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
         <hive-drop-down
           v-model="mm"

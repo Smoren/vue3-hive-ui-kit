@@ -2,6 +2,9 @@
 import HiveSplitter from '@/components/hive-splitter/hive-splitter.vue';
 import HivePane from '@/components/hive-splitter/hive-pane.vue';
 import AllWidgets from '@/examples/components/all-widgets.vue';
+import FilterNew from '@/examples/components/filter-new.vue';
+
+const a = 1;
 </script>
 
 <template>
@@ -15,6 +18,9 @@ import AllWidgets from '@/examples/components/all-widgets.vue';
       </div>
     </hive-pane>
   </hive-splitter>
+  <!-- <div>
+    <filter-new />
+  </div> -->
 </template>
 
 <style lang="scss"></style>

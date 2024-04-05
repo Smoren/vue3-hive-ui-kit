@@ -125,6 +125,7 @@ defineExpose({ current });
           :class="{
             'value-null': (modelValue === null && withNull) || modelValue === undefined,
             'no-width': !isExpanded,
+            'no-padding': !isExpanded,
           }"
           @focusin="expand(), onFocusin(emit)"
           @focusout="collapse(), onFocusout(emit)"
@@ -197,6 +198,7 @@ $height: var(--height, calc($common-widget-height));
   animation-duration: 300ms;
   animation-timing-function: ease;
   animation-fill-mode: both;
+  min-width: fit-content;
 
   .no-width {
     width: 0;
@@ -230,7 +232,6 @@ $height: var(--height, calc($common-widget-height));
 
   &__content {
     display: flex;
-    padding-right: 1em;
   }
 
   &__search {
@@ -260,6 +261,7 @@ $height: var(--height, calc($common-widget-height));
     height: $height;
     box-sizing: border-box;
     line-height: 18px;
+    min-width: fit-content;
   }
 
   &__icon {

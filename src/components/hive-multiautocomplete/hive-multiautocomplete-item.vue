@@ -83,7 +83,7 @@ $height: var(--height, calc($common-widget-height - 10px));
   &__img {
     width: 1em;
     height: 1em;
-    color: var(--text, $text);
+    color: var(--multiselect-text, $multiselect-text);
 
     &:hover {
       cursor: pointer;
