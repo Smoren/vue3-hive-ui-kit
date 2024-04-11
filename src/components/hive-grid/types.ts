@@ -65,7 +65,7 @@ export type GridColumns = {
   inEditMode?: boolean;
   cssClass?: CssClassConfig;
   function?: (...args: any) => void; //TODO: переименовать логично
-  inputProps: InputPropsColumn;
+  inputProps?: InputPropsColumn;
 };
 
 export type GridConfig = {
