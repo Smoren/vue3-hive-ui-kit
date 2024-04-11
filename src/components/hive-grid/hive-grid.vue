@@ -254,7 +254,7 @@ defineExpose({ items, grid });
                   :item="(item as any)[column.field]"
                   :row="row"
                   :setTrueFlag="setTrueFlag"
-                  :row-ref="rowRef"
+                  extensionFields
                 >
                   <template v-if="column.viewType === 'list'">
                     <div v-if="!column.separator">
@@ -307,6 +307,11 @@ defineExpose({ items, grid });
                     @focusout="hideEdit"
                     @keydown.enter="hideEdit"
                     style="width: 100%"
+                    :integer="column.inputProps?.integer ?? false"
+                    :step="column.inputProps?.step ?? 0.01"
+                    :min="column.inputProps?.min"
+                    :max="column.inputProps?.max"
+                    :mask="column.inputProps?.mask"
                   />
                   <hive-drop-down
                     v-else-if="column.editType === 'dropdown-list'"
@@ -362,6 +367,7 @@ defineExpose({ items, grid });
                     @focusout="hideEdit"
                     @keydown.enter="hideEdit"
                     style="width: 100%"
+                    :mask="column.inputProps?.mask"
                   />
                 </slot>
               </template>

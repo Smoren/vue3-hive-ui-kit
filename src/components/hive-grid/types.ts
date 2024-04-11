@@ -1,4 +1,5 @@
 import type { ComputedRef } from 'vue';
+import { Props as HiveInputProps } from '@/components/hive-input/hive-input.vue';
 
 export type ColumnWithoutChildren = {
   id: string;
@@ -31,6 +32,11 @@ export type ColgroupItem = {
 
 export type CssClassConfig = string | string[] | ((row: Record<string, unknown>) => string[] | string);
 
+export type InputPropsColumn = Pick<
+  HiveInputProps,
+  'integer' | 'step' | 'min' | 'max' | 'mask' | 'tokens' | 'type' | 'invalid' | 'placeholder'
+>;
+
 export type GridColumns = {
   field: string;
   fields?: string[];
@@ -58,7 +64,8 @@ export type GridColumns = {
   options?: string[];
   inEditMode?: boolean;
   cssClass?: CssClassConfig;
-  function?: (...args: any) => void; // TODO переименовать логично
+  function?: (...args: any) => void; //TODO: переименовать логично
+  inputProps: InputPropsColumn;
 };
 
 export type GridConfig = {
