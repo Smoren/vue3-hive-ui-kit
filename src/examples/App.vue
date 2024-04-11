@@ -12,11 +12,11 @@ const a = 1;
     <hive-pane id="light">
       <all-widgets />
     </hive-pane>
-    <hive-pane id="dark">
+    <!-- <hive-pane id="dark">
       <div hive-theme="dark" style="background: black; color: white">
         <all-widgets dark />
       </div>
-    </hive-pane>
+    </hive-pane> -->
   </hive-splitter>
   <!-- <div>
     <filter-new />

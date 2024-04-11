@@ -292,7 +292,31 @@ const checkCurrent = {
   title: 'Activ',
   value: false,
 };
-const multiselect = ref(null);
+const multiselect: Ref<string[]> = ref([]);
+
+setTimeout(() => {
+  multiselect.value = [
+    'стихи',
+    'сказка',
+    'аудиоверсия',
+    'ночной_эфир',
+    'десять_сказок_о',
+    'миниконкурс',
+    'Игра_в_одиноком_октябре',
+  ];
+}, 2000);
+
+const categoriesOptions = ref([
+  { name: 'проза', value: 'сказка' },
+  { name: 'стихи', value: 'стихи' },
+  { name: 'мнимая проза', value: 'мнимая_проза' },
+  { name: 'аудиоверсия', value: 'аудиоверсия' },
+  { name: 'городской бестиарий', value: 'городской_бестиарий' },
+  { name: 'ночной эфир', value: 'ночной_эфир' },
+  { name: 'десять сказок о', value: 'десять_сказок_о' },
+  { name: 'мини-конкурс', value: 'миниконкурс' },
+  { name: 'Игра в одиноком октябре', value: 'Игра_в_одиноком_октябре' },
+]);
 
 const date: Ref<Date | undefined> = ref();
 
@@ -769,7 +793,12 @@ const optionsObject1 = {
 
           <div :style="{ display: 'flex', flexDirection: 'column', gap: '10px', height: '500px' }">
             <hive-input v-model="text" invalid />
-            <hive-multiselect :options="yearList" v-model="multiselect" title-field="title" value-field="value" />
+            <hive-multiselect
+              :options="categoriesOptions"
+              v-model="multiselect"
+              title-field="name"
+              value-field="value"
+            />
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" /> -->
@@ -830,7 +859,8 @@ const optionsObject1 = {
       </widget-wrapper>
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
-        <hive-multiselect :options="maritalStatusList" v-model="multiselect" title-field="title" value-field="id" />
+        <!-- <hive-multiselect :options="maritalStatusList" v-model="multiselect" title-field="title" value-field="id" /> -->
+        <hive-multiselect :options="categoriesOptions" v-model="multiselect" title-field="name" value-field="value" />
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
