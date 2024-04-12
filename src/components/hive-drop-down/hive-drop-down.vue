@@ -77,6 +77,7 @@ const {
   setPrevActiveValue,
   setNextActiveValue,
   menuRef,
+  setFirstActiveValue,
 } = useListMethods(configOptions);
 
 watch(
@@ -86,6 +87,7 @@ watch(
     currentOptions.value = useListMethods(configOptions).currentOptions.value;
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
     current.value = useListMethods(configOptions).current.value;
+    setFirstActiveValue();
   },
 );
 
@@ -130,7 +132,7 @@ defineExpose({ current });
           @focusin="expand(), onFocusin(emit)"
           @focusout="collapse(), onFocusout(emit)"
           @keydown="onKeydown(emit, $event)"
-          @keydown.enter="updateCurrentValue(activeValue), onUpdateModelValue<Value>(emit, activeValue)"
+          @keydown.enter.exec="updateCurrentValue(activeValue), onUpdateModelValue<Value>(emit, activeValue)"
           @keydown.esc="collapse()"
           @keydown.up.prevent="setPrevActiveValue"
           @keydown.down.prevent="setNextActiveValue"

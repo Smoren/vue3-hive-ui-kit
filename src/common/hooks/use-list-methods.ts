@@ -141,7 +141,6 @@ export const useListMethods = ({
 
   const setNextActiveValue = () => {
     const node = filteredOptions.value.get(activeValue.value);
-
     if (node === undefined) {
       for (const key of filteredOptions.value.keys()) {
         updateActiveValue(key);

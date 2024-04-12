@@ -79,6 +79,7 @@ const {
   setNextActiveValue,
   currentValue,
   menuRef,
+  setFirstActiveValue,
 } = useListMethods(configOptions);
 
 const changeValue = (value: Value) => {
@@ -121,6 +122,8 @@ watch(
     currentOptions.value = useListMethods(configOptions).currentOptions.value;
     filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
     current.value = useListMethods(configOptions).current.value;
+    activeValue.value = useListMethods(configOptions).activeValue.value;
+    setFirstActiveValue();
   },
   { deep: true },
 );
@@ -177,7 +180,7 @@ onMounted(() => {
           @focusin="expand(), onFocusin(emit)"
           @focusout="collapse(), onFocusout(emit)"
           @keydown="onKeydown(emit, $event)"
-          @keydown.enter="changeValue(activeValue)"
+          @keydown.enter.exec="changeValue(activeValue)"
           @keydown.esc="collapse()"
           @keydown.up.prevent="setPrevActiveValue"
           @keydown.down.prevent="setNextActiveValue"
