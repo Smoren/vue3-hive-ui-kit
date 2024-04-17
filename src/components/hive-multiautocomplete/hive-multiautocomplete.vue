@@ -188,12 +188,13 @@ const computedPlaceholder = computed(() =>
 
 const handleKeydown = (event: KeyboardEvent) => {
   onKeydown(emit, event);
-  if (props.keysToEnterValue && props.keysToEnterValue.includes(event.key)) {
+  if (props.keysToEnterValue && props.keysToEnterValue.includes(event.code)) {
     changeValue(activeValue.value ?? searchQuery.value);
   }
-  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
-    setFirstActiveValue();
-  }
+};
+
+const onEnter = () => {
+  changeValue(activeValue.value ?? searchQuery.value);
 };
 </script>
 
@@ -223,7 +224,7 @@ const handleKeydown = (event: KeyboardEvent) => {
         @focusin="expand(), onFocusin(emit)"
         @focusout="collapse(), onFocusout(emit)"
         @keydown="handleKeydown"
-        @keydown.enter.exact="changeValue(activeValue ?? searchQuery)"
+        @keydown.enter.exact="onEnter()"
         @keydown.esc="collapse()"
         @keydown.up.prevent="setPrevActiveValue"
         @keydown.down.prevent="setNextActiveValue"

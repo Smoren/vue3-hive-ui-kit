@@ -98,7 +98,7 @@ const textEditor = ref('');
 
 let optionsTest: Option[] | undefined;
 
-const autoCompleteOptions = ref(['И', 'НЕ', 'ИЛИ', '(', ')', '<->', '<2>']);
+const autoCompleteOptions = ref(['И', 'НЕ', 'ИЛИ', '(', ')', '<->', '<2>', 'обрыв']);
 
 setTimeout(() => {
   optionsTest = [
@@ -870,6 +870,7 @@ const optionsObject1 = {
           :options="autoCompleteOptions"
           :style="{ width: '300px' }"
           :distinct="false"
+          :keys-to-enter-value="['Space']"
         />
       </widget-wrapper>
       <widget-wrapper title="HiveUploadFile">
