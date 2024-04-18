@@ -100,6 +100,7 @@ const changeValue = (value: Value) => {
   }
   searchQuery.value = '';
   onUpdateModelValue<Value[]>(emit, currentValue.value);
+  setFirstActiveValue();
 };
 
 const deleteLast = (value: Value) => {
@@ -130,7 +131,7 @@ watch(
     filteredOptions.value = res.filteredOptions.value;
     current.value = res.current.value;
     activeValue.value = res.activeValue.value;
-    res.setFirstActiveValue();
+    setFirstActiveValue();
   },
   { deep: true },
 );
@@ -146,6 +147,10 @@ watch(
 );
 
 watch(searchQuery, () => {
+  setFirstActiveValue();
+});
+
+watch(filteredOptions, () => {
   setFirstActiveValue();
 });
 
@@ -222,7 +227,7 @@ onMounted(() => {
             @click="changeValue(item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
-            :data-value="item[1][valueField]"
+            :data-value="JSON.stringify(item[1][valueField])"
           >
             {{ item[1][titleField] ?? nullTitle }}
           </div>

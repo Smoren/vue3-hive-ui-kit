@@ -22,7 +22,7 @@ const _useFilterStore = defineStore('filter', () => {
     { name: 'мини-конкурс', value: 'миниконкурс' },
     { name: 'Игра в одиноком октябре', value: 'Игра_в_одиноком_октябре' },
   ]);
-  const categoriesValues: Ref<string[]> = ref([]);
+  const categoriesValues: Ref<string[]> = ref(['стихи', 'мнимая_проза', 'Игра_в_одиноком_октябре', 'ночной_эфир']);
 
   const authorsOptions: Ref<PostAuthor[]> = ref([]);
   const authorsValues: Ref<string[]> = ref([]);

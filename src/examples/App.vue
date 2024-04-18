@@ -8,19 +8,19 @@ const a = 1;
 </script>
 
 <template>
-  <hive-splitter style="min-height: 100vh">
+  <!-- <hive-splitter style="min-height: 100vh">
     <hive-pane id="light">
       <all-widgets />
     </hive-pane>
-    <!-- <hive-pane id="dark">
+     <hive-pane id="dark">
       <div hive-theme="dark" style="background: black; color: white">
         <all-widgets dark />
       </div>
-    </hive-pane> -->
-  </hive-splitter>
-  <!-- <div>
+    </hive-pane> 
+    </hive-splitter> -->
+  <div>
     <filter-new />
-  </div> -->
+  </div>
 </template>
 
 <style lang="scss"></style>

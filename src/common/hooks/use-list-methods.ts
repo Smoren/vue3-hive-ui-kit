@@ -82,7 +82,7 @@ export const useListMethods = ({
 
   const updateActiveValue = (value: Value) => {
     activeValue.value = value;
-    let element = menuRef.value?.querySelector(`[data-value='${value}']`);
+    let element = menuRef.value?.querySelector(`[data-value='${JSON.stringify(value)}']`);
     if (element) {
       (element as unknown as HTMLElement).scrollIntoView({
         behavior: 'smooth',
@@ -158,8 +158,9 @@ export const useListMethods = ({
   const setFirstActiveValue = () => {
     for (const key of filteredOptions.value.keys()) {
       updateActiveValue(key);
-      break;
+      return;
     }
+    updateActiveValue(null);
   };
 
   return {
