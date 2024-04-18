@@ -68,6 +68,8 @@ const configOptions = reactive({
   fieldValue: props.valueField,
 });
 
+const useListRes = useListMethods(configOptions);
+
 const {
   isExpanded,
   activeValue,
@@ -85,7 +87,9 @@ const {
   currentValue,
   menuRef,
   setFirstActiveValue,
-} = useListMethods(configOptions);
+} = useListRes;
+
+let { stopWatchSearch } = useListRes;
 
 const changeValue = (value: Value) => {
   if (!currentValue.value || !value || !Array.isArray(currentValue.value)) return;
@@ -112,12 +116,15 @@ const deleteLast = (value: Value) => {
 watch(
   () => props.modelValue,
   () => {
+    // stopWatchSearch();
     currentValue.value = props.modelValue;
     configOptions.modelValue = props.modelValue === null ? [] : props.modelValue;
     const res = useListMethods(configOptions);
     current.value = res.current.value;
     currentOptions.value = res.currentOptions.value;
     filteredOptions.value = res.filteredOptions.value;
+    searchQuery.value = res.searchQuery.value;
+    stopWatchSearch = res.stopWatchSearch;
   },
   { deep: true },
 );

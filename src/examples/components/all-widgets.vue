@@ -292,7 +292,7 @@ const checkCurrent = {
   title: 'Activ',
   value: false,
 };
-const multiselect: Ref<string[]> = ref([]);
+const multiselect: Ref<string[]> = ref(['городской_бестиарий']);
 
 setTimeout(() => {
   categoriesOptions.value = [
@@ -305,6 +305,8 @@ setTimeout(() => {
     { name: 'мини-конкурс', value: 'миниконкурс' },
     { name: 'Игра в одиноком октябре', value: 'Игра_в_одиноком_октябре' },
   ];
+
+  multiselect.value = ['городской_бестиарий', 'мнимая_проза', 'ночной_эфир'];
 }, 2000);
 
 const categoriesOptions = ref([

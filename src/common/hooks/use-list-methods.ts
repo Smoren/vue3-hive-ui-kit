@@ -127,11 +127,11 @@ export const useListMethods = ({
     }
   };
 
-  watch(searchQuery, () => {
-    useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
+  let stopWatchSearch = watch(searchQuery, () => {
+    useSearch(currentOptions, searchQuery.value, currentValue.value, fieldTitle, fieldValue, filteredOptions, distinct);
   });
 
-  useSearch(currentOptions, searchQuery.value, modelValue, fieldTitle, fieldValue, filteredOptions, distinct);
+  useSearch(currentOptions, searchQuery.value, currentValue.value, fieldTitle, fieldValue, filteredOptions, distinct);
 
   const setPrevActiveValue = () => {
     const node = filteredOptions.value.get(activeValue.value);
@@ -182,5 +182,6 @@ export const useListMethods = ({
     setNextActiveValue,
     menuRef,
     setFirstActiveValue,
+    stopWatchSearch,
   };
 };
