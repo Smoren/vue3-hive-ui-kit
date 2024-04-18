@@ -113,9 +113,10 @@ watch(
   () => {
     currentValue.value = props.modelValue;
     configOptions.modelValue = props.modelValue === null ? [] : props.modelValue;
-    current.value = useListMethods(configOptions).current.value;
-    currentOptions.value = useListMethods(configOptions).currentOptions.value;
-    filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
+    const res = useListMethods(configOptions);
+    current.value = res.current.value;
+    currentOptions.value = res.currentOptions.value;
+    filteredOptions.value = res.filteredOptions.value;
   },
   { deep: true },
 );
@@ -124,11 +125,12 @@ watch(
   () => props.options,
   () => {
     configOptions.options = props.options;
-    currentOptions.value = useListMethods(configOptions).currentOptions.value;
-    filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
-    current.value = useListMethods(configOptions).current.value;
-    activeValue.value = useListMethods(configOptions).activeValue.value;
-    setFirstActiveValue();
+    const res = useListMethods(configOptions);
+    currentOptions.value = res.currentOptions.value;
+    filteredOptions.value = res.filteredOptions.value;
+    current.value = res.current.value;
+    activeValue.value = res.activeValue.value;
+    res.setFirstActiveValue();
   },
   { deep: true },
 );
@@ -136,11 +138,16 @@ watch(
 watch(
   currentValue,
   () => {
-    filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
-    setNextActiveValue();
+    const res = useListMethods(configOptions);
+    filteredOptions.value = res.filteredOptions.value;
+    res.setNextActiveValue();
   },
   { deep: true },
 );
+
+watch(searchQuery, () => {
+  setFirstActiveValue();
+});
 
 const computedPlaceholder = computed(() =>
   current.value ? String(current.value[props.titleField]) : props.isPlaceholderSeenWithValues ? props.placeholder : '',
