@@ -70,6 +70,7 @@ const configOptions = reactive({
   fieldTitle: props.titleField,
   fieldValue: props.valueField,
   distinct: props.distinct,
+  query: '',
 });
 
 const {
@@ -131,9 +132,11 @@ watch(
   () => props.options,
   () => {
     configOptions.options = props.options;
-    currentOptions.value = useListMethods(configOptions).currentOptions.value;
-    filteredOptions.value = useListMethods(configOptions).filteredOptions.value;
-    current.value = useListMethods(configOptions).current.value;
+    configOptions.query = searchQuery.value;
+    const res = useListMethods(configOptions);
+    currentOptions.value = res.currentOptions.value;
+    filteredOptions.value = res.filteredOptions.value;
+    current.value = res.current.value;
   },
   { deep: true },
 );

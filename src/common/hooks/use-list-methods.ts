@@ -15,6 +15,7 @@ export type ListMethodsConfig = {
   fieldValue: string;
   autocomplete?: boolean;
   distinct?: boolean;
+  query?: string;
 };
 
 export const useListMethods = ({
@@ -26,12 +27,13 @@ export const useListMethods = ({
   fieldTitle,
   fieldValue,
   distinct = true,
+  query = '',
 }: ListMethodsConfig) => {
   const isExpanded = ref(false);
   const activeValue: Ref<Value | undefined> = ref();
   const currentValue: Ref<Value | Value[] | undefined> = ref(modelValue);
   const current: CurrentOptionsRef = ref();
-  const searchQuery = ref('');
+  const searchQuery = ref(query);
   const searchRef: Ref<InputExpose | null> = ref(null);
   const menuRef: Ref<HTMLDivElement | null> = ref(null);
   const searchInput = computed(() => searchRef.value?.input);
