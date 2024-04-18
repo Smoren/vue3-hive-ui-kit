@@ -153,7 +153,7 @@ const updateCurrentValueAutocomplteHandler = (value: Value | undefined) => {
             "
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
-            :data-value="item[1][valueField]"
+            :data-value="JSON.stringify(item[1][valueField])"
           >
             {{ item[1][titleField] }}
           </div>

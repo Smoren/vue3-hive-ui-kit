@@ -159,7 +159,7 @@ defineExpose({ current });
             @click.stop="updateCurrentValue(item[1][valueField]), onUpdateModelValue<Value>(emit, item[1][valueField])"
             @mouseover="updateActiveValue(item[1][valueField])"
             @mousedown.prevent
-            :data-value="item[1][valueField]"
+            :data-value="JSON.stringify(item[1][valueField])"
           >
             {{ item[1][titleField] ?? nullTitle }}
           </div>
