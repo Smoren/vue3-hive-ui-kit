@@ -15,8 +15,6 @@ export const useSearch = (
   }
   filteredOptions.value.clear();
 
-  console.log(filteredOptions.value, modelValue);
-
   if (typeof searchString === 'string') {
     searchString = searchString.toLowerCase();
   }

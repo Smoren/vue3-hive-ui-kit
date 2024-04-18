@@ -149,7 +149,7 @@ export const useListMethods = ({
         break;
       }
     } else {
-      if (node.next !== null) {
+      if (node.next !== null && filteredOptions.value.has(node.next)) {
         updateActiveValue(node.next);
       }
     }
