@@ -22,6 +22,7 @@ import type { Options } from '@/common/types/option';
 import { Value } from '@/common/types/select';
 import { useListMethods } from '@/common/hooks/use-list-methods';
 import DeleteIcon from '@/components/hive-multiselect/assets/delete-icon.svg';
+import { computed } from 'vue';
 
 export interface Props extends CommonProps {
   options: Options | undefined;
@@ -36,6 +37,8 @@ export interface Props extends CommonProps {
   nullTitle?: string;
   disabled?: boolean;
   focusOnMount?: boolean;
+  isPlaceholderSeenWithValues: true;
+  placeholder?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -47,6 +50,8 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   nullTitle: 'Не выбрано',
   focusOnMount: false,
+  placeholder: '',
+  isPlaceholderSeenWithValues: true,
 });
 
 type Emit = Event & Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
@@ -137,6 +142,10 @@ watch(
   { deep: true },
 );
 
+const computedPlaceholder = computed(() =>
+  current.value ? String(current.value[props.titleField]) : props.isPlaceholderSeenWithValues ? props.placeholder : '',
+);
+
 onMounted(() => {
   if (props.focusOnMount) searchRef.value?.forceFocus();
 });
@@ -170,7 +179,7 @@ onMounted(() => {
           v-model="searchQuery"
           ref="searchRef"
           :disabled="disabled"
-          :placeholder="current ? String(current[titleField]) : ''"
+          :placeholder="computedPlaceholder"
           class="hive-multiselect__search"
           :class="{
             valueNull: (modelValue === null && withNull) || modelValue === undefined,
@@ -338,15 +347,15 @@ $multiselect-padding: 0.5em 1em 0.5em 1em;
 
     &::placeholder {
       opacity: 1;
-      color: $text;
+      color: var(--placeholder, $placeholder);
     }
 
     &:focus {
       cursor: text;
 
-      &::placeholder {
-        opacity: 0.5;
-      }
+      // &::placeholder {
+      //   opacity: 0.5;
+      // }
     }
 
     &.valueNull {

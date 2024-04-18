@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<Props>(), {
   focusOnMount: false,
   distinct: true,
   placeholder: '',
-  isPlaceholderSeenWithValues: false,
+  isPlaceholderSeenWithValues: true,
 });
 
 type Emit = Event & Mount & Unmount & Update<Value[]> & Focusin & Focusout & Keydown & Search<string>;
@@ -370,15 +370,15 @@ $height: var(--height, calc($common-widget-height - 10px));
 
     &::placeholder {
       opacity: 1;
-      color: $text;
+      color: var(--placeholder, $placeholder);
     }
 
     &:focus {
       cursor: text;
 
-      &::placeholder {
-        opacity: 0.5;
-      }
+      // &::placeholder {
+      //   opacity: 0.5;
+      // }
     }
 
     &.valueNull {

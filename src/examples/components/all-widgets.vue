@@ -793,6 +793,7 @@ const optionsObject1 = {
               v-model="multiselect"
               title-field="name"
               value-field="value"
+              placeholder="Введите"
             />
             <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" />
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" /> -->
@@ -855,7 +856,13 @@ const optionsObject1 = {
       <widget-wrapper title="Multiselect">
         {{ checkbox }}
         <!-- <hive-multiselect :options="maritalStatusList" v-model="multiselect" title-field="title" value-field="id" /> -->
-        <hive-multiselect :options="categoriesOptions" v-model="multiselect" title-field="name" value-field="value" />
+        <hive-multiselect
+          :options="categoriesOptions"
+          v-model="multiselect"
+          title-field="name"
+          value-field="value"
+          placeholder="Введите"
+        />
         <hive-textarea v-model="text" resize-direction="both" :style="{ width: '300px' }" disabled />
       </widget-wrapper>
       <widget-wrapper title="Autocompelte">
@@ -871,6 +878,7 @@ const optionsObject1 = {
           :style="{ width: '300px' }"
           :distinct="false"
           :keys-to-enter-value="['Space']"
+          placeholder="Введите"
         />
       </widget-wrapper>
       <widget-wrapper title="HiveUploadFile">
