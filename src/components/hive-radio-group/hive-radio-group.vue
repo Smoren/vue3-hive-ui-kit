@@ -143,8 +143,8 @@ $gap: 15px;
         border-radius: 50%;
         margin-right: 0.5em;
         background-repeat: no-repeat;
-        background-position: center center;
-        background-size: 50% 50%;
+        background-position: center;
+        background-size: 100%;
         background-color: var(--bg-input, $bg-input);
       }
     }
