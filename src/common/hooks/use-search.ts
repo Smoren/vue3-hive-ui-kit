@@ -9,6 +9,7 @@ export const useSearch = (
   fieldValue: string,
   filteredOptions: Ref<Map<any, any>>,
   distinct: boolean,
+  withNull: boolean,
 ) => {
   if (!searchString) {
     filteredOptions.value = new Map(JSON.parse(JSON.stringify([...input.value])));
@@ -23,7 +24,7 @@ export const useSearch = (
   let prev = null;
 
   for (const item of input.value.values()) {
-    if (item.id === null || item[fieldTitle] === null) {
+    if (!withNull && (item.id === null || item[fieldTitle] === null)) {
       continue;
     }
 
