@@ -173,7 +173,7 @@ const rowClicked = (row: Record<string, unknown>, rowRef: ComponentPublicInstanc
 defineExpose({ items, grid });
 
 const currentPageItems = computed(() => {
-  if (pagginatedItems.value.length === 0) return items;
+  if (pagginatedItems.value.length === 0) return items.value;
   if (currentPage.value <= 0) return pagginatedItems.value[0];
   if (currentPage.value > pagginatedItems.value.length) return pagginatedItems.value[pagginatedItems.value.length - 1];
   return pagginatedItems.value[currentPage.value - 1];

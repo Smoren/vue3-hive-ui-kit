@@ -947,7 +947,7 @@ const optionsObject1 = {
           :data-items="rows"
           has-filter
           :filter-fields="['name', 'bool', 'age']"
-          :items-on-page="2"
+          :items-on-page="0"
           :row-css-class="(row: any) => [`aaa-${row['age']}`, 'bbb']"
           :extension-fields="['score']"
         ></HiveGrid>
