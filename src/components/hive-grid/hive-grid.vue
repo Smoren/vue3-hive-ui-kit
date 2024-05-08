@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref, WritableComputedRef, watch, onMounted, getCurrentInstance, useSlots } from 'vue';
+import { ref, type Ref, WritableComputedRef, watch, onMounted, getCurrentInstance, useSlots, computed } from 'vue';
 import useHiveGrid from './hooks/use-hive-grid';
 import { CommonProps } from '@/common/types/props';
 import {
@@ -105,7 +105,7 @@ const { items, sort, deleteRow, itemsLength, addRow, isLoading } = useHiveGrid({
   extensionFields: props.extensionFields,
 } as GridConfig);
 
-const arrayOfSplittedItems: Ref<Record<string, any>[][]> = ref([]);
+const pagginatedItems: Ref<Record<string, any>[][]> = ref([]);
 const currentPage = ref(props.page);
 const prevPage = (page?: number) => {
   if (currentPage.value === 1) return;
@@ -113,20 +113,18 @@ const prevPage = (page?: number) => {
 };
 
 const nextPage = (page?: number) => {
-  if (currentPage.value === arrayOfSplittedItems.value.length) return;
+  if (currentPage.value === pagginatedItems.value.length) return;
   page === undefined ? currentPage.value++ : (currentPage.value = page);
 };
 
-const pagination = (items: WritableComputedRef<object[]>) => {
-  arrayOfSplittedItems.value.length = 0;
+const paginateItems = (items: WritableComputedRef<object[]>) => {
+  pagginatedItems.value.length = 0;
   if (props.itemsOnPage === 0) return;
   for (let i = 0; i < items.value.length / props.itemsOnPage; i++) {
-    arrayOfSplittedItems.value.push(
-      items.value.slice(i * props.itemsOnPage, i * props.itemsOnPage + props.itemsOnPage),
-    );
+    pagginatedItems.value.push(items.value.slice(i * props.itemsOnPage, i * props.itemsOnPage + props.itemsOnPage));
   }
-  if (arrayOfSplittedItems.value.length < currentPage.value) {
-    currentPage.value = arrayOfSplittedItems.value.length;
+  if (pagginatedItems.value.length < currentPage.value) {
+    currentPage.value = pagginatedItems.value.length;
   }
 };
 
@@ -153,16 +151,16 @@ watch(currentQuery, () => {
 });
 
 onMounted(() => {
-  pagination(items);
+  paginateItems(items);
 });
 
 watch(items, () => {
-  pagination(items);
+  paginateItems(items);
   if (itemsLength.value <= 1) currentPage.value = 1;
 });
 
 watch(itemsLength, () => {
-  pagination(items);
+  paginateItems(items);
 });
 
 const slots = useSlots();
@@ -173,6 +171,13 @@ const rowClicked = (row: Record<string, unknown>, rowRef: ComponentPublicInstanc
 };
 
 defineExpose({ items, grid });
+
+const currentPageItems = computed(() => {
+  if (pagginatedItems.value.length === 0) return items;
+  if (currentPage.value <= 0) return pagginatedItems.value[0];
+  if (currentPage.value > pagginatedItems.value.length) return pagginatedItems.value[pagginatedItems.value.length - 1];
+  return pagginatedItems.value[currentPage.value - 1];
+});
 </script>
 
 <template>
@@ -189,7 +194,7 @@ defineExpose({ items, grid });
       />
       <tbody>
         <hive-grid-row
-          v-for="(item, index) in arrayOfSplittedItems.length === 0 ? items : arrayOfSplittedItems[currentPage - 1]"
+          v-for="(item, index) in currentPageItems"
           :key="(item as any).id"
           :index="index"
           :columns="columns"
@@ -376,7 +381,7 @@ defineExpose({ items, grid });
         </hive-grid-row>
       </tbody>
     </table>
-    <div v-if="arrayOfSplittedItems.length > 1" class="pagination-item">
+    <div v-if="pagginatedItems.length > 1" class="pagination-item">
       <svg
         @click="prevPage(1)"
         xmlns="http://www.w3.org/2000/svg"
@@ -423,7 +428,7 @@ defineExpose({ items, grid });
         viewBox="0 0 30 30"
         version="1.1"
         class="pagination-item_svg"
-        :class="{ disabled: currentPage === arrayOfSplittedItems.length }"
+        :class="{ disabled: currentPage === pagginatedItems.length }"
       >
         <g id="surface1">
           <path
@@ -433,7 +438,7 @@ defineExpose({ items, grid });
         </g>
       </svg>
       <svg
-        @click="nextPage(arrayOfSplittedItems.length)"
+        @click="nextPage(pagginatedItems.length)"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         width="30px"
@@ -441,7 +446,7 @@ defineExpose({ items, grid });
         viewBox="0 0 30 30"
         version="1.1"
         class="pagination-item_svg"
-        :class="{ disabled: currentPage === arrayOfSplittedItems.length }"
+        :class="{ disabled: currentPage === pagginatedItems.length }"
       >
         <g id="surface1">
           <path
