@@ -109,6 +109,10 @@ onMounted(() => {
 });
 
 defineExpose({ current });
+
+const onScroll = () => {
+  searchRef.value?.forceFocus();
+};
 </script>
 
 <template>
@@ -136,8 +140,8 @@ defineExpose({ current });
           @keydown.up.prevent="setPrevActiveValue"
           @keydown.down.prevent="setNextActiveValue"
           @input="onSearch<string>(emit, $event as string)"
+          @focusout="collapse(), onFocusout(emit)"
         />
-        <!-- @focusout="collapse(), onFocusout(emit)" -->
         <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
       </div>
       <transition name="fade" appear>
@@ -148,6 +152,7 @@ defineExpose({ current });
           :style="{
             maxHeight: menuHeight,
           }"
+          @scroll="onScroll"
         >
           <div
             v-for="(item, i) in filteredOptions"
