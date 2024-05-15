@@ -130,7 +130,6 @@ defineExpose({ current });
             'no-padding': !isExpanded,
           }"
           @focusin="expand(), onFocusin(emit)"
-          @focusout="collapse(), onFocusout(emit)"
           @keydown="onKeydown(emit, $event)"
           @keydown.enter.exact="updateCurrentValue(activeValue), onUpdateModelValue<Value>(emit, activeValue)"
           @keydown.esc="collapse()"
@@ -138,6 +137,7 @@ defineExpose({ current });
           @keydown.down.prevent="setNextActiveValue"
           @input="onSearch<string>(emit, $event as string)"
         />
+        <!-- @focusout="collapse(), onFocusout(emit)" -->
         <i class="hive-drop-down__icon" :class="{ expand: isExpanded }" @mousedown="toggle" />
       </div>
       <transition name="fade" appear>

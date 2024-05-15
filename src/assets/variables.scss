@@ -101,3 +101,30 @@ $bg-multiautocomplete-item: #e8e8e8;
   --bg-selected: rgba(255, 255, 255, 0.103);
   --bg-multiautocomplete-item: #2c2c2c;
 }
+
+body ::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+  appearance: none;
+}
+
+body ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 10%);
+  border-radius: 0;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 25%);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+body ::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0, 0, 0, 15%);
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 135, 139, 80%);
+}
+
