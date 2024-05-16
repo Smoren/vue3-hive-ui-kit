@@ -109,10 +109,6 @@ onMounted(() => {
 });
 
 defineExpose({ current });
-
-const onScroll = () => {
-  searchRef.value?.forceFocus();
-};
 </script>
 
 <template>
@@ -152,7 +148,6 @@ const onScroll = () => {
           :style="{
             maxHeight: menuHeight,
           }"
-          @scroll="onScroll"
         >
           <div
             v-for="(item, i) in filteredOptions"
@@ -176,8 +171,7 @@ const onScroll = () => {
 
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
-
-$drop-down-z_menu: 1;
+$drop-down-z_menu: 10000;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);
 $drop-down-selected_background: var(--bg-selected, $bg-selected);

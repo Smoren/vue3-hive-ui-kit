@@ -803,6 +803,8 @@ const optionsObject1 = {
             <!-- <hive-drop-down v-model="dropdown" :options="optionsObject" :style="{ width: '300px' }" menu-width="0px" /> -->
             <!-- <hive-drop-down v-model="dd3" :options="yearList" title-field="title" value-field="value" /> -->
             <!-- <hive-drop-down v-model="mm" :options="yearList" title-field="title" value-field="id" /> -->
+            <hive-drop-down v-model="dd4" :options="optionsArray" title-field="title" value-field="value" />
+
             <hive-button />
           </div>
 

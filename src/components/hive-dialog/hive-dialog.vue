@@ -55,7 +55,7 @@ watch(
 <template>
   <teleport to="body">
     <transition name="backdrop">
-      <div v-if="modelValue" class="hive-dialog" ref="dialogRef" :tabindex="0" @keydown.esc="handleKeydown">
+      <div v-if="modelValue" class="hive-dialog" ref="dialogRef" @keydown.esc="handleKeydown">
         <div
           class="hive-dialog__mask"
           :style="{ backgroundColor: maskBackground, zIndex: zIndex }"
