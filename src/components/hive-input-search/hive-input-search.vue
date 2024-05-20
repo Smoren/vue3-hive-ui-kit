@@ -24,9 +24,11 @@ export interface Props extends CommonProps {
   placeholder?: string;
   label?: string;
   timeout?: number;
+  disabled?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
   timeout: 250,
+  disabled: false,
 });
 
 type Emit = Event & Mount & Unmount & Update<string> & Focusin & Focusout & Keydown & Input<string>;
@@ -78,6 +80,7 @@ const handleInput = () => {
       id="input"
       :placeholder="placeholder"
       @input="handleInput"
+      :disabled="disabled"
     />
   </div>
 </template>
