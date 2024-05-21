@@ -126,6 +126,21 @@ $dialog-width-min: 100px;
     flex-direction: column;
     color: var(--text, $text);
   }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+    &-text {
+      font-size: 20px;
+    }
+
+    &-close {
+      cursor: pointer;
+    }
+  }
 }
 
 .backdrop-enter-active {

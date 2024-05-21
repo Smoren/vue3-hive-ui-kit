@@ -780,12 +780,7 @@ const optionsObject1 = {
       <widget-wrapper title="Modal">
         <hive-button @click="isOpenModal = true" />
 
-        <hive-dialog v-model="isOpenModal" :hive-theme="dark ? 'dark' : 'light'" withCloseButton title="Hello world">
-          <template #header>
-            <!-- <hive-button title="close" /> -->
-            ривэд эдвэд
-            FFFFFFFFFFFFFddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-          </template>
+        <hive-dialog v-model="isOpenModal" :hive-theme="dark ? 'dark' : 'light'" with-close-button title="Hello world">
 
           Hello
 
