@@ -132,6 +132,7 @@ $dialog-width-min: 100px;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 5px;
+    gap: 5px;
 
     &-text {
       font-size: 20px;
