@@ -139,6 +139,8 @@ $dialog-width-min: 100px;
 
     &-close {
       cursor: pointer;
+      color: var(--text, $text);
+      opacity: 0.7;
     }
   }
 }
