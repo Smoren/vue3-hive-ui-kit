@@ -481,7 +481,7 @@ const currentPageItems = computed(() => {
   }
 
   & tr.even {
-    background-color: var(--bg-input, $bg-input);
+    background-color: var(--bg-grid, $bg-grid);
   }
 
   & tr.odd {

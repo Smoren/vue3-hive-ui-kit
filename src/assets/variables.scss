@@ -1,6 +1,7 @@
 //* Core
 $bg-button: #f2f2f2;
 $bg-input: #ffffff;
+$bg-grid: #ffffff;
 $bg-hover: #d3eafff5;
 $bg-selected: rgba(0, 0, 0, 0.03);
 $bg-grid-odd: rgba(0, 0, 0, 0.04);
@@ -58,6 +59,7 @@ $bg-multiautocomplete-item: #e8e8e8;
   //* Core
   --bg-button: #000000;
   --bg-input: #000000;
+  --bg-grid: #000000;
   --bg-hover: #303030f5;
   --bg-grid-odd: rgba(117, 117, 117, 0.342);
 
@@ -127,4 +129,3 @@ body ::-webkit-scrollbar-thumb:window-inactive {
 body ::-webkit-scrollbar-thumb:hover {
   background: rgba(128, 135, 139, 80%);
 }
-

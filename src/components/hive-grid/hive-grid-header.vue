@@ -91,7 +91,7 @@ watch(currentQuery, () => {
 @import '@/assets/variables.scss';
 
 .hive-grid__header {
-  background-color: var(--bg-input, $bg-input);
+  background-color: var(--bg-grid, $bg-grid);
   border: 1px solid rgba(0, 0, 0, 0.08);
   position: sticky;
   top: 0;
