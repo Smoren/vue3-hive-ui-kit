@@ -46,7 +46,6 @@ useOnMount(emit);
 
 const slots = defineSlots<{
   edit(props: {
-    click: () => void;
     value: unknown;
     update: (value: unknown) => void;
     isChangeAllowed: boolean;
@@ -57,7 +56,6 @@ const slots = defineSlots<{
     setTrueFlag: () => void;
   }): any;
   view(props: {
-    click: () => void;
     value: unknown;
     view: string;
     row: Record<string, unknown> | undefined;
