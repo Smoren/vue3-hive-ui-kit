@@ -39,6 +39,7 @@ import { VueComponent } from '../../common/types/value';
 import hiveContextMenu from '../../components/hive-context-menu/hive-context-menu.vue';
 import { ContextMenuItems } from '../../components/hive-context-menu/types';
 import FilterNew from './components/filter-new.vue';
+import HiveMultitext from '@/components/hive-multitext/hive-multitext.vue';
 
 const text = ref('text');
 const num = ref(0);
@@ -723,6 +724,8 @@ const optionsObject1 = {
   a: 'b',
   c: 'd',
 };
+
+const multitext = ref(['1', '2', '3', '4']);
 </script>
 
 <template>
@@ -961,6 +964,9 @@ const optionsObject1 = {
       <widget-wrapper title="ContextMenu" style="height: 500px">
         <hive-context-menu :items="contextMenuItems" @context-item-click="universalLog" />
       </widget-wrapper>
+      <widget-wrapper title="HiveMultiText">
+        <hive-multitext v-model="multitext" title="Значения" />
+      </widget-wrapper>
     </div>
   </div>
 
@@ -979,6 +985,7 @@ const optionsObject1 = {
 
 <style scoped lang="scss">
 @import '@/assets/variables.scss';
+
 $bg-input: black;
 .app {
   max-width: 1280px;
@@ -989,6 +996,7 @@ $bg-input: black;
   line-height: 1.5;
   font-weight: 400;
 }
+
 .wrapper {
   display: flex;
   flex-direction: column;

@@ -25,6 +25,7 @@ import HiveTreeView from './components/hive-tree-view/hive-tree-view.vue';
 import HiveTreeViewNode from './components/hive-tree-view/hive-tree-view-node.vue';
 import HiveUploadFile from '@/components/hive-upload-file/hive-upload-file.vue';
 import Notification from '@/plugins/hive-notification';
+import HiveMultitext from '@/components/hive-multitext/hive-multitext.vue';
 import { notify, useNotification } from '@/plugins/hive-notification';
 
 import type { NotificationsOptions, NotificationsPluginOptions, NotificationItem } from '@/plugins/hive-notification';
@@ -79,6 +80,7 @@ export {
   FontAwesomeIcon,
   faSearch,
   faXmark,
+  HiveMultitext,
 };
 
 export type {
