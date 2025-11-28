@@ -36,7 +36,7 @@ useOnMount(emit);
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .hive-textaria {
   border: 1px solid transparent;

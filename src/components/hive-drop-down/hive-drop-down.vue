@@ -170,7 +170,7 @@ defineExpose({ current });
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 $drop-down-z_menu: 10000;
 $border-width: 1px;
 $drop-down-border: $border-width solid var(--border, $border);

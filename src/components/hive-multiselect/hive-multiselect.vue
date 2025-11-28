@@ -37,7 +37,7 @@ export interface Props extends CommonProps {
   nullTitle?: string;
   disabled?: boolean;
   focusOnMount?: boolean;
-  isPlaceholderSeenWithValues: true;
+  isPlaceholderSeenWithValues?: true;
   placeholder?: string;
 }
 
@@ -245,7 +245,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 $multiselect-z_menu: 1;
 $border-width: 1px;

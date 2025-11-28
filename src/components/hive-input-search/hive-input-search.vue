@@ -86,8 +86,8 @@ const handleInput = () => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
-@import '@/assets/mixins.scss';
+@use '@/assets/variables.scss' as *;
+@use '@/assets/mixins.scss' as *;
 
 .search {
   position: relative;

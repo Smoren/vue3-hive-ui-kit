@@ -138,7 +138,7 @@ const isDateTime = props.type === 'date' || props.type === 'time';
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .hive-input {
   border: 1px solid transparent;

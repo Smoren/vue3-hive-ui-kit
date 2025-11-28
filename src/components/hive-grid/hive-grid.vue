@@ -460,7 +460,7 @@ const currentPageItems = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .wrapper {
   height: fit-content;

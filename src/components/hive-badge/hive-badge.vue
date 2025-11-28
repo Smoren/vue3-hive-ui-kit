@@ -39,7 +39,7 @@ const isFlashing = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .badge {
   display: flex;

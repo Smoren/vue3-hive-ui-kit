@@ -46,7 +46,7 @@ provide('onPaneUpdate', onPaneUpdate);
 </template>
 
 <style lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .hive-splitter {
   display: flex;

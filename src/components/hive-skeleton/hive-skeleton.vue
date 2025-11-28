@@ -23,7 +23,7 @@ useOnMount(emit);
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .skeleton {
   animation: skeleton-loading 1s linear infinite alternate;

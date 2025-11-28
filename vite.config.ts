@@ -11,6 +11,13 @@ export default defineConfig({
       '@/': new URL('./src/', import.meta.url).pathname,
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+      },
+    },
+  },
 
   build: {
     cssCodeSplit: true,
@@ -22,10 +29,10 @@ export default defineConfig({
     },
 
     rollupOptions: {
-      external: ["vue"],
+      external: ['vue'],
       output: {
         globals: {
-          vue: "Vue",
+          vue: 'Vue',
         },
       },
     },

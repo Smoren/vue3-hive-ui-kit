@@ -88,7 +88,7 @@ watch(currentQuery, () => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .hive-grid__header {
   background-color: var(--bg-grid, $bg-grid);

@@ -17,7 +17,7 @@ defineProps<{
 
 <style scoped lang="scss">
 
-@import "@/assets/variables";
+@use "@/assets/variables" as *;
 
 .wrapper {
   display: flex;

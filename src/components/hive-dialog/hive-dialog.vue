@@ -3,6 +3,7 @@ import { CommonProps } from '@/common/types/props';
 import { Mount, Unmount, Update, onUpdateModelValue, Event } from '@/common/mixin/emits';
 import { useOnMount } from '@/common/hooks/use-mount';
 import { mergeProps, nextTick, ref, watch } from 'vue';
+import { parseStyles } from '@/common/helpers/parseStyles';
 
 export interface Props extends CommonProps {
   modelValue: boolean;
@@ -63,7 +64,7 @@ watch(
         />
         <div
           class="hive-dialog__content"
-          :style="{ zIndex: zIndex, ...style }"
+          :style="{ zIndex: zIndex, ...parseStyles(style) }"
           v-bind="$attrs"
           @keydown="handleKeydown"
         >
@@ -88,7 +89,7 @@ watch(
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 $dialog-bg: var(--bg-input, $bg-input);
 $dialog-trait: lightgrey;
