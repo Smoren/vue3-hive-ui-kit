@@ -11,7 +11,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '16.16.0'
+          node-version: '24.11.1'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
         run: npm i && npm ci && npm run build
