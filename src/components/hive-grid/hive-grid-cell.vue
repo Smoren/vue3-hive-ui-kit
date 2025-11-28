@@ -176,7 +176,7 @@ const classString = computed(() => getClassString(props.row, props.cssClass));
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .cell {
   border-width: 0 0 1px 1px;

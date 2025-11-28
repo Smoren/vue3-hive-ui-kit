@@ -464,19 +464,7 @@ const currentTab = ref('1');
 
 const prevRow: Ref<InstanceType<typeof HiveGridRow> | null> = ref(null);
 
-const log = (row: Record<string, unknown>, rowRef: VueComponent<typeof HiveGridRow> | null) => {
-  if (rowRef && rowRef.style) {
-    rowRef.style.background = 'red';
-    if (prevRow.value?.style?.background) {
-      prevRow.value.style.background = 'inherit';
-    }
-    if (prevRow.value !== rowRef) {
-      prevRow.value = rowRef;
-    } else {
-      prevRow.value = null;
-    }
-  }
-};
+
 
 const changeRows = () => {
   rows.value = [
@@ -984,7 +972,7 @@ const multitext = ref(['1', '2', '3', '4']);
 </style>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 $bg-input: black;
 .app {

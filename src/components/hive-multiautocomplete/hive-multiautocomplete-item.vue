@@ -59,7 +59,7 @@ const cancelEdit = () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 $height: var(--height, calc($common-widget-height - 10px));
 
 .hive-multiselect__selected-item {

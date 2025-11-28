@@ -126,7 +126,7 @@ const handleContextItemClick = (item: ContextMenuItem) => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 .context-menu {
   position: absolute;
   z-index: 1001;

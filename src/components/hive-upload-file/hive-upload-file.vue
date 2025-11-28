@@ -123,7 +123,7 @@ defineExpose({
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .drop-area {
   width: 100%;

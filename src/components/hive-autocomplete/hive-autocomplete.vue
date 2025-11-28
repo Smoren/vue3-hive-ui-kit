@@ -164,7 +164,7 @@ const updateCurrentValueAutocomplteHandler = (value: Value | undefined) => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 $drop-down-z_menu: 1;
 $border-width: 1px;

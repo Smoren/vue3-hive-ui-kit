@@ -103,7 +103,7 @@ const handleClick = (event: MouseEvent) => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 .separator {
   border-top: 1px solid var(--border, $border);

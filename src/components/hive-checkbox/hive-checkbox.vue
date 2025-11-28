@@ -88,7 +88,7 @@ if (Array.isArray(props.option)) {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 
 $gap: 15px;
 

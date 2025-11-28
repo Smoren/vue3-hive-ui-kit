@@ -29,7 +29,7 @@ useOnMount(emit);
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/variables.scss';
+@use '@/assets/variables.scss' as *;
 $height: var(--height, calc($common-widget-height + 2px));
 .hive-button {
   cursor: pointer;

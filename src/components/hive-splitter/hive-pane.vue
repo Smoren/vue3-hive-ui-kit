@@ -3,6 +3,7 @@ import { CommonProps } from '@/common/types/props';
 import { onMounted, watch, ref, getCurrentInstance } from 'vue';
 import useHivePane from '@/components/hive-splitter/hooks/use-hive-pane';
 import { v4 as uuidv4 } from 'uuid';
+import { parseStyles } from '@/common/helpers/parseStyles';
 
 export interface Props extends CommonProps {
   size?: number | string | null;
@@ -60,7 +61,7 @@ defineExpose({ updateStyle });
 </script>
 
 <template>
-  <div class="hive-splitter__pane" :style="{ ...style, ...updatedStyle }">
+  <div class="hive-splitter__pane" :style="{ ...parseStyles(style), ...updatedStyle }">
     <slot />
   </div>
 </template>

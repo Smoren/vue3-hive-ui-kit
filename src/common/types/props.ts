@@ -4,5 +4,5 @@ export interface CommonProps {
   id?: string;
   attrs?: object;
   classes?: StyleValue;
-  style?: Record<string, string>;
+  style?: Record<string, string> | string;
 }
