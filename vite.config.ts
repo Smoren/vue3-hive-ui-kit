@@ -23,15 +23,16 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'VueHive',
+      formats: ['es'],
       fileName: (format) => `vue-hive.${format}.js`,
     },
-
     rollupOptions: {
       external: ['vue'],
       output: {
-        globals: {
-          vue: 'Vue',
-        },
+        preserveModules: true,
+        dir: 'dist/es',
+        format: 'es',
+        entryFileNames: '[name].mjs',
       },
     },
   },
