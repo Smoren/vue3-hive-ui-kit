@@ -1,7 +1,7 @@
 {
   "name": "vue3-hive-ui-kit",
   "private": false,
-  "version": "0.8.3",
+  "version": "0.8.4",
   "type": "module",
   "description": "UI kit for Vue 3",
   "files": [
@@ -21,7 +21,8 @@
   "module": "./dist/es/src/index.mjs",
   "exports": {
     ".": {
-      "import": "./dist/es/src/index.mjs"
+      "import": "./dist/es/src/index.mjs",
+      "types": "./dist/types/index.d.ts"
     }
   },
   "types": "./dist/types/index.d.ts",
