@@ -21,7 +21,8 @@
   "module": "./dist/es/src/index.mjs",
   "exports": {
     ".": {
-      "import": "./dist/es/src/index.mjs"
+      "import": "./dist/es/src/index.mjs",
+      "types": "./dist/types/index.d.ts"
     }
   },
   "types": "./dist/types/index.d.ts",
